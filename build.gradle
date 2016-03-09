@@ -11,9 +11,14 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'jacoco'
 
 // Declares binary plugin and its required JavaFX classpath
 apply from: "http://dl.bintray.com/content/shemnon/javafx-gradle/8.1.1/javafx.plugin"
+
+version = '0.0.1'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 task initSourceFolders { // add << before { to prevent executing during configuration phase
     sourceSets*.java.srcDirs*.each { it.mkdirs() }
@@ -47,3 +52,12 @@ javafx {
     appID 'HelloWorldApp'
     appName 'Hello World Application'
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
