@@ -10,8 +10,15 @@ import java.util.List;
 public class TestORM {
 
     public static void main( String[] args ) {
-        Base.open( "org.sqlite.JDBC", "jdbc:sqlite://database.sql", null, null );
-        List<Recipe> recipeList = Recipe.where("name = 'John'");
+
+        TestORM t = new TestORM();
+        final String path = t.getClass().getClassLoader().getResource("database/database.db").getPath();
+        Base.open( "org.sqlite.JDBC", "jdbc:sqlite://" + path, null, null );
+
+        new Recipe().set("title", "First Recipe").saveIt();
+
+        List<Recipe> recipeList = Recipe.findAll();
+        recipeList.forEach(System.out::println);
 
     }
 }
