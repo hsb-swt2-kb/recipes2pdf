@@ -8,6 +8,8 @@ interface Config {
 
     String TEMP_FOLDER_NAME = "temp";
 
+    String IMAGE_FOLDER_NAME = "images";
+
     String TEMPLATE_FOLDER_NAME = "templates";
     String TEMPLATE_FILE_NAME = "recipeTemplate.tex";
 

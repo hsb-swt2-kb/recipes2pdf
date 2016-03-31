@@ -16,7 +16,6 @@ class PdfBuilder {
 
         File template = new File(this.getClass().getClassLoader().getResource("sample/pdfBuilder/templates/recipeTemplate.tex").getPath());
 
-
         File parseRootDirectory = template.getParentFile().getParentFile();
         String str_parseRootDirectory = parseRootDirectory.getAbsolutePath() + File.separator;
 
@@ -34,6 +33,7 @@ class PdfBuilder {
         converter.replace("ingredientList", new Recipe().getIngredients());
         converter.replace("centerHead", new Recipe().getCategory());
         converter.replace("referenceNumber", new Recipe().getCategoryNumber() + "." + currentNumber);
+
         try {
             converter.parse(template, recipe1);
             generator.generate(recipe1, outputDir, parseRootDirectory);
