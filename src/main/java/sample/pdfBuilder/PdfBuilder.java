@@ -52,6 +52,7 @@ class PdfBuilder {
         converter.replace("centerHead", recipe_obj.getCategory());
         converter.replace("referenceNumber", recipe_obj.getCategoryNumber() + "." + currentNumber);
         converter.replace("imgPath", outputImg.getAbsolutePath());
+        converter.replace("recipeText", recipe_obj.getRecipeText());
 
         try {
             converter.parse(template, recipe1);
@@ -60,8 +61,6 @@ class PdfBuilder {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(outputDir);
     }
-
-
-
 }

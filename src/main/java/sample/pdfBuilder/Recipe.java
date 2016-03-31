@@ -33,4 +33,8 @@ public class Recipe {
     public int getID() {
         return 1;
     }
+
+    public String getRecipeText() {
+        return "'N bisschen hiervon, 'n bisschen davon, rühren, backofen, fertig! Und wenn alle Stricke reissen, einfach zur nächsten Imbissbude und 'einmal swei halbe Hahn' bestellen";
+    }
 }

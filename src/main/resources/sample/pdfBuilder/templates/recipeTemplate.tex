@@ -32,7 +32,7 @@
 
 \begin{document}
 
-	\begin{minipage}{0.4\textwidth}
+	\begin{minipage}[t]{0.4\textwidth}
 	\textbf{Zutaten}\\
 	\begin{itemize}
 		#foreach($ingredient in $ingredientList)
@@ -41,11 +41,11 @@
 	\end{itemize}
 	\end{minipage}
 	\hfill
-	\begin{minipage}{0.4\textwidth}
-		\begin{figure}[ht]
-        	\centering
-          \includegraphics[width=\textwidth]{$imgPath}
-        	\caption{Bild}
-        \end{figure}
-	\end{minipage}
+    \begin{minipage}[t]{0.4\textwidth}
+       \vspace{-2ex}
+        \includegraphics[width=\linewidth]{$imgPath}
+    \end{minipage}
+    \section*{Zubereitung}
+    $recipeText
+
 \end{document}
