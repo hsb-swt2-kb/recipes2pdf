@@ -28,33 +28,55 @@ class PdfBuilder {
         //TODO: Excaptionhandling for missing directories or files (like template-file)
 
         File recipe1 = new File(tempDir.getAbsolutePath() + File.separator + Config.OUTPUT_FILE_PREFIX + "1" + Config.OUTPUT_FILETYPE);
-
+        System.out.println(recipe1);
         JLRConverter converter = new JLRConverter(templateDir);
         JLRGenerator generator = new JLRGenerator();
 
-        ArrayList<ArrayList<String>> ingredientList = new ArrayList<>();
+//        ArrayList<ArrayList<String>> ingredientList = new ArrayList<>();
+//
+//        ArrayList<String> ingredient1 = new ArrayList<>();
+//        ArrayList<String> ingredient2 = new ArrayList<>();
+//        ArrayList<String> ingredient3 = new ArrayList<>();
+//
+//        ingredient1.add("Mehl");
+//        ingredient1.add("400");
+//        ingredient2.add("Wasser");
+//        ingredient2.add("200");
+//        ingredient3.add("Hefe");
+//        ingredient3.add("1");
+//
+//        ingredientList.add(ingredient1);
+//        ingredientList.add(ingredient2);
+//        ingredientList.add(ingredient3);
 
-        ArrayList<String> ingredient1 = new ArrayList<>();
-        ArrayList<String> ingredient2 = new ArrayList<>();
-        ArrayList<String> ingredient3 = new ArrayList<>();
-
-        ingredient1.add("Mehl");
-        ingredient1.add("400");
-        ingredient2.add("Wasser");
-        ingredient2.add("200");
-        ingredient3.add("Hefe");
-        ingredient3.add("1");
-
-        ingredientList.add(ingredient1);
-        ingredientList.add(ingredient2);
-        ingredientList.add(ingredient3);
-
-        converter.replace("ingredientList", ingredientList);
+        converter.replace("ingredientList", new Recipe().getIngredients());
         try {
             converter.parse(template, recipe1);
             generator.generate(recipe1, outputDir, parseRootDirectory);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    class Recipe {
+        public ArrayList<Ingredient> getIngredients() {
+            ArrayList<Ingredient> ingredientlist = new ArrayList<>();
+            ingredientlist.add(new Ingredient());
+            return ingredientlist;
+        }
+    }
+
+    class Ingredient {
+        public String getName() {
+            return "Mehl";
+        }
+
+        public int getAmount() {
+            return 500;
+        }
+
+        public String getUnig() {
+            return "g";
         }
     }
 }
