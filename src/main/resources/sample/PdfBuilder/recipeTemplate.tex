@@ -1,0 +1,25 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+
+\begin{document}
+
+	\begin{minipage}{0.4\textwidth}
+	\textbf{Zutaten}
+	\begin{itemize}
+		#foreach( $ingredient in $ingredientList )
+   			\item{$ingredient[0] $ingredient[1]} {1}
+		#end
+	\end{itemize}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.4\textwidth}
+		<Hier kommt das Bild hin>
+	\end{minipage}
+\end{document}
