@@ -36,12 +36,16 @@
 	\textbf{Zutaten}\\
 	\begin{itemize}
 		#foreach($ingredient in $ingredientList)
-   		\item{$ingredient.getName(), $ingredient.getAmount() $ingredient.getUnit()\\
+   		\item{$ingredient.getName(), $ingredient.getAmount() $ingredient.getUnit()}
 		#end
 	\end{itemize}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.4\textwidth}
-		Hier kommt das Bild hin
+		\begin{figure}[ht]
+        	\centering
+          \includegraphics[width=\textwidth]{$imgPath}
+        	\caption{Bild}
+        \end{figure}
 	\end{minipage}
 \end{document}

@@ -29,4 +29,8 @@ public class Recipe {
     public String getRecipeTypeNumber() {
         return "1";
     }
+
+    public int getID() {
+        return 1;
+    }
 }
