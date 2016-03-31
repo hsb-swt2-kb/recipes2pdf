@@ -5,7 +5,6 @@ import de.nixosoft.jlr.JLRGenerator;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * @author Kai Nortmann
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 class PdfBuilder {
     void buildPDF() {
         String fileseperator = File.separator;
-
+        int currentNumber = 1;
 
         File template = new File(this.getClass().getClassLoader().getResource("sample/pdfBuilder/templates/recipeTemplate.tex").getPath());
 
@@ -32,51 +31,18 @@ class PdfBuilder {
         JLRConverter converter = new JLRConverter(templateDir);
         JLRGenerator generator = new JLRGenerator();
 
-//        ArrayList<ArrayList<String>> ingredientList = new ArrayList<>();
-//
-//        ArrayList<String> ingredient1 = new ArrayList<>();
-//        ArrayList<String> ingredient2 = new ArrayList<>();
-//        ArrayList<String> ingredient3 = new ArrayList<>();
-//
-//        ingredient1.add("Mehl");
-//        ingredient1.add("400");
-//        ingredient2.add("Wasser");
-//        ingredient2.add("200");
-//        ingredient3.add("Hefe");
-//        ingredient3.add("1");
-//
-//        ingredientList.add(ingredient1);
-//        ingredientList.add(ingredient2);
-//        ingredientList.add(ingredient3);
-
         converter.replace("ingredientList", new Recipe().getIngredients());
+        converter.replace("centerHead", new Recipe().getCategory());
+        converter.replace("referenceNumber", new Recipe().getCategoryNumber() + "." + currentNumber);
         try {
             converter.parse(template, recipe1);
             generator.generate(recipe1, outputDir, parseRootDirectory);
+            System.out.println(converter.getErrorMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    class Recipe {
-        public ArrayList<Ingredient> getIngredients() {
-            ArrayList<Ingredient> ingredientlist = new ArrayList<>();
-            ingredientlist.add(new Ingredient());
-            return ingredientlist;
-        }
-    }
 
-    class Ingredient {
-        public String getName() {
-            return "Mehl";
-        }
 
-        public int getAmount() {
-            return 500;
-        }
-
-        public String getUnig() {
-            return "g";
-        }
-    }
 }
