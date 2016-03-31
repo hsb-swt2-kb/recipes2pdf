@@ -6,15 +6,39 @@
 \usepackage{makeidx}
 \usepackage{graphicx}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%Kopf- und Fußzeile
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+%Kopfzeile links bzw. innen
+%\fancyhead[L]{Kai Nortmann \& Christian Zöller}
+%Kopfzeile mittig
+\fancyhead[C]{$centerHead}
+%Kopfzeile rechts bzw. außen
+%\fancyhead[R]{\today}
+%Linie oben
+\renewcommand{\headrulewidth}{0.5pt}
+
+%Fußzeile ungerade links
+\fancyfoot[ol]{Rezept $referenceNumber}
+%Fußzeile mittig
+%\fancyfoot[c]{Labor 1 RS-232-Schnittstelle}
+%Fußzeile gerade rechts
+\fancyfoot[er]{Rezept $referenceNumber}
+%Linie unten
+\renewcommand{\footrulewidth}{0.5pt}
 
 
 \begin{document}
 
 	\begin{minipage}{0.4\textwidth}
 	\textbf{Zutaten}\\
+	\begin{itemize}
 		#foreach($ingredient in $ingredientList)
-   			$ingredient.getName()\\
+   		\item{$ingredient.getName(), $ingredient.getAmount() $ingredient.getUnit()\\
 		#end
+	\end{itemize}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.4\textwidth}
