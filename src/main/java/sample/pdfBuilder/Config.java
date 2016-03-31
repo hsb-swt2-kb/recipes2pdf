@@ -1,12 +1,10 @@
-package sample.PdfBuilder;
-
-import java.io.File;
+package sample.pdfBuilder;
 
 /**
  * @author Kai Nortmann
  */
 interface Config {
-    String WORKKING_DIRECTORY = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "sample" + File.separator + "PdfBuilder";
+    String WORKKING_DIRECTORY = "PdfBuilder";
 
     String TEMP_FOLDER_NAME = "temp";
 

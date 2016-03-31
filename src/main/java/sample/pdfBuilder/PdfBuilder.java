@@ -1,4 +1,4 @@
-package sample.PdfBuilder;
+package sample.pdfBuilder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
@@ -10,15 +10,20 @@ import java.util.ArrayList;
 /**
  * @author Kai Nortmann
  */
-public class PdfBuilder {
-    public static void main(String[] args) {
-        File parseRootDirectory = new File(Config.WORKKING_DIRECTORY);
+class PdfBuilder {
+    void buildPDF() {
+        String fileseperator = File.separator;
+
+
+        File template = new File(this.getClass().getClassLoader().getResource("sample/pdfBuilder/templates/recipeTemplate.tex").getPath());
+
+
+        File parseRootDirectory = template.getParentFile().getParentFile();
         String str_parseRootDirectory = parseRootDirectory.getAbsolutePath() + File.separator;
 
-        File tempDir = new File(parseRootDirectory + File.separator + Config.TEMP_FOLDER_NAME);
-        File templateDir = new File(parseRootDirectory + File.separator + Config.TEMPLATE_FOLDER_NAME);
-        File outputDir = new File(parseRootDirectory + File.separator + Config.OUTPUT_FOLDER_NAME);
-        File template = new File(templateDir + File.separator + Config.TEMPLATE_FILE_NAME);
+        File tempDir = new File(str_parseRootDirectory + File.separator + Config.TEMP_FOLDER_NAME);
+        File templateDir = new File(str_parseRootDirectory + File.separator + Config.TEMPLATE_FOLDER_NAME);
+        File outputDir = new File(str_parseRootDirectory + File.separator + Config.OUTPUT_FOLDER_NAME);
 
         //TODO: Excaptionhandling for missing directories or files (like template-file)
 
