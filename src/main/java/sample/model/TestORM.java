@@ -14,7 +14,7 @@ public class TestORM {
     public static void main( String[] args ) throws SQLException {
 
         TestORM t = new TestORM();
-        DatabaseConnection databaseConnection = new DatabaseConnection();
+        DatabaseConnection databaseConnection = DatabaseConnection.getDatabaseConnection();
         Base.open(databaseConnection.CONNECTOR, databaseConnection.PATH, databaseConnection.USER, databaseConnection.PASSWORD);
 
         Recipe recipe = new Recipe();
