@@ -5,21 +5,21 @@ CREATE TABLE cookbook
   id INTEGER DEFAULT NULL PRIMARY KEY AUTOINCREMENT,
   title VARCHAR(255)
 );
-CREATE UNIQUE INDEX cookbook_cookbook_id_uindex ON cookbook (id)
+CREATE UNIQUE INDEX cookbook_cookbook_id_uindex ON cookbook (id);
 
 CREATE TABLE recipe
 (
   id INTEGER DEFAULT NULL PRIMARY KEY AUTOINCREMENT,
   title VARCHAR(255)
 );
-CREATE UNIQUE INDEX recipes_recipe_id_uindex ON recipe (id)
+CREATE UNIQUE INDEX recipes_recipe_id_uindex ON recipe (id);
 
 CREATE TABLE ingredient
 (
   id INTEGER DEFAULT NULL PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(255)
 );
-CREATE UNIQUE INDEX ingredients_ingredient_id_uindex ON ingredient (id)
+CREATE UNIQUE INDEX ingredients_ingredient_id_uindex ON ingredient (id);
 
 --DROP TABLE IF EXISTS cookbook_recipe;
 CREATE TABLE cookbook_recipe

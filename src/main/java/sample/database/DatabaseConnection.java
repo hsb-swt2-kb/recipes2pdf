@@ -10,12 +10,22 @@ public class DatabaseConnection {
     public String USER;
     public String PASSWORD;
 
-    public DatabaseConnection() {
+    private DatabaseConnection() {
         final String path = System.getProperty("user.dir") + "/database.db";
         this.CONNECTOR = "org.sqlite.JDBC";
         this.PATH = "jdbc:sqlite://" + path;
         this.USER = null;
         this.PASSWORD = null;
+    }
+
+    public static DatabaseConnection getDatabaseConnection() {
+        return new DatabaseConnection();
+    }
+
+    public static DatabaseConnection getSandboxDatabaseConnection() {
+        DatabaseConnection sanboxDatabaseConnection = new DatabaseConnection();
+        sanboxDatabaseConnection.PATH = sanboxDatabaseConnection.PATH.replace(".db", "-test.db");
+        return sanboxDatabaseConnection;
     }
 
 }
