@@ -28,6 +28,7 @@ task initSourceFolders { // add << before { to prevent executing during configur
 
 buildscript {
     repositories {
+        jcenter()
         mavenCentral()
         maven { url 'http://repo.javalite.io' }
     }
@@ -50,7 +51,7 @@ buildscript {
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.13'
-    compile group: 'org.javalite', name: 'activejdbc', version: '1.4.12-SNAPSHOT'
+    compile group: 'org.javalite', name: 'activejdbc', version: '1.4.11'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.5'
     compile 'org.slf4j:slf4j-api:1.7.13'
     compile 'org.xerial:sqlite-jdbc:3.8.11'
