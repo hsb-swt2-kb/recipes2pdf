@@ -4,20 +4,18 @@ package sample.model;
  * Created by czoeller on 26.03.16.
  */
 
-import org.javalite.activejdbc.Association;
-import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.javalite.test.jspec.JSpec.the;
 
 public class CookbookSpec extends ADatabaseSpec {
 
-    private CookbookRepository cookbookRepository;
+    private ICookbookRepository cookbookRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -26,7 +24,7 @@ public class CookbookSpec extends ADatabaseSpec {
 
     @Override
     @Test
-    public void shouldValidateMandatoryFields(){
+    public void shouldValidateMandatoryFields() {
 
         Cookbook cookbook = new Cookbook();
 
@@ -44,16 +42,22 @@ public class CookbookSpec extends ADatabaseSpec {
 
     @Test
     public void addRecipe() {
-        Optional<ICookbook> cookbook = cookbookRepository.getCookbookById(1);
+        Optional<ICookbook> cookbook = cookbookRepository.findById(1);
         cookbook.orElseThrow(IllegalStateException::new);
 
-        IRecipe recipe = new Recipe();
-        recipe.setTitle("A second Recipe");
+        IRecipe recipe = IRecipe.getInstance();
+        final String uniqueTitle = "A second Recipe with $id3ntifi3r41";
+        recipe.setTitle(uniqueTitle);
         recipe.saveIt();
 
         cookbook.get().addRecipe(recipe);
-        final LazyList<Recipe> relatives = ((Model) cookbook.get()).getAll(Recipe.class);
-        //the(relatives).shouldContain(recipe);
+        final List<IRecipe> recipes = cookbook.get().getRecipes();
+        final List<String> titles = recipes.
+            stream()
+            .map(d -> d.getTitle())
+            .collect(Collectors.toList());
+
+        the(titles).shouldContain(recipe.getTitle());
     }
 
 }

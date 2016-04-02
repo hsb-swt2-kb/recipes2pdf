@@ -25,11 +25,9 @@ public class ADatabaseTest {
     }
 
     private void populateSampleData() {
-        Recipe recipe = new Recipe();
-        recipe
-            .set("title", "First Recipe")
-            .saveIt();
-        recipe.getTitle();
+        IRecipe recipe = IRecipe.getInstance();
+        recipe.setTitle("First Recipe");
+        recipe.saveIt();
 
         List<Recipe> recipeList = Recipe.findAll();
         recipeList.forEach(System.out::println);
@@ -49,40 +47,11 @@ public class ADatabaseTest {
             .set("name", "Zucker")
             .saveIt();
 
-        RecipeIngredient recipeIngredient = RecipeIngredient.createIt("amount", 3);
+        //RecipeIngredient recipeIngredient = RecipeIngredient.ccreateIt("amount", 3);
         //recipeIngredient.add(ingredient1);
         //use one to many notation here:
-        recipe.add(recipeIngredient);
-        ingredient1.add(recipeIngredient);
-    }
-
-    private void populateSampleDataOLD() {
-        Recipe recipe = new Recipe();
-        Cookbook cookbook = new Cookbook();
-        Ingredient ingredient1 = new Ingredient();
-        RecipeIngredient recipeIngredient = RecipeIngredient.createIt("amount", 3);
-
-        recipe
-            .set("title", "First Recipe")
-            .saveIt();
-        Recipe r1 = Recipe.findFirst("title = ?", "First Recipe");
-
-        cookbook.set("title", "A Cookbook").saveIt();
-        Cookbook c1 = Cookbook.findFirst("title = ?", "A Cookbook");
-        c1.add(r1);
-        c1.saveIt();
-
-        final List<Recipe> allRecipesofC1 = c1.getAll(Recipe.class);
-        allRecipesofC1.forEach(System.out::println);
-
-        ingredient1
-            .set("name", "Zucker")
-            .saveIt();
-
-        //recipeIngredient.add(ingredient1);
-        //use one to many notation here:
-        recipe.add(recipeIngredient);
-        ingredient1.add(recipeIngredient);
+        //recipe.add(recipeIngredient);
+        //ingredient1.add(recipeIngredient);
     }
 
     @After

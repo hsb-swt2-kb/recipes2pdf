@@ -3,6 +3,7 @@ package sample.model;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,22 +27,22 @@ public class Cookbook extends Model implements ICookbook {
     }
 
     @Override
-    public List<Recipe> getRecipes() {
-        return this.getAll(Recipe.class);
+    public List<IRecipe> getRecipes() {
+        List<IRecipe> list = new ArrayList<>();
+        list.addAll( this.getAll(Recipe.class) );
+        return list;
     }
 
     @Override
     public void addRecipe(IRecipe recipe) {
         // Cast to underling database abstraction model
         this.add((Model) recipe);
-        recipe.add(this);
     }
 
     @Override
     public void removeRecipe(IRecipe recipe) {
         // Cast to underling database abstraction model
         this.remove((Model) recipe);
-        recipe.remove(this);
     }
 
 }

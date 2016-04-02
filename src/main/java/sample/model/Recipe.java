@@ -17,20 +17,13 @@ public class Recipe extends Model implements IRecipe {
         set("title", title);
     }
 
+    @Override
+    public void add(IRecipeIngredient recipeIngredient) {
+        this.add((Model) recipeIngredient);
+    }
+
     public String getTitle() {
         return getString("title");
-    }
-
-    @Override
-    public void add(ICookbook cookbook) {
-        this.add( (Model) cookbook );
-        cookbook.addRecipe( (IRecipe) this);
-    }
-
-    @Override
-    public void remove(ICookbook cookbook) {
-        this.remove( (Model) cookbook );
-        ((Model) cookbook).remove(this);
     }
 
 }

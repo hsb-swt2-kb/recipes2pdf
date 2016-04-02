@@ -1,12 +1,7 @@
 package sample.database;
 
 import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.RowListener;
-import org.javalite.activejdbc.RowProcessor;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
