@@ -1,5 +1,7 @@
 package sample.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.database.Database;
 import sample.database.DatabaseConnection;
 import sample.model.activejdbc.RecipeRepository;
@@ -7,14 +9,14 @@ import sample.model.activejdbc.RecipeRepository;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
  * Created by czoeller on 25.03.16.
  */
 public class TestORM {
+
+    private Logger LOG = LoggerFactory.getLogger(TestORM.class);
 
     public static void main(String[] args) {
         try {
@@ -30,11 +32,48 @@ public class TestORM {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         database.drop();
         database.install();
-        Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Database recreated");
+        LOG.warn("Database recreated");
+        createCategories();
+        createDaytimes();
+        createNurtures();
+        createSeasons();
         createIngredients();
         createUnits();
         createRecipes();
         createCookbooks();
+        createSortlevels();
+    }
+
+
+    private void createCategories() {
+
+    }
+
+    private void createDaytimes() {
+        String[] defaultDaytimes = {"Frühstück", "Mittag", "Abend"};
+        Stream.of(defaultDaytimes).forEach(name -> {
+            IDaytime daytime = IDaytime.getInstance();
+            daytime.setName(name);
+            daytime.saveIt();
+        });
+    }
+
+    private void createNurtures() {
+        String[] defaultNurtures = {"Low Carb", "vegetarisch", "Vegan", "Winter"};
+        Stream.of(defaultNurtures).forEach(name -> {
+            INurture nurture = INurture.getInstance();
+            nurture.setName(name);
+            nurture.saveIt();
+        });
+    }
+
+    private void createSeasons() {
+        String[] commonSeasons = {"Frühling", "Sommer", "Herbst", "Winter"};
+        Stream.of(commonSeasons).forEach(name -> {
+            ISeason season = ISeason.getInstance();
+            season.setName(name);
+            season.saveIt();
+        });
     }
 
     private void createIngredients() {
@@ -74,4 +113,14 @@ public class TestORM {
         cookbook.saveIt();
         cookbook.addRecipe(nudeln.get());
     }
+
+    private void createSortlevels() {
+        String[] defaultSortlevels = {"Kategorie", "Gerichtart", "Region", "Tageszeit", "Saison", "Ernaehrungsart", "Quelle"};
+        Stream.of(defaultSortlevels).forEach(unitName -> {
+            ISortlevel sortlevel = ISortlevel.getInstance();
+            sortlevel.setName(unitName);
+            sortlevel.saveIt();
+        });
+    }
+
 }
