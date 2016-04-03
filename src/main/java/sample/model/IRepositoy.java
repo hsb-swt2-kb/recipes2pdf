@@ -25,12 +25,12 @@ public interface IRepositoy<T> {
     Optional<T> findById(long id);
 
     /**
-     * Find first occurence of record that fulfills the query.
+     * Find first occurrence of record that fulfills the query.
      *
      * @param subQuery this is a set of conditions that normally follow the "where" clause. Example:
-     *                 <code>"department = ? and dob &gt ?"</code>. If this value is "*" and no parameters provided, then it behaves as {@link #getAll()}.
+     *                 <code>"department = ? and dob &gt ?"</code>.
      * @param params   list of parameters corresponding to the place holders in the subquery.
-     * @return instance of <code>LazyList<Model></code> containing results.
+     * @return instance of <code>List</code> containing results.
      */
     Optional<T> findFirst(String subQuery, Object... params);
 }
