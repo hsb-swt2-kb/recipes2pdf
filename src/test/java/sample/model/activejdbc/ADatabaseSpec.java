@@ -1,4 +1,4 @@
-package sample.model;
+package sample.model.activejdbc;
 
 import org.junit.Test;
 

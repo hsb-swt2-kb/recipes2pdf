@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.model.activejdbc.Cookbook;
+
 import java.util.List;
 
 /**

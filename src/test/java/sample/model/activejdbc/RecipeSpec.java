@@ -1,4 +1,4 @@
-package sample.model;
+package sample.model.activejdbc;
 
 /**
  * Created by czoeller on 26.03.16.

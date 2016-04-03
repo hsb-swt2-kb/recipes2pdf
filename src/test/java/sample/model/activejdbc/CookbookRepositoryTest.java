@@ -1,7 +1,8 @@
-package sample.model;
+package sample.model.activejdbc;
 
 import org.junit.Before;
 import org.junit.Test;
+import sample.model.ICookbook;
 
 import java.util.List;
 import java.util.Optional;

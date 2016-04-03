@@ -1,4 +1,7 @@
-package sample.model;
+package sample.model.activejdbc;
+
+import sample.model.ICookbook;
+import sample.model.ICookbookRepository;
 
 import java.util.ArrayList;
 import java.util.List;

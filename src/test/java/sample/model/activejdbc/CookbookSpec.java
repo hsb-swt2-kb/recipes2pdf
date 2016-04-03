@@ -1,4 +1,4 @@
-package sample.model;
+package sample.model.activejdbc;
 
 /**
  * Created by czoeller on 26.03.16.
@@ -6,6 +6,9 @@ package sample.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import sample.model.ICookbook;
+import sample.model.ICookbookRepository;
+import sample.model.IRecipe;
 
 import java.util.List;
 import java.util.Optional;

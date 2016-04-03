@@ -45,7 +45,7 @@ public class Database {
         Statement statement = connection.createStatement();
 
         // SQL statement to create tables
-        String sql = new String(Files.readAllBytes( Paths.get("db.sql")) );
+        final String sql = new String(Files.readAllBytes(Paths.get(this.getClass().getClassLoader().getResource("sample/database/db.sql").getPath())));
 
         // execute the statement string
         statement.executeUpdate(sql);

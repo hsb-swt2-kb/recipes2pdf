@@ -1,7 +1,9 @@
-package sample.model;
+package sample.model.activejdbc;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
+import sample.model.ICookbook;
+import sample.model.IRecipe;
 
 import java.util.ArrayList;
 import java.util.List;

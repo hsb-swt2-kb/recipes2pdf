@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.model.activejdbc.Ingredient;
+
 /**
  * Created by czoeller on 02.04.16.
  */

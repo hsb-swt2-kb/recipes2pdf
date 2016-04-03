@@ -37,8 +37,17 @@ CREATE TABLE recipe_ingredient
   id INTEGER DEFAULT NULL PRIMARY KEY AUTOINCREMENT,
   recipe_id INTEGER,
   ingredient_id INTEGER,
+  unit_id INTEGER,
   amount INTEGER,
   FOREIGN KEY (recipe_id) REFERENCES recipe(id),
   FOREIGN KEY (ingredient_id) REFERENCES ingredient(id),
+  FOREIGN KEY (unit_id) REFERENCES unit(id),
   UNIQUE(recipe_id, ingredient_id) ON CONFLICT ABORT
+);
+
+CREATE TABLE unit
+(
+  id INTEGER DEFAULT NULL PRIMARY KEY AUTOINCREMENT,
+  `name` VARCHAR,
+  UNIQUE(`name`) ON CONFLICT ABORT
 );

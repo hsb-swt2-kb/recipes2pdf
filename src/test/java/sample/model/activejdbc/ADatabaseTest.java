@@ -1,10 +1,14 @@
-package sample.model;
+package sample.model.activejdbc;
 
 import org.javalite.activejdbc.Base;
 import org.junit.After;
 import org.junit.Before;
 import sample.database.Database;
 import sample.database.DatabaseConnection;
+import sample.model.IRecipe;
+import sample.model.activejdbc.Cookbook;
+import sample.model.activejdbc.Ingredient;
+import sample.model.activejdbc.Recipe;
 
 import java.io.IOException;
 import java.sql.SQLException;
