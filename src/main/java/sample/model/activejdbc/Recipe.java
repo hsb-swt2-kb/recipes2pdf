@@ -34,17 +34,13 @@ public class Recipe extends Model implements IRecipe {
 
         // set recipeIngredient ends
         // Create ingredient on the fly if it was not there yet
-        ingredient.orElseGet(() -> {
-            return (IIngredient) Ingredient.createIt("name", ingredientName + "else");
-        }).add(recipeIngredient);
+        ingredient.orElseGet(() -> (IIngredient) Ingredient.createIt("name", ingredientName + "else")).add(recipeIngredient);
         //ingredient.orElseGet( Ingredient.createIt("name", ingredientName + "else") ).add(recipeIngredient);
         this.add((Model) recipeIngredient);
 
         // Create HasMany Relation unit ---< recipe_ingredient
         // Create unit on the fly if it was not there yet
-        unit.orElseGet(() -> {
-            return (IUnit) Unit.createIt("name", unitName);
-        }).add(recipeIngredient);
+        unit.orElseGet(() -> (IUnit) Unit.createIt("name", unitName)).add(recipeIngredient);
     }
 
     public String getTitle() {
