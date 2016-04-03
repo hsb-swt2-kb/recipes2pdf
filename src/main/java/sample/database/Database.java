@@ -1,6 +1,8 @@
 package sample.database;
 
 import org.javalite.activejdbc.Base;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,8 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by czoeller on 30.03.16.
@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class Database {
 
     private DatabaseConnection databaseConnection;
+    final Logger LOG = LoggerFactory.getLogger(Database.class);
 
     public Database(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;
@@ -27,10 +28,10 @@ public class Database {
             try {
                 install();
             } catch (SQLException sqlex) {
-                Logger.getLogger("").log(Level.WARNING, "Database installation failed.");
+                LOG.error("Database installation failed.");
                 sqlex.printStackTrace();
             } catch (IOException ex) {
-                Logger.getLogger("").log(Level.WARNING, "Database installation failed.");
+                LOG.error("Database installation failed.");
                 ex.printStackTrace();
             }
         }
@@ -40,7 +41,7 @@ public class Database {
     public void install() throws SQLException, IOException {
         Connection connection = DriverManager.getConnection( databaseConnection.PATH );
 
-        Logger.getLogger("").log(Level.INFO, "Database connection opened successfully");
+        LOG.info("Database connection opened successfully");
 
         Statement statement = connection.createStatement();
 
