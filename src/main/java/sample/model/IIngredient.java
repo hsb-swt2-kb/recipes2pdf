@@ -8,6 +8,7 @@ import sample.model.activejdbc.Ingredient;
 public interface IIngredient {
     static IIngredient getInstance() { return new Ingredient(); }
 
+    String getName();
     void setName(String name);
 
     boolean saveIt();

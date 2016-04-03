@@ -15,8 +15,13 @@ public class Ingredient extends Model implements IIngredient {
     }
 
     @Override
+    public String getName() {
+        return getString("name");
+    }
+
+    @Override
     public void setName(String name) {
-        this.set("name", name);
+        setString("name", name);
     }
 
     @Override

@@ -72,8 +72,8 @@ CREATE TABLE "sortlevel"
   UNIQUE(`name`) ON CONFLICT ABORT
 );
 
--- Kochbuch<-->Sortiereben
-CREATE TABLE "sortlevel_cookbook"
+-- Sortiereben<-->Kochbuch
+CREATE TABLE "cookbook_sortlevel"
 (
   id INTEGER DEFAULT NULL PRIMARY KEY AUTOINCREMENT,
   cookbook_id INTEGER,
