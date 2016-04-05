@@ -36,3 +36,6 @@ hs_err_pid*
 .gradle/
 build/
 bin/
+/JavaApplication34/nbproject/private/
+/parser/nbproject/private/
+/parser/dist/
