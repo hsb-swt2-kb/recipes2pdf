@@ -35,9 +35,11 @@
 	\begin{minipage}[t]{0.4\textwidth}
 	\textbf{Zutaten}\\
 	\begin{itemize}
-		#foreach($ingredient in $ingredientList)
-   		\item{$ingredient.getName(), $ingredient.getAmount() $ingredient.getUnit()}
-		#end
+        #foreach( $key in $ingredientList.keySet() )
+            #foreach( $ingreddetail in $ingredientList.get($key).keySet())
+                \item {Key: $key.getName() $ingreddetail $ingredientList.get($key).get($ingreddetail).getName()}
+            #end
+        #end
 	\end{itemize}
 	\end{minipage}
 	\hfill

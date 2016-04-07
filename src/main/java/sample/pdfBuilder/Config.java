@@ -22,5 +22,6 @@ interface Config {
     String IMAGE_PREFIX = "image_";
     String IMAGE_FILETYPE = ".jpg";
 
-    String RESSOURCEPATH = "sample" + File.separator + "pdfBuilder" + File.separator;
+    String RESSOURCE_PATH = "sample" + File.separator + "pdfBuilder";
+    String RESSOURCE_USER_PATH = System.getProperty("user.dir") + File.separator + ".recipes2pdf" + File.separator + "ressources";
 }
