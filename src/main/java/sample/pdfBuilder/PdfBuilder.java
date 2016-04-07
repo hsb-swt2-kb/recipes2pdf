@@ -2,6 +2,7 @@ package sample.pdfBuilder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
+import sample.model.dummy.DummyRecipe;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,54 +14,74 @@ import java.nio.file.Files;
  */
 class PdfBuilder {
     void buildPDF() {
-        String fileseperator = File.separator;
-        int currentNumber = 1;
-        Recipe recipe_obj = new Recipe();
+        DummyRecipe recipe_obj = new DummyRecipe();
+        File outputTexFile = getOutputTexFile();
+        createImage(recipe_obj.getID());
 
-        File template = new File(this.getClass().getClassLoader().getResource("sample/pdfBuilder/templates/recipeTemplate.tex").getPath());
+        parseTexFile(outputTexFile, recipe_obj);
+        createPDFFile(outputTexFile);
+    }
 
-        File parseRootDirectory = template.getParentFile().getParentFile();
-        String str_parseRootDirectory = parseRootDirectory.getAbsolutePath() + File.separator;
-
-        File imageDir = new File(str_parseRootDirectory + Config.IMAGE_FOLDER_NAME);
-
-        //TODO: File generating out of database
-        File imgFile = new File(imageDir.getAbsolutePath() + File.separator + Config.IMAGE_PREFIX + recipe_obj.getID() + Config.IMAGE_FILETYPE);
-
-        File outputImg = new File(imageDir.getAbsolutePath() + File.separator + Config.IMAGE_PREFIX + recipe_obj.getID() + "_out" + Config.IMAGE_FILETYPE);
-        System.out.println(outputImg);
-        File tempDir = new File(str_parseRootDirectory + Config.TEMP_FOLDER_NAME);
-        File templateDir = new File(str_parseRootDirectory + Config.TEMPLATE_FOLDER_NAME);
-        File outputDir = new File(str_parseRootDirectory + Config.OUTPUT_FOLDER_NAME);
-
-        //TODO: Excaptionhandling for missing directories or files (like template-file)
+    private void createPDFFile(File outputTexFile) {
+        JLRGenerator generator = new JLRGenerator();
 
         try {
-            byte[] img = Files.readAllBytes(imgFile.toPath());
-            FileOutputStream outputStream = new FileOutputStream(outputImg);
+            generator.generate(outputTexFile, getOutputDir(), getParserRootDir());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseTexFile(File outputTexFile, DummyRecipe recipe_obj) {
+        JLRConverter converter = new JLRConverter(getTemplateDir());
+
+        converter.replace("ingredientList", recipe_obj.getIngredients());
+        converter.replace("centerHead", recipe_obj.getCategory());
+        converter.replace("referenceNumber", recipe_obj.getCategoryNumber());
+        converter.replace("imgPath", getOutputImage(recipe_obj.getID()).getAbsolutePath());
+        converter.replace("recipeText", recipe_obj.getRecipeText());
+    }
+
+    private File getTemplateFile() {
+        return new File(this.getClass().getClassLoader().getResource(Config.RESSOURCEPATH + File.separator + Config.TEMPLATE_FOLDER_NAME + File.separator + Config.TEMPLATE_FILE_NAME).getPath());
+    }
+
+    private File getParserRootDir() {
+        return new File(Config.RESSOURCEPATH);
+    }
+
+    private File getOutputImage(Long ImageID) {
+        return new File(Config.RESSOURCEPATH + File.separator + Config.IMAGE_FOLDER_NAME + File.separator + Config.IMAGE_PREFIX + ImageID + "_out" + Config.IMAGE_FILETYPE);
+    }
+
+    private File getInputImage(Long ImageID) {
+        return new File(Config.RESSOURCEPATH + File.separator + Config.IMAGE_FOLDER_NAME + File.separator + Config.IMAGE_PREFIX + ImageID + Config.IMAGE_FILETYPE);
+    }
+
+    private File getTempDir() {
+        return new File(Config.RESSOURCEPATH + File.separator + Config.TEMP_FOLDER_NAME);
+    }
+
+    private File getTemplateDir() {
+        return new File(Config.RESSOURCEPATH + File.separator + Config.TEMPLATE_FOLDER_NAME);
+    }
+
+    private File getOutputDir() {
+        return new File(Config.RESSOURCEPATH + File.separator + Config.OUTPUT_FOLDER_NAME);
+    }
+
+    private File getOutputTexFile() {
+        return new File(getTempDir().getAbsolutePath() + File.separator + Config.OUTPUT_FILE_PREFIX + "1" + Config.OUTPUT_FILETYPE);
+    }
+
+    private void createImage(Long recipeID) {
+        try {
+            byte[] img = Files.readAllBytes(getInputImage(recipeID).toPath());
+            FileOutputStream outputStream = new FileOutputStream(getOutputImage(recipeID));
             outputStream.write(img);
             outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        File recipe1 = new File(tempDir.getAbsolutePath() + File.separator + Config.OUTPUT_FILE_PREFIX + "1" + Config.OUTPUT_FILETYPE);
-        System.out.println(recipe1);
-        JLRConverter converter = new JLRConverter(templateDir);
-        JLRGenerator generator = new JLRGenerator();
-
-        converter.replace("ingredientList", recipe_obj.getIngredients());
-        converter.replace("centerHead", recipe_obj.getCategory());
-        converter.replace("referenceNumber", recipe_obj.getCategoryNumber() + "." + currentNumber);
-        converter.replace("imgPath", outputImg.getAbsolutePath());
-        converter.replace("recipeText", recipe_obj.getRecipeText());
-
-        try {
-            converter.parse(template, recipe1);
-            generator.generate(recipe1, outputDir, parseRootDirectory);
-            System.out.println(converter.getErrorMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(outputDir);
     }
 }

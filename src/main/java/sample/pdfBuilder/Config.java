@@ -1,5 +1,7 @@
 package sample.pdfBuilder;
 
+import java.io.File;
+
 /**
  * @author Kai Nortmann
  */
@@ -19,4 +21,6 @@ interface Config {
 
     String IMAGE_PREFIX = "image_";
     String IMAGE_FILETYPE = ".jpg";
+
+    String RESSOURCEPATH = "sample" + File.separator + "pdfBuilder" + File.separator;
 }
