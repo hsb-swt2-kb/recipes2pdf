@@ -11,7 +11,7 @@ public class pdfBuilderTest {
     public void testPdfBuider() {
         PdfBuilder builder = new PdfBuilder();
         // List<File> pdfFiles = builder.buildPDF(ICookbook.getInstance());
-        File cookbookPDF = builder.createPDF(ICookbook.getInstance());
+        File cookbookPDF = builder.buildPDF(ICookbook.getInstance());
 
     }
 }

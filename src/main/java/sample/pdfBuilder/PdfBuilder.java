@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * @author Kai Nortmann
  */
+
 class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
 
     private List<File> createPDFFiles(ICookbook cookbook) {
@@ -27,17 +28,15 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
         return outputPDFFiles;
     }
 
-    private void parseTexFile(File outputTexFile, IRecipe recipe_obj) {
+    private void parseTexFile(File outputTexFile, IRecipe recipe) {
         JLRConverter converter = new JLRConverter(getTemplateDir());
-
-        converter.replace("recipeTitle", recipe_obj.getTitle());
-        converter.replace("ingredientList", recipe_obj.getIngredients());
-        converter.replace("centerHead", recipe_obj.getCategory());
-        converter.replace("referenceNumber", recipe_obj.getCategoryNumber());
-        converter.replace("imgPath", getOutputImage(recipe_obj.getID()).getAbsolutePath());
-        converter.replace("recipeText", recipe_obj.getRecipeText());
+        converter.replace("recipe", recipe);
+        converter.replace("referenceNumber", "refNum"); //TODO: Generate Referencenumber out of Cookbook
+        converter.replace("imgPath", getOutputImage(recipe.getID()).getAbsolutePath());
         try {
-            converter.parse(getTemplateFile(), outputTexFile);
+            if (!converter.parse(getTemplateFile(), outputTexFile)) {
+                System.out.println(converter.getErrorMessage());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,8 +46,13 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
         JLRGenerator generator = new JLRGenerator();
         try {
             if (generator.generate(outputTexFile, getOutputDir(), getParserRootDir())) {
+
                 return getOutputPdfFile(recipe_obj.getID());
+            } else {
+                System.out.println("Generieren Fehlgeschlagen! " + generator.getErrorMessage());
+                return null;
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,13 +62,18 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
     private File getTemplateFile() {
         File template = new File(this.getClass().getClassLoader().getResource(Config.RESSOURCE_PATH + File.separator + Config.TEMPLATE_FOLDER_NAME + File.separator + Config.TEMPLATE_FILE_NAME).getPath());
         File userTemplate = new File(getParserRootDir().getAbsolutePath() + File.separator + Config.TEMPLATE_FOLDER_NAME + File.separator + Config.TEMPLATE_FILE_NAME);
-        if (!userTemplate.exists()) {
-            try {
+
+        try {
+            if (!getTemplateDir().exists()) {
                 Files.createDirectory(getTemplateDir().toPath());
-                Files.copy(template.toPath(), userTemplate.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+        if (!userTemplate.exists()) {
+                Files.copy(template.toPath(), userTemplate.toPath());
+
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return userTemplate;
     }

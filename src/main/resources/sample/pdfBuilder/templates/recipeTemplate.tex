@@ -1,3 +1,7 @@
+
+#set($ingredientList = $recipe.getIngredients())
+
+
 \documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -14,7 +18,7 @@
 %Kopfzeile links bzw. innen
 %\fancyhead[L]{Kai Nortmann \& Christian Zöller}
 %Kopfzeile mittig
-\fancyhead[C]{$centerHead}
+\fancyhead[C]{$recipe.getCategory()}
 %Kopfzeile rechts bzw. außen
 %\fancyhead[R]{\today}
 %Linie oben
@@ -30,14 +34,15 @@
 \renewcommand{\footrulewidth}{0.5pt}
 
 
+
 \begin{document}
-    \section*{$recipeTitle}
+    \section*{$recipe.getTitle()}
 	\begin{minipage}[t]{0.4\textwidth}
 	\subsection*{Zutaten}
 	\begin{itemize}
         #foreach( $key in $ingredientList.keySet() )
             #foreach( $ingreddetail in $ingredientList.get($key).keySet())
-                \item {Key: $key.getName() $ingreddetail $ingredientList.get($key).get($ingreddetail).getName()}
+                \item {$key.getName() $ingreddetail $ingredientList.get($key).get($ingreddetail).getName()}
             #end
         #end
 	\end{itemize}
@@ -48,6 +53,6 @@
         \includegraphics[width=\linewidth]{$imgPath}
     \end{minipage}
     \subsection*{Zubereitung}
-    $recipeText
+    $recipe.getRecipeText()
 
 \end{document}
