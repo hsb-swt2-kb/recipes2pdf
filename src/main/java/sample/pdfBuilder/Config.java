@@ -17,7 +17,8 @@ interface Config {
 
     String OUTPUT_FOLDER_NAME = "output";
     String OUTPUT_FILE_PREFIX = "recipe";
-    String OUTPUT_FILETYPE = ".tex";
+    String OUTPUT_TEX_FILETYPE = ".tex";
+    String OUTPUT_PDF_FILETYPE = ".pdf";
 
     String IMAGE_PREFIX = "image_";
     String IMAGE_FILETYPE = ".jpg";

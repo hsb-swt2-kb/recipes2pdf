@@ -11,9 +11,14 @@ import java.util.TreeMap;
  * Created by kai on 07.04.16.
  */
 public class DummyRecipe implements IRecipe {
-
+    static Long id = new Long(0);
+    private Long myID;
     private String title;
 
+    public DummyRecipe() {
+        id += 1;
+        myID = id;
+    }
     @Override
     public boolean saveIt() {
         return true;
@@ -35,8 +40,9 @@ public class DummyRecipe implements IRecipe {
 
     @Override
     public Long getID() {
-        return new Long(1);
+        return myID;
     }
+
 
     @Override
     public Map<IIngredient, Map<Integer, IUnit>> getIngredients() {

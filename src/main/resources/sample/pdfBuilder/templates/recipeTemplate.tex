@@ -31,9 +31,9 @@
 
 
 \begin{document}
-
+    \section*{$recipeTitle}
 	\begin{minipage}[t]{0.4\textwidth}
-	\textbf{Zutaten}\\
+	\subsection*{Zutaten}
 	\begin{itemize}
         #foreach( $key in $ingredientList.keySet() )
             #foreach( $ingreddetail in $ingredientList.get($key).keySet())
@@ -47,7 +47,7 @@
        \vspace{-2ex}
         \includegraphics[width=\linewidth]{$imgPath}
     \end{minipage}
-    \section*{Zubereitung}
+    \subsection*{Zubereitung}
     $recipeText
 
 \end{document}
