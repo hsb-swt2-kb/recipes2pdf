@@ -5,14 +5,12 @@ import org.junit.After;
 import org.junit.Before;
 import sample.database.Database;
 import sample.database.DatabaseConnection;
-import sample.model.IRecipe;
-import sample.model.activejdbc.Cookbook;
-import sample.model.activejdbc.Ingredient;
-import sample.model.activejdbc.Recipe;
+import sample.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created by czoeller on 30.03.16.
@@ -29,33 +27,93 @@ public class ADatabaseTest {
     }
 
     private void populateSampleData() {
+        createCategories();
+        createDaytimes();
+        createNurtures();
+        createSeasons();
+        createIngredients();
+        createUnits();
+        createRecipes();
+        createCookbooks();
+        createSortlevels();
+    }
+
+    private void createCategories() {
+
+    }
+
+    private void createDaytimes() {
+        String[] defaultDaytimes = {"Frühstück", "Mittag", "Abend"};
+        Stream.of(defaultDaytimes).forEach(name -> {
+            IDaytime daytime = IDaytime.getInstance();
+            daytime.setName(name);
+            daytime.saveIt();
+        });
+    }
+
+    private void createNurtures() {
+        String[] defaultNurtures = {"Low Carb", "vegetarisch", "Vegan", "Winter"};
+        Stream.of(defaultNurtures).forEach(name -> {
+            INurture nurture = INurture.getInstance();
+            nurture.setName(name);
+            nurture.saveIt();
+        });
+    }
+
+    private void createSeasons() {
+        String[] commonSeasons = {"Frühling", "Sommer", "Herbst", "Winter"};
+        Stream.of(commonSeasons).forEach(name -> {
+            ISeason season = ISeason.getInstance();
+            season.setName(name);
+            season.saveIt();
+        });
+    }
+
+    private void createIngredients() {
+        String[] commonIngredients = {"Mehl", "Wasser", "Zucker", "Hefe", "Nudeln", "Paprika"};
+        Stream.of(commonIngredients).forEach(name -> {
+            IIngredient ingredient = IIngredient.getInstance();
+            ingredient.setName(name);
+            ingredient.saveIt();
+        });
+    }
+
+    private void createUnits() {
+        String[] commonUnits = {"kg", "TL"};
+        Stream.of(commonUnits).forEach(unitName -> {
+            IUnit unit = IUnit.getInstance();
+            unit.setName(unitName);
+            unit.saveIt();
+        });
+    }
+
+    private void createRecipes() {
         IRecipe recipe = IRecipe.getInstance();
-        recipe.setTitle("First Recipe");
+        recipe.setTitle("Nudeln mit Soße");
         recipe.saveIt();
+        recipe.add("Nudeln", 500, "g");
+        recipe.add("Paprika", 2, "Stück");
+    }
 
-        List<Recipe> recipeList = Recipe.findAll();
-        recipeList.forEach(System.out::println);
-        Recipe r1 = Recipe.findFirst("title = ?", "First Recipe");
+    private void createCookbooks() {
+        IRecipeRepository recipeRepository = new RecipeRepository();
 
-        Cookbook c = new Cookbook();
-        c.set("title", "A Cookbook").saveIt();
-        Cookbook c1 = Cookbook.findFirst("title = ?", "A Cookbook");
-        c1.add( r1 );
-        c1.saveIt();
+        Optional<IRecipe> nudeln = recipeRepository.findFirst("title = ?", "Nudeln mit Soße");
+        nudeln.orElseThrow(IllegalStateException::new);
 
-        final List<Recipe> allRecipesofC1 = c1.getAll(Recipe.class);
-        allRecipesofC1.forEach(System.out::println);
+        ICookbook cookbook = ICookbook.getInstance();
+        cookbook.setTitle("First Cookbook");
+        cookbook.saveIt();
+        cookbook.addRecipe(nudeln.get());
+    }
 
-        Ingredient ingredient1 = new Ingredient();
-        ingredient1
-            .set("name", "Zucker")
-            .saveIt();
-
-        //RecipeIngredient recipeIngredient = RecipeIngredient.ccreateIt("amount", 3);
-        //recipeIngredient.add(ingredient1);
-        //use one to many notation here:
-        //recipe.add(recipeIngredient);
-        //ingredient1.add(recipeIngredient);
+    private void createSortlevels() {
+        String[] defaultSortlevels = {"Kategorie", "Gerichtart", "Region", "Tageszeit", "Saison", "Ernaehrungsart", "Quelle"};
+        Stream.of(defaultSortlevels).forEach(unitName -> {
+            ISortlevel sortlevel = ISortlevel.getInstance();
+            sortlevel.setName(unitName);
+            sortlevel.saveIt();
+        });
     }
 
     @After

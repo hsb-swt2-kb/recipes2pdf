@@ -25,7 +25,17 @@ public class Ingredient extends Model implements IIngredient {
     }
 
     @Override
+    public long getID() {
+        return getLongId();
+    }
+
+    @Override
     public void add(IRecipeIngredient recipeIngredient) {
         this.add((Model) recipeIngredient);
+    }
+
+    @Override
+    public int compareTo(IIngredient o) {
+        return getLongId().compareTo(o.getID());
     }
 }
