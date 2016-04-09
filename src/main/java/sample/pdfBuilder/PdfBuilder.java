@@ -3,6 +3,8 @@ package sample.pdfBuilder;
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
 import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.util.PDFMergerUtility;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
@@ -68,10 +70,10 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
                 Files.createDirectory(getTemplateDir().toPath());
             }
 
-        if (!userTemplate.exists()) {
+            if (!userTemplate.exists()) {
                 Files.copy(template.toPath(), userTemplate.toPath());
 
-        }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,18 +128,34 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
 
     public File buildPDF(ICookbook cookbook) {
         PDFMergerUtility merger = new PDFMergerUtility();
-        for (File pdfDoc : createPDFFiles(cookbook)) {
-            merger.addSource(pdfDoc);
-        }
-        merger.setDestinationFileName(getOutputDir().getAbsolutePath() + File.separator + "kochbuch.pdf");
+        //merger.setDestinationFileName(getOutputDir().getAbsolutePath() + File.separator + "kochbuch.pdf");
 
+        PDDocument cookbookPDF;
         try {
-            merger.mergeDocuments();
+            cookbookPDF = new PDDocument();
+
+            for (File recipeFile : createPDFFiles(cookbook)) {
+
+                PDDocument recipePDF = PDDocument.load(recipeFile);
+                if (recipePDF.getNumberOfPages() % 2 == 1) {
+                    PDPage firstRecipePage = (PDPage) recipePDF.getDocumentCatalog().getAllPages().get(0);
+                    recipePDF.addPage(new PDPage(firstRecipePage.getMediaBox()));
+                }
+
+                merger.appendDocument(cookbookPDF, recipePDF);
+                recipePDF.close();
+            }
+
+            cookbookPDF.save(getOutputDir().getAbsolutePath() + File.separator + "kochbuch.pdf");
+            cookbookPDF.close();
+
         } catch (IOException e) {
             e.printStackTrace();
+
         } catch (COSVisitorException e) {
             e.printStackTrace();
         }
+
         return new File(getOutputDir().getAbsolutePath() + File.separator + "kochbuch.pdf");
     }
 
