@@ -25,14 +25,14 @@ public class CookbookRepositoryTest extends ADatabaseTest {
     public void getCookbooks() throws Exception {
         final List<ICookbook> cookbooks = cookbookRepository.getAll();
         the(cookbooks).shouldNotBeNull();
-        the(cookbooks.get(0).getTitle()).shouldEqual("A Cookbook");
+        the(cookbooks.get(0).getTitle()).shouldEqual("First Cookbook");
     }
 
     @Test
     public void getCookbookById() throws Exception {
         final Optional<ICookbook> cookbook = cookbookRepository.findById(1);
         cookbook.orElseThrow(IllegalStateException::new);
-        the(cookbook.get().getTitle()).shouldEqual("A Cookbook");
+        the(cookbook.get().getTitle()).shouldEqual("First Cookbook");
     }
 
 }
