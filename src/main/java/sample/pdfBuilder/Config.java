@@ -13,7 +13,7 @@ interface Config {
     String IMAGE_FOLDER_NAME = "images";
 
     String TEMPLATE_FOLDER_NAME = "templates";
-    String TEMPLATE_FILE_NAME = "recipeTemplate.tex";
+    String TEMPLATE_FILE_NAME = "cookbookTemplate.tex";
 
     String OUTPUT_FOLDER_NAME = "output";
     String OUTPUT_FILE_PREFIX = "recipe";

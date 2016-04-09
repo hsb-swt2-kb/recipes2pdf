@@ -11,13 +11,11 @@ import java.util.TreeMap;
  * Created by kai on 07.04.16.
  */
 public class DummyRecipe implements IRecipe {
-    static Long id = new Long(0);
-    private Long myID;
+    static Long id;
     private String title;
 
     public DummyRecipe() {
-        id += 1;
-        myID = id;
+        id = new Long(1);
     }
     @Override
     public boolean saveIt() {
@@ -40,7 +38,7 @@ public class DummyRecipe implements IRecipe {
 
     @Override
     public Long getID() {
-        return myID;
+        return id;
     }
 
 
@@ -75,6 +73,10 @@ public class DummyRecipe implements IRecipe {
 
     @Override
     public String getRecipeText() {
-        return "Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!Dies und das, rühren, fertig!";
+        String text = "";
+        for (int i = 1; i <= 20; i++) {
+            text += "Texstzeile " + i + "\\\\";
+        }
+        return text;
     }
 }

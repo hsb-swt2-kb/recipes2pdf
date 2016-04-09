@@ -14,6 +14,10 @@ public class DummyCookbook implements ICookbook {
     private String title;
     private List<IRecipe> recipeList;
 
+    public DummyCookbook() {
+        recipeList = new ArrayList<>();
+        title = "Das Kochbuch";
+    }
     @Override
     public boolean saveIt() {
         return true;
@@ -36,14 +40,6 @@ public class DummyCookbook implements ICookbook {
 
     @Override
     public List<IRecipe> getRecipes() {
-
-        recipeList = new ArrayList<>();
-
-        for (int i = 1; i <= 10; i++) {
-            IRecipe tempRecipe = IRecipe.getInstance();
-            tempRecipe.setTitle(i + ". Rezept");
-            recipeList.add(tempRecipe);
-        }
         return recipeList;
     }
 

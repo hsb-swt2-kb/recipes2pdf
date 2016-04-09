@@ -1,0 +1,68 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{scrextend} %\ifoddpage
+\usepackage{changepage}
+\usepackage{fancyhdr} %Kopf- und Fußzeile
+\pagestyle{fancy}
+\fancyhf{}
+
+%Kopfzeile links bzw. innen
+%\fancyhead[L]{Kai Nortmann \& Christian Zöller}
+%Kopfzeile rechts bzw. außen
+%\fancyhead[R]{\today}
+%Linie oben
+%Fußzeile mittig
+%\fancyfoot[c]{Labor 1 RS-232-Schnittstelle}
+%Fußzeile gerade rechts
+
+\renewcommand{\footrulewidth}{0.5pt} %Linie unten
+
+\begin{document}
+
+
+    #foreach( $recipe in $cookbook.getRecipes() )
+
+
+
+
+        #set($ingredientList = $recipe.getIngredients())
+        \fancyhead[C]{$recipe.getCategory()} %Kopfzeile mittig
+        \fancyfoot[ol]{Rezept $referenceNumber} %Fußzeile ungerade links
+        \fancyfoot[er]{Rezept $referenceNumber} %Fußzeile gerade links
+
+        \section*{$recipe.getTitle()}
+	    \begin{minipage}[t]{0.4\textwidth}
+	        \subsection*{Zutaten}
+	        \begin{itemize}
+                #foreach( $key in $ingredientList.keySet() )
+                    #foreach( $ingreddetail in $ingredientList.get($key).keySet())
+                        \item {$key.getName() $ingreddetail $ingredientList.get($key).get($ingreddetail).getName()}
+                    #end
+                #end
+	        \end{itemize}
+	    \end{minipage}
+	    \hfill
+        \begin{minipage}[t]{0.4\textwidth}
+            \vspace{-2ex}
+            \includegraphics[width=\linewidth]{${imgDir}/image_${recipe.getID()}_out.jpg}
+        \end{minipage}
+        \subsection*{Zubereitung}
+        $recipe.getRecipeText()\\
+
+        \checkoddpage
+        \ifoddpage
+        	\newpage{}
+       	    \thispagestyle{empty}
+     	    \mbox{}
+     	    \newpage
+       	\else
+       		\newpage{}
+        \fi
+    #end
+\end{document}
