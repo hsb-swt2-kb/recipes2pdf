@@ -16,7 +16,8 @@ public class DummyCookbook implements ICookbook {
 
     public DummyCookbook() {
         recipeList = new ArrayList<>();
-        title = "Das Kochbuch";
+        title = "DasKochbuch";
+
     }
     @Override
     public boolean saveIt() {

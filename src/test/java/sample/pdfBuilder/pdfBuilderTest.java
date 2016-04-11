@@ -13,7 +13,7 @@ import java.io.IOException;
 public class pdfBuilderTest {
     @Test
     public void testPdfBuider() {
-        PdfBuilder builder = new PdfBuilder();
+        PdfBuilder builder = new PdfBuilder(new PdfBuilderConfig());
         ICookbook cookbook = ICookbook.getInstance();
 
         for (int i = 1; i <= 10; i++) {
@@ -26,7 +26,7 @@ public class pdfBuilderTest {
         recipe.setTitle("Mein Rezept");
 
         try {
-            File cookbookPDF = builder.buildPDF(ICookbook.getInstance());
+            File cookbookPDF = builder.buildPDF(cookbook);
 
             File recipePDF = builder.buildPDF(recipe);
         } catch (IOException e) {

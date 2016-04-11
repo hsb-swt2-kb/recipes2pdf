@@ -16,36 +16,35 @@ import java.nio.file.Files;
  * @author Kai Nortmann
  */
 
-class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
+class PdfBuilder implements IPdfBuilder {
 
-//    private List<File> createPDFFiles(ICookbook cookbook) {
-//        ArrayList<File> outputPDFFiles = new ArrayList<>();
-//        for (IRecipe recipe : cookbook.getRecipes()) {
-//            outputPDFFiles.add(buildPDF(recipe));
-//        }
-//        return outputPDFFiles;
-//    }
+
+    private final PdfBuilderConfig config;
+
+    PdfBuilder(PdfBuilderConfig config) {
+        this.config = config;
+    }
 
     private void parseTexFile(File outputTexFile, ICookbook cookbook) throws ConvertTemplatetoTexFailedException, IOException {
-        JLRConverter converter = new JLRConverter(getTemplateDir());
+        JLRConverter converter = new JLRConverter(config.getTemplateDir());
         converter.replace("cookbook", cookbook);
-
+        System.out.println(config.getTemplateDir());
         converter.replace("referenceNumber", "refNum"); //TODO: This is going to be hard to implement with the Template...
-        converter.replace("imgDir", getImageDir().getAbsolutePath());
+        converter.replace("imgDir", config.getImageDir().getAbsolutePath());
         if (!converter.parse(getTemplateFile(), outputTexFile)) {
             throw getConvertFailedException(cookbook, converter); //TODO: Display ErrorMessage in GUI?
         }
     }
 
     private ConvertTemplatetoTexFailedException getConvertFailedException(ICookbook cookbook, JLRConverter converter) {
-        return new ConvertTemplatetoTexFailedException("Convert template to " + getOutputTexFile(cookbook.getTitle()) + " failed! Error Message:\n" + converter.getErrorMessage());
+        return new ConvertTemplatetoTexFailedException("Convert template to " + config.getOutputTexFile(cookbook.getTitle()) + " failed! Error Message:\n" + converter.getErrorMessage());
     }
 
     private File createPDFFile(File outputTexFile, ICookbook cookbook) throws IOException, GeneratePdfFailedException {
 
         JLRGenerator generator = new JLRGenerator();
-        if (generator.generate(outputTexFile, getOutputDir(), getParserRootDir())) {
-            return getOutputPdfFile(cookbook.getTitle());
+        if (generator.generate(outputTexFile, config.getOutputDir(), config.getParserRootDir())) {
+            return config.getOutputPdfFile(cookbook.getTitle());
         } else {
             throw getGeneratePdfFailedException(cookbook, generator);
         }
@@ -53,17 +52,18 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
 
 
     private GeneratePdfFailedException getGeneratePdfFailedException(ICookbook cookbook, JLRGenerator generator) {
-        return new GeneratePdfFailedException("Parse \"" + getOutputTexFile(cookbook.getTitle()) + "\" to \"" + getOutputPdfFile(cookbook.getTitle()) + "\" failed! Error Message:\n" + generator.getErrorMessage());
+        return new GeneratePdfFailedException("Parse \"" + config.getOutputTexFile(cookbook.getTitle()) + "\" to \"" + config.getOutputPdfFile(cookbook.getTitle()) + "\" failed! Error Message:\n" + generator.getErrorMessage());
     }
 
 
+
     private File getTemplateFile() {
-        File template = new File(this.getClass().getClassLoader().getResource(Config.RESSOURCE_PATH + File.separator + Config.TEMPLATE_FOLDER_NAME + File.separator + Config.TEMPLATE_FILE_NAME).getPath());
-        File userTemplate = new File(getParserRootDir().getAbsolutePath() + File.separator + Config.TEMPLATE_FOLDER_NAME + File.separator + Config.TEMPLATE_FILE_NAME);
+        File template = new File(this.getClass().getClassLoader().getResource("sample/pdfBuilder/templates/cookbookTemplate.tex").getPath());
+        File userTemplate = config.getUserTemplate();
 
         try {
-            if (!getTemplateDir().exists()) {
-                Files.createDirectory(getTemplateDir().toPath());
+            if (!config.getTemplateDir().exists()) {
+                Files.createDirectory(config.getTemplateDir().toPath());
             }
 
             if (!userTemplate.exists()) {
@@ -76,48 +76,10 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
         return userTemplate;
     }
 
-    private File getParserRootDir() {
-        return new File(Config.RESSOURCE_USER_PATH);
-    }
-
-    private File getImageDir() {
-        return new File(Config.RESSOURCE_USER_PATH + File.separator + Config.IMAGE_FOLDER_NAME);
-    }
-
-    private File getOutputImage(Long ImageID) {
-        ImageID = new Long(1); //TODO: Just for testing, delete later, when recipes come out of database
-        return new File(Config.RESSOURCE_USER_PATH + File.separator + Config.IMAGE_FOLDER_NAME + File.separator + Config.IMAGE_PREFIX + ImageID + "_out" + Config.IMAGE_FILETYPE);
-    }
-
-    private File getInputImage(Long ImageID) {
-        ImageID = new Long(1); //TODO: Just for testing, delete later, when recipes come out of database
-        return new File(Config.RESSOURCE_USER_PATH + File.separator + Config.IMAGE_FOLDER_NAME + File.separator + Config.IMAGE_PREFIX + ImageID + Config.IMAGE_FILETYPE);
-    }
-
-    private File getTempDir() {
-        return new File(Config.RESSOURCE_USER_PATH + File.separator + Config.TEMP_FOLDER_NAME);
-    }
-
-    private File getTemplateDir() {
-        return new File(Config.RESSOURCE_USER_PATH + File.separator + Config.TEMPLATE_FOLDER_NAME);
-    }
-
-    private File getOutputDir() {
-        return new File(Config.RESSOURCE_USER_PATH + File.separator + Config.OUTPUT_FOLDER_NAME);
-    }
-
-    private File getOutputTexFile(String cookbookName) {
-        return new File(getOutputDir().getAbsolutePath() + File.separator + Config.OUTPUT_FILE_PREFIX + "_" + cookbookName + Config.OUTPUT_TEX_FILETYPE);
-    }
-
-    private File getOutputPdfFile(String cookbookName) {
-        return new File(getOutputDir().getAbsolutePath() + File.separator + Config.OUTPUT_FILE_PREFIX + "_" + cookbookName + Config.OUTPUT_PDF_FILETYPE);
-    }
-
     private void createImage(Long recipeID) {
         try {
-            byte[] img = Files.readAllBytes(getInputImage(recipeID).toPath());
-            FileOutputStream outputStream = new FileOutputStream(getOutputImage(recipeID));
+            byte[] img = Files.readAllBytes(config.getInputImage(recipeID).toPath());
+            FileOutputStream outputStream = new FileOutputStream(config.getOutputImage(recipeID));
             outputStream.write(img);
             outputStream.close();
         } catch (IOException e) {
@@ -128,7 +90,7 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
 
 
     public File buildPDF(ICookbook cookbook) throws IOException, GeneratePdfFailedException, ConvertTemplatetoTexFailedException {
-        File outputTexFile = getOutputTexFile(cookbook.getTitle());
+        File outputTexFile = config.getOutputTexFile(cookbook.getTitle());
         for (IRecipe recipe : cookbook.getRecipes()) {
             createImage(recipe.getID());
         }
@@ -141,7 +103,7 @@ class PdfBuilder implements IPdfBuilder { //TODO: Exceptionhandling
         ICookbook cookbook = ICookbook.getInstance();
         cookbook.addRecipe(recipe);
 
-        File outputTexFile = getOutputTexFile(recipe.getTitle());
+        File outputTexFile = config.getOutputTexFile(recipe.getTitle());
         for (IRecipe tempRecipe : cookbook.getRecipes()) {
             createImage(tempRecipe.getID());
         }
