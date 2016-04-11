@@ -18,6 +18,12 @@ public interface IRecipe {
     void setTitle(String title);
     void add(IRecipeIngredient recipeIngredient);
     void add(String ingredientName, int amount, String unitName);
+
+    /**
+     * Retrieve Map of Ingredients with details amount and unit per ingredient.
+     * @return map
+     */
     Map<IIngredient, Map<Integer, IUnit>> getIngredients();
+
     byte[] getImage();
 }
