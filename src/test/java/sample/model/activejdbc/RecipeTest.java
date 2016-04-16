@@ -16,19 +16,23 @@ public class RecipeTest extends ADatabaseTest {
 
     @Test
     public void testGetIngredients() {
-
         final RecipeRepository recipeRepository = new RecipeRepository();
         final Optional<IRecipe> nudeln = recipeRepository.findFirst("title = ?", "Nudeln mit Soße");
+        nudeln.orElseThrow(IllegalStateException::new);
 
-        final List<String> ingredientNames = nudeln.get()
+        final List<String> ingredientNames = getIngredientsNames(nudeln.get());
+        the(ingredientNames).shouldContain("Nudeln");
+        the(ingredientNames).shouldContain("Paprika");
+        the(ingredientNames).shouldNotContain("Schokolade");
+    }
+
+    private List<String> getIngredientsNames(IRecipe nudeln) {
+        return nudeln
             .getIngredients()
             .keySet()
             .stream()
             .map(iIngredient -> iIngredient.getName())
             .collect(Collectors.toList());
-
-        the(ingredientNames).shouldContain("Nudeln");
-        the(ingredientNames).shouldContain("Paprika");
-        the(ingredientNames).shouldNotContain("Schokolade");
     }
+
 }
