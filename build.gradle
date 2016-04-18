@@ -64,6 +64,7 @@ javafx {
     // Application name and ID presented by target OS
     appID 'HelloWorldApp'
     appName 'Hello World Application'
+    packaging 'none'
 }
 
 jacocoTestReport {
