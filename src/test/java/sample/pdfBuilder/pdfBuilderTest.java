@@ -33,6 +33,7 @@ public class pdfBuilderTest {
             e.printStackTrace();
         } catch (GeneratePdfFailedException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         } catch (ConvertTemplatetoTexFailedException e) {
             e.printStackTrace();
         }

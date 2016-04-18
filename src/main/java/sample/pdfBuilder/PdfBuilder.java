@@ -31,12 +31,12 @@ class PdfBuilder implements IPdfBuilder {
         System.out.println(config.getTemplateDir());
         converter.replace("referenceNumber", "refNum"); //TODO: This is going to be hard to implement with the Template...
         converter.replace("imgDir", config.getImageDir().getAbsolutePath());
-        if (!converter.parse(getTemplateFile(), outputTexFile)) {
+        if (!converter.parse(config.getTemplateFile(), outputTexFile)) {
             throw getConvertFailedException(cookbook, converter); //TODO: Display ErrorMessage in GUI?
         }
     }
 
-    private ConvertTemplatetoTexFailedException getConvertFailedException(ICookbook cookbook, JLRConverter converter) {
+    private ConvertTemplatetoTexFailedException getConvertFailedException(ICookbook cookbook, JLRConverter converter) throws IOException {
         return new ConvertTemplatetoTexFailedException("Convert template to " + config.getOutputTexFile(cookbook.getTitle()) + " failed! Error Message:\n" + converter.getErrorMessage());
     }
 
@@ -51,46 +51,28 @@ class PdfBuilder implements IPdfBuilder {
     }
 
 
-    private GeneratePdfFailedException getGeneratePdfFailedException(ICookbook cookbook, JLRGenerator generator) {
+    private GeneratePdfFailedException getGeneratePdfFailedException(ICookbook cookbook, JLRGenerator generator) throws IOException {
         return new GeneratePdfFailedException("Parse \"" + config.getOutputTexFile(cookbook.getTitle()) + "\" to \"" + config.getOutputPdfFile(cookbook.getTitle()) + "\" failed! Error Message:\n" + generator.getErrorMessage());
     }
 
 
 
-    private File getTemplateFile() {
-        File template = new File(this.getClass().getClassLoader().getResource("sample/pdfBuilder/templates/cookbookTemplate.tex").getPath());
-        File userTemplate = config.getUserTemplate();
-
-        try {
-            if (!config.getTemplateDir().exists()) {
-                Files.createDirectory(config.getTemplateDir().toPath());
-            }
-
-            if (!userTemplate.exists()) {
-                Files.copy(template.toPath(), userTemplate.toPath());
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return userTemplate;
-    }
 
     private void createImage(Long recipeID) {
         try {
-            byte[] img = Files.readAllBytes(config.getInputImage(recipeID).toPath());
+            byte[] img = Files.readAllBytes(config.getInputImage().toPath());
             FileOutputStream outputStream = new FileOutputStream(config.getOutputImage(recipeID));
             outputStream.write(img);
             outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 
     public File buildPDF(ICookbook cookbook) throws IOException, GeneratePdfFailedException, ConvertTemplatetoTexFailedException {
         File outputTexFile = config.getOutputTexFile(cookbook.getTitle());
+
         for (IRecipe recipe : cookbook.getRecipes()) {
             createImage(recipe.getID());
         }
@@ -104,6 +86,7 @@ class PdfBuilder implements IPdfBuilder {
         cookbook.addRecipe(recipe);
 
         File outputTexFile = config.getOutputTexFile(recipe.getTitle());
+
         for (IRecipe tempRecipe : cookbook.getRecipes()) {
             createImage(tempRecipe.getID());
         }
@@ -111,4 +94,6 @@ class PdfBuilder implements IPdfBuilder {
 
         return createPDFFile(outputTexFile, cookbook);
     }
+
+
 }
