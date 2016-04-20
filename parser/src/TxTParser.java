@@ -90,7 +90,7 @@ public class TxTParser extends Parser implements Konstanten
       Double.parseDouble(s);
       
       quanti[0] = s;
-      quanti[1] = sTemp.replaceFirst(s, "");
+      quanti[1] = sTemp.replaceFirst(s, null);
       
       return quanti;
     }
