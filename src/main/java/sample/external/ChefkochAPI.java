@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import sample.model.IRecipe;
 
+import java.io.*;
 import java.util.Optional;
 
 /**
@@ -51,11 +52,22 @@ public class ChefkochAPI {
 
     public Optional<IRecipe> findById(String showID) {
         try {
+            String url = "";
             final JSONObject body = query(RECIPE_DETAIL_API, "ID", showID );
             final JSONArray result = body.getJSONArray("result");
-            final JSONObject list = result.getJSONObject(0);
-            recipe.setTitle( list.getString("rezept_name") );
-            final JSONArray zutaten = list.getJSONArray("rezept_zutaten");
+            final JSONObject jsonRecipe = result.getJSONObject(0);
+            recipe.setTitle(jsonRecipe.getString("rezept_name"));
+
+            final JSONArray rezept_bilder = jsonRecipe.getJSONArray("rezept_bilder");
+            for (int i = 0; i < rezept_bilder.length(); i++) {
+                final JSONObject jsonPictures = rezept_bilder.getJSONObject(i);
+                final JSONObject big = jsonPictures.getJSONObject("big");
+                url = big.getString("file");
+                break;
+            }
+            recipe.setImage(downloadImage(url));
+
+            final JSONArray zutaten = jsonRecipe.getJSONArray("rezept_zutaten");
             for (int i = 0; i < zutaten.length(); i++) {
                 final JSONObject jsonObject = zutaten.getJSONObject(i);
                 recipe.add( jsonObject.getString("name"), jsonObject.getInt("menge"), jsonObject.optString("einheit") );
@@ -66,4 +78,36 @@ public class ChefkochAPI {
         return Optional.of(recipe);
     }
 
+    public byte[] downloadImage(String url) {
+        final HttpResponse<InputStream> inputStreamHttpResponse;
+        try {
+            inputStreamHttpResponse = Unirest.get(url).asBinary();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            while ((bytesRead = inputStreamHttpResponse.getBody().read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
+            }
+            createImage(output.toByteArray()); // TODO REMOVE
+            return output.toByteArray();
+
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new byte[0]; // TODO CHECK
+    }
+
+    private void createImage(byte[] bytes) {
+        File f = new File("out.jpeg");
+        System.out.println(f.getAbsolutePath());
+        try {
+            FileOutputStream outputStream = new FileOutputStream(f);
+            outputStream.write(bytes);
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

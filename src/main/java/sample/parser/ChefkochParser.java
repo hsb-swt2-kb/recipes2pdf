@@ -81,7 +81,7 @@ public class ChefkochParser extends AParser {
      * @param head The html head.
      * @return Optional<Element> meta tag.
      */
-    private Optional<Element> extractMetaElement(Element head) {
+    private Optional<Element> extractMetaElement(final Element head) {
         final Optional<Element> metaElementOpt = head.children().stream()
             .filter(headTag -> headTag.tagName().contains("meta"))
             .filter(headTag -> headTag.attributes().get("property").equals("og:url"))
@@ -97,8 +97,7 @@ public class ChefkochParser extends AParser {
      * @param contentURL The url with id.
      * @return Optional<Element> id.
      */
-    private Optional<String> extractIDFromURL(String contentURL) {
-        // http://www.chefkoch.de/rezepte/1616691268862802/Zucchini-Lasagne.html
+    private Optional<String> extractIDFromURL(final String contentURL) {
         final Predicate<String> notEmpty = (String it) -> !it.isEmpty();
         final BiFunction<String, String, String> currentRecipeNextID = (String current, String next) -> {
             if (current.equals("rezepte")) return next;

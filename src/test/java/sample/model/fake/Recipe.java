@@ -13,6 +13,7 @@ public class Recipe implements IRecipe {
     private Long id = new Long(0);
     private String title;
     private Map<IIngredient, Map<Integer, IUnit>> ingredients = new TreeMap<>();
+    private byte[] image;
 
     @Override
     public boolean saveIt() {
@@ -72,6 +73,11 @@ public class Recipe implements IRecipe {
             text += "Texstzeile " + i + "\\\\";
         }
         return text;
+    }
+
+    @Override
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
 

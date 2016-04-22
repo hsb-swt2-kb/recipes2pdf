@@ -3,7 +3,6 @@ package sample.model;
 import sample.model.activejdbc.Recipe;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by czoeller on 16.04.16.
@@ -27,4 +26,6 @@ public interface IRecipe {
     int getCategoryNumber();
 
     String getRecipeText();
+
+    void setImage(byte[] image);
 }

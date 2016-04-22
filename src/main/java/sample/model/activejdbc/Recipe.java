@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public class Recipe implements IRecipe {
 
+    private byte[] image;
+
     @Override
     public boolean saveIt() {
         return false;
@@ -54,6 +56,11 @@ public class Recipe implements IRecipe {
     @Override
     public String getRecipeText() {
         return null;
+    }
+
+    @Override
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
 }
