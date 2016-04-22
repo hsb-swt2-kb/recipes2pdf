@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import sample.external.ChefkochAPI;
 import sample.model.IRecipe;
+import sample.util.ResourceLoader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,8 +44,7 @@ public class ChefkochParserTest {
         chefkochParser.setChefkochAPI(mockChefkochAPI);
         chefkochParser.setRecipe(fakeRecipe);
 
-        final Path path = Paths.get(getClass().getClassLoader().getResource("sample/parser/ChefkochRecipe.html").getPath());
-        this.exampleRecipeRaw = new String(Files.readAllBytes(path));
+        this.exampleRecipeRaw = ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/ChefkochRecipe.html");
         this.exampleRecipe = chefkochParser.parse(exampleRecipeRaw);
     }
 

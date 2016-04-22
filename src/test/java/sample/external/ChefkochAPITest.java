@@ -8,6 +8,7 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import sample.model.IRecipe;
 import sample.model.fake.Recipe;
+import sample.util.ResourceLoader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,8 +40,8 @@ public class ChefkochAPITest {
     public void setUp() throws Throwable {
         this.chefKochAPI.setRecipe( new Recipe() );
 
-        JSONObject search = readJSON("sample/parser/ChefkochAPISearchResponse.json");
-        JSONObject recipe_detail = readJSON("sample/parser/ChefkochAPIDetailResponse.json");
+        JSONObject search = readJSON("/sample/parser/ChefkochAPISearchResponse.json");
+        JSONObject recipe_detail = readJSON("/sample/parser/ChefkochAPIDetailResponse.json");
         doReturn(search).when(this.chefKochAPI).query(eq(ChefkochAPI.SEARCH_API), any(String.class), eq(EXAMPLE_RECIPE_TITLE));
         doReturn(new JSONObject()).when(this.chefKochAPI).query(eq(ChefkochAPI.RECIPE_DETAIL_API), any(String.class), not(eq(EXAMPLE_RECIPE_TITLE)));
         doReturn(recipe_detail).when(this.chefKochAPI).query(eq(ChefkochAPI.RECIPE_DETAIL_API), any(String.class), eq(EXAMPLE_RECIPE_ID));
@@ -48,9 +49,8 @@ public class ChefkochAPITest {
     }
 
     private JSONObject readJSON(String packagepath) throws IOException {
-        final Path path = Paths.get(getClass().getClassLoader().getResource(packagepath).getPath());
-        final String str = new String(Files.readAllBytes(path));
-        final JSONObject json = new JSONObject(str);
+        final String content = ResourceLoader.loadFileContents(this.getClass(), packagepath);
+        final JSONObject json = new JSONObject(content);
         return json;
     }
 
