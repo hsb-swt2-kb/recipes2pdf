@@ -1,14 +1,15 @@
 package sample.parser;
 
+import one.util.streamex.StreamEx;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.DataNode;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import sample.external.ChefkochAPI;
 import sample.model.IRecipe;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 /**
  * Created by czoeller on 16.04.16.
@@ -43,31 +44,6 @@ public class ChefkochParser extends AParser {
     }
 
     /**
-     * Extracts the <code>showID</code> of a chefkoch recipe.
-     *
-     * @param text The recipe as text
-     * @return The <code>showID</code>
-     */
-    private Optional<String> extractShowID(final String text) {
-        String showID;
-        String needle = "rezept_show_id = ";
-        Document doc = Jsoup.parse(text);
-        Elements scriptTags = doc.getElementsByTag("script");
-        for (Element tag : scriptTags) {
-            for (DataNode node : tag.dataNodes()) {
-                if (node.getWholeData().contains(needle)) {
-                    String line = node.getWholeData();
-                    final int from = line.indexOf(needle) + needle.length();
-                    final int to = line.indexOf(";", from);
-                    showID = line.substring(from, to).replace("'", "").trim();
-                    return Optional.of(showID);
-                }
-            }
-        }
-        return Optional.empty();
-    }
-
-    /**
      * The parser accepts recipes with <code>chefkoch</code>(case insensitive) in the recipe text.
      * Improvement note: It might be specified by scanning the html title attribute to avoid false positives.
      *
@@ -78,4 +54,64 @@ public class ChefkochParser extends AParser {
     public boolean accepts(final String text) {
         return text.contains("chefkoch");
     }
+
+    /**
+     * Extracts the <code>showID</code> of a chefkoch recipe in html format.
+     *
+     * @param text The recipe as text
+     * @return The <code>showID</code>
+     */
+    private Optional<String> extractShowID(final String text) {
+        final Document doc = Jsoup.parse(text);
+        final Element head = doc.getElementsByTag("head").first();
+
+        final Optional<Element> metaElementOpt = extractMetaElement(head);
+        final Element metaElement = metaElementOpt.orElseThrow(() -> new IllegalStateException("Could not find meta tag to retrieve id from."));
+        final String contentURL = metaElement.attr("content");
+
+        final Optional<String> showID = extractIDFromURL(contentURL);
+        showID.orElseThrow(() -> new IllegalStateException("Could not retrieve id. Maybe html structure changed."));
+        return showID;
+    }
+
+    /**
+     * Extract meta element with url from head element.
+     *
+     * E.g. <meta property="og:url" content="http://www.chefkoch.de/rezepte/1616691268862802/Zucchini-Lasagne.html" />
+     * @param head The html head.
+     * @return Optional<Element> meta tag.
+     */
+    private Optional<Element> extractMetaElement(Element head) {
+        final Optional<Element> metaElementOpt = head.children().stream()
+            .filter(headTag -> headTag.tagName().contains("meta"))
+            .filter(headTag -> headTag.attributes().get("property").equals("og:url"))
+            .findFirst();
+        return metaElementOpt;
+    }
+
+    /**
+     * Extract the showID from url.
+     *
+     * Since the prefix of the <code>showID</code> is <code>rezepteurl</code> we can parse the url segments.
+     * http://www.chefkoch.de/rezepte/1616691268862802/Zucchini-Lasagne.html
+     * @param contentURL The url with id.
+     * @return Optional<Element> id.
+     */
+    private Optional<String> extractIDFromURL(String contentURL) {
+        // http://www.chefkoch.de/rezepte/1616691268862802/Zucchini-Lasagne.html
+        final Predicate<String> notEmpty = (String it) -> !it.isEmpty();
+        final BiFunction<String, String, String> currentRecipeNextID = (String current, String next) -> {
+            if (current.equals("rezepte")) return next;
+            return "";
+        };
+        final String[] segments = contentURL.split("/");
+
+        final Optional<String> firstOpt = StreamEx.of(segments)
+            .pairMap(currentRecipeNextID)
+            .filter(notEmpty)
+            .findFirst();
+
+        return firstOpt;
+    }
+
 }
