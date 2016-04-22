@@ -9,9 +9,6 @@ import sample.external.ChefkochAPI;
 import sample.model.IRecipe;
 import sample.util.ResourceLoader;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 import static org.javalite.test.jspec.JSpec.the;
@@ -37,8 +34,8 @@ public class ChefkochParserTest {
 
     @Before
     public void setUp() throws Throwable {
-        when(mockChefkochAPI.search(any(String.class))).thenReturn(Optional.ofNullable(EXAMPLE_RECIPE_ID));
-        when(mockChefkochAPI.findById(any(String.class))).thenReturn(Optional.ofNullable(fakeRecipe));
+        when(mockChefkochAPI.search(any(String.class))).thenReturn(Optional.of(EXAMPLE_RECIPE_ID));
+        when(mockChefkochAPI.findById(any(String.class))).thenReturn(Optional.of(fakeRecipe));
 
         this.chefkochParser = new ChefkochParser();
         chefkochParser.setChefkochAPI(mockChefkochAPI);

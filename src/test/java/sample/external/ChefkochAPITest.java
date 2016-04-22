@@ -10,10 +10,6 @@ import sample.model.IRecipe;
 import sample.model.fake.Recipe;
 import sample.util.ResourceLoader;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +44,7 @@ public class ChefkochAPITest {
         doReturn(new JSONObject()).when(this.chefKochAPI).query(eq(ChefkochAPI.RECIPE_DETAIL_API), any(String.class), not(eq(EXAMPLE_RECIPE_ID)));
     }
 
-    private JSONObject readJSON(String packagepath) throws IOException {
+    private JSONObject readJSON(String packagepath) {
         final String content = ResourceLoader.loadFileContents(this.getClass(), packagepath);
         final JSONObject json = new JSONObject(content);
         return json;
@@ -77,13 +73,13 @@ public class ChefkochAPITest {
     public void theParsedRecipeHasProperIngredients() {
         final Optional<String> showID = chefKochAPI.search(EXAMPLE_RECIPE_TITLE);
         final Optional<IRecipe> recipe = chefKochAPI.findById( showID.get() );
-        final List<String> ingredientNames = extractTitles(recipe.get());
+        final List<String> ingredientNames = extractIngredientNames(recipe.get());
         the(ingredientNames).shouldContain("Zucchini");
         the(ingredientNames).shouldContain("Hackfleisch");
         the(ingredientNames).shouldContain("Zwiebel(n)");
     }
 
-    List<String> extractTitles(IRecipe recipe) {
+    List<String> extractIngredientNames(IRecipe recipe) {
         return recipe
             .getIngredients()
             .keySet()

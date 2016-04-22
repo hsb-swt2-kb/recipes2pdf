@@ -106,12 +106,12 @@ public class ChefkochParser extends AParser {
         };
         final String[] segments = contentURL.split("/");
 
-        final Optional<String> firstOpt = StreamEx.of(segments)
+        final Optional<String> showIDOpt = StreamEx.of(segments)
             .pairMap(currentRecipeNextID)
             .filter(notEmpty)
             .findFirst();
 
-        return firstOpt;
+        return showIDOpt;
     }
 
 }
