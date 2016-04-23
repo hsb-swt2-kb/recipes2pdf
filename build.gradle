@@ -36,6 +36,7 @@ task initSourceFolders { // add << before { to prevent executing during configur
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.13'
+    compile 'org.slf4j:slf4j-simple:1.7.13'
     compile group: 'org.javalite', name: 'activejdbc', version: '1.4.11'
     compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
     compile 'org.jsoup:jsoup:1.8.3'

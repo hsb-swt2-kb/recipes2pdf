@@ -3,12 +3,17 @@ package sample.external;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.model.IRecipe;
+import sample.util.Image;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
 import java.util.Optional;
 
 /**
@@ -18,6 +23,7 @@ public class ChefkochAPI {
 
     public static final String SEARCH_API = "http://api.chefkoch.de/api/1.0/api-recipe-search.php";
     public static final String RECIPE_DETAIL_API = "http://api.chefkoch.de/api/1.0/api-recipe.php";
+    final Logger LOG = LoggerFactory.getLogger(this.getClass());
     private IRecipe recipe;
 
     public ChefkochAPI() {
@@ -45,7 +51,7 @@ public class ChefkochAPI {
                 rezeptShowID = jsonObject.getString("RezeptShowID");
             }
         } catch (UnirestException e) {
-            e.printStackTrace();
+            LOG.error("Error while searching API.", e);
         }
         return Optional.ofNullable(rezeptShowID);
     }
@@ -65,7 +71,7 @@ public class ChefkochAPI {
                 url = big.getString("file");
                 break;
             }
-            recipe.setImage(downloadImage(url));
+            downloadAndSetImage(url);
 
             final JSONArray zutaten = jsonRecipe.getJSONArray("rezept_zutaten");
             for (int i = 0; i < zutaten.length(); i++) {
@@ -73,41 +79,29 @@ public class ChefkochAPI {
                 recipe.add( jsonObject.getString("name"), jsonObject.getInt("menge"), jsonObject.optString("einheit") );
             }
         } catch (UnirestException e) {
-            e.printStackTrace();
+            LOG.error("Error while retrieving recipe details from API.", e);
         }
         return Optional.of(recipe);
     }
 
-    public byte[] downloadImage(String url) {
-        final HttpResponse<InputStream> inputStreamHttpResponse;
-        try {
-            inputStreamHttpResponse = Unirest.get(url).asBinary();
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            while ((bytesRead = inputStreamHttpResponse.getBody().read(buffer)) != -1) {
-                output.write(buffer, 0, bytesRead);
+    void downloadAndSetImage(String url) {
+        Unirest.get(url).asBinaryAsync(new Callback<InputStream>() {
+            @Override
+            public void completed(HttpResponse<InputStream> inputStreamHttpResponse) {
+                final Image image = new Image(inputStreamHttpResponse.getBody());
+                byte[] bytes = image.getBytes();
+                recipe.setImage(bytes);
             }
-            createImage(output.toByteArray()); // TODO REMOVE
-            return output.toByteArray();
 
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new byte[0]; // TODO CHECK
-    }
+            @Override
+            public void failed(UnirestException e) {
+                LOG.error("Download of image failed.", e);
+            }
 
-    private void createImage(byte[] bytes) {
-        File f = new File("out.jpeg");
-        System.out.println(f.getAbsolutePath());
-        try {
-            FileOutputStream outputStream = new FileOutputStream(f);
-            outputStream.write(bytes);
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void cancelled() {
+                LOG.error("Download of image cancelled.");
+            }
+        });
     }
 }

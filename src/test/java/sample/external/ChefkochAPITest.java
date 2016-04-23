@@ -18,6 +18,7 @@ import static org.javalite.test.jspec.JSpec.the;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
 /**
@@ -38,6 +39,7 @@ public class ChefkochAPITest {
 
         JSONObject search = readJSON("/sample/parser/ChefkochAPISearchResponse.json");
         JSONObject recipe_detail = readJSON("/sample/parser/ChefkochAPIDetailResponse.json");
+        doNothing().when(this.chefKochAPI).downloadAndSetImage(any(String.class));
         doReturn(search).when(this.chefKochAPI).query(eq(ChefkochAPI.SEARCH_API), any(String.class), eq(EXAMPLE_RECIPE_TITLE));
         doReturn(new JSONObject()).when(this.chefKochAPI).query(eq(ChefkochAPI.RECIPE_DETAIL_API), any(String.class), not(eq(EXAMPLE_RECIPE_TITLE)));
         doReturn(recipe_detail).when(this.chefKochAPI).query(eq(ChefkochAPI.RECIPE_DETAIL_API), any(String.class), eq(EXAMPLE_RECIPE_ID));
