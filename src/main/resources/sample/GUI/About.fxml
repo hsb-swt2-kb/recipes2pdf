@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="293.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUI.ControllerAbout">
+   <children>
+      <TextArea editable="false" prefHeight="134.0" prefWidth="293.0" promptText="Die Receipes2PDF-Software wurde im Rahmen des Softwaretechnik II - Projektes von Henrik Gießel, Markus Kluge, Kai Nortmann ,Christian Zöller, Tobias Stelter, Dany Khaddaj und Florian Pfennig erstellt. " text="Die Receipes2PDF-Software wurde im Rahmen des Softwaretechnik II - Projektes von Henrik Gießel, Markus Kluge, Kai Nortmann ,Christian Zöller, Tobias Stelter, Dany Khaddaj und Florian Pfennig erstellt. " wrapText="true" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="closeButton" layoutX="220.0" layoutY="141.0" mnemonicParsing="false" onAction="#closeAbout" text="Schließen" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="6.0" />
+   </children>
+</AnchorPane>

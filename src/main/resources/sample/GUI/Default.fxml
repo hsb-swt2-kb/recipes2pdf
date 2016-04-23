@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUI.ControllerDefault">
+    <children>
+        <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Programm">
+                    <items>
+                        <MenuItem fx:id="endMenuItem" mnemonicParsing="false" onAction="#endProgramm" text="Beenden" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Kochbuch">
+                    <items>
+                        <MenuItem fx:id="addCookBook" mnemonicParsing="false" onAction="#addCookBook" text="Hinzufuegen" />
+                        <MenuItem fx:id="manageCookBook" mnemonicParsing="false" onAction="#manageCookBook" text="Verwalten" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Rezept">
+                    <items>
+                        <MenuItem fx:id="addReceipe" mnemonicParsing="false" onAction="#addReceipe" text="Hinzufuegen" />
+                        <MenuItem fx:id="manageReceipe" mnemonicParsing="false" onAction="#manageReceipe" text="Verwalten" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Hilfe">
+                    <items>
+                        <MenuItem fx:id="openHelp" mnemonicParsing="false" onAction="#openHelp" text="Hilfe" />
+                        <MenuItem fx:id="openAbout" mnemonicParsing="false" onAction="#openAbout" text="Über" />
+                    </items>
+                </Menu>
+            </menus>
+            <contextMenu>
+                <ContextMenu>
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                    </items>
+                </ContextMenu>
+            </contextMenu>
+        </MenuBar>
+      <AnchorPane fx:id="content" layoutY="25.0" prefHeight="373.0" prefWidth="600.0" />
+    </children>
+</AnchorPane>
