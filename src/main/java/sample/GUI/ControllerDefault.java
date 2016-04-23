@@ -1,9 +1,8 @@
 package sample.GUI;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.event.*;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -40,13 +39,16 @@ public class ControllerDefault {
         private MenuItem openAbout;
 
         void changeLayout(String fxml) throws Exception {
-        //change content through new FXML-File
-        AnchorPane myPane = (AnchorPane)FXMLLoader.load(getClass().getResource(fxml));
-        content.getChildren().clear();
-        //Set Constrains Back to the defaults
-        content.setTopAnchor(myPane, 25.0); content.setBottomAnchor(myPane, 2.0); content.setRightAnchor(myPane, 0.0); content.setLeftAnchor(myPane, 0.0);
-        content.getChildren().add(myPane);
-         }
+            //Pane (Content) durch anderes Pane in anderer FXML ersetzten
+            Parent newContent = FXMLLoader.load(getClass().getResource(fxml));
+
+            //Set Constrains Back to the defaults
+            content.setTopAnchor(newContent, 25.0);
+            content.setBottomAnchor(newContent, 2.0);
+            content.setRightAnchor(newContent, 0.0);
+            content.setLeftAnchor(newContent, 0.0);
+            content.getChildren().setAll(newContent);
+        }
 
         @FXML
         void addCookBook(ActionEvent event) throws Exception {
