@@ -44,6 +44,6 @@
                 </ContextMenu>
             </contextMenu>
         </MenuBar>
-      <AnchorPane fx:id="content" layoutY="25.0" prefHeight="373.0" prefWidth="600.0" />
+      <AnchorPane fx:id="content" layoutY="25.0" prefHeight="373.0" prefWidth="600.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
     </children>
 </AnchorPane>

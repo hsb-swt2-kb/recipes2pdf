@@ -15,8 +15,9 @@ public class Main extends Application {
         Parent root = (Parent) loader.load();
         ControllerDefault ctrl = loader.getController();
 
-        primaryStage.setTitle("Receipes2PDF");
+        primaryStage.setTitle("Recipes2PDF");
         primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setResizable(true);
         primaryStage.show();
 
         //Sets the default Pane in the default Controller

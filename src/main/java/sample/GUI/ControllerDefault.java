@@ -3,11 +3,11 @@ package sample.GUI;
 import javafx.fxml.FXML;
 import javafx.event.*;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -40,9 +40,11 @@ public class ControllerDefault {
         private MenuItem openAbout;
 
         void changeLayout(String fxml) throws Exception {
-        //Pane (Content) durch anderes Pane in anderer FXML ersetzten
+        //change content through new FXML-File
         AnchorPane myPane = (AnchorPane)FXMLLoader.load(getClass().getResource(fxml));
         content.getChildren().clear();
+        //Set Constrains Back to the defaults
+        content.setTopAnchor(myPane, 25.0); content.setBottomAnchor(myPane, 2.0); content.setRightAnchor(myPane, 0.0); content.setLeftAnchor(myPane, 0.0);
         content.getChildren().add(myPane);
          }
 
@@ -65,7 +67,7 @@ public class ControllerDefault {
         @FXML
         void addReceipe(ActionEvent event) throws Exception {
             //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-            changeLayout("/sample/GUI/AddReceipe.fxml");
+            changeLayout("/sample/GUI/AddRecipe.fxml");
         }
 
         @FXML
