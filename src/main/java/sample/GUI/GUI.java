@@ -1,4 +1,4 @@
-package sample.GUI;
+package sample.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class Main extends Application {
+public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -19,7 +19,7 @@ public class Main extends Application {
         final ResourceBundle locale_bundle = ResourceBundle.getBundle("bundles/locale", Locale.getDefault());
         loader.setResources(locale_bundle);
         Parent root = (Parent) loader.load();
-        sample.GUI.ControllerDefault ctrl = loader.getController();
+        sample.gui.ControllerDefault ctrl = loader.getController();
 
         primaryStage.setTitle("Recipes2PDF");
         primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/sample/GUI/icon_bg_small.png" )));
@@ -32,8 +32,8 @@ public class Main extends Application {
 
     }
 
-    public static void main(String[] args) throws Exception{
-        launch(args);
+    public void start() {
+        launch();
     }
 }
 

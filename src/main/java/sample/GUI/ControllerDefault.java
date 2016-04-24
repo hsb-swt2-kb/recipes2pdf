@@ -1,4 +1,4 @@
-package sample.GUI;
+package sample.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="293.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUI.ControllerAbout">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="293.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.ControllerAbout">
    <children>
       <TextArea editable="false" prefHeight="134.0" prefWidth="293.0" promptText="Die Receipes2PDF-Software wurde im Rahmen des Softwaretechnik II - Projektes von Henrik Gießel, Markus Kluge, Kai Nortmann ,Christian Zöller, Tobias Stelter, Dany Khaddaj und Florian Pfennig erstellt. " text="Die Receipes2PDF-Software wurde im Rahmen des Softwaretechnik II - Projektes von Henrik Gießel, Markus Kluge, Kai Nortmann ,Christian Zöller, Tobias Stelter, Dany Khaddaj und Florian Pfennig erstellt. " wrapText="true" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <font>
