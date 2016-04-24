@@ -1,6 +1,5 @@
 package sample.model.activejdbc;
 
-import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
@@ -8,6 +7,7 @@ import org.javalite.activejdbc.annotations.Many2Many;
 import org.javalite.activejdbc.annotations.Table;
 import sample.model.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -157,6 +157,9 @@ public class Recipe extends Model implements IRecipe {
         this.add((Model) recipeIngredient);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void add(String ingredientName, int amount, String unitName) {
         IIngredientRepository ingredientRepository = new IngredientRepository();
@@ -178,12 +181,15 @@ public class Recipe extends Model implements IRecipe {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<IIngredient, Map<Integer, IUnit>> getIngredients() {
         Map<IIngredient, Map<Integer, IUnit>> map = new TreeMap<>();
         Map<Integer, IUnit> innerMap = new TreeMap<>();
 
-        final LazyList<RecipeIngredient> recipeIngredients = this.getAll(RecipeIngredient.class);
+        final List<RecipeIngredient> recipeIngredients = this.getAll(RecipeIngredient.class);
 
         for( RecipeIngredient recipeIngredient : recipeIngredients ) {
             final IIngredient ingredient = recipeIngredient.parent(Ingredient.class);
