@@ -14,7 +14,7 @@ public class UnitRepository implements IUnitRepository {
     @Override
     public List<IUnit> getAll() {
         List<IUnit> list = new ArrayList<>();
-        list.addAll(Cookbook.findAll());
+        list.addAll(Unit.findAll());
         return list;
     }
 

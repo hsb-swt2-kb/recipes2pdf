@@ -13,7 +13,7 @@ import java.util.Optional;
 class CookbookRepository implements ICookbookRepository<ICookbook> {
     @Override
     public List<ICookbook> getAll() {
-        List<ICookbook> list= new ArrayList<>();
+        List<ICookbook> list = new ArrayList<>();
         list.addAll( Cookbook.findAll() );
         return list;
     }
