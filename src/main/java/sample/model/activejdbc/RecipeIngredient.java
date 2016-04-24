@@ -11,8 +11,4 @@ import sample.model.IRecipeIngredient;
 @Table("recipe_ingredient")
 @BelongsTo(foreignKeyName = "unit_id", parent = Unit.class)
 public class RecipeIngredient extends Model implements IRecipeIngredient {
-    @Override
-    public RecipeIngredient ccreateIt(Object... namesAndValues) {
-        return RecipeIngredient.createIt(namesAndValues);
-    }
 }

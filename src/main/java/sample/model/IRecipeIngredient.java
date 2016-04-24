@@ -9,5 +9,4 @@ public interface IRecipeIngredient {
     static IRecipeIngredient getInstance() {
         return new RecipeIngredient();
     }
-    IRecipeIngredient ccreateIt(Object... namesAndValues);
 }
