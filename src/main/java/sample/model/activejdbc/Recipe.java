@@ -32,6 +32,127 @@ public class Recipe extends Model implements IRecipe {
     }
 
     @Override
+    public long getID() {
+        return this.getLongId();
+    }
+
+    public void setTitle(String title) {
+        setString("title", title);
+    }
+
+    public String getTitle() {
+        return getString("title");
+    }
+
+    @Override
+    public void setText(String text) {
+        setString("text", text);
+    }
+
+    @Override
+    public String getText() {
+        return getString("text");
+    }
+
+    @Override
+    public void setPortions(int portions) {
+        setInteger("portions", portions);
+    }
+
+    @Override
+    public int getPortions() {
+        return getInteger("portions");
+    }
+
+    @Override
+    public void setDuration(int duration) {
+        setInteger("duration", duration);
+    }
+
+    @Override
+    public int getDuration() {
+        return getInteger("duration");
+    }
+
+    public void setImage(byte[] image) {
+        set("image", image);
+    }
+
+    public byte[] getImage() {
+        return getBytes("image");
+    }
+
+    @Override
+    public void setCalories(int calories) {
+        setInteger("calories", calories);
+    }
+
+    @Override
+    public int getCalories() {
+        return getInteger("calories");
+    }
+
+    @Override
+    public void setCategory(ICategory category) {
+        ((Model) category).add(this);
+    }
+
+    @Override
+    public ICategory getCategory() {
+        return parent(Category.class);
+    }
+
+    @Override
+    public void setCourse(ICourse course) {
+        ((Model) course).add(this);
+    }
+
+    @Override
+    public ICourse getCourse() {
+        return parent(Course.class);
+    }
+
+    @Override
+    public void setRegion(IRegion region) {
+        ((Model) region).add(this);
+    }
+
+    @Override
+    public IRegion getRegion() {
+        return parent(Region.class);
+    }
+
+    @Override
+    public void setDaytime(IDaytime daytime) {
+        ((Model) daytime).add(this);
+    }
+
+    @Override
+    public IDaytime getDaytime() {
+        return parent(Daytime.class);
+    }
+
+    @Override
+    public void setSeason(ISeason season) {
+        ((Model) season).add(this);
+    }
+
+    @Override
+    public ISeason getSeason() {
+        return parent(Season.class);
+    }
+
+    @Override
+    public void setNurture(INurture nurture) {
+        ((Model) nurture).add(this);
+    }
+
+    @Override
+    public INurture getNurture() {
+        return parent(Nurture.class);
+    }
+
+    @Override
     public void add(IRecipeIngredient recipeIngredient) {
         this.add((Model) recipeIngredient);
     }
@@ -74,25 +195,5 @@ public class Recipe extends Model implements IRecipe {
 
         return map;
     }
-
-    @Override
-    public byte[] getImage() {
-        return getBytes("image");
-    }
-
-
-    public String getTitle() {
-        return getString("title");
-    }
-
-    public void setTitle(String title) {
-        set("title", title);
-    }
-
-    @Override
-    public long getID() {
-        return this.getLongId();
-    }
-
 
 }

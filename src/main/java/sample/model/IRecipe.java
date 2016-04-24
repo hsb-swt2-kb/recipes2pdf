@@ -1,6 +1,6 @@
 package sample.model;
 
-import sample.model.activejdbc.Recipe;
+import sample.model.activejdbc.*;
 
 import java.util.Map;
 
@@ -13,10 +13,65 @@ public interface IRecipe {
     }
 
     boolean saveIt();
-    String getTitle();
     long getID();
+
+    String getTitle();
     void setTitle(String title);
+
+    void setText(String text);
+
+    String getText();
+
+    void setPortions(int portions);
+
+    int getPortions();
+
+    void setDuration(int duration);
+
+    int getDuration();
+
+    void setImage(byte[] image);
+
+    byte[] getImage();
+
+    void setCalories(int calories);
+
+    int getCalories();
+
+    void setCategory(ICategory category);
+
+    ICategory getCategory();
+
+    void setCourse(ICourse course);
+
+    ICourse getCourse();
+
+    void setRegion(IRegion region);
+
+    IRegion getRegion();
+
+    void setDaytime(IDaytime daytime);
+
+    IDaytime getDaytime();
+
+    void setSeason(ISeason season);
+
+    ISeason getSeason();
+
+    void setNurture(INurture nurture);
+
+    INurture getNurture();
+
     void add(IRecipeIngredient recipeIngredient);
+
+    /**
+     * Add ingredient with amount and unit.
+     * This is a convenience method that creates missing entities on the fly.
+     *
+     * @param ingredientName the name of ingredient
+     * @param amount amount of ingredient
+     * @param unitName name of the unit
+     */
     void add(String ingredientName, int amount, String unitName);
 
     /**
@@ -24,6 +79,4 @@ public interface IRecipe {
      * @return map
      */
     Map<IIngredient, Map<Integer, IUnit>> getIngredients();
-
-    byte[] getImage();
 }
