@@ -9,8 +9,8 @@ import sample.model.IRecipe;
 public interface IParser {
 
     /**
-     * Parse a recipe text in
-     * @param text The recipe as text
+     * Parse a recipe text to recipe.
+     * @param text The recipe as text. E.g. plain text or html etc.
      * @return IRecipe The populated IRecipe
      * @throws Exception The parse should throw Exceptions appropriately.
      */
@@ -18,7 +18,7 @@ public interface IParser {
 
     /**
      * Decide whether the parser is responsible for this kind of recipe or not.
-     * @param text The recipe as text
+     * @param text The recipe as text.
      * @return true if accepts
      */
     boolean accepts(String text);
