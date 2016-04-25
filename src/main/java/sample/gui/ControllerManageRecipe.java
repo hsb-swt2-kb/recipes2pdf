@@ -14,7 +14,7 @@ public class ControllerManageRecipe {
     private Button export2pdfButton;
 
     @FXML
-    void export2pdf(ActionEvent event) throws Exception {
+    void export2pdf(ActionEvent event) {
         ControllerDefault controllerDefault = new ControllerDefault();
         controllerDefault.newWindow("/sample/GUI/ExportCookBook.fxml");
 
