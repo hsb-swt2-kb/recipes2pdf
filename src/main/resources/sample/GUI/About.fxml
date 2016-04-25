@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -7,15 +12,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="206.0" prefWidth="294.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.ControllerAbout">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="289.0"
+            prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.gui.ControllerAbout">
    <children>
-      <VBox alignment="BASELINE_CENTER" />
-      <Button fx:id="closeButton" layoutX="201.0" layoutY="165.0" mnemonicParsing="false" onAction="#closeAbout" text="Schließen" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-      <Text layoutX="14.0" layoutY="116.0" strokeWidth="0.0" text="Developed by Henrik Gießel, Markus Kluge, Kai Nortmann, Christian Zöller, Tobias Stelter, Dany Khaddaj und Florian. " wrappingWidth="266.0" />
-      <ImageView fitHeight="96.0" fitWidth="96.0" layoutX="99.0" preserveRatio="true" smooth="false">
+       <ImageView fitHeight="80.0" fitWidth="78.0" layoutX="126.0" layoutY="14.0" preserveRatio="true" smooth="false"
+                  AnchorPane.leftAnchor="126.0" AnchorPane.rightAnchor="126.0">
          <image>
             <Image url="@icon_bg.png" />
          </image>
       </ImageView>
+       <Button fx:id="closeButton" layoutX="201.0" layoutY="165.0" mnemonicParsing="false" onAction="#closeAbout"
+               text="Schließen" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0"/>
+       <TextArea editable="false" layoutX="14.0" layoutY="103.0" prefHeight="61.0" prefWidth="266.0"
+                 promptText="Developed by Henrik Gießel, Markus Kluge, Kai Nortmann, Christian Zöller, Tobias Stelter, Dany Khaddaj und Florian. "
+                 text="Developed by Henrik Gießel, Markus Kluge, Kai Nortmann, Christian Zöller, Tobias Stelter, Dany Khaddaj und Florian. "
+                 wrapText="true" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="14.0"
+                 AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="103.0"/>
    </children>
 </AnchorPane>
