@@ -1,11 +1,9 @@
-package sample.pdfBuilder;
+package sample.converter;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
-import sample.pdfBuilder.exceptions.ConvertTemplatetoTexFailedException;
-import sample.pdfBuilder.exceptions.GeneratePdfFailedException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,38 +27,27 @@ class Converter implements IConverter {
         this.config = new ConverterConfig();
     }
 
-    private void parseTexFile(File outputTexFile, ICookbook cookbook) throws ConvertTemplatetoTexFailedException, IOException {
+    private void parseTexFile(File outputTexFile, ICookbook cookbook) throws IOException {
         JLRConverter converter = new JLRConverter(config.getTemplateDir());
         converter.replace("cookbook", cookbook);
         System.out.println(config.getTemplateDir());
         converter.replace("referenceNumber", "refNum"); //TODO: Generate Referencenumber out of cookbook refnum-rule (but how?)
         converter.replace("imgDir", config.getImageDir().getAbsolutePath());
         if (!converter.parse(config.getTemplateFile(), outputTexFile)) {
-            throw getConvertFailedException(cookbook, converter); //TODO: Display ErrorMessage in GUI?
+            new Exception("Convert template to " + config.getOutputTexFile(cookbook.getTitle()) + " failed! Error Message:\n" + converter.getErrorMessage()); //TODO: Display ErrorMessage in GUI?
         }
     }
 
-    private ConvertTemplatetoTexFailedException getConvertFailedException(ICookbook cookbook, JLRConverter converter) throws IOException {
-        return new ConvertTemplatetoTexFailedException("Convert template to " + config.getOutputTexFile(cookbook.getTitle()) + " failed! Error Message:\n" + converter.getErrorMessage());
-    }
-
-    private File createPDFFile(File outputTexFile, ICookbook cookbook) throws IOException, GeneratePdfFailedException {
+    private File createPDFFile(File outputTexFile, ICookbook cookbook) throws Exception {
 
         JLRGenerator generator = new JLRGenerator();
         if (generator.generate(outputTexFile, config.getOutputDir(), config.getParserRootDir())) {
             return config.getOutputPdfFile(cookbook.getTitle());
         } else {
-            throw getGeneratePdfFailedException(cookbook, generator);
+            throw new Exception("Parse \"" + config.getOutputTexFile(cookbook.getTitle()) + "\" to \"" + config.getOutputPdfFile(cookbook.getTitle()) + "\" failed! Error Message:\n" + generator.getErrorMessage());
+
         }
     }
-
-
-    private GeneratePdfFailedException getGeneratePdfFailedException(ICookbook cookbook, JLRGenerator generator) throws IOException {
-        return new GeneratePdfFailedException("Parse \"" + config.getOutputTexFile(cookbook.getTitle()) + "\" to \"" + config.getOutputPdfFile(cookbook.getTitle()) + "\" failed! Error Message:\n" + generator.getErrorMessage());
-    }
-
-
-
 
     private void createImage(Long recipeID) {
         try {
@@ -74,7 +61,7 @@ class Converter implements IConverter {
     }
 
 
-    public File buildPDF(ICookbook cookbook) throws IOException, GeneratePdfFailedException, ConvertTemplatetoTexFailedException {
+    public File buildPDF(ICookbook cookbook) throws Exception {
         File outputTexFile = config.getOutputTexFile(cookbook.getTitle());
 
         for (IRecipe recipe : cookbook.getRecipes()) {
@@ -85,7 +72,7 @@ class Converter implements IConverter {
         return createPDFFile(outputTexFile, cookbook);
     }
 
-    public File buildPDF(IRecipe recipe) throws ConvertTemplatetoTexFailedException, IOException, GeneratePdfFailedException {
+    public File buildPDF(IRecipe recipe) throws Exception {
         ICookbook cookbook = ICookbook.getInstance();
         cookbook.addRecipe(recipe);
 

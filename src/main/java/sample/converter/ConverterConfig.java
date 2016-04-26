@@ -1,4 +1,4 @@
-package sample.pdfBuilder;
+package sample.converter;
 
 import sample.config.IConfig;
 
