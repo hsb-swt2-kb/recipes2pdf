@@ -16,13 +16,11 @@
             </font>
         </Text>
         <ListView layoutX="14.0" layoutY="42.0" prefHeight="251.0" prefWidth="247.0"/>
-        <TextField layoutX="14.0" layoutY="305.0" prefHeight="25.0" prefWidth="247.0" promptText="Suchfeld*"/>
         <Button layoutX="274.0" layoutY="106.0" mnemonicParsing="false" text="==&gt;">
             <font>
                 <Font name="System Bold" size="12.0"/>
             </font>
         </Button>
-        <TextField layoutX="340.0" layoutY="305.0" prefHeight="25.0" prefWidth="247.0" promptText="Suchfeld*"/>
         <Text layoutX="339.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbücher" underline="true">
             <font>
                 <Font name="System Bold" size="21.0"/>
