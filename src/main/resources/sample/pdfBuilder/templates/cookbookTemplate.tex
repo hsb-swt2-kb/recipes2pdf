@@ -1,8 +1,5 @@
 \documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{graphicx}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
@@ -27,10 +24,6 @@
 
 
     #foreach( $recipe in $cookbook.getRecipes() )
-
-
-
-
         #set($ingredientList = $recipe.getIngredients())
         \fancyhead[C]{$recipe.getCategory()} %Kopfzeile mittig
         \fancyfoot[ol]{Rezept $referenceNumber} %Fußzeile ungerade links

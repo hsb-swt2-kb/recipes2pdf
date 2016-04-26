@@ -16,20 +16,24 @@ import java.nio.file.Files;
  * @author Kai Nortmann
  */
 
-class PdfBuilder implements IPdfBuilder {
+class Converter implements IConverter {
 
 
-    private final PdfBuilderConfig config;
+    private final ConverterConfig config;
 
-    PdfBuilder(PdfBuilderConfig config) {
+    Converter(ConverterConfig config) {
         this.config = config;
+    }
+
+    Converter() {
+        this.config = new ConverterConfig();
     }
 
     private void parseTexFile(File outputTexFile, ICookbook cookbook) throws ConvertTemplatetoTexFailedException, IOException {
         JLRConverter converter = new JLRConverter(config.getTemplateDir());
         converter.replace("cookbook", cookbook);
         System.out.println(config.getTemplateDir());
-        converter.replace("referenceNumber", "refNum"); //TODO: This is going to be hard to implement with the Template...
+        converter.replace("referenceNumber", "refNum"); //TODO: Generate Referencenumber out of cookbook refnum-rule (but how?)
         converter.replace("imgDir", config.getImageDir().getAbsolutePath());
         if (!converter.parse(config.getTemplateFile(), outputTexFile)) {
             throw getConvertFailedException(cookbook, converter); //TODO: Display ErrorMessage in GUI?
@@ -94,6 +98,4 @@ class PdfBuilder implements IPdfBuilder {
 
         return createPDFFile(outputTexFile, cookbook);
     }
-
-
 }

@@ -1,6 +1,6 @@
 package sample.pdfBuilder;
 
-import sample.config.IConfiguration;
+import sample.config.IConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,14 +9,14 @@ import java.nio.file.Files;
 /**
  * Created by kai on 11.04.16.
  */
-public class PdfBuilderConfig {
+public class ConverterConfig {
 
     public File getParserRootDir() {
-        return checkDir(new File(IConfiguration.PROGRAM_USERDATA_DIR));
+        return checkDir(new File(IConfig.PROGRAM_USERDATA_DIR));
     }
 
     public File getImageDir() {
-        return checkDir(new File(getParserRootDir() + File.separator + IConfiguration.getInstance().getProperty("IMAGE_FOLDER_NAME")));
+        return checkDir(new File(getParserRootDir() + File.separator + IConfig.getInstance().getProperty("IMAGE_FOLDER_NAME")));
     }
 
     public File getOutputImage(Long ImageID) throws IOException {
@@ -29,11 +29,11 @@ public class PdfBuilderConfig {
     }
 
     public File getTempDir() {
-        return checkDir(new File(getParserRootDir() + File.separator + IConfiguration.getInstance().getProperty("TEMP_FOLDER_NAME")));
+        return checkDir(new File(getParserRootDir() + File.separator + IConfig.getInstance().getProperty("TEMP_FOLDER_NAME")));
     }
 
     public File getTemplateDir() {
-        return checkDir(new File(getParserRootDir() + File.separator + IConfiguration.getInstance().getProperty("TEMPLATE_FOLDER_NAME")));
+        return checkDir(new File(getParserRootDir() + File.separator + IConfig.getInstance().getProperty("TEMPLATE_FOLDER_NAME")));
     }
 
     public File getTemplateFile() throws IOException {
@@ -51,11 +51,11 @@ public class PdfBuilderConfig {
     }
 
     public File getUserTemplate() throws IOException {
-        return new File(getTemplateDir() + File.separator + IConfiguration.getInstance().getProperty("TEMPLATE_FILE_NAME"));
+        return new File(getTemplateDir() + File.separator + IConfig.getInstance().getProperty("TEMPLATE_FILE_NAME"));
     }
 
     public File getOutputDir() {
-        return checkDir(new File(getParserRootDir() + File.separator + IConfiguration.getInstance().getProperty("OUTPUT_FOLDER_NAME")));
+        return checkDir(new File(getParserRootDir() + File.separator + IConfig.getInstance().getProperty("OUTPUT_FOLDER_NAME")));
     }
 
     public File getOutputTexFile(String cookbookName) throws IOException {

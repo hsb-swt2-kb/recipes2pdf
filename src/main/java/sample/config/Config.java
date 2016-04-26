@@ -1,41 +1,37 @@
 package sample.config;
 
-import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
  * Created by kai on 11.04.16.
  */
-class Configuration implements IConfiguration {
+class Config implements IConfig {
 
-    private static Configuration config = new Configuration();
+    private static Config config = new Config();
     private Properties properties;
 
 
-    private Configuration() {
+    private Config() {
 
-        BufferedReader reader;
         properties = new Properties();
 
-//        try {
         setProperties();
-//            reader = new BufferedReader(new FileReader(new File(CONFIG_FILE_PATH)));
-//            properties.load(reader);
-//            reader.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            properties.store(new FileOutputStream(IConfig.PROGRAM_USERDATA_DIR + File.separator + "config.txt"), "Properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static Configuration getInstance() {
+    public static Config getInstance() {
         return config;
     }
 
     private void setProperties() {
-        properties.setProperty("USER_DIR", "/home/kai/.recipes2pdf");
-        properties.setProperty("WORKKING_DIRECTORY", "PdfBuilder");
+
         properties.setProperty("TEMP_FOLDER_NAME", "temp");
         properties.setProperty("IMAGE_FOLDER_NAME", "images");
         properties.setProperty("TEMPLATE_FOLDER_NAME", "templates");
