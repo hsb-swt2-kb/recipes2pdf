@@ -43,8 +43,7 @@ public class ADatabaseTest {
     }
 
     private void createDaytimes() {
-        String[] defaultDaytimes = {"Frühstück", "Mittag", "Abend"};
-        Stream.of(defaultDaytimes).forEach(name -> {
+        Stream.of("Frühstück", "Mittag", "Abend").forEach(name -> {
             IDaytime daytime = IDaytime.getInstance();
             daytime.setName(name);
             daytime.saveIt();
@@ -52,8 +51,7 @@ public class ADatabaseTest {
     }
 
     private void createNurtures() {
-        String[] defaultNurtures = {"Low Carb", "vegetarisch", "Vegan", "Winter"};
-        Stream.of(defaultNurtures).forEach(name -> {
+        Stream.of("Low Carb", "vegetarisch", "Vegan", "Winter").forEach(name -> {
             INurture nurture = INurture.getInstance();
             nurture.setName(name);
             nurture.saveIt();
@@ -61,8 +59,7 @@ public class ADatabaseTest {
     }
 
     private void createSeasons() {
-        String[] commonSeasons = {"Frühling", "Sommer", "Herbst", "Winter"};
-        Stream.of(commonSeasons).forEach(name -> {
+        Stream.of("Frühling", "Sommer", "Herbst", "Winter").forEach(name -> {
             ISeason season = ISeason.getInstance();
             season.setName(name);
             season.saveIt();
@@ -70,8 +67,7 @@ public class ADatabaseTest {
     }
 
     private void createIngredients() {
-        String[] commonIngredients = {"Mehl", "Wasser", "Zucker", "Hefe", "Nudeln", "Paprika"};
-        Stream.of(commonIngredients).forEach(name -> {
+        Stream.of("Mehl", "Wasser", "Zucker", "Hefe", "Nudeln", "Paprika").forEach(name -> {
             IIngredient ingredient = IIngredient.getInstance();
             ingredient.setName(name);
             ingredient.saveIt();
@@ -79,8 +75,7 @@ public class ADatabaseTest {
     }
 
     private void createUnits() {
-        String[] commonUnits = {"kg", "TL"};
-        Stream.of(commonUnits).forEach(unitName -> {
+        Stream.of("kg", "TL").forEach(unitName -> {
             IUnit unit = IUnit.getInstance();
             unit.setName(unitName);
             unit.saveIt();
@@ -108,8 +103,7 @@ public class ADatabaseTest {
     }
 
     private void createSortlevels() {
-        String[] defaultSortlevels = {"Kategorie", "Gerichtart", "Region", "Tageszeit", "Saison", "Ernaehrungsart", "Quelle"};
-        Stream.of(defaultSortlevels).forEach(unitName -> {
+        Stream.of("Kategorie", "Gerichtart", "Region", "Tageszeit", "Saison", "Ernaehrungsart", "Quelle").forEach(unitName -> {
             ISortlevel sortlevel = ISortlevel.getInstance();
             sortlevel.setName(unitName);
             sortlevel.saveIt();

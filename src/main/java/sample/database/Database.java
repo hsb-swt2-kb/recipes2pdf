@@ -27,12 +27,8 @@ public class Database {
         if( !isInstalled() ) {
             try {
                 install();
-            } catch (SQLException sqlex) {
-                LOG.error("Database installation failed.");
-                sqlex.printStackTrace();
-            } catch (IOException ex) {
-                LOG.error("Database installation failed.");
-                ex.printStackTrace();
+            } catch (SQLException | IOException ex) {
+                LOG.error("Database installation failed.", ex);
             }
         }
         openConnection();
@@ -42,6 +38,7 @@ public class Database {
         Connection connection = DriverManager.getConnection( databaseConnection.PATH );
 
         LOG.info("Database connection opened successfully");
+        LOG.info("Installing database...");
 
         Statement statement = connection.createStatement();
 
@@ -50,6 +47,8 @@ public class Database {
 
         // execute the statement string
         statement.executeUpdate(sql);
+
+        LOG.info("Database installed.");
 
         // cleanup
         statement.close();
