@@ -1,4 +1,4 @@
-package sample.guix;
+package sample.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +28,7 @@ public class GUI extends Application {
             e.printStackTrace();
             System.out.println(wrongPathException);
         }
-        sample.guix.ControllerDefault ctrl = loader.getController();
+        sample.gui.ControllerDefault ctrl = loader.getController();
 
         primaryStage.setTitle("Recipes2PDF");
         primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/sample/GUI/icon_bg_small.png" )));

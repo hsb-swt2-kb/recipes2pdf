@@ -1,6 +1,6 @@
 package sample;
 
-import sample.guix.GUI;
+import sample.gui.GUI;
 
 public class Main {
 

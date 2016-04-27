@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="373.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.guix.ControllerManageCookBook">
+            fx:controller="sample.gui.ControllerManageCookBook">
     <children>
         <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte" underline="true">
             <font>
