@@ -16,7 +16,8 @@ public class GUI extends Application {
     private final String wrongPathException = "The path of the FXML-file is wrong or there are other problems with the loader.";
     private final String defaultFXML = "/sample/ui/Default.fxml";
     private final String pathIcon = "/sample/ui/icon_bg_small.png";
-    private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
+    private final String manageCookBookFXML = "/sample/ui/ManageCookBook.fxml";
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -40,7 +41,7 @@ public class GUI extends Application {
         primaryStage.show();
 
         //Sets the default Pane in the default Controller
-        ctrl.changeLayout(addCookBookFXML);
+        ctrl.changeLayout(manageCookBookFXML);
 
     }
 
