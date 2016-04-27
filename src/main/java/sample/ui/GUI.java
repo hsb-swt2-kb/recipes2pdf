@@ -33,7 +33,7 @@ public class GUI extends Application {
         }
         sample.ui.ControllerDefault ctrl = loader.getController();
 
-        primaryStage.setTitle("Recipes2PDF");
+        primaryStage.setTitle("Kochbuchmanager");
         primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.setResizable(true);
