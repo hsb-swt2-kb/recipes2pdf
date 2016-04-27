@@ -8,9 +8,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.ui.ControllerDefault">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerDefault">
     <children>
         <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <menus>
@@ -23,15 +21,11 @@
                     <items>
                         <MenuItem fx:id="addCookBook" mnemonicParsing="false" onAction="#addCookBook" text="%add" />
                         <MenuItem fx:id="manageCookBook" mnemonicParsing="false" onAction="#manageCookBook" text="%manage" />
-                        <MenuItem fx:id="openDataFromCookBook" mnemonicParsing="false" onAction="#openDataFromCookBook"
-                                  text="%menu.data"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menu.recipe">
                     <items>
                         <MenuItem fx:id="addReceipe" mnemonicParsing="false" onAction="#addReceipe" text="%add" />
-                        <MenuItem fx:id="openDataFromRecipe" mnemonicParsing="false" onAction="#openDataFromRecipe"
-                                  text="%menu.data"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menu.help">
