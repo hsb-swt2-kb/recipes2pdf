@@ -1,4 +1,4 @@
-package sample.gui;
+package sample.guix;
 
 /**
  * Created by Tobias on 24.04.2016.
