@@ -20,7 +20,6 @@
                 <Menu mnemonicParsing="false" text="%menu.cookbook">
                     <items>
                         <MenuItem fx:id="addCookBook" mnemonicParsing="false" onAction="#addCookBook" text="%add" />
-                        <MenuItem fx:id="manageCookBook" mnemonicParsing="false" onAction="#manageCookBook" text="%manage" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menu.recipe">

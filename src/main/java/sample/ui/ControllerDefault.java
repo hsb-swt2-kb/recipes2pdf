@@ -98,11 +98,6 @@ public class ControllerDefault {
     }
 
     @FXML
-    void manageCookBook(ActionEvent event) {
-        changeLayout(manageCookBookFXML);
-    }
-
-    @FXML
     void addReceipe(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
         changeLayout(manageCookBookFXML);
