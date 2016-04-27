@@ -12,11 +12,13 @@ public class ControllerManageCookBook {
 
     @FXML
     private Button export2pdfButton;
+    private final String exportFXML = "/sample/ui/ExportCookBook.fxml";
+    private final String export = "Exportieren";
 
     @FXML
     void export2pdf(ActionEvent event) {
         ControllerDefault controllerDefault = new ControllerDefault();
-        controllerDefault.newWindow("/sample/GUI/ExportCookBook.fxml");
+        controllerDefault.newWindow(exportFXML, export);
 
     }
 

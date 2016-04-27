@@ -22,6 +22,10 @@ public class ControllerDefault {
     private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
     private final String helpFXML =  "/sample/ui/Help.fxml";
     private final String addRecipeFXML = "/sample/ui/AddRecipe.fxml";
+    private final String aboutWindowTitel = "Über";
+    private final String helpWindowTitel = "Hilfe";
+    private final String addRecipeWindowTitel = "Rezepte hinzufügen";
+    private final String addCookBookWindowTitel = "Kochbuch hinzufügen";
 
     @FXML
     private MenuItem endMenuItem;
@@ -68,7 +72,7 @@ public class ControllerDefault {
         content.getChildren().setAll(newContent);
     }
 
-    void newWindow(String fxml) {
+    void newWindow(String fxml, String windowTitel) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
         try {
@@ -80,13 +84,14 @@ public class ControllerDefault {
         Stage stage = new Stage();
         stage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
         stage.setScene(new Scene(root));
+        stage.setTitle(windowTitel);
         stage.show();
     }
 
     @FXML
     void addCookBook(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-        changeLayout(addCookBookFXML);
+        newWindow(addCookBookFXML, addCookBookWindowTitel);
     }
 
     @FXML
@@ -102,19 +107,19 @@ public class ControllerDefault {
     @FXML
     void addReceipe(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-        newWindow(addRecipeFXML);
+        newWindow(addRecipeFXML, addRecipeWindowTitel);
         changeLayout(manageCookBookFXML);
     }
 
     @FXML
     void openHelp(ActionEvent event) {
-        newWindow(helpFXML);
+        newWindow(helpFXML, helpWindowTitel);
 
     }
 
     @FXML
     void openAbout(ActionEvent event) {
-        newWindow(aboutFXML);
+        newWindow(aboutFXML, aboutWindowTitel);
     }
 
     @FXML
