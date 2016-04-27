@@ -1,4 +1,4 @@
-package sample.gui;
+package sample.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +13,15 @@ import java.util.ResourceBundle;
 
 public class GUI extends Application {
 
-    private final String wrongPathException = "The path of the FXML-file is wrong.";
+    private final String wrongPathException = "The path of the FXML-file is wrong or there are other problems with the loader.";
+    private final String defaultFXML = "/sample/ui/Default.fxml";
+    private final String pathIcon = "/sample/ui/icon_bg_small.png";
+    private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
 
     @Override
     public void start(Stage primaryStage) {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/GUI/Default.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(defaultFXML));
         final ResourceBundle locale_bundle = ResourceBundle.getBundle("bundles/locale", Locale.getDefault());
         loader.setResources(locale_bundle);
         Parent root = null;
@@ -28,16 +31,16 @@ public class GUI extends Application {
             e.printStackTrace();
             System.out.println(wrongPathException);
         }
-        sample.gui.ControllerDefault ctrl = loader.getController();
+        sample.ui.ControllerDefault ctrl = loader.getController();
 
         primaryStage.setTitle("Recipes2PDF");
-        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/sample/GUI/icon_bg_small.png" )));
+        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.setResizable(true);
         primaryStage.show();
 
         //Sets the default Pane in the default Controller
-        ctrl.changeLayout("/sample/GUI/AddCookBook.fxml");
+        ctrl.changeLayout(addCookBookFXML);
 
     }
 

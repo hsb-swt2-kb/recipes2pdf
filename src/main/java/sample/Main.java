@@ -1,6 +1,6 @@
 package sample;
 
-import sample.gui.GUI;
+import sample.ui.GUI;
 
 public class Main {
 

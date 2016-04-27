@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="289.0"
             prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.gui.ControllerAbout">
+            fx:controller="sample.ui.ControllerAbout">
    <children>
        <ImageView fitHeight="80.0" fitWidth="78.0" layoutX="126.0" layoutY="14.0" preserveRatio="true" smooth="false"
                   AnchorPane.leftAnchor="126.0" AnchorPane.rightAnchor="126.0">

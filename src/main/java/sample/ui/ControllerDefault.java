@@ -1,4 +1,4 @@
-package sample.gui;
+package sample.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +15,13 @@ import java.io.IOException;
 
 public class ControllerDefault {
 
-    private final String wrongPathException = "The FXML-file is wrong or the FXML-file does not exist.";
+    private final String wrongPathException = "The FXML-file is wrong or the FXML-file does not exist or there are other problems with the loader.";
+    private final String aboutFXML = "/sample/ui/About.fxml";
+    private final String manageCookBookFXML = "/sample/ui/ManageCookBook.fxml";
+    private final String pathIcon = "/sample/ui/icon_bg_small.png";
+    private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
+    private final String helpFXML =  "/sample/ui/Help.fxml";
+    private final String addRecipeFXML = "/sample/ui/AddRecipe.fxml";
 
     @FXML
     private MenuItem endMenuItem;
@@ -72,7 +78,7 @@ public class ControllerDefault {
             System.out.println(wrongPathException);
         }
         Stage stage = new Stage();
-        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/sample/GUI/icon_bg_small.png")));
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -80,7 +86,7 @@ public class ControllerDefault {
     @FXML
     void addCookBook(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-        changeLayout("/sample/GUI/AddCookBook.fxml");
+        changeLayout(addCookBookFXML);
     }
 
     @FXML
@@ -90,25 +96,25 @@ public class ControllerDefault {
 
     @FXML
     void manageCookBook(ActionEvent event) {
-        changeLayout("/sample/GUI/ManageCookBook.fxml");
+        changeLayout(manageCookBookFXML);
     }
 
     @FXML
     void addReceipe(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-        newWindow("/sample/GUI/AddRecipe.fxml");
-        changeLayout("/sample/GUI/ManageCookBook.fxml");
+        newWindow(addRecipeFXML);
+        changeLayout(manageCookBookFXML);
     }
 
     @FXML
     void openHelp(ActionEvent event) {
-        newWindow("/sample/GUI/Help.fxml");
+        newWindow(helpFXML);
 
     }
 
     @FXML
     void openAbout(ActionEvent event) {
-        newWindow("/sample/GUI/About.fxml");
+        newWindow(aboutFXML);
     }
 
     @FXML

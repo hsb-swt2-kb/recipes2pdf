@@ -1,4 +1,4 @@
-package sample.gui;
+package sample.ui;
 
 
 import javafx.fxml.FXML;
