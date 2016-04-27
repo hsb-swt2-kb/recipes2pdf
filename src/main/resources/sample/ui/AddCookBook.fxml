@@ -8,60 +8,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="373.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerAddCookBook">
+<AnchorPane prefHeight="231.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerAddCookBook">
    <children>
        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch hinzufügen">
            <font>
-               <Font name="System Bold" size="21.0"/>
+               <Font name="System Bold" size="21.0" />
            </font>
        </Text>
-       <Button alignment="BOTTOM_RIGHT" layoutX="535.0" layoutY="326.0" mnemonicParsing="false" text="Erzeugen"
-               AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="14.0"/>
+       <Button alignment="BOTTOM_RIGHT" layoutX="294.0" layoutY="199.0" mnemonicParsing="false" text="Erzeugen" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="14.0" />
        <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
            <font>
-               <Font size="21.0"/>
+               <Font size="21.0" />
            </font>
        </Text>
-       <Text layoutX="14.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategorie"
-             wrappingWidth="131.00390625">
+       <Text layoutX="16.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titelbild" wrappingWidth="131.00390625">
            <font>
-               <Font size="21.0"/>
+               <Font size="21.0" />
            </font>
        </Text>
-       <Text layoutX="14.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schwierigkeit"
-             wrappingWidth="131.00390625">
+       <Text layoutX="16.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vorwort" wrappingWidth="131.00390625">
            <font>
-               <Font size="21.0"/>
+               <Font size="21.0" />
            </font>
        </Text>
-       <Text layoutX="14.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titelbild"
-             wrappingWidth="131.00390625">
-           <font>
-               <Font size="21.0"/>
-           </font>
-       </Text>
-       <Text layoutX="16.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vorwort"
-             wrappingWidth="131.00390625">
-           <font>
-               <Font size="21.0"/>
-           </font>
-       </Text>
-       <TextField layoutX="192.0" layoutY="58.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="192.0"
-                  AnchorPane.rightAnchor="10.0"/>
-       <TextArea layoutX="192.0" layoutY="210.0" prefHeight="106.0" prefWidth="398.0" AnchorPane.bottomAnchor="57.0"
-                 AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="210.0"/>
-       <TextField layoutX="192.0" layoutY="93.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="192.0"
-                  AnchorPane.rightAnchor="10.0"/>
-       <TextField layoutX="192.0" layoutY="166.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="192.0"
-                  AnchorPane.rightAnchor="10.0"/>
-       <Button fx:id="skipButton" layoutX="427.0" layoutY="326.0" mnemonicParsing="false" onAction="#skipWindow"
-               text="Überspringen" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="85.0"/>
-       <MenuButton layoutX="192.0" layoutY="129.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="398.0"
-                   AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0">
-           <items>
-               <MenuItem mnemonicParsing="false" text="Action 1"/>
-               <MenuItem mnemonicParsing="false" text="Action 2"/>
-           </items>
-       </MenuButton>
+       <TextField layoutX="192.0" layoutY="58.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" />
+       <TextField layoutX="192.0" layoutY="97.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" />
+      <TextArea layoutX="192.0" layoutY="136.0" prefHeight="52.0" prefWidth="171.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="136.0" />
    </children>
 </AnchorPane>
