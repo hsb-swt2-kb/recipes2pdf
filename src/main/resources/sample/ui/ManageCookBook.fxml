@@ -14,53 +14,54 @@
                 <Font name="System Bold" size="21.0" />
             </font>
         </Text>
-        <ListView layoutX="14.0" layoutY="42.0" prefHeight="251.0" prefWidth="247.0" />
-        <Button layoutX="274.0" layoutY="106.0" mnemonicParsing="false" text="==&gt;">
+        <ListView layoutX="14.0" layoutY="42.0" prefHeight="266.0" prefWidth="253.0" />
+        <Button layoutX="279.0" layoutY="106.0" mnemonicParsing="false" text="==&gt;">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Text layoutX="339.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch" underline="true">
+        <Text layoutX="334.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch:" underline="true">
             <font>
                 <Font name="System Bold" size="21.0" />
             </font>
         </Text>
-        <Button layoutX="274.0" layoutY="141.0" mnemonicParsing="false" text="&lt;==">
+        <Button layoutX="278.0" layoutY="141.0" mnemonicParsing="false" text="&lt;==">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <ListView layoutX="339.0" layoutY="45.0" prefHeight="251.0" prefWidth="247.0" />
-        <Button layoutX="466.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="+">
+        <ListView layoutX="333.0" layoutY="45.0" prefHeight="266.0" prefWidth="253.0" />
+        <Button layoutX="339.0" layoutY="317.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="+">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button layoutX="508.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="-">
+        <Button layoutX="381.0" layoutY="318.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="-">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button layoutX="552.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="*">
+        <Button layoutX="425.0" layoutY="318.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="*">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button layoutX="227.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="*">
+        <Button layoutX="100.0" layoutY="318.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="*">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button layoutX="183.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="-">
+        <Button layoutX="56.0" layoutY="318.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="-">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button layoutX="141.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="+">
+        <Button layoutX="14.0" layoutY="317.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="+">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="export2pdfButton" layoutX="492.0" layoutY="334.0" mnemonicParsing="false" onAction="#export2pdf" prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+        <Button fx:id="export2pdfButton" layoutX="492.0" layoutY="318.0" mnemonicParsing="false" onAction="#export2pdf" prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" />
+      <ComboBox layoutX="442.0" layoutY="8.0" prefHeight="25.0" prefWidth="145.0" />
     </children>
 </AnchorPane>
