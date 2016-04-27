@@ -1,4 +1,4 @@
-package sample.converter;
+package sample.builder.pdfBuilder;
 
 import sample.config.IConfig;
 
@@ -9,7 +9,7 @@ import java.nio.file.Files;
 /**
  * Created by kai on 11.04.16.
  */
-public class ConverterConfig {
+public class PdfBuilderConfig {
 
     public File getParserRootDir() {
         return checkDir(new File(IConfig.PROGRAM_USERDATA_DIR));

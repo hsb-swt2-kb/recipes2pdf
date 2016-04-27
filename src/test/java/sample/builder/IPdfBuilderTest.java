@@ -1,25 +1,27 @@
-package sample.converter;
+package sample.builder;
 
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.junit.Test;
+import sample.builder.pdfBuilder.PdfBuilder;
+import sample.builder.pdfBuilder.PdfBuilderConfig;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 
 import java.io.File;
 
-public class IConverterTest {
+public class IPdfBuilderTest {
     @Test
 
     public void testRecipePdfBuilder() throws Throwable {
-        Converter builder = new Converter(new ConverterConfig());
+        IBuilder builder = new PdfBuilder(new PdfBuilderConfig());
 
 
         IRecipe recipe = IRecipe.getInstance();
         recipe.setTitle("Mein Rezept");
 
-        File recipePDF = builder.buildPDF(recipe);
+        File recipePDF = builder.build(recipe);
 
         PDDocument pdfDoc;
 
@@ -34,7 +36,7 @@ public class IConverterTest {
 
 
     public void testCookbookPdfBuilder() {
-        Converter builder = new Converter(new ConverterConfig());
+        IBuilder builder = new PdfBuilder(new PdfBuilderConfig());
 
         ICookbook cookbook = ICookbook.getInstance();
 

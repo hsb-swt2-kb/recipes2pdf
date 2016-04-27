@@ -1,7 +1,8 @@
-package sample.converter;
+package sample.builder.pdfBuilder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
+import sample.builder.IBuilder;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 
@@ -14,17 +15,17 @@ import java.nio.file.Files;
  * @author Kai Nortmann
  */
 
-class Converter implements IConverter {
+public class PdfBuilder implements IBuilder {
 
 
-    private final ConverterConfig config;
+    private final PdfBuilderConfig config;
 
-    Converter(ConverterConfig config) {
+    public PdfBuilder(PdfBuilderConfig config) {
         this.config = config;
     }
 
-    Converter() {
-        this.config = new ConverterConfig();
+    public PdfBuilder() {
+        this.config = new PdfBuilderConfig();
     }
 
     private void parseTexFile(File outputTexFile, ICookbook cookbook) throws IOException {
@@ -61,7 +62,7 @@ class Converter implements IConverter {
     }
 
 
-    public File buildPDF(ICookbook cookbook) throws Exception {
+    public File build(ICookbook cookbook) throws Exception {
         File outputTexFile = config.getOutputTexFile(cookbook.getTitle());
 
         for (IRecipe recipe : cookbook.getRecipes()) {
@@ -72,7 +73,7 @@ class Converter implements IConverter {
         return createPDFFile(outputTexFile, cookbook);
     }
 
-    public File buildPDF(IRecipe recipe) throws Exception {
+    public File build(IRecipe recipe) throws Exception {
         ICookbook cookbook = ICookbook.getInstance();
         cookbook.addRecipe(recipe);
 
@@ -84,5 +85,10 @@ class Converter implements IConverter {
         parseTexFile(outputTexFile, cookbook);
 
         return createPDFFile(outputTexFile, cookbook);
+    }
+
+    @Override
+    public boolean builds(String filetype) {
+        return filetype.equalsIgnoreCase("pdf");
     }
 }
