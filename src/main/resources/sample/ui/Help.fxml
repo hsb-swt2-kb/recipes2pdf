@@ -12,10 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="206.0" prefWidth="294.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerAbout">
    <children>
-      <TextArea editable="false" layoutX="12.0" layoutY="14.0" prefHeight="154.0" prefWidth="266.0" promptText="Welcome to Kochbuchmanager help! Kochbuchmanager is cross-platform. It works on Windows, OS X and Linux and brings the whole range of precise tools for all recipebook-designer." text="Welcome to Kochbuchmanager help! Kochbuchmanager is cross-platform. It works on Windows, OS X and Linux and brings the whole range of precise tools for all recipebook-designer." wrapText="true" />
-      <Button fx:id="closeButton" layoutX="211.0" layoutY="175.0" mnemonicParsing="false" onAction="#closeAbout" text="Schließen" />
+      <TextArea editable="false" layoutX="12.0" layoutY="14.0" prefHeight="154.0" prefWidth="266.0" promptText="Welcome to Kochbuchmanager help! Kochbuchmanager is cross-platform. It works on Windows, OS X and Linux and brings the whole range of precise tools for all recipebook-designer." text="Welcome to Kochbuchmanager help! Kochbuchmanager is cross-platform. It works on Windows, OS X and Linux and brings the whole range of precise tools for all recipebook-designer." wrapText="true" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="14.0" />
+      <Button fx:id="closeButton" layoutX="211.0" layoutY="175.0" mnemonicParsing="false" onAction="#closeAbout" text="Schließen" AnchorPane.bottomAnchor="6.0" AnchorPane.rightAnchor="16.0" />
    </children>
 </AnchorPane>

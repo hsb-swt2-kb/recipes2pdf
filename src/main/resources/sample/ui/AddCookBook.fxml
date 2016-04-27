@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="231.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerAddCookBook">
    <children>
-       <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch hinzufügen">
+       <Text layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch hinzufügen">
            <font>
                <Font name="System Bold" size="21.0" />
            </font>
