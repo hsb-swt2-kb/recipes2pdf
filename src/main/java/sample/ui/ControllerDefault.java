@@ -21,10 +21,8 @@ public class ControllerDefault {
     private final String pathIcon = "/sample/ui/icon_bg_small.png";
     private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
     private final String helpFXML =  "/sample/ui/Help.fxml";
-    private final String addRecipeFXML = "/sample/ui/AddRecipe.fxml";
     private final String aboutWindowTitel = "Über";
     private final String helpWindowTitel = "Hilfe";
-    private final String addRecipeWindowTitel = "Rezepte hinzufügen";
     private final String addCookBookWindowTitel = "Kochbuch hinzufügen";
 
     @FXML
@@ -107,7 +105,6 @@ public class ControllerDefault {
     @FXML
     void addReceipe(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-        newWindow(addRecipeFXML, addRecipeWindowTitel);
         changeLayout(manageCookBookFXML);
     }
 
