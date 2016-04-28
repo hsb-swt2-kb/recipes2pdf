@@ -13,7 +13,7 @@ public class IngredientSpec extends ADatabaseSpec {
     @Test
     public void shouldValidateMandatoryFields(){
 
-        Ingredient ingredient = new Ingredient();
+        IngredientDBO ingredient = new IngredientDBO();
 
         //check errors
         the(ingredient).shouldNotBe("valid");

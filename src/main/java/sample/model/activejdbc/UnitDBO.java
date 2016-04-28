@@ -2,13 +2,15 @@ package sample.model.activejdbc;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
-import sample.model.ICategory;
+import sample.model.IRecipeIngredient;
+import sample.model.IUnit;
 
 /**
- * Created by czoeller on 03.04.16.
+ * Created by czoeller on 02.04.16.
  */
-@Table("category")
-public class Category extends Model implements ICategory {
+@Table("unit")
+public class UnitDBO extends Model implements IUnit {
+
     @Override
     public String getName() {
         return getString("name");

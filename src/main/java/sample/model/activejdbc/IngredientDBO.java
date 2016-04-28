@@ -9,7 +9,7 @@ import sample.model.IRecipeIngredient;
  * Created by czoeller on 28.03.16.
  */
 @Table("ingredient")
-public class Ingredient extends Model implements IIngredient {
+public class IngredientDBO extends Model implements IIngredient {
     static {
         validatePresenceOf("name");
     }
@@ -29,7 +29,6 @@ public class Ingredient extends Model implements IIngredient {
         return getLongId();
     }
 
-    @Override
     public void add(IRecipeIngredient recipeIngredient) {
         this.add((Model) recipeIngredient);
     }

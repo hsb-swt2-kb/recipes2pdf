@@ -7,5 +7,5 @@ import org.javalite.activejdbc.annotations.Table;
  * Created by czoeller on 26.03.16.
  */
 @Table("cookbook_recipe")
-public class CookbookRecipe extends Model {
+public class CookbookRecipeDBO extends Model {
 }

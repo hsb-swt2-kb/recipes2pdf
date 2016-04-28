@@ -1,0 +1,23 @@
+package sample.model;
+
+/**
+ * Created by czoeller on 28.04.16.
+ */
+public class Unit implements IUnit {
+    private String name;
+    private Long id;
+
+    public Unit(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+}

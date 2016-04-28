@@ -2,13 +2,13 @@ package sample.model.activejdbc;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
-import sample.model.ISeason;
+import sample.model.IRating;
 
 /**
  * Created by czoeller on 03.04.16.
  */
-@Table("Season")
-public class Season extends Model implements ISeason {
+@Table("rating")
+public class RatingDBO extends Model implements IRating {
     @Override
     public String getName() {
         return getString("name");

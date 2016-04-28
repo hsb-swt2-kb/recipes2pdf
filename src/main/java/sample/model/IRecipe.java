@@ -1,19 +1,12 @@
 package sample.model;
 
-import sample.model.activejdbc.*;
-
 import java.util.Map;
 
 /**
  * Created by czoeller on 01.04.16.
  */
 public interface IRecipe {
-    static IRecipe getInstance() {
-        return new Recipe();
-    }
-
-    boolean saveIt();
-    long getID();
+    Long getID();
 
     String getTitle();
     void setTitle(String title);
@@ -61,8 +54,6 @@ public interface IRecipe {
     void setNurture(INurture nurture);
 
     INurture getNurture();
-
-    void add(IRecipeIngredient recipeIngredient);
 
     /**
      * Add ingredient with amount and unit.

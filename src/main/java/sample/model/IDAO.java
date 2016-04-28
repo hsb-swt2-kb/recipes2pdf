@@ -3,17 +3,17 @@ package sample.model;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by czoeller on 02.04.16.
- */
-public interface IRepositoy<T> {
 
+/**
+ * Created by czoeller on 28.04.16.
+ */
+public interface IDAO<IPOJO> {
     /**
      * Returns all records of this entity. If you need to get a subset, look for variations of "find()".
      *
      * @return result list
      */
-    List<T> getAll();
+    List<IPOJO> getAll();
 
     /**
      * Returns an Optional record with given id.
@@ -22,7 +22,7 @@ public interface IRepositoy<T> {
      * @return Optional<T> the optional record.
      */
 
-    Optional<T> findById(long id);
+    Optional<IPOJO> findById(long id);
 
     /**
      * Find first occurrence of record that fulfills the query.
@@ -32,5 +32,12 @@ public interface IRepositoy<T> {
      * @param params   list of parameters corresponding to the place holders in the subquery.
      * @return instance of <code>List</code> containing results.
      */
-    Optional<T> findFirst(String subQuery, Object... params);
+    Optional<IPOJO> findFirst(String subQuery, Object... params);
+
+    /**
+     * ID of recipe has to be null for insert.
+     */
+    public void insert(IPOJO pojo);
+    public void update(IPOJO pojo);
+    public void delete(IPOJO pojo);
 }

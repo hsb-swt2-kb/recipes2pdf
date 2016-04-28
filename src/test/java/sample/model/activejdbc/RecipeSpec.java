@@ -13,14 +13,14 @@ public class RecipeSpec extends ADatabaseSpec {
     @Test
     public void shouldValidateMandatoryFields(){
 
-        Recipe recipe = new Recipe();
+        RecipeDBO recipe = new RecipeDBO();
 
         //check errors
         the(recipe).shouldNotBe("valid");
         the(recipe.errors().get("title")).shouldBeEqual("value is missing");
 
         //set missing values
-        recipe.set("title", "A Recipe");
+        recipe.set("title", "A RecipeDBO");
 
         //all is good:
         the(recipe).shouldBe("valid");
