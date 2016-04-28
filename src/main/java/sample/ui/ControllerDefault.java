@@ -18,12 +18,14 @@ public class ControllerDefault {
     private final String wrongPathException = "The FXML-file is wrong or the FXML-file does not exist or there are other problems with the loader.";
     private final String aboutFXML = "/sample/ui/About.fxml";
     private final String manageCookBookFXML = "/sample/ui/ManageCookBook.fxml";
+    private final String manageCookBooksFXML = "/sample/ui/ManageCookBooks.fxml";
     private final String pathIcon = "/sample/ui/icon_bg_small.png";
     private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
     private final String helpFXML =  "/sample/ui/Help.fxml";
     private final String aboutWindowTitel = "Über";
     private final String helpWindowTitel = "Hilfe";
     private final String addCookBookWindowTitel = "Kochbuch hinzufügen";
+    private final String manageCookBooksTitel = "Kochbuchverwaltung";
 
     @FXML
     private MenuItem endMenuItem;
@@ -51,6 +53,9 @@ public class ControllerDefault {
 
     @FXML
     private MenuItem openAbout;
+
+    @FXML
+    private MenuItem data;
 
     void changeLayout(String fxml) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
@@ -115,12 +120,8 @@ public class ControllerDefault {
     }
 
     @FXML
-    void openDataFromRecipe(ActionEvent event) {
-
-    }
-
-    @FXML
-    void openDataFromCookBook(ActionEvent event) {
+    void openManageCookBooks(ActionEvent event) {
+        newWindow(manageCookBooksFXML, manageCookBooksTitel);
 
     }
 

@@ -19,7 +19,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menu.cookbook">
                     <items>
-                        <MenuItem fx:id="addCookBook" mnemonicParsing="false" onAction="#addCookBook" text="%add" />
+                        <MenuItem fx:id="data" mnemonicParsing="false" onAction="#openManageCookBooks" text="%menu.data" />
+                  <MenuItem fx:id="addCookBook1" mnemonicParsing="false" onAction="#addCookBook" text="%add" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menu.recipe">
