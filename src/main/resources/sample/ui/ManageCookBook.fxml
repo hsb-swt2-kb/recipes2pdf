@@ -63,8 +63,8 @@
             </font>
         </Text>
       <TextField layoutX="11.0" layoutY="35.0" prefHeight="25.0" prefWidth="253.0" promptText="Suche*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <ListView layoutX="11.0" layoutY="59.0" prefHeight="248.0" prefWidth="253.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <ListView layoutX="335.0" layoutY="58.0" prefHeight="255.0" prefWidth="253.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+        <ListView fx:id="listViewRecipes" layoutX="11.0" layoutY="59.0" prefHeight="248.0" prefWidth="253.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <ListView fx:id="listViewCookBook" layoutX="335.0" layoutY="58.0" prefHeight="255.0" prefWidth="253.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <TextField layoutX="335.0" layoutY="34.0" prefHeight="25.0" prefWidth="253.0" promptText="Suche*" GridPane.columnIndex="3" GridPane.rowIndex="2" />
     </children>
 </AnchorPane>
