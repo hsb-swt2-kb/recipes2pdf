@@ -34,5 +34,10 @@
         </MenuButton>
       <Button layoutX="123.0" layoutY="38.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" />
       <TextField editable="false" layoutX="151.0" layoutY="38.0" prefHeight="25.0" prefWidth="127.0" />
+      <ImageView disable="true" fitHeight="25.0" fitWidth="28.0" layoutX="124.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@explorer.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

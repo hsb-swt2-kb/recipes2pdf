@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -34,7 +35,12 @@
        <TextField layoutX="192.0" layoutY="58.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" />
       <TextArea layoutX="192.0" layoutY="136.0" prefHeight="52.0" prefWidth="171.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="136.0" />
       <Button fx:id="closeButton" alignment="BOTTOM_RIGHT" layoutX="221.0" layoutY="199.0" mnemonicParsing="false" onAction="#closeAddCookBook" text="Schließen" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="85.0" />
-      <TextField editable="false" layoutX="220.0" layoutY="98.0" prefHeight="25.0" prefWidth="141.0" />
-      <Button layoutX="192.0" layoutY="98.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" />
+      <TextField editable="false" layoutX="220.0" layoutY="98.0" prefHeight="25.0" prefWidth="143.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="10.0" />
+      <Button fx:id="browseButton" layoutX="192.0" layoutY="98.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" />
+      <ImageView disable="true" fitHeight="25.0" fitWidth="28.0" layoutX="193.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@explorer.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
