@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 
 <AnchorPane prefHeight="382.0" prefWidth="483.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerChangeRecipe">
    <children>
@@ -15,5 +14,11 @@
        </Text>
        <Button alignment="BOTTOM_RIGHT" layoutX="306.0" layoutY="199.0" mnemonicParsing="false" text="Ändern" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="12.0" />
       <Button fx:id="closeButton" alignment="BOTTOM_RIGHT" layoutX="232.0" layoutY="199.0" mnemonicParsing="false" onAction="#closeChangeRecipe" text="Schließen" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="74.0" />
+      <TextField layoutX="143.0" layoutY="67.0" prefHeight="25.0" prefWidth="320.0" />
+      <Text layoutX="24.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
