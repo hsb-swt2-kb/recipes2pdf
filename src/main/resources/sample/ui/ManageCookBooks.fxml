@@ -15,7 +15,7 @@
                 <Font name="System Bold" size="21.0" />
             </font>
         </Text>
-        <Button layoutX="94.0" layoutY="311.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="*">
+        <Button fx:id="changeButton" layoutX="94.0" layoutY="311.0" mnemonicParsing="false" onAction="#changeCookBook" prefHeight="25.0" prefWidth="34.0" text="*">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
