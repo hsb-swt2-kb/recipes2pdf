@@ -52,7 +52,7 @@ public class ControllerManageCookBook {
         controllerDefault.newWindow(deleteFXML, delete);
 
         //Test
-        ObservableList<String> recipes = FXCollections.observableArrayList ("Chilli", "Pizza", "Eintopf", "Bohnenauflauf");
+        ObservableList<String> recipes = FXCollections.observableArrayList ("Chilli", "Pizza", "Eintopf", "Bohnenauflauf","Rindsschmorbraten");
         ObservableList<String> cookbook = FXCollections.observableArrayList ("Rindsschmorbraten");
         refreshListViews(recipes, cookbook);
 

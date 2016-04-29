@@ -32,5 +32,7 @@
             <MenuItem mnemonicParsing="false" text="A5" />
             </items>
         </MenuButton>
+      <Button layoutX="123.0" layoutY="38.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" />
+      <TextField editable="false" layoutX="151.0" layoutY="38.0" prefHeight="25.0" prefWidth="127.0" />
     </children>
 </AnchorPane>
