@@ -16,11 +16,13 @@ public class ControllerManageCookBook {
     private final String exportFXML = "/sample/ui/ExportCookBook.fxml";
     private final String export = "Exportieren";
     private final String deleteFXML = "/sample/ui/DeleteDialog.fxml";
+    private final String noElementSelectedFXML = "/sample/ui/NoElementSelectedDialog.fxml";
     private final String changeRecipeFXML = "/sample/ui/ChangeRecipe.fxml";
     private final String loadRecipeFXML = "/sample/ui/LoadRecipe.fxml";
     private final String loadRecipeText = "Rezept laden";
     private final String deleteText = "Löschen";
-    private final String changeText = "Rezept ändern";
+    private final String noElementSelectedText = "Error";
+        private final String changeText = "Rezept ändern";
 
 
 
@@ -45,6 +47,7 @@ public class ControllerManageCookBook {
     @FXML
     void delteRecipe(ActionEvent event) {
         controllerDefault.newWindow(deleteFXML, deleteText);
+        controllerDefault.newWindow(noElementSelectedFXML, noElementSelectedText);
 
         //Test
         ObservableList<String> recipes = FXCollections.observableArrayList ("Chilli", "Pizza", "Eintopf", "Bohnenauflauf","Rindsschmorbraten");
