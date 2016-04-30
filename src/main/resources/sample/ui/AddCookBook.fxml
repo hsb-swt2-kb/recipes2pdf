@@ -13,7 +13,7 @@
    <children>
        <Text layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch hinzufügen">
            <font>
-               <Font name="System Bold" size="21.0" />
+               <Font name="System Bold Italic" size="21.0" />
            </font>
        </Text>
        <Button alignment="BOTTOM_RIGHT" layoutX="294.0" layoutY="199.0" mnemonicParsing="false" text="Erzeugen" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="14.0" />

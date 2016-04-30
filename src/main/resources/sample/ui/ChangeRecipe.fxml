@@ -1,24 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="382.0" prefWidth="483.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerChangeRecipe">
+<AnchorPane prefHeight="546.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerChangeRecipe">
    <children>
        <Text layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezept ändern">
            <font>
                <Font name="System Bold" size="21.0" />
            </font>
        </Text>
-       <Button alignment="BOTTOM_RIGHT" layoutX="306.0" layoutY="199.0" mnemonicParsing="false" text="Ändern" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="12.0" />
-      <Button fx:id="closeButton" alignment="BOTTOM_RIGHT" layoutX="232.0" layoutY="199.0" mnemonicParsing="false" onAction="#closeChangeRecipe" text="Schließen" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="74.0" />
-      <TextField layoutX="143.0" layoutY="67.0" prefHeight="25.0" prefWidth="320.0" />
-      <Text layoutX="24.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+       <Button alignment="BOTTOM_RIGHT" layoutX="340.0" layoutY="514.0" mnemonicParsing="false" text="Ändern" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="20.0" />
+      <Button fx:id="closeButton" alignment="BOTTOM_RIGHT" layoutX="266.0" layoutY="514.0" mnemonicParsing="false" onAction="#closeChangeRecipe" text="Schließen" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="82.0" />
+      <TextField layoutX="199.0" layoutY="67.0" prefHeight="25.0" prefWidth="201.0" />
+      <Text layoutX="17.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:*">
          <font>
             <Font size="21.0" />
          </font>
       </Text>
+      <Text layoutX="17.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zutaten:*">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="16.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zubereitungstext:*">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <TextArea layoutX="200.0" layoutY="408.0" prefHeight="69.0" prefWidth="201.0" />
+      <Label layoutX="10.0" layoutY="521.0" text="* Pflichtfelder" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="10.0" />
+      <Text layoutX="17.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zubereitungszeit:">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <TextField layoutX="200.0" layoutY="379.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="200.0" layoutY="350.0" prefHeight="25.0" prefWidth="201.0" />
+      <Text layoutX="17.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ernährungsart:">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="17.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerichtart:">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="17.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Region:">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="16.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptbild">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="17.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saison">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="17.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tageszeit">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="17.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptkategorie">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="17.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptquelle">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="17.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Portionen:">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <TextField layoutX="199.0" layoutY="96.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="199.0" layoutY="123.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="200.0" layoutY="151.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="199.0" layoutY="179.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="200.0" layoutY="236.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="200.0" layoutY="264.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="200.0" layoutY="293.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="200.0" layoutY="321.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField editable="false" layoutX="229.0" layoutY="207.0" prefHeight="25.0" prefWidth="171.0" />
+      <Button layoutX="201.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" />
+      <ImageView disable="true" fitHeight="25.0" fitWidth="28.0" layoutX="202.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@explorer.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

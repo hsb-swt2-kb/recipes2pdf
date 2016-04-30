@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
-
 <?import javafx.scene.layout.*?>
-
 
 <AnchorPane prefHeight="351.0" prefWidth="576.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerManageCookBook">
     <children>
@@ -56,9 +54,9 @@
         </Button>
         <Button fx:id="export2pdfButton" layoutX="466.0" layoutY="310.0" mnemonicParsing="false" onAction="#export2pdf" prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" />
       <ComboBox layoutX="429.0" layoutY="2.0" prefHeight="25.0" prefWidth="131.0" />
-        <Text layoutX="15.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte" underline="true" GridPane.columnIndex="1">
+        <Text layoutX="15.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte:" underline="true" GridPane.columnIndex="1">
             <font>
-                <Font name="System Bold" size="21.0" />
+                <Font name="System Bold Italic" size="21.0" />
             </font>
         </Text>
       <TextField layoutX="13.0" layoutY="35.0" prefHeight="25.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="1" GridPane.rowIndex="2" />

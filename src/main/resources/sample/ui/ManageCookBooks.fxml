@@ -12,7 +12,7 @@
     <children>
         <Text layoutX="12.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbücher:" underline="true">
             <font>
-                <Font name="System Bold" size="21.0" />
+                <Font name="System Bold Italic" size="21.0" />
             </font>
         </Text>
         <Button fx:id="changeButton" layoutX="94.0" layoutY="311.0" mnemonicParsing="false" onAction="#changeCookBook" prefHeight="25.0" prefWidth="34.0" text="*">
