@@ -26,8 +26,9 @@ import java.util.TreeMap;
 })
 public class RecipeDBO extends Model implements IRecipe {
 
-    static {
-        validatePresenceOf("title");
+    public RecipeDBO() {}
+
+    public RecipeDBO(Long id) {
     }
 
     @Override
@@ -151,16 +152,16 @@ public class RecipeDBO extends Model implements IRecipe {
         return parent(NurtureDBO.class);
     }
 
-    @Override
+   /* @Override
     public void add(String ingredientName, int amount, String unitName) {
         throw new IllegalStateException("Unimplemented");
-    }
+    }*/
     /**
      * {@inheritDoc}
      */
-/*     @Override
+    @Override
    public void add(String ingredientName, int amount, String unitName) {
-        IIngredientRepository ingredientRepository = new IngredientRepository();
+        /*IIngredientRepository ingredientRepository = new IngredientRepository();
         IUnitRepository unitRepository = new UnitRepository();
 
         Optional<IIngredient> ingredient = ingredientRepository.findFirst("name = ?", ingredientName);
@@ -175,9 +176,9 @@ public class RecipeDBO extends Model implements IRecipe {
         // set both recipeIngredient ends
         // Create ingredient on the fly if it was not there yet
         ingredient.orElseGet(() -> (IIngredient) IngredientDBO.createIt("name", ingredientName)).add(recipeIngredient);
-        this.add((Model) recipeIngredient);
+        this.add((Model) recipeIngredient);*/
 
-    }*/
+    }
 
     /**
      * {@inheritDoc}

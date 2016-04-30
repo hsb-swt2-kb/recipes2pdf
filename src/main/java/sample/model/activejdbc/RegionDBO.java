@@ -7,7 +7,7 @@ import sample.model.IRegion;
 /**
  * Created by czoeller on 03.04.16.
  */
-@Table("RegionDBO")
+@Table("region")
 public class RegionDBO extends Model implements IRegion {
     @Override
     public String getName() {

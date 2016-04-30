@@ -1,5 +1,4 @@
 pragma foreign_keys=on;
-
 -- Kategorie
 CREATE TABLE "category"
 (

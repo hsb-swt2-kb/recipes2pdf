@@ -9,6 +9,12 @@ import sample.model.ICategory;
  */
 @Table("category")
 public class CategoryDBO extends Model implements ICategory {
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
     @Override
     public String getName() {
         return getString("name");

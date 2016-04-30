@@ -7,7 +7,7 @@ import sample.model.ISeason;
 /**
  * Created by czoeller on 03.04.16.
  */
-@Table("SeasonDBO")
+@Table("season")
 public class SeasonDBO extends Model implements ISeason {
     @Override
     public String getName() {
