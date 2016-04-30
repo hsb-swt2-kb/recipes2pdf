@@ -19,6 +19,8 @@ public class ControllerDefault {
     private final String aboutFXML = "/sample/ui/About.fxml";
     private final String manageCookBookFXML = "/sample/ui/ManageCookBook.fxml";
     private final String manageCookBooksFXML = "/sample/ui/ManageCookBooks.fxml";
+    private final String loadRecipeFXML = "/sample/ui/LoadRecipe.fxml";
+    private final String loadRecipeText = "Rezept laden";
     private final String pathIcon = "/sample/ui/icon_bg_small.png";
     private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
     private final String helpFXML =  "/sample/ui/Help.fxml";
@@ -104,8 +106,7 @@ public class ControllerDefault {
 
     @FXML
     void addReceipe(ActionEvent event) {
-        //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-        changeLayout(manageCookBookFXML);
+        newWindow(loadRecipeFXML, loadRecipeText);
     }
 
     @FXML

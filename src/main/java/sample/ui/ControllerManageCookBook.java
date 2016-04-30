@@ -7,6 +7,7 @@ package sample.ui;
 import javafx.fxml.FXML;
 import javafx.event.*;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,6 +17,8 @@ public class ControllerManageCookBook {
     private final String export = "Exportieren";
     private final String deleteFXML = "/sample/ui/DeleteDialog.fxml";
     private final String changeRecipeFXML = "/sample/ui/ChangeRecipe.fxml";
+    private final String loadRecipeFXML = "/sample/ui/LoadRecipe.fxml";
+    private final String loadRecipeText = "Rezept laden";
     private final String deleteText = "Löschen";
     private final String changeText = "Rezept ändern";
 
@@ -25,6 +28,9 @@ public class ControllerManageCookBook {
 
     @FXML
     private ListView<String> listViewRecipes;
+
+    @FXML
+    private Button plusButton;
 
 
     @FXML
@@ -57,6 +63,11 @@ public class ControllerManageCookBook {
     void export2pdf(ActionEvent event) {
         controllerDefault.newWindow(exportFXML, export);
 
+    }
+
+    @FXML
+    void addRecipe(ActionEvent event) {
+        controllerDefault.newWindow(loadRecipeFXML, loadRecipeText);
     }
 
 }

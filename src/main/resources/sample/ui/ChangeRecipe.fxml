@@ -15,7 +15,7 @@
        </Text>
        <Button alignment="BOTTOM_RIGHT" layoutX="340.0" layoutY="514.0" mnemonicParsing="false" text="Ändern" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="20.0" />
       <Button fx:id="closeButton" alignment="BOTTOM_RIGHT" layoutX="266.0" layoutY="514.0" mnemonicParsing="false" onAction="#closeChangeRecipe" text="Schließen" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="82.0" />
-      <TextField layoutX="199.0" layoutY="67.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="199.0" layoutY="67.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
       <Text layoutX="17.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:*">
          <font>
             <Font size="21.0" />
@@ -31,15 +31,15 @@
             <Font size="21.0" />
          </font>
       </Text>
-      <TextArea layoutX="200.0" layoutY="408.0" prefHeight="69.0" prefWidth="201.0" />
+      <TextArea layoutX="200.0" layoutY="408.0" prefHeight="69.0" prefWidth="201.0" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="408.0" />
       <Label layoutX="10.0" layoutY="521.0" text="* Pflichtfelder" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="10.0" />
       <Text layoutX="17.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zubereitungszeit:">
          <font>
             <Font size="21.0" />
          </font>
       </Text>
-      <TextField layoutX="200.0" layoutY="379.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField layoutX="200.0" layoutY="350.0" prefHeight="25.0" prefWidth="201.0" />
+      <TextField layoutX="200.0" layoutY="379.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField layoutX="200.0" layoutY="350.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
       <Text layoutX="17.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ernährungsart:">
          <font>
             <Font size="21.0" />
@@ -85,15 +85,15 @@
             <Font size="21.0" />
          </font>
       </Text>
-      <TextField layoutX="199.0" layoutY="96.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField layoutX="199.0" layoutY="123.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField layoutX="200.0" layoutY="151.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField layoutX="199.0" layoutY="179.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField layoutX="200.0" layoutY="236.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField layoutX="200.0" layoutY="264.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField layoutX="200.0" layoutY="293.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField layoutX="200.0" layoutY="321.0" prefHeight="25.0" prefWidth="201.0" />
-      <TextField editable="false" layoutX="229.0" layoutY="207.0" prefHeight="25.0" prefWidth="171.0" />
+      <TextField layoutX="199.0" layoutY="96.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField layoutX="199.0" layoutY="123.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField layoutX="200.0" layoutY="151.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField layoutX="199.0" layoutY="179.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField layoutX="200.0" layoutY="236.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField layoutX="200.0" layoutY="264.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField layoutX="200.0" layoutY="293.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField layoutX="200.0" layoutY="321.0" prefHeight="25.0" prefWidth="201.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="15.0" />
+      <TextField editable="false" layoutX="229.0" layoutY="207.0" prefHeight="25.0" prefWidth="171.0" AnchorPane.leftAnchor="229.0" AnchorPane.rightAnchor="15.0" />
       <Button layoutX="201.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" />
       <ImageView disable="true" fitHeight="25.0" fitWidth="28.0" layoutX="202.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
          <image>
