@@ -1,9 +1,10 @@
 package sample.database;
 
 import org.javalite.activejdbc.Base;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -43,7 +44,7 @@ public class Database {
         Statement statement = connection.createStatement();
 
         // SQL statement to create tables
-        final String sql = new String(Files.readAllBytes(Paths.get(this.getClass().getClassLoader().getResource("sample/database/db.sql").getPath())));
+        final String sql = new String(Files.readAllBytes(Paths.get( new File(this.getClass().getClassLoader().getResource("sample/database/db.sql").getPath()).getAbsolutePath())));
 
         // execute the statement string
         statement.executeUpdate(sql);
