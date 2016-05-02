@@ -36,8 +36,9 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
     private DBO dbo;
 
     @SuppressWarnings("unchecked")
-    public ADAO() {
+    ADAO() {
         dboType = (Class<DBO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        LOG.debug("Used type parameter for DBO: " + dboType.getName());
         try {
             dbo = dboType.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
