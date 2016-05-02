@@ -10,8 +10,19 @@ import sample.model.IIdentifiable;
  */
 @Table("ingredient")
 public class IngredientDBO extends Model implements IIngredient, IIdentifiable {
+
     static {
         validatePresenceOf("name");
+    }
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
     }
 
     @Override
@@ -22,16 +33,6 @@ public class IngredientDBO extends Model implements IIngredient, IIdentifiable {
     @Override
     public void setName(String name) {
         setString("name", name);
-    }
-
-    @Override
-    public Long getID() {
-        return getLongId();
-    }
-
-    @Override
-    public void setID(Long id) {
-        setId(id);
     }
 
     @Override

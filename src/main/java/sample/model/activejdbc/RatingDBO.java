@@ -9,6 +9,17 @@ import sample.model.IRating;
  */
 @Table("rating")
 public class RatingDBO extends Model implements IRating {
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
+    }
+
     @Override
     public String getName() {
         return getString("name");

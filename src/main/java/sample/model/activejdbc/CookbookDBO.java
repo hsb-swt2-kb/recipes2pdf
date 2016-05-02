@@ -19,6 +19,16 @@ public class CookbookDBO extends Model implements ICookbook {
     }
 
     @Override
+    public Long getID() {
+        return getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
+    }
+
+    @Override
     public String getTitle() {
         return getString("title");
     }
@@ -46,5 +56,4 @@ public class CookbookDBO extends Model implements ICookbook {
         // Cast to underling database abstraction model
         this.remove((Model) recipe);
     }
-
 }

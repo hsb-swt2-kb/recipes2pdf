@@ -9,6 +9,17 @@ import sample.model.ISource;
  */
 @Table("source")
 public class SourceDBO extends Model implements ISource {
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
+    }
+
     @Override
     public String getName() {
         return getString("name");

@@ -9,6 +9,17 @@ import sample.model.INurture;
  */
 @Table("nurture")
 public class NurtureDBO extends Model implements INurture {
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
+    }
+
     @Override
     public String getName() {
         return getString("name");

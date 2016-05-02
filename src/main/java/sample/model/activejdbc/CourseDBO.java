@@ -9,6 +9,17 @@ import sample.model.ICourse;
  */
 @Table("course")
 public class CourseDBO extends Model implements ICourse {
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
+    }
+
     @Override
     public String getName() {
         return getString("name");

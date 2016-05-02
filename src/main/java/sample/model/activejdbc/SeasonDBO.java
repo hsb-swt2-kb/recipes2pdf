@@ -9,6 +9,17 @@ import sample.model.ISeason;
  */
 @Table("season")
 public class SeasonDBO extends Model implements ISeason {
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
+    }
+
     @Override
     public String getName() {
         return getString("name");

@@ -9,6 +9,17 @@ import sample.model.IDaytime;
  */
 @Table("daytime")
 public class DaytimeDBO extends Model implements IDaytime {
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
+    }
+
     @Override
     public String getName() {
         return getString("name");

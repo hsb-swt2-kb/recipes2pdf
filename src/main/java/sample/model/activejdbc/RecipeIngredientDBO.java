@@ -11,4 +11,15 @@ import sample.model.IRecipeIngredient;
 @Table("recipe_ingredient")
 @BelongsTo(foreignKeyName = "unit_id", parent = UnitDBO.class)
 public class RecipeIngredientDBO extends Model implements IRecipeIngredient {
+
+    @Override
+    public Long getID() {
+        return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
+    }
+
 }
