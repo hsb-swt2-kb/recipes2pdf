@@ -3,7 +3,7 @@ package sample.model;
 /**
  * Created by czoeller on 28.04.16.
  */
-public class Ingredient implements IIngredient, Identity {
+public class Ingredient implements IIngredient, IIdentifiable {
     private String name;
     private Long id;
 

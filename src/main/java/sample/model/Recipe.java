@@ -1,12 +1,15 @@
 package sample.model;
 
-import java.util.Map;
-import java.util.TreeMap;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by czoeller on 28.04.16.
  */
-public class Recipe implements IRecipe, Identity {
+public class Recipe implements IRecipe, IIdentifiable {
 
     private Long id;
     private String title;
@@ -21,7 +24,7 @@ public class Recipe implements IRecipe, Identity {
     private IDaytime daytime;
     private ISeason season;
     private INurture nurture;
-    private Map<IIngredient, Map<Integer, IUnit>> ingredients = new TreeMap<>();
+    private List<Triple<IIngredient, Integer, IUnit>> ingredients = new ArrayList<>(10);
 
     @Override
     public Long getID() {
@@ -158,27 +161,25 @@ public class Recipe implements IRecipe, Identity {
      * This is a convenience method that creates missing entities on the fly.
      *
      * @param ingredientName the name of ingredient
-     * @param amount amount of ingredient
-     * @param unitName name of the unit
+     * @param amount         amount of ingredient
+     * @param unitName       name of the unit
      */
     public void add(String ingredientName, int amount, String unitName) {
-        Map<Integer, IUnit> ingredientDetails = new TreeMap<>();
-
         IIngredient ingredient = new Ingredient();
         ingredient.setName(ingredientName);
 
         IUnit unit = new Unit();
         unit.setName(unitName);
 
-        ingredientDetails.put(amount, unit);
-        this.ingredients.put(ingredient, ingredientDetails);
+        this.ingredients.add(new ImmutableTriple<>(ingredient, amount, unit));
     }
 
     /**
      * Retrieve Map of Ingredients with details amount and unit per ingredient.
+     *
      * @return map
      */
-    public Map<IIngredient, Map<Integer, IUnit>> getIngredients() {
+    public List<Triple<IIngredient, Integer, IUnit>> getIngredients() {
         return this.ingredients;
     }
 

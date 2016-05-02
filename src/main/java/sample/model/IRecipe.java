@@ -1,14 +1,15 @@
 package sample.model;
 
-import java.util.Map;
+import org.apache.commons.lang3.tuple.Triple;
+
+import java.util.List;
 
 /**
  * Created by czoeller on 01.04.16.
  */
-public interface IRecipe {
-    Long getID();
-
+public interface IRecipe extends IIdentifiable {
     String getTitle();
+
     void setTitle(String title);
 
     void setText(String text);
@@ -60,14 +61,15 @@ public interface IRecipe {
      * This is a convenience method that creates missing entities on the fly.
      *
      * @param ingredientName the name of ingredient
-     * @param amount amount of ingredient
-     * @param unitName name of the unit
+     * @param amount         amount of ingredient
+     * @param unitName       name of the unit
      */
     void add(String ingredientName, int amount, String unitName);
 
     /**
      * Retrieve Map of Ingredients with details amount and unit per ingredient.
+     *
      * @return map
      */
-    Map<IIngredient, Map<Integer, IUnit>> getIngredients();
+    List<Triple<IIngredient, Integer, IUnit>> getIngredients();
 }

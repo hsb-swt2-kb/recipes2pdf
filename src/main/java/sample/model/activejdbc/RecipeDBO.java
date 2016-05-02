@@ -1,16 +1,17 @@
 package sample.model.activejdbc;
 
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.Many2Many;
 import org.javalite.activejdbc.annotations.Table;
 import sample.model.*;
+import sample.model.dao.IngredientDAO;
+import sample.model.dao.UnitDAO;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by czoeller on 25.03.16.
@@ -25,7 +26,7 @@ import java.util.TreeMap;
     @BelongsTo(foreignKeyName = "season_id", parent = SeasonDBO.class),
     @BelongsTo(foreignKeyName = "nurture_id", parent = NurtureDBO.class)
 })
-public class RecipeDBO extends Model implements IRecipe, Identity {
+public class RecipeDBO extends Model implements IRecipe, IIdentifiable {
 
     @Override
     public Long getID() {
@@ -172,7 +173,7 @@ public class RecipeDBO extends Model implements IRecipe, Identity {
         final RecipeIngredientDBO recipeIngredient = RecipeIngredientDBO.createIt("amount", amount);
         // Create HasMany Relation unit ---< recipe_ingredient
         // Create unit on the fly if it was not there yet
-        if( ! unit.isPresent() ) {
+        if (!unit.isPresent()) {
             Unit newUnit = new Unit();
             newUnit.setName(unitName);
             unitDAO.insert(newUnit);
@@ -184,7 +185,7 @@ public class RecipeDBO extends Model implements IRecipe, Identity {
 
         // set both recipeIngredient ends
         // Create ingredient on the fly if it was not there yet
-        if( ! ingredient.isPresent() ) {
+        if (!ingredient.isPresent()) {
             Ingredient newIngredient = new Ingredient();
             newIngredient.setName(unitName);
             ingredientDAO.insert(newIngredient);
@@ -200,9 +201,8 @@ public class RecipeDBO extends Model implements IRecipe, Identity {
      * {@inheritDoc}
      */
     @Override
-    public Map<IIngredient, Map<Integer, IUnit>> getIngredients() {
-        Map<IIngredient, Map<Integer, IUnit>> map = new TreeMap<>();
-        Map<Integer, IUnit> innerMap = new TreeMap<>();
+    public List<Triple<IIngredient, Integer, IUnit>> getIngredients() {
+        List<Triple<IIngredient, Integer, IUnit>> ingredients = new ArrayList<>();
 
         final List<RecipeIngredientDBO> recipeIngredients = this.getAll(RecipeIngredientDBO.class);
 
@@ -210,11 +210,10 @@ public class RecipeDBO extends Model implements IRecipe, Identity {
             final IIngredient ingredient = recipeIngredient.parent(IngredientDBO.class);
             final Integer amount = recipeIngredient.getInteger("amount");
             final IUnit unit = recipeIngredient.parent(UnitDBO.class);
-            innerMap.put(amount, unit);
-            map.put(ingredient, innerMap);
+            ingredients.add(new ImmutableTriple<>(ingredient, amount, unit));
         }
 
-        return map;
+        return ingredients;
     }
 
 }

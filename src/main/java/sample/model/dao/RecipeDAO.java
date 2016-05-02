@@ -1,5 +1,7 @@
-package sample.model;
+package sample.model.dao;
 
+import sample.model.Category;
+import sample.model.Recipe;
 import sample.model.activejdbc.CategoryDBO;
 import sample.model.activejdbc.RecipeDBO;
 
@@ -12,12 +14,12 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
     Recipe toPOJO(RecipeDBO recipeDBO) {
         final Recipe recipe = new Recipe();
         recipe.setID(recipeDBO.getID());
-        recipe.setTitle( recipeDBO.getTitle() );
+        recipe.setTitle(recipeDBO.getTitle());
 
         final CategoryDBO categoryDBO = (CategoryDBO) recipeDBO.getCategory();
-        if(categoryDBO != null) {
+        if (categoryDBO != null) {
             final Category category = new CategoryDAO().toPOJO(categoryDBO);
-            recipe.setCategory( category );
+            recipe.setCategory(category);
         }
 
         return recipe;
@@ -30,9 +32,9 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
         recipeDBO.setTitle(recipe.getTitle());
 
         final Category category = (Category) recipe.getCategory();
-        if(category != null) {
+        if (category != null) {
             final CategoryDBO categoryDBO = new CategoryDAO().toDBO(category);
-            recipeDBO.setCategory( categoryDBO );
+            recipeDBO.setCategory(categoryDBO);
         }
         return recipeDBO;
     }

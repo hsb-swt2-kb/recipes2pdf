@@ -31,7 +31,7 @@ public class CookbookDBO extends Model implements ICookbook {
     @Override
     public List<IRecipe> getRecipes() {
         List<IRecipe> list = new ArrayList<>();
-        list.addAll( this.getAll(RecipeDBO.class) );
+        list.addAll(this.getAll(RecipeDBO.class));
         return list;
     }
 

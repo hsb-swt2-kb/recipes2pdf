@@ -3,7 +3,7 @@ package sample.model;
 /**
  * Created by czoeller on 30.04.2016.
  */
-public class Category implements ICategory, Identity {
+public class Category implements ICategory, IIdentifiable {
     private Long id;
     private String name;
 

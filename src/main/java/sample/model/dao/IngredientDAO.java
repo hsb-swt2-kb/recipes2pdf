@@ -1,5 +1,6 @@
-package sample.model;
+package sample.model.dao;
 
+import sample.model.Ingredient;
 import sample.model.activejdbc.IngredientDBO;
 
 /**
@@ -11,15 +12,15 @@ public class IngredientDAO extends ADAO<Ingredient, IngredientDBO> {
     Ingredient toPOJO(IngredientDBO ingredientDBO) {
         final Ingredient ingredient = new Ingredient();
         ingredient.setID(ingredientDBO.getID());
-        ingredient.setName( ingredientDBO.getName() );
+        ingredient.setName(ingredientDBO.getName());
         return ingredient;
     }
 
     @Override
     public IngredientDBO toDBO(Ingredient pojo) {
         IngredientDBO ingredientDBO = new IngredientDBO();
-        if( findById( pojo.getID( ) ).isPresent()  ) {
-            ingredientDBO.setID( pojo.getID() ) ;
+        if (findById(pojo.getID()).isPresent()) {
+            ingredientDBO.setID(pojo.getID());
         }
 
         ingredientDBO.setName(pojo.getName());

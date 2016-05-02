@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import sample.model.IRecipe;
 import sample.model.Recipe;
-import sample.model.RecipeDAO;
+import sample.model.dao.RecipeDAO;
 
 import java.util.List;
 import java.util.Optional;
@@ -172,8 +172,8 @@ public class RecipeTest extends ADatabaseTest {
     private List<String> getIngredientsNames(IRecipe nudeln) {
         return nudeln
             .getIngredients()
-            .keySet()
             .stream()
+            .map(iIngredientIntegerIUnitTriple -> iIngredientIntegerIUnitTriple.getLeft() )
             .map(iIngredient -> iIngredient.getName())
             .collect(Collectors.toList());
     }

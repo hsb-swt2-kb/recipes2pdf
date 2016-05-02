@@ -3,9 +3,9 @@ package sample.model.activejdbc;
 import org.junit.Before;
 import org.junit.Test;
 import sample.model.Category;
-import sample.model.CategoryDAO;
+import sample.model.dao.CategoryDAO;
 import sample.model.Recipe;
-import sample.model.RecipeDAO;
+import sample.model.dao.RecipeDAO;
 
 import java.util.Optional;
 

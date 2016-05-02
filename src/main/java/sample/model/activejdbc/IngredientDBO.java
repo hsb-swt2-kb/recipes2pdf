@@ -3,14 +3,13 @@ package sample.model.activejdbc;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 import sample.model.IIngredient;
-import sample.model.IRecipeIngredient;
-import sample.model.Identity;
+import sample.model.IIdentifiable;
 
 /**
  * Created by czoeller on 28.03.16.
  */
 @Table("ingredient")
-public class IngredientDBO extends Model implements IIngredient, Identity {
+public class IngredientDBO extends Model implements IIngredient, IIdentifiable {
     static {
         validatePresenceOf("name");
     }

@@ -3,13 +3,13 @@ package sample.model.activejdbc;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 import sample.model.IUnit;
-import sample.model.Identity;
+import sample.model.IIdentifiable;
 
 /**
  * Created by czoeller on 02.04.16.
  */
 @Table("unit")
-public class UnitDBO extends Model implements IUnit, Identity {
+public class UnitDBO extends Model implements IUnit, IIdentifiable {
 
     @Override
     public Long getID() {
