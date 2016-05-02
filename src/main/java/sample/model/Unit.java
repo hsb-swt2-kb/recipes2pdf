@@ -3,11 +3,17 @@ package sample.model;
 /**
  * Created by czoeller on 28.04.16.
  */
-public class Unit implements IUnit {
+public class Unit implements IUnit, Identity {
     private String name;
     private Long id;
 
-    public Unit(Long id) {
+    @Override
+    public Long getID() {
+        return this.id;
+    }
+
+    @Override
+    public void setID(Long id) {
         this.id = id;
     }
 

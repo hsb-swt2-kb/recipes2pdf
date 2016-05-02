@@ -3,11 +3,17 @@ package sample.model;
 /**
  * Created by czoeller on 28.04.16.
  */
-public class Ingredient implements IIngredient {
+public class Ingredient implements IIngredient, Identity {
     private String name;
     private Long id;
 
-    public Ingredient(Long id) {
+    @Override
+    public Long getID() {
+        return this.id;
+    }
+
+    @Override
+    public void setID(Long id) {
         this.id = id;
     }
 
@@ -21,13 +27,4 @@ public class Ingredient implements IIngredient {
         this.name = name;
     }
 
-    @Override
-    public long getID() {
-        return this.id;
-    }
-
-    @Override
-    public int compareTo(IIngredient o) {
-        return 0;
-    }
 }

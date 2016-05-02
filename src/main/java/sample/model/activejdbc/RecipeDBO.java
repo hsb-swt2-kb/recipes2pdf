@@ -9,6 +9,7 @@ import sample.model.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 /**
@@ -24,16 +25,16 @@ import java.util.TreeMap;
     @BelongsTo(foreignKeyName = "season_id", parent = SeasonDBO.class),
     @BelongsTo(foreignKeyName = "nurture_id", parent = NurtureDBO.class)
 })
-public class RecipeDBO extends Model implements IRecipe {
-
-    public RecipeDBO() {}
-
-    public RecipeDBO(Long id) {
-    }
+public class RecipeDBO extends Model implements IRecipe, Identity {
 
     @Override
     public Long getID() {
         return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
     }
 
     public void setTitle(String title) {
@@ -156,28 +157,43 @@ public class RecipeDBO extends Model implements IRecipe {
     public void add(String ingredientName, int amount, String unitName) {
         throw new IllegalStateException("Unimplemented");
     }*/
+
     /**
      * {@inheritDoc}
      */
-    @Override
-   public void add(String ingredientName, int amount, String unitName) {
-        /*IIngredientRepository ingredientRepository = new IngredientRepository();
-        IUnitRepository unitRepository = new UnitRepository();
+    public void add(String ingredientName, int amount, String unitName) {
+        final IngredientDAO ingredientDAO = new IngredientDAO();
+        final UnitDAO unitDAO = new UnitDAO();
 
-        Optional<IIngredient> ingredient = ingredientRepository.findFirst("name = ?", ingredientName);
-        Optional<IUnit> unit = unitRepository.findFirst("name = ?", unitName);
+        final Optional<Ingredient> ingredient = ingredientDAO.findFirst("name = ?", ingredientName);
+        final Optional<Unit> unit = unitDAO.findFirst("name = ?", unitName);
 
         // Create Many2Many Relation RecipeDBO<---recipeIngredient--->IngredientDBO
         final RecipeIngredientDBO recipeIngredient = RecipeIngredientDBO.createIt("amount", amount);
         // Create HasMany Relation unit ---< recipe_ingredient
         // Create unit on the fly if it was not there yet
-        unit.orElseGet(() -> (IUnit) UnitDBO.createIt("name", unitName)).add(recipeIngredient);
+        if( ! unit.isPresent() ) {
+            Unit newUnit = new Unit();
+            newUnit.setName(unitName);
+            unitDAO.insert(newUnit);
+            unitDAO.toDBO(newUnit).add(recipeIngredient);
+        } else {
+            final UnitDBO unitDBO = unitDAO.toDBO(unit.get());
+            unitDBO.add(recipeIngredient);
+        }
 
         // set both recipeIngredient ends
         // Create ingredient on the fly if it was not there yet
-        ingredient.orElseGet(() -> (IIngredient) IngredientDBO.createIt("name", ingredientName)).add(recipeIngredient);
-        this.add((Model) recipeIngredient);*/
-
+        if( ! ingredient.isPresent() ) {
+            Ingredient newIngredient = new Ingredient();
+            newIngredient.setName(unitName);
+            ingredientDAO.insert(newIngredient);
+            ingredientDAO.toDBO(newIngredient).add(recipeIngredient);
+        } else {
+            final IngredientDBO ingredientDBO = ingredientDAO.toDBO(ingredient.get());
+            ingredientDBO.add(recipeIngredient);
+        }
+        this.add(recipeIngredient);
     }
 
     /**
@@ -190,7 +206,7 @@ public class RecipeDBO extends Model implements IRecipe {
 
         final List<RecipeIngredientDBO> recipeIngredients = this.getAll(RecipeIngredientDBO.class);
 
-        for( RecipeIngredientDBO recipeIngredient : recipeIngredients ) {
+        for (RecipeIngredientDBO recipeIngredient : recipeIngredients) {
             final IIngredient ingredient = recipeIngredient.parent(IngredientDBO.class);
             final Integer amount = recipeIngredient.getInteger("amount");
             final IUnit unit = recipeIngredient.parent(UnitDBO.class);

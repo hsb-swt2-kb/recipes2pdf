@@ -6,7 +6,7 @@ import java.util.TreeMap;
 /**
  * Created by czoeller on 28.04.16.
  */
-public class Recipe implements IRecipe {
+public class Recipe implements IRecipe, Identity {
 
     private Long id;
     private String title;
@@ -23,13 +23,14 @@ public class Recipe implements IRecipe {
     private INurture nurture;
     private Map<IIngredient, Map<Integer, IUnit>> ingredients = new TreeMap<>();
 
-    public Recipe(Long id) {
-        this.id = id;
-    }
-
     @Override
     public Long getID() {
         return this.id;
+    }
+
+    @Override
+    public void setID(Long id) {
+        this.id = id;
     }
 
     @Override
@@ -161,12 +162,12 @@ public class Recipe implements IRecipe {
      * @param unitName name of the unit
      */
     public void add(String ingredientName, int amount, String unitName) {
-        IIngredient ingredient = new Ingredient(null);
         Map<Integer, IUnit> ingredientDetails = new TreeMap<>();
 
+        IIngredient ingredient = new Ingredient();
         ingredient.setName(ingredientName);
 
-        IUnit unit = new Unit(null);
+        IUnit unit = new Unit();
         unit.setName(unitName);
 
         ingredientDetails.put(amount, unit);

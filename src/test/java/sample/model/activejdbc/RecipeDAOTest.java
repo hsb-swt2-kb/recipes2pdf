@@ -25,7 +25,7 @@ public class RecipeDAOTest extends ADatabaseTest {
 
     @Test
     public void insertTest() {
-        final Recipe recipe = new Recipe(null);
+        final Recipe recipe = new Recipe();
         final int sizeBefore = recipeDAO.getAll().size();
         recipeDAO.insert(recipe);
         final int sizeAfter = recipeDAO.getAll().size();
@@ -34,14 +34,15 @@ public class RecipeDAOTest extends ADatabaseTest {
 
     @Test
     public void insertAggregateTest() {
-        final Recipe recipe = new Recipe(null);
+        final Recipe recipe = new Recipe();
         String recipeTitle = "Recipe Title";
         String categoryTitle = "Category Title";
         recipe.setTitle(recipeTitle);
-        final Category category = new Category(null);
-        category.setName("Test Category");
+        final Category category = new Category();
+        category.setName(categoryTitle);
         final CategoryDAO categoryDAO = new CategoryDAO();
         categoryDAO.insert(category);
+        recipe.setCategory(category);
         recipeDAO.insert(recipe);
 
         final Optional<Recipe> first = recipeDAO.findFirst("title = ?", recipeTitle);

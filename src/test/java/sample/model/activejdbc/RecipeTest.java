@@ -2,7 +2,9 @@ package sample.model.activejdbc;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import sample.model.IRecipe;
 import sample.model.Recipe;
 import sample.model.RecipeDAO;
@@ -18,53 +20,57 @@ import static org.mockito.Mockito.when;
 /**
  * Created by czoeller on 08.04.16.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class RecipeTest extends ADatabaseTest {
 
-    Recipe nudeln;
+    Recipe recipe;
     @Mock
     RecipeDAO recipeDAO;
 
     @Before
     public void setUp() {
-        recipeDAO = new RecipeDAO();
-        when(recipeDAO.findFirst(any(String.class), any(String.class))).thenReturn( Optional.of( new Recipe(null) ) );
+        final Recipe recipe = new Recipe();
+        recipe.setID(1L);
+        when(recipeDAO.findFirst(any(String.class), any())).thenReturn( Optional.of(recipe) );
+        when(recipeDAO.findById(1L)).thenReturn(  Optional.of(recipe)  );
+        when(recipeDAO.update(any(Recipe.class))).then(invocation -> { this.recipe = invocation.getArgumentAt(0, Recipe.class); return true; } );
         final Optional<Recipe> nudeln = recipeDAO.findFirst("title = ?", "Nudeln mit Soße");
-        this.nudeln = nudeln.orElseThrow(IllegalStateException::new);
+        this.recipe = nudeln.orElseThrow(IllegalStateException::new);
     }
 
     @Test
     public void testTitle() {
         String title = "The title of the recipe.";
-        nudeln.setTitle(title);
-        recipeDAO.update(nudeln);
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setTitle(title);
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getTitle()).shouldBeEqual(title);
     }
 
     @Test
     public void testText() {
         String text = "Description of the recipe. The steps etc.";
-        nudeln.setText(text);
-        recipeDAO.update(nudeln);
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setText(text);
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getText()).shouldBeEqual(text);
     }
 
     @Test
     public void testPortions() {
         int portions = 3;
-        nudeln.setPortions(3);
-        recipeDAO.update(nudeln);
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setPortions(3);
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getPortions()).shouldBeEqual(portions);
     }
 
     @Test
     public void testDuration() {
         int duration = 3;
-        nudeln.setDuration(duration);
-        recipeDAO.update(nudeln);
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setDuration(duration);
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getDuration()).shouldBeEqual(duration);
     }
 
@@ -73,9 +79,9 @@ public class RecipeTest extends ADatabaseTest {
     @Test
     public void testCalories() {
         int setCalories = 300;
-        nudeln.setCalories(setCalories);
-        recipeDAO.update(nudeln);
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setCalories(setCalories);
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getCalories()).shouldBeEqual(setCalories);
     }
 
@@ -85,9 +91,9 @@ public class RecipeTest extends ADatabaseTest {
         String categoryName = "Example CategoryDBO";
         category.setName(categoryName);
         categoryDAO.update(category);
-        nudeln.setCategory(category);
-        recipeDAO.update(nudeln);
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setCategory(category);
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getCategory().getName()).shouldBeEqual(categoryName);
     }
 
@@ -97,9 +103,9 @@ public class RecipeTest extends ADatabaseTest {
         String courseName = "main course";
         course.setName(courseName);
         course.saveIt();
-        nudeln.setCourse(course);
-        nudeln.saveIt();
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setCourse(course);
+        recipe.saveIt();
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getCourse().getName()).shouldBeEqual(courseName);
     }
 
@@ -109,9 +115,9 @@ public class RecipeTest extends ADatabaseTest {
         String regionName = "Spain";
         region.setName(regionName);
         region.saveIt();
-        nudeln.setRegion(region);
-        nudeln.saveIt();
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setRegion(region);
+        recipe.saveIt();
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getRegion().getName()).shouldBeEqual(regionName);
     }
 
@@ -121,9 +127,9 @@ public class RecipeTest extends ADatabaseTest {
         String daytimeName = "Breakfast";
         daytime.setName(daytimeName);
         daytime.saveIt();
-        nudeln.setDaytime(daytime);
-        nudeln.saveIt();
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setDaytime(daytime);
+        recipe.saveIt();
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getDaytime().getName()).shouldBeEqual(daytimeName);
     }
 
@@ -133,9 +139,9 @@ public class RecipeTest extends ADatabaseTest {
         String seasonName = "Spring";
         season.setName(seasonName);
         season.saveIt();
-        nudeln.setSeason(season);
-        nudeln.saveIt();
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setSeason(season);
+        recipe.saveIt();
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getSeason().getName()).shouldBeEqual(seasonName);
     }
 
@@ -145,15 +151,19 @@ public class RecipeTest extends ADatabaseTest {
         String nurtureName = "High carb";
         nurture.setName(nurtureName);
         nurture.saveIt();
-        nudeln.setNurture(nurture);
-        nudeln.saveIt();
-        final Recipe byId = recipeDAO.findById(nudeln.getID()).get();
+        recipe.setNurture(nurture);
+        recipe.saveIt();
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getNurture().getName()).shouldBeEqual(nurtureName);
     }*/
 
     @Test
     public void testGetIngredients() {
-        final List<String> ingredientNames = getIngredientsNames(nudeln);
+        recipe.add("Nudeln", 2, "kg");
+        recipe.add("Paprika", 3, "kg");
+        recipeDAO.update(recipe);
+        final Recipe recipe = recipeDAO.findById(1L).get();
+        final List<String> ingredientNames = getIngredientsNames(recipe);
         the(ingredientNames).shouldContain("Nudeln");
         the(ingredientNames).shouldContain("Paprika");
         the(ingredientNames).shouldNotContain("Schokolade");

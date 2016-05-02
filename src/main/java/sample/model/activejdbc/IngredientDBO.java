@@ -4,12 +4,13 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 import sample.model.IIngredient;
 import sample.model.IRecipeIngredient;
+import sample.model.Identity;
 
 /**
  * Created by czoeller on 28.03.16.
  */
 @Table("ingredient")
-public class IngredientDBO extends Model implements IIngredient {
+public class IngredientDBO extends Model implements IIngredient, Identity {
     static {
         validatePresenceOf("name");
     }
@@ -25,12 +26,13 @@ public class IngredientDBO extends Model implements IIngredient {
     }
 
     @Override
-    public long getID() {
+    public Long getID() {
         return getLongId();
     }
 
-    public void add(IRecipeIngredient recipeIngredient) {
-        this.add((Model) recipeIngredient);
+    @Override
+    public void setID(Long id) {
+        setId(id);
     }
 
     @Override

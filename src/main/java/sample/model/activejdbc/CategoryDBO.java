@@ -3,16 +3,22 @@ package sample.model.activejdbc;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 import sample.model.ICategory;
+import sample.model.Identity;
 
 /**
  * Created by czoeller on 03.04.16.
  */
 @Table("category")
-public class CategoryDBO extends Model implements ICategory {
+public class CategoryDBO extends Model implements ICategory, Identity {
 
     @Override
     public Long getID() {
         return this.getLongId();
+    }
+
+    @Override
+    public void setID(Long id) {
+        setId(id);
     }
 
     @Override
