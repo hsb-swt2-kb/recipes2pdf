@@ -1,10 +1,9 @@
 package sample.ui;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
+import javafx.fxml.FXML;
 /**
  * Created by Tobias on 30.04.2016.
  */

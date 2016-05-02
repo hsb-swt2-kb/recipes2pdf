@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 
 public class ControllerChangeCookBook {
 
+    @FXML
+    private Button fileChooserButton;
+
         @FXML
         private Button closeButton;
 
@@ -17,6 +20,13 @@ public class ControllerChangeCookBook {
             stage.close();
 
         }
+
+    @FXML
+    void openFileChooser(ActionEvent event) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.importFiles();
+
+    }
 
     }
 
