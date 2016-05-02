@@ -25,6 +25,7 @@ public class CategoryDAO extends ADAO<Category, CategoryDBO> {
         }
 
         categoryDBO.setName(pojo.getName());
+        categoryDBO.save();
         return categoryDBO;
     }
 }

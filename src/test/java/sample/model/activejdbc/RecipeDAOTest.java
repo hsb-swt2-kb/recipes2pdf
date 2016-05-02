@@ -26,6 +26,7 @@ public class RecipeDAOTest extends ADatabaseTest {
     @Test
     public void insertTest() {
         final Recipe recipe = new Recipe();
+        recipe.setTitle("Hallo");
         final int sizeBefore = recipeDAO.getAll().size();
         recipeDAO.insert(recipe);
         final int sizeAfter = recipeDAO.getAll().size();

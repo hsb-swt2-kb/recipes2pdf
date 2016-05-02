@@ -28,6 +28,10 @@ import java.util.*;
 })
 public class RecipeDBO extends Model implements IRecipe, IIdentifiable {
 
+    static {
+        validatePresenceOf("title");
+    }
+
     @Override
     public Long getID() {
         return this.getLongId();
