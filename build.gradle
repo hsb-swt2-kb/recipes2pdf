@@ -94,8 +94,3 @@ jacocoTestReport {
 }
 
 check.dependsOn jacocoTestReport
-
-task runn(dependsOn: 'build', type: JavaExec) {
-    main = 'sample.model.TestORM'
-    classpath = sourceSets.main.runtimeClasspath
-}
