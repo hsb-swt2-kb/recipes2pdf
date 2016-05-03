@@ -53,8 +53,7 @@ class Config implements IConfig {
     }
 
     @Override
-    public Properties getProperies() {
-        return properties;
+    public void setProperty(String key, String value) throws IllegalArgumentException {
+        properties.setProperty(key, value);
     }
-
 }
