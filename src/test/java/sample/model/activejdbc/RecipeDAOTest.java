@@ -50,4 +50,20 @@ public class RecipeDAOTest extends ADatabaseTest {
         the(first.get().getTitle()).shouldBeEqual(recipeTitle);
         the(first.get().getCategory().getName()).shouldBeEqual(categoryTitle);
     }
+
+    @Test
+    public void insertImplicitAggregateTest() {
+        final Recipe recipe = new Recipe();
+        String recipeTitle = "Recipe Title";
+        String categoryTitle = "Category Title";
+        recipe.setTitle(recipeTitle);
+        final Category category = new Category();
+        category.setName(categoryTitle);
+        recipe.setCategory(category);
+        recipeDAO.insert(recipe);
+
+        final Optional<Recipe> first = recipeDAO.findFirst("title = ?", recipeTitle);
+        the(first.get().getTitle()).shouldBeEqual(recipeTitle);
+        the(first.get().getCategory().getName()).shouldBeEqual(categoryTitle);
+    }
 }
