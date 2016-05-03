@@ -76,41 +76,47 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
         recipeDBO.setDuration(recipe.getDuration());
         recipeDBO.setImage(recipe.getImage());
         recipeDBO.setCalories(recipe.getCalories());
-        //recipeDBO.saveIt(); // IMPORTANT to attach ingredients and so on
+        recipeDBO.saveIt();
 
         final Category category = (Category) recipe.getCategory();
         if (category != null) {
             final CategoryDBO categoryDBO = new CategoryDAO().toDBO(category);
+            categoryDBO.saveIt();
             recipeDBO.setCategory(categoryDBO);
         }
 
         final Course course = (Course) recipe.getCourse();
         if( null != course ) {
             final CourseDBO courseDBO = new CourseDAO().toDBO(course);
+            courseDBO.saveIt();
             recipeDBO.setCourse( courseDBO );
         }
 
         final Region region = (Region) recipe.getRegion();
         if( null != region ) {
             final RegionDBO regionDBO = new RegionDAO().toDBO(region);
+            regionDBO.saveIt();
             recipeDBO.setRegion( regionDBO );
         }
 
         final Daytime daytime = (Daytime) recipe.getDaytime();
         if( null != daytime ) {
             final DaytimeDBO daytimeDBO = new DaytimeDAO().toDBO(daytime);
+            daytimeDBO.saveIt();
             recipeDBO.setDaytime( daytimeDBO );
         }
 
         final Season season = (Season) recipe.getSeason();
         if( null != season ) {
             final SeasonDBO seasonDBO = new SeasonDAO().toDBO(season);
+            seasonDBO.saveIt();
             recipeDBO.setSeason( seasonDBO );
         }
 
         final Nurture nurture = (Nurture) recipe.getNurture();
         if( null != nurture ) {
             final NurtureDBO nurtureDBO = new NurtureDAO().toDBO(nurture);
+            nurtureDBO.saveIt();
             recipeDBO.setNurture( nurtureDBO );
         }
 

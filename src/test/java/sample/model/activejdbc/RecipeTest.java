@@ -5,10 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import sample.model.*;
-import sample.model.dao.DaytimeDAO;
-import sample.model.dao.NurtureDAO;
-import sample.model.dao.RecipeDAO;
-import sample.model.dao.SeasonDAO;
+import sample.model.dao.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -91,11 +88,11 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getCategory().getName()).shouldBeEqual(categoryName);
     }
 
-   /* @Test
+   @Test
     public void testCourse() {
         CourseDAO courseDAO = new CourseDAO();
         Course course = new Course();
-        String courseName = "main course";
+        String courseName = "dessert";
         course.setName(courseName);
         courseDAO.insert(course);
         recipe.setCourse(course);
@@ -103,7 +100,7 @@ public class RecipeTest extends ADatabaseTest {
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getCourse().getName()).shouldBeEqual(courseName);
     }
-*/
+
     @Test
     public void testRegion() {
         Region region = new Region();
@@ -157,17 +154,17 @@ public class RecipeTest extends ADatabaseTest {
     @Test
     public void testGetIngredients() {
         recipe.add("Nudeln", 2, "kg");
-        recipe.add("Paprika", 3, "kg");
+        recipe.add("Nüsse", 3, "kleine Stück");
         recipeDAO.update(recipe);
-        final Recipe recipe = recipeDAO.findById(1L).get();
-        final List<String> ingredientNames = getIngredientsNames(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
+        final List<String> ingredientNames = getIngredientsNames(byId);
         the(ingredientNames).shouldContain("Nudeln");
         the(ingredientNames).shouldContain("Paprika");
         the(ingredientNames).shouldNotContain("Schokolade");
     }
 
-    private List<String> getIngredientsNames(IRecipe nudeln) {
-        return nudeln
+    private List<String> getIngredientsNames(IRecipe recipe) {
+        return recipe
             .getIngredients()
             .stream()
             .map(iIngredientIntegerIUnitTriple -> iIngredientIntegerIUnitTriple.getLeft() )

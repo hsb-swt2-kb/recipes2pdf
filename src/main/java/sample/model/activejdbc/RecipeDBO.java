@@ -181,15 +181,20 @@ public class RecipeDBO extends Model implements IRecipe {
 
         // Create Many2Many Relation RecipeDBO<---recipeIngredient--->IngredientDBO
         final RecipeIngredientDBO recipeIngredient = RecipeIngredientDBO.createIt("amount", amount);
+
+
+        UnitDBO unitDBO;
+        IngredientDBO ingredientDBO;
         // Create HasMany Relation unit ---< recipe_ingredient
         // Create unit on the fly if it was not there yet
         if (!unit.isPresent()) {
             Unit newUnit = new Unit();
             newUnit.setName(unitName);
             unitDAO.insert(newUnit);
-            unitDAO.toDBO(newUnit).add(recipeIngredient);
+            unitDBO = unitDAO.toDBO(newUnit);
+            unitDBO.add(recipeIngredient);
         } else {
-            final UnitDBO unitDBO = unitDAO.toDBO(unit.get());
+            unitDBO = unitDAO.toDBO(unit.get());
             unitDBO.add(recipeIngredient);
         }
 
@@ -199,13 +204,14 @@ public class RecipeDBO extends Model implements IRecipe {
             Ingredient newIngredient = new Ingredient();
             newIngredient.setName(unitName);
             ingredientDAO.insert(newIngredient);
-            ingredientDAO.toDBO(newIngredient).add(recipeIngredient);
+            ingredientDBO = ingredientDAO.toDBO(newIngredient);
+            ingredientDBO.add(recipeIngredient);
         } else {
-            final IngredientDBO ingredientDBO = ingredientDAO.toDBO(ingredient.get());
+            ingredientDBO = ingredientDAO.toDBO(ingredient.get());
             ingredientDBO.add(recipeIngredient);
         }
 
-        final boolean alreadyPersisted = 0 < RecipeIngredientDBO.count("recipe_id = ? AND ingredient_id = ?", this.getID(), ingredient.get().getID());
+        final boolean alreadyPersisted = 0 < RecipeIngredientDBO.count("recipe_id = ? AND ingredient_id = ?", this.getID(), ingredientDBO.getID());
         if( !alreadyPersisted ) {
             this.add(recipeIngredient);
             LOG.info("Added new recipe ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "]");

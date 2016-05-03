@@ -24,7 +24,6 @@ public class RegionDAO extends ADAO<Region, RegionDBO> {
         }
 
         regionDBO.setName(pojo.getName());
-        regionDBO.save();
         return regionDBO;
     }
 }

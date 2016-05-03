@@ -24,7 +24,6 @@ public class CourseDAO extends ADAO<Course, CourseDBO> {
         }
 
         courseDBO.setName(pojo.getName());
-        courseDBO.save();
         return courseDBO;
     }
 }
