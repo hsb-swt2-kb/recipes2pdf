@@ -12,7 +12,7 @@ class Config implements IConfig {
 
     private static Config config = new Config();
     private Properties properties;
-
+    final String PROGRAM_USERDATA_DIR = System.getProperty("user.home") + File.separator + ".recipes2pdf";
 
     private Config() {
 
@@ -20,7 +20,7 @@ class Config implements IConfig {
 
         setProperties();
         try {
-            properties.store(new FileOutputStream(IConfig.PROGRAM_USERDATA_DIR + File.separator + "config.txt"), "Properties");
+            properties.store(new FileOutputStream(PROGRAM_USERDATA_DIR + File.separator + "config.txt"), "Properties");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,13 +43,18 @@ class Config implements IConfig {
 
 
     public String getProperty(String key) throws IllegalArgumentException {
-        if (!properties.containsKey(key)) {
+        if (key.equalsIgnoreCase("PROGRAM_USERDATA_DIR")){
+            return PROGRAM_USERDATA_DIR;
+        }
+        else if (!properties.containsKey(key)) {
             throw new IllegalArgumentException("Property " + key + "not found!");
         }
         return properties.getProperty(key);
     }
 
-    public String getProperyList() {
-        return properties.toString();
+    @Override
+    public Properties getProperies() {
+        return properties;
     }
+
 }

@@ -3,6 +3,7 @@ package sample.builder.pdfBuilder;
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
 import sample.builder.IBuilder;
+import sample.config.IConfig;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 
@@ -24,18 +25,14 @@ public class PdfBuilder implements IBuilder {
         this.config = config;
     }
 
-    public PdfBuilder() {
-        this.config = new PdfBuilderConfig();
-    }
-
-    private void parseTexFile(File outputTexFile, ICookbook cookbook) throws IOException {
+    private void parseTexFile(File outputTexFile, ICookbook cookbook) throws Exception {
         JLRConverter converter = new JLRConverter(config.getTemplateDir());
         converter.replace("cookbook", cookbook);
         System.out.println(config.getTemplateDir());
         converter.replace("referenceNumber", "refNum"); //TODO: Generate Referencenumber out of cookbook refnum-rule (but how?)
         converter.replace("imgDir", config.getImageDir().getAbsolutePath());
         if (!converter.parse(config.getTemplateFile(), outputTexFile)) {
-            new Exception("Convert template to " + config.getOutputTexFile(cookbook.getTitle()) + " failed! Error Message:\n" + converter.getErrorMessage()); //TODO: Display ErrorMessage in GUI?
+            throw new Exception("Convert template to " + config.getOutputTexFile(cookbook.getTitle()) + " failed! Error Message:\n" + converter.getErrorMessage()); //TODO: Display ErrorMessage in GUI?
         }
     }
 

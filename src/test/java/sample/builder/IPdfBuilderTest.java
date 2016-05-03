@@ -6,23 +6,32 @@ import org.apache.pdfbox.util.PDFTextStripper;
 import org.junit.Test;
 import sample.builder.pdfBuilder.PdfBuilder;
 import sample.builder.pdfBuilder.PdfBuilderConfig;
+import sample.config.IConfig;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 
+import javax.swing.*;
 import java.io.File;
+import java.util.ArrayList;
 
 public class IPdfBuilderTest {
     @Test
 
     public void testRecipePdfBuilder() throws Throwable {
-        IBuilder builder = new PdfBuilder(new PdfBuilderConfig());
+        ArrayList<IBuilder> builderList = new ArrayList<>();
+        IBuilder pdfBuilder = new PdfBuilder(new PdfBuilderConfig(IConfig.getInstance()));
+        builderList.add(pdfBuilder);
+        BuilderController builderController = new BuilderController(builderList);
 
+        ICookbook cookbook = ICookbook.getInstance();
 
-        IRecipe recipe = IRecipe.getInstance();
-        recipe.setTitle("Mein Rezept");
+        for (int i = 1; i <= 10; i++) {
+            IRecipe tempRecipe = IRecipe.getInstance();
+            tempRecipe.setTitle(i + ". Rezept");
+            cookbook.addRecipe(tempRecipe);
+        }
 
-        File recipePDF = builder.build(recipe);
-
+        File recipePDF = builderController.build(cookbook,"pdf");
         PDDocument pdfDoc;
 
         pdfDoc = PDDocument.load(recipePDF);
@@ -36,14 +45,8 @@ public class IPdfBuilderTest {
 
 
     public void testCookbookPdfBuilder() {
-        IBuilder builder = new PdfBuilder(new PdfBuilderConfig());
+        IBuilder builder = new PdfBuilder(new PdfBuilderConfig(IConfig.getInstance()));
 
-        ICookbook cookbook = ICookbook.getInstance();
 
-        for (int i = 1; i <= 10; i++) {
-            IRecipe tempRecipe = IRecipe.getInstance();
-            tempRecipe.setTitle(i + ". Rezept");
-            cookbook.addRecipe(tempRecipe);
-        }
     }
 }
