@@ -5,9 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import sample.model.IRecipe;
-import sample.model.Recipe;
-import sample.model.dao.RecipeDAO;
+import sample.model.*;
+import sample.model.dao.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -85,13 +84,14 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getCalories()).shouldBeEqual(setCalories);
     }
 
-/*    @Test
+    @Test
     public void testCategory() {
-        ICategory category = ICategory.getInstance();
+        final CategoryDAO categoryDAO = new CategoryDAO();
+        Category category = new Category();
         String categoryName = "Example CategoryDBO";
         category.setName(categoryName);
-        categoryDAO.update(category);
         recipe.setCategory(category);
+        categoryDAO.insert(category);
         recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getCategory().getName()).shouldBeEqual(categoryName);
@@ -99,63 +99,68 @@ public class RecipeTest extends ADatabaseTest {
 
     @Test
     public void testCourse() {
-        ICourse course = ICourse.getInstance();
+        CourseDAO courseDAO = new CourseDAO();
+        Course course = new Course();
         String courseName = "main course";
         course.setName(courseName);
-        course.saveIt();
+        courseDAO.insert(course);
         recipe.setCourse(course);
-        recipe.saveIt();
+        recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getCourse().getName()).shouldBeEqual(courseName);
     }
 
     @Test
     public void testRegion() {
-        IRegion region = IRegion.getInstance();
+        RegionDAO regionDAO = new RegionDAO();
+        Region region = new Region();
         String regionName = "Spain";
         region.setName(regionName);
-        region.saveIt();
+        regionDAO.insert(region);
         recipe.setRegion(region);
-        recipe.saveIt();
+        recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getRegion().getName()).shouldBeEqual(regionName);
     }
 
     @Test
     public void testDaytime() {
-        IDaytime daytime = IDaytime.getInstance();
+        final DaytimeDAO daytimeDAO = new DaytimeDAO();
+        Daytime daytime = new Daytime();
         String daytimeName = "Breakfast";
         daytime.setName(daytimeName);
-        daytime.saveIt();
+        daytimeDAO.insert(daytime);
         recipe.setDaytime(daytime);
-        recipe.saveIt();
+        recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getDaytime().getName()).shouldBeEqual(daytimeName);
     }
 
     @Test
     public void testSeason() {
-        ISeason season = ISeason.getInstance();
+        final SeasonDAO seasonDAO = new SeasonDAO();
+        Season season = new Season();
         String seasonName = "Spring";
         season.setName(seasonName);
-        season.saveIt();
+        seasonDAO.insert(season);
         recipe.setSeason(season);
-        recipe.saveIt();
+        recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getSeason().getName()).shouldBeEqual(seasonName);
     }
 
     @Test
     public void testNurture() {
-        INurture nurture = INurture.getInstance();
+        NurtureDAO nurtureDAO = new NurtureDAO();
+        Nurture nurture = new Nurture();
         String nurtureName = "High carb";
         nurture.setName(nurtureName);
-        nurture.saveIt();
+        nurtureDAO.insert(nurture);
         recipe.setNurture(nurture);
-        recipe.saveIt();
+        recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getNurture().getName()).shouldBeEqual(nurtureName);
-    }*/
+    }
 
     @Test
     public void testGetIngredients() {

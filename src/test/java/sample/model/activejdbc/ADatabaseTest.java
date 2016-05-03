@@ -37,6 +37,8 @@ public class ADatabaseTest {
         createRecipes();
         createCookbooks();
         createSortlevels();
+        createCourses();
+        createRegions();
     }
 
     private void createCategories() {
@@ -123,6 +125,24 @@ public class ADatabaseTest {
             Sortlevel sortlevel = new Sortlevel();
             sortlevel.setName(unitName);
             sortlevelDAO.insert(sortlevel);
+        });
+    }
+
+    private void createCourses() {
+        final CourseDAO courseDAO = new CourseDAO();
+        Stream.of("first course", "second course", "main course").forEach(name -> {
+            Course course = new Course();
+            course.setName(name);
+            courseDAO.insert(course);
+        });
+    }
+
+    private void createRegions() {
+        final RegionDAO regionDAO = new RegionDAO();
+        Stream.of("Greek", "Italy").forEach(name -> {
+            Region region = new Region();
+            region.setName(name);
+            regionDAO.insert(region);
         });
     }
 

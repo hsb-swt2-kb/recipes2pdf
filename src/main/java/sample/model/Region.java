@@ -1,9 +1,9 @@
 package sample.model;
 
 /**
- * Created by czoeller on 30.04.2016.
+ * Created by czoeller on 03.05.16.
  */
-public class Category implements ICategory {
+public class Region implements IRegion {
     private Long id;
     private String name;
 
@@ -26,4 +26,3 @@ public class Category implements ICategory {
         this.name = name;
     }
 }
-

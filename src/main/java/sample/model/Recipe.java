@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by czoeller on 28.04.16.
  */
-public class Recipe implements IRecipe, IIdentifiable {
+public class Recipe implements IRecipe {
 
     private Long id;
     private String title;
