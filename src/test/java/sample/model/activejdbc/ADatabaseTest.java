@@ -61,7 +61,7 @@ public class ADatabaseTest {
 
     private void createNurtures() {
         final NurtureDAO nurtureDAO = new NurtureDAO();
-        Stream.of("Low Carb", "vegetarisch", "Vegan", "Winter").forEach(name -> {
+        Stream.of("Low Carb", "vegetarisch", "Vegan").forEach(name -> {
             Nurture nurture = new Nurture();
             nurture.setName(name);
             nurtureDAO.insert(nurture);
@@ -121,9 +121,9 @@ public class ADatabaseTest {
 
     private void createSortlevels() {
         final SortlevelDAO sortlevelDAO = new SortlevelDAO();
-        Stream.of("Kategorie", "Gerichtart", "Region", "Tageszeit", "Saison", "Ernaehrungsart", "Quelle").forEach(unitName -> {
+        Stream.of("Kategorie", "Gerichtart", "Region", "Tageszeit", "Saison", "Ernaehrungsart", "Quelle").forEach(name -> {
             Sortlevel sortlevel = new Sortlevel();
-            sortlevel.setName(unitName);
+            sortlevel.setName(name);
             sortlevelDAO.insert(sortlevel);
         });
     }
