@@ -183,4 +183,15 @@ public class Recipe implements IRecipe {
         return this.ingredients;
     }
 
+    /**
+     * Insert recipe ingredient directly.
+     * In most cases you should use <code>add(String ingredientName, int amount, String unitName)</code>
+     *
+     * @param recipeIngredient
+     */
+    @Override
+    public void add(Triple<IIngredient, Integer, IUnit> recipeIngredient) {
+        this.ingredients.add(recipeIngredient);
+    }
+
 }

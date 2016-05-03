@@ -9,7 +9,7 @@ import sample.model.IIdentifiable;
  * Created by czoeller on 02.04.16.
  */
 @Table("unit")
-public class UnitDBO extends Model implements IUnit, IIdentifiable {
+public class UnitDBO extends Model implements IUnit {
 
     @Override
     public Long getID() {

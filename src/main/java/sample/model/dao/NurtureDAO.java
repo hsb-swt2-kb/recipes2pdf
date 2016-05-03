@@ -10,10 +10,10 @@ public class NurtureDAO extends ADAO<Nurture, NurtureDBO> {
 
     @Override
     Nurture toPOJO(NurtureDBO nurtureDBO) {
-        final Nurture category = new Nurture();
-        category.setID(category.getID());
-        category.setName(category.getName());
-        return category;
+        final Nurture nurture = new Nurture();
+        nurture.setID(nurtureDBO.getID());
+        nurture.setName(nurtureDBO.getName());
+        return nurture;
     }
 
     @Override

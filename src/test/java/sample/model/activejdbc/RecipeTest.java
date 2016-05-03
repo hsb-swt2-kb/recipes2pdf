@@ -3,18 +3,18 @@ package sample.model.activejdbc;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import sample.model.*;
-import sample.model.dao.*;
+import sample.model.dao.DaytimeDAO;
+import sample.model.dao.NurtureDAO;
+import sample.model.dao.RecipeDAO;
+import sample.model.dao.SeasonDAO;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.javalite.test.jspec.JSpec.the;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by czoeller on 08.04.16.
@@ -23,16 +23,12 @@ import static org.mockito.Mockito.when;
 public class RecipeTest extends ADatabaseTest {
 
     Recipe recipe;
-    @Mock
     RecipeDAO recipeDAO;
 
     @Before
     public void setUp() {
+        this.recipeDAO = new RecipeDAO();
         final Recipe recipe = new Recipe();
-        recipe.setID(1L);
-        when(recipeDAO.findFirst(any(String.class), any())).thenReturn( Optional.of(recipe) );
-        when(recipeDAO.findById(1L)).thenReturn(  Optional.of(recipe)  );
-        when(recipeDAO.update(any(Recipe.class))).then(invocation -> { this.recipe = invocation.getArgumentAt(0, Recipe.class); return true; } );
         final Optional<Recipe> nudeln = recipeDAO.findFirst("title = ?", "Nudeln mit Soße");
         this.recipe = nudeln.orElseThrow(IllegalStateException::new);
     }
@@ -86,18 +82,16 @@ public class RecipeTest extends ADatabaseTest {
 
     @Test
     public void testCategory() {
-        final CategoryDAO categoryDAO = new CategoryDAO();
         Category category = new Category();
         String categoryName = "Example CategoryDBO";
         category.setName(categoryName);
         recipe.setCategory(category);
-        categoryDAO.insert(category);
         recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getCategory().getName()).shouldBeEqual(categoryName);
     }
 
-    @Test
+   /* @Test
     public void testCourse() {
         CourseDAO courseDAO = new CourseDAO();
         Course course = new Course();
@@ -109,14 +103,12 @@ public class RecipeTest extends ADatabaseTest {
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getCourse().getName()).shouldBeEqual(courseName);
     }
-
+*/
     @Test
     public void testRegion() {
-        RegionDAO regionDAO = new RegionDAO();
         Region region = new Region();
         String regionName = "Spain";
         region.setName(regionName);
-        regionDAO.insert(region);
         recipe.setRegion(region);
         recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();

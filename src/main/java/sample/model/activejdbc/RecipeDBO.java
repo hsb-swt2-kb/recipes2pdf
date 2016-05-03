@@ -7,11 +7,15 @@ import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.Many2Many;
 import org.javalite.activejdbc.annotations.Table;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.model.*;
 import sample.model.dao.IngredientDAO;
 import sample.model.dao.UnitDAO;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by czoeller on 25.03.16.
@@ -26,7 +30,9 @@ import java.util.*;
     @BelongsTo(foreignKeyName = "season_id", parent = SeasonDBO.class),
     @BelongsTo(foreignKeyName = "nurture_id", parent = NurtureDBO.class)
 })
-public class RecipeDBO extends Model implements IRecipe, IIdentifiable {
+public class RecipeDBO extends Model implements IRecipe {
+
+    final Logger LOG = LoggerFactory.getLogger(RecipeDBO.class);
 
     static {
         validatePresenceOf("title");
@@ -198,7 +204,15 @@ public class RecipeDBO extends Model implements IRecipe, IIdentifiable {
             final IngredientDBO ingredientDBO = ingredientDAO.toDBO(ingredient.get());
             ingredientDBO.add(recipeIngredient);
         }
-        this.add(recipeIngredient);
+
+        final boolean alreadyPersisted = 0 < RecipeIngredientDBO.count("recipe_id = ? AND ingredient_id = ?", this.getID(), ingredient.get().getID());
+        if( !alreadyPersisted ) {
+            this.add(recipeIngredient);
+            LOG.info("Added new recipe ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "]");
+        } else {
+            LOG.info("Rejected adding of new recipe ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "] (already exists)");
+        }
+
     }
 
     /**
@@ -218,6 +232,17 @@ public class RecipeDBO extends Model implements IRecipe, IIdentifiable {
         }
 
         return ingredients;
+    }
+
+    /**
+     * Insert recipe ingredient directly.
+     * In most cases you should use <code>add(String ingredientName, int amount, String unitName)</code>
+     *
+     * @param recipeIngredient
+     */
+    @Override
+    public void add(Triple<IIngredient, Integer, IUnit> recipeIngredient) {
+        this.add( recipeIngredient.getLeft().getName(), recipeIngredient.getMiddle(), recipeIngredient.getRight().getName() );
     }
 
 }

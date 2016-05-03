@@ -9,7 +9,7 @@ import sample.model.IIdentifiable;
  * Created by czoeller on 03.04.16.
  */
 @Table("category")
-public class CategoryDBO extends Model implements ICategory, IIdentifiable {
+public class CategoryDBO extends Model implements ICategory {
 
     @Override
     public Long getID() {

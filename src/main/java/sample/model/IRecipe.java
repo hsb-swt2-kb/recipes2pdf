@@ -72,4 +72,11 @@ public interface IRecipe extends IIdentifiable {
      * @return map
      */
     List<Triple<IIngredient, Integer, IUnit>> getIngredients();
+
+    /**
+     * Insert recipe ingredient directly.
+     * In most cases you should use <code>add(String ingredientName, int amount, String unitName)</code>
+     * @param recipeIngredient
+     */
+    void add(Triple<IIngredient, Integer, IUnit> recipeIngredient);
 }
