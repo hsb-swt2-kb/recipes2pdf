@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by noex_ on 02.05.2016.
  */
-public class Cookbook implements ICookbook, IIdentifiable {
+public class Cookbook implements ICookbook {
     private Long id;
     private String title;
     private List<IRecipe> recipes;
