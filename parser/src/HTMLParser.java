@@ -13,9 +13,9 @@ import java.util.ArrayList;
  */
 public class HTMLParser extends Parser implements Konstanten {
   
-  public Gericht befuelleGerichtsObjekt()
+  public Recipe befuelleGerichtsObjekt()
   {
-    Gericht a = new Gericht();
+    Recipe a = new Recipe();
     return a;
   }
   

@@ -2,31 +2,68 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/* This Class can extract information for a recipe from a textfile
+   
+  precondition: A Arraylist of String, that contains information from a Textfile
+  each row in the Arraxlist is one row in the textfile
+  
+  After exctracting all availible information, the recipe will be check for
+  minimal data like recipename, Ingredientlist with at least one incredient
+  and a preperationtext. 
+
+  All additional data like region of the recipe (ex. Greece, France, Africans etc..)
+  have to be declared in the Textfile like "Region: France" 
+
+  Author: Henrik Giessel
+  last edited: 3rd May of 2016
+*/
+
+
 
 public class ConreteTextParser extends Parser implements Konstanten
 {
   public Recipe parse(ArrayList<String> textFileContent) {
     Recipe recipe = new Recipe();
     
-    //Extract minimal recipdata
-    recipe.name=extractRecipename(textFileContent);
-    ArrayList<String[]> incredents = extractIncredentsList(textFileContent);
-   System.out.println(recipe.zubereitung = findPreparationOfRecipe(textFileContent));
+    //Try to extract minimal recipdata
+    recipe.name = extractRecipename(textFileContent);
+    recipe.zutaten = extractIncredentsList(textFileContent);
+    recipe.zubereitung = findPreparationOfRecipe(textFileContent);
     
-    //extract addtional recipeinformation
-    //System.out.println(recipe.kategorie = findDatafield(textFileContent,"Kategorie"));
+    //Try to exctract additional recipedata
+    recipe.region = findDatafield(textFileContent,"Region");  
+    recipe.gerichtsart = findDatafield(textFileContent,"Gerichtsart");
+    recipe.kategorie = findDatafield(textFileContent,"Kategorie");
+    recipe.arbeitszeit = findDatafield(textFileContent,"Arbeitszeit");
+
+    recipe.kcal = parseStringToNumeric(findDatafield(textFileContent,"Kcal"));
+    recipe.portionen =  Double.parseDouble(findDatafield(textFileContent,"Portionen"));    
     
-    
+    //Checking Data will be deletet later
+    System.out.println(recipe.name);
+    for (int i=0;i<recipe.zutaten.size();i++){
+      System.out.println(recipe.zutaten.get(i)[0] +"   |   "+recipe.zutaten.get(i)[1]+"   |   "+recipe.zutaten.get(i)[2]);
+    }
+    System.out.println(recipe.zubereitung);
+    System.out.println(recipe.region);
+    System.out.println(recipe.gerichtsart);
+    System.out.println(recipe.kategorie);
+    System.out.println(recipe.arbeitszeit);
+    System.out.println(recipe.kcal);
+    System.out.println(recipe.portionen);
     return recipe;
   }
   
-  public boolean accepts() {
+  public boolean accepts(Recipe recipe) {
     boolean acceptance = false;
     
-    
-    
-    
-    return acceptance;
+    if(recipe.name == null || recipe.zubereitung == null || recipe.zutaten.size()==0) 
+    {    
+      return false;
+    }
+    else{
+      return true;
+    }
   }
   
   //Extract the name of a recpipe. Must be in the first non empty row
@@ -114,7 +151,8 @@ public class ConreteTextParser extends Parser implements Konstanten
   
   private String findPreparationOfRecipe(ArrayList<String> fileContent)
   {
-    boolean ignoreText = true;
+    boolean lastIngredientFound = false;
+    boolean nameFound = false;
     int beginRow = -1;
    
     String preperation = null;
@@ -122,26 +160,37 @@ public class ConreteTextParser extends Parser implements Konstanten
     
     //Find begin of Preperation - ignore Name and Ingredients!
     for(int i=0;i<fileContent.size();i++){
-      row = fileContent.get(i).trim();
-      if(row.length()==0 || ignoreText == true) { continue;}
       
-      else if(fileContent.get(i).trim().startsWith("-")){
+      row = fileContent.get(i).trim();
+      if(row.length()==0) {;continue;}
+      else if(row.length()>0 && fileContent.get(i).startsWith("-") == false ){
+        nameFound = true; 
+      }
+      
+      else if(fileContent.get(i).startsWith("-") == true){
         for (int j=i+1;j<fileContent.size();j++){
-          if (row.trim().length()==0) { continue;}
-          else if(fileContent.get(j).trim().startsWith("-")==true) { break;}
+          if ((fileContent.get(j).trim().length()==0)){ continue;}
+          else if(fileContent.get(j).startsWith("-")==true) { continue; }
           else {
-            ignoreText = false;
-            //Begin of preperation found
-            beginRow = j;
+            // Row could be a optional Informationen. Have to be checked
+            if (checkRowForSignalwords(fileContent.get(j))==true){
+              continue;
+            }
+            else{
+ 
+              //Begin of preperation found
+              lastIngredientFound = true;
+              beginRow = j;
             break;
+            }
           }
         }
-        if (beginRow > 0) { break; }
+        if (beginRow > 0 && lastIngredientFound==true ) { break; }
       }      
     }
     //Find last row of preperation
     int endRow = findNextSignalword(beginRow,fileContent,"Zubereitung");
-    System.out.println(beginRow+" "+endRow);
+    
 //extract preperation from file - if begin < 0 zero there is now preperation
     if (beginRow > 0) {
       for (int i = beginRow; i<endRow;i++){
@@ -149,7 +198,7 @@ public class ConreteTextParser extends Parser implements Konstanten
           preperation=fileContent.get(i);
         }
         else{
-          preperation=preperation+fileContent.get(i);
+          preperation=preperation+" "+fileContent.get(i);
         } 
       }
       preperation = preperation.trim();
@@ -159,33 +208,47 @@ public class ConreteTextParser extends Parser implements Konstanten
 	
 
   
-  public String findDatafield(ArrayList<String> textDateiInhalt,String signalwort)
+  private String findDatafield(ArrayList<String> textDateiInhalt,String signalwort)
   {
-    String Daten = null;
+    String datafield = null;
     int zeileS = findSignalword(textDateiInhalt,signalwort);
     
     if(zeileS >= 0)
     {
-      int nZeile = findNextSignalword(zeileS,textDateiInhalt,signalwort);
-
-      for(int i=zeileS;i<=nZeile;i++)
-      {
-        if(Daten==null)
-        {
-          Daten=textDateiInhalt.get(i);
-        }
-        else
-        {
-          Daten=Daten+textDateiInhalt.get(i);
-        }      
-      }
-      Daten=Daten.replaceFirst(signalwort+":","");
-      Daten=Daten.trim();
+      datafield = textDateiInhalt.get(zeileS);
+      datafield=datafield.replaceFirst(signalwort+":","");
+      datafield=datafield.trim();
     }
-    return Daten;
+    else {
+      return null;
+    }
+    return datafield;
   }
   
-  public int findSignalword(ArrayList<String> textDateiInhalt,String signalwort)
+  private boolean checkRowForSignalwords(String row){
+    for (int k=0;k<signalwoerter.length;k++){
+      if(row.contains(signalwoerter[k]+":")){
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  private double parseStringToNumeric(String str) {
+    
+    double d=0;
+    str = str.replaceAll(",", ".");
+    
+    try {
+      d = Double.parseDouble(str);
+    }
+    catch (NumberFormatException | NullPointerException e){
+      return 0;
+    }
+    return d;
+  }
+  
+  private int findSignalword(ArrayList<String> textDateiInhalt,String signalwort)
   {
     for(int i=0;i<textDateiInhalt.size();i++){
       if(textDateiInhalt.get(i).contains(signalwort+":")) {
@@ -195,7 +258,7 @@ public class ConreteTextParser extends Parser implements Konstanten
     return -1;
   }
     
-  public int findNextSignalword(int j,ArrayList<String> textDateiInhalt,String signalwort)
+  private int findNextSignalword(int j,ArrayList<String> textDateiInhalt,String signalwort)
   {
     for (int i=j+1;i<textDateiInhalt.size();i++)
     {
@@ -213,7 +276,7 @@ public class ConreteTextParser extends Parser implements Konstanten
   /*Checks a String (From Step 1 in extractIncredentsList()) if it contains
   * a (double-)number. It can be zero, one or more Numbers follows by
   * a dot and followe by zero, one or more numbers */
-  public String[] extractAmountUnit(String s)
+  private String[] extractAmountUnit(String s)
   { 
     String sTemp = s;
     String [] quanti = new String[2];
@@ -241,6 +304,7 @@ public class ConreteTextParser extends Parser implements Konstanten
     catch (Exception e) { return quanti; }
   }
   
+  //This Method is for longer names for Ingredients
   private String buildStringFromMultipleArrays(String[] s,int j){
     String tempStr ="";
     for (int i = j;i<s.length;i++){
@@ -248,6 +312,5 @@ public class ConreteTextParser extends Parser implements Konstanten
     }
     return tempStr.trim();
   }
- 
-  }  
+}  
 
