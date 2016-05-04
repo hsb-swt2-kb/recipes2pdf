@@ -24,7 +24,7 @@ public class ControllerChangeRecipe {
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.importFiles();
+        fileHandler.importFile();
 
     }
 

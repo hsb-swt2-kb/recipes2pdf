@@ -25,7 +25,7 @@ public class ControllerAddCookBook {
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.importFiles();
+        fileHandler.importFolder();
 
     }
 

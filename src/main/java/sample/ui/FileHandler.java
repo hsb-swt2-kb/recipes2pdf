@@ -7,21 +7,38 @@ package sample.ui;
 import java.io.File;
 import java.util.List;
 import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 
 public class FileHandler {
 
-    private Stage stage;
-    private List<File> files;
+    private Stage stage  = new Stage();
+
+
+    void importFolder(){
+        stage.setTitle("JavaFX Projects");
+        final DirectoryChooser chooser = new DirectoryChooser();
+        //File defaultDirectory = new File("c:/dev/javafx");
+        //chooser.setInitialDirectory(defaultDirectory);
+        File selectedDirectory = chooser.showDialog(stage);
+    }
 
     void importFiles(){
-       Stage stage = new Stage();
-       stage.setTitle("File Chooser Sample");
+        stage.setTitle("File Chooser");
         final FileChooser fileChooser = new FileChooser();
         //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.stl", "*.STL");
         //fileChooser.setSelectedExtensionFilter(extFilter);
-        this.files =
+        List<File> files =
             fileChooser.showOpenMultipleDialog(stage);
+    }
+
+    void importFile(){
+       stage.setTitle("File Chooser");
+        final FileChooser fileChooser = new FileChooser();
+             //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.stl", "*.STL");
+        //fileChooser.setSelectedExtensionFilter(extFilter);
+        File file = fileChooser.showOpenDialog(stage);
+
     }
 }
