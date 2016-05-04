@@ -14,10 +14,11 @@ import javafx.stage.Stage;
 public class FileHandler {
 
     private Stage stage  = new Stage();
+    private final String windowText = "File Chooser";
 
 
     void importFolder(){
-        stage.setTitle("JavaFX Projects");
+        stage.setTitle(windowText);
         final DirectoryChooser chooser = new DirectoryChooser();
         //File defaultDirectory = new File("c:/dev/javafx");
         //chooser.setInitialDirectory(defaultDirectory);
@@ -25,7 +26,7 @@ public class FileHandler {
     }
 
     void importFiles(){
-        stage.setTitle("File Chooser");
+        stage.setTitle(windowText);
         final FileChooser fileChooser = new FileChooser();
         //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.stl", "*.STL");
         //fileChooser.setSelectedExtensionFilter(extFilter);
@@ -34,7 +35,7 @@ public class FileHandler {
     }
 
     void importFile(){
-       stage.setTitle("File Chooser");
+       stage.setTitle(windowText);
         final FileChooser fileChooser = new FileChooser();
              //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.stl", "*.STL");
         //fileChooser.setSelectedExtensionFilter(extFilter);

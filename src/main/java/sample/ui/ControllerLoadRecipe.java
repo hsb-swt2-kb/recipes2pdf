@@ -6,11 +6,24 @@ package sample.ui;
 import javafx.fxml.FXML;
 import javafx.event.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 
 public class ControllerLoadRecipe {
+
+    final ToggleGroup group = new ToggleGroup();
+
+    @FXML
+    private RadioButton radioButtonHyperLink;
+
+    @FXML
+    private RadioButton radioButtonFolder;
+    @FXML
+    private RadioButton radioButtonFile;
+
 
     @FXML
     private TextField hyperLinkTextField;
@@ -19,13 +32,40 @@ public class ControllerLoadRecipe {
     private Button loadButton;
 
 
+    @FXML
+    private Button closeButton;
+
+
     private boolean editability = false;
-    private boolean radioButtonFile = false;
-    private boolean radioButtonFolder = false;
-    private boolean radioButtonLink = false;
+
+    private boolean radioButtonFileBoolean = false;
+    private boolean radioButtonFolderBoolean = false;
+    private boolean radioButtonLinkBoolean = false;
+
+
+    @FXML
+    public void initialize(){
+        groupRadioButtons();
+    }
+
+    void groupRadioButtons() {
+        radioButtonFile.setToggleGroup(group);
+        radioButtonFolder.setToggleGroup(group);
+        radioButtonHyperLink.setToggleGroup(group);
+
+
+    }
+
+    void controllRadioButtons()
+    {
+        boolean radioButtonFileBoolean = false;
+        boolean radioButtonFolderBoolean = false;
+        boolean radioButtonLinkBoolean = false;
+    }
 
     void setHyperLinkEditable() {
         hyperLinkTextField.setEditable(true);
+
 
     }
     void setHyperLinkNotEditable() {
@@ -35,29 +75,44 @@ public class ControllerLoadRecipe {
     }
 
     @FXML
+    void changeRadioButtonFolder(ActionEvent event) {
+        controllRadioButtons();
+        setHyperLinkNotEditable();
+        radioButtonFolderBoolean = true;
+
+
+    }
+
+    @FXML
+    void changeRadioButtonFile(ActionEvent event) {
+        controllRadioButtons();
+        setHyperLinkNotEditable();
+        radioButtonFileBoolean = true;
+
+
+
+
+    }
+
+
+    @FXML
     void changeHyperLinkEditability(ActionEvent event) {
-        if (editability == false)
-        {
-            editability = true;
-            radioButtonLink = true;
-            setHyperLinkEditable();
-        }else{
-            editability = false;
-            radioButtonLink = false;
-            setHyperLinkNotEditable();
-        }
+        controllRadioButtons();
+         setHyperLinkEditable();
+        radioButtonLinkBoolean = true;
+
 
     }
 
     @FXML
-    void openFileChooserSingle() {
+    void openFileChooser() {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.importFile();
+        fileHandler.importFiles();
 
     }
 
     @FXML
-    void openFileChooserMultiple() {
+    void openFolder() {
         FileHandler fileHandler = new FileHandler();
         fileHandler.importFolder();
 
@@ -70,14 +125,22 @@ public class ControllerLoadRecipe {
 
     @FXML
     void selectOptionsForLoading(ActionEvent event) {
-        if (radioButtonLink == true) {
+        if (radioButtonLinkBoolean == true) {
             //
-        } else if (radioButtonFile == true) {
-            openFileChooserMultiple();
-        } else if (radioButtonFolder == true) {
-            openFileChooserSingle();
+        } else if (radioButtonFolderBoolean == true) {
+            openFolder();
+        } else if (radioButtonFileBoolean == true) {
+            openFileChooser();
         }
         closeStage();
+
+
+    }
+
+    @FXML
+    void closeWindow(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
 
 
     }
