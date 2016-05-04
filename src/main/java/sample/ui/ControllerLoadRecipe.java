@@ -5,18 +5,46 @@ package sample.ui;
  */
 import javafx.fxml.FXML;
 import javafx.event.*;
-import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 public class ControllerLoadRecipe {
 
     @FXML
-    private Button fileChooserButton;
+    private RadioButton radioButtonHyperLink;
 
     @FXML
-    void openFileChooser(ActionEvent event) {
-       FileHandler fileHandler = new FileHandler();
-        fileHandler.importFiles();
+    private Text hyperLinkLabel;
+
+    @FXML
+    private TextField hyperLinkTextField;
+
+    private boolean editability = false;
+
+    void setHyperLinkEditable() {
+        hyperLinkTextField.setEditable(true);
+
+    }
+    void setHyperLinkNotEditable() {
+        hyperLinkTextField.setEditable(false);
+        hyperLinkTextField.clear();
+    }
+
+    @FXML
+    void changeHyperLinkEditability(ActionEvent event) {
+        if (editability == false)
+        {
+            editability = true;
+            setHyperLinkEditable();
+        }else{
+            editability = false;
+            setHyperLinkNotEditable();
+        }
 
     }
 
+
 }
+
+
