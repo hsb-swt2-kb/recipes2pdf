@@ -8,8 +8,13 @@ import javafx.stage.Stage;
 
 public class ControllerAddCookBook {
 
-        @FXML
+
+
+    @FXML
         private Button closeButton;
+
+    @FXML
+    private Button generateButton;
 
 
     @FXML
@@ -26,6 +31,13 @@ public class ControllerAddCookBook {
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
         fileHandler.importFolder();
+
+    }
+    @FXML
+    void generateCookBook(ActionEvent event) {
+        //
+        Stage stage = (Stage) generateButton.getScene().getWindow();
+        stage.close();
 
     }
 

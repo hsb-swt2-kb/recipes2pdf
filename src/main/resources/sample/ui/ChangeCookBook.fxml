@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.image.*?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 
 <AnchorPane prefHeight="231.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerChangeCookBook">
    <children>
@@ -14,7 +12,7 @@
                <Font name="System Bold Italic" size="21.0" />
            </font>
        </Text>
-       <Button alignment="BOTTOM_RIGHT" layoutX="306.0" layoutY="199.0" mnemonicParsing="false" text="Ändern" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="12.0" />
+       <Button fx:id="changeButton" alignment="BOTTOM_RIGHT" layoutX="306.0" layoutY="199.0" mnemonicParsing="false" onAction="#changeCookBook" text="Ändern" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="12.0" />
        <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
            <font>
                <Font size="21.0" />

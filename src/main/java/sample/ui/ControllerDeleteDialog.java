@@ -14,6 +14,15 @@ public class ControllerDeleteDialog {
     private Button closeButton;
 
     @FXML
+    private Button deleteButton;
+
+    @FXML
+    void deleteElement(ActionEvent event) {
+        Stage stage = (Stage) deleteButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
     void closeDeleteDialog(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();

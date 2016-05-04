@@ -14,6 +14,16 @@ public class ControllerChangeCookBook {
         @FXML
         private Button closeButton;
 
+    @FXML
+    private Button changeButton;
+
+    @FXML
+    void changeCookBook(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+
+    }
+
         @FXML
         void closeChangeCookBook(ActionEvent event) {
             Stage stage = (Stage) closeButton.getScene().getWindow();

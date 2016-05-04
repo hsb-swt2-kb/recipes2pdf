@@ -14,12 +14,22 @@ public class ControllerChangeRecipe {
         @FXML
         private Button closeButton;
 
+    @FXML
+    private Button changeButton;
+
         @FXML
         void closeChangeRecipe(ActionEvent event) {
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
 
         }
+
+    @FXML
+    void changeRecipe(ActionEvent event) {
+        Stage stage = (Stage) changeButton.getScene().getWindow();
+        stage.close();
+
+    }
 
     @FXML
     void openFileChooser(ActionEvent event) {

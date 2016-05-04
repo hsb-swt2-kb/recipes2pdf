@@ -7,6 +7,7 @@ package sample.ui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.event.*;
+import javafx.stage.Stage;
 
 public class ControllerManageCookBooks {
 
@@ -15,12 +16,23 @@ public class ControllerManageCookBooks {
     private final String changeCookBookText = "Kochbuch ändern";
 
     @FXML
+    private Button closeButton;
+
+
+    @FXML
     private Button changeButton;
 
     @FXML
     void changeCookBook(ActionEvent event) {
         ControllerDefault controllerDefault = new ControllerDefault();
         controllerDefault.newWindow(changeCookBookFXML, changeCookBookText);
+
+    }
+
+    @FXML
+    void closeWindow(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
 
     }
 
