@@ -37,23 +37,23 @@
             </ImageView>
          </graphic>
         </Button>
-        <Button fx:id="changeRecipeButton" layoutX="94.0" layoutY="311.0" mnemonicParsing="false" onAction="#changeRecipe" prefHeight="25.0" prefWidth="34.0" text="*">
+        <Button fx:id="changeRecipeButton" layoutX="90.0" layoutY="310.0" mnemonicParsing="false" onAction="#changeRecipe" prefHeight="25.0" prefWidth="34.0" text="*" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="90.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="delteButtonRecipe" layoutX="53.0" layoutY="311.0" mnemonicParsing="false" onAction="#delteRecipe" prefHeight="25.0" prefWidth="34.0" text="-">
+        <Button fx:id="delteButtonRecipe" layoutX="52.0" layoutY="311.0" mnemonicParsing="false" onAction="#delteRecipe" prefHeight="25.0" prefWidth="34.0" text="-" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="52.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="plusButton" layoutX="12.0" layoutY="310.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="25.0" prefWidth="34.0" text="+">
+        <Button fx:id="plusButton" layoutX="14.0" layoutY="311.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="25.0" prefWidth="34.0" text="+" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="14.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="export2pdfButton" layoutX="466.0" layoutY="310.0" mnemonicParsing="false" onAction="#export2pdf" prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" />
-      <ComboBox layoutX="429.0" layoutY="2.0" prefHeight="25.0" prefWidth="131.0" />
+        <Button fx:id="export2pdfButton" layoutX="466.0" layoutY="310.0" mnemonicParsing="false" onAction="#export2pdf" prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="16.0" />
+      <ComboBox layoutX="429.0" layoutY="2.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="131.0" />
         <Text layoutX="15.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte:" underline="true" GridPane.columnIndex="1">
             <font>
                 <Font name="System Bold Italic" size="21.0" />
@@ -61,7 +61,7 @@
         </Text>
       <TextField layoutX="13.0" layoutY="35.0" prefHeight="25.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <ListView fx:id="listViewRecipes" layoutX="13.0" layoutY="59.0" prefHeight="248.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <ListView fx:id="listViewCookBook" layoutX="315.0" layoutY="59.0" prefHeight="248.0" prefWidth="245.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+        <ListView fx:id="listViewCookBook" layoutX="315.0" layoutY="59.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="248.0" prefWidth="245.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <TextField layoutX="315.0" layoutY="35.0" prefHeight="19.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="3" GridPane.rowIndex="2" />
     </children>
 </AnchorPane>
