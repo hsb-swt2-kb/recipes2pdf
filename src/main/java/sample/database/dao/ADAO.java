@@ -88,7 +88,7 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
     }
 
     /**
-     * Find first occurrence of record that fulfills the query.
+     * Find first occurrence of record that matches the query.
      *
      * @param subQuery this is a set of conditions that normally follow the "where" clause. Example:
      *                 <code>"department = ? and dob &gt ?"</code>.
@@ -113,7 +113,7 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
     }
 
     /**
-     * Insert POJO into database.
+     * Insert new POJO into database.
      * ID has to be null.
      *
      * @param pojo POJO to insert ("id" attribute is modified by this method with insert id from db. )
