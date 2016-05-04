@@ -1,7 +1,9 @@
 package sample.model;
 
+import sample.model.INurture;
+
 /**
- * Created by noex_ on 02.05.2016.
+ * Created by czoeller on 02.05.2016.
  */
 public class Nurture implements INurture {
 

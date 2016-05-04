@@ -1,10 +1,13 @@
 package sample.model;
 
+import sample.model.ICookbook;
+import sample.model.IRecipe;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by noex_ on 02.05.2016.
+ * Created by czoeller on 02.05.2016.
  */
 public class Cookbook implements ICookbook {
     private Long id;

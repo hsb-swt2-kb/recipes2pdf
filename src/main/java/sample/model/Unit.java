@@ -1,5 +1,8 @@
 package sample.model;
 
+import sample.model.IIdentifiable;
+import sample.model.IUnit;
+
 /**
  * Created by czoeller on 28.04.16.
  */

@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.model.IRegion;
+
 /**
  * Created by czoeller on 03.05.16.
  */

@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.model.ICourse;
+
 /**
  * Created by czoeller on 03.05.16.
  */

@@ -1,7 +1,7 @@
 package sample.model;
 
 /**
- * Created by noex_ on 02.05.2016.
+ * Created by czoeller on 02.05.2016.
  */
 public class Sortlevel implements ISortlevel {
 

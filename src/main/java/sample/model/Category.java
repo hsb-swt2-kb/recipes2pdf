@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.model.ICategory;
+
 /**
  * Created by czoeller on 30.04.2016.
  */
