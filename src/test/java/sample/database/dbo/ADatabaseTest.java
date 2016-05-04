@@ -1,4 +1,4 @@
-package sample.database.dbo.activejdbc;
+package sample.database.dbo;
 
 import org.javalite.activejdbc.Base;
 import org.junit.After;

@@ -1,7 +1,6 @@
-package sample.database.dbo.activejdbc;
+package sample.database.dbo;
 
 import org.junit.Test;
-import sample.database.dbo.IngredientDBO;
 
 import static org.javalite.test.jspec.JSpec.the;
 

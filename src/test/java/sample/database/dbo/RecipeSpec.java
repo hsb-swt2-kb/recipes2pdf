@@ -1,11 +1,10 @@
-package sample.database.dbo.activejdbc;
+package sample.database.dbo;
 
 /**
  * Created by czoeller on 26.03.16.
  */
 
 import org.junit.Test;
-import sample.database.dbo.RecipeDBO;
 
 import static org.javalite.test.jspec.JSpec.the;
 
