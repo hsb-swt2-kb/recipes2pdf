@@ -77,22 +77,6 @@ public class ControllerDefault {
         content.getChildren().setAll(newContent);
     }
 
-    void newWindow(String fxml, String windowTitel) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(wrongPathException);
-        }
-        Stage stage = new Stage();
-        stage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
-        stage.setScene(new Scene(root));
-        stage.setTitle(windowTitel);
-        stage.show();
-    }
-
     void newWindowNotResizable(String fxml, String windowTitel) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
