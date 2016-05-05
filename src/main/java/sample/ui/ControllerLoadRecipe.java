@@ -45,6 +45,7 @@ public class ControllerLoadRecipe {
 
     @FXML
     public void initialize(){
+
         groupRadioButtons();
     }
 
@@ -65,12 +66,16 @@ public class ControllerLoadRecipe {
 
     void setHyperLinkEditable() {
         hyperLinkTextField.setEditable(true);
+        hyperLinkTextField.getStyleClass().clear();
+        hyperLinkTextField.getStyleClass().addAll("text-field", "text-input");
 
 
     }
     void setHyperLinkNotEditable() {
         hyperLinkTextField.setEditable(false);
         hyperLinkTextField.clear();
+        hyperLinkTextField.getStyleClass().clear();
+        hyperLinkTextField.getStyleClass().add("textfieldDisabled");
 
     }
 
