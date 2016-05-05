@@ -36,7 +36,7 @@ public class GUI extends Application {
 
         primaryStage.setTitle("Kochbuchmanager");
         primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
-        primaryStage.setScene(new Scene(root, 575, 390));
+        primaryStage.setScene(new Scene(root, 605, 455));
         primaryStage.setResizable(true);
         primaryStage.show();
 

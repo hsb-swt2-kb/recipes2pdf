@@ -4,12 +4,14 @@ package sample.ui;
  * Created by Tobias on 24.04.2016.
  */
 
-import javafx.fxml.FXML;
-import javafx.event.*;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Button;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.GridPane;
+
 
 public class ControllerManageCookBook {
 
@@ -30,6 +32,9 @@ public class ControllerManageCookBook {
 
     @FXML
     private ListView<String> listViewRecipes;
+
+    @FXML
+    private GridPane gridPane;
 
     @FXML
     private Button plusButton;

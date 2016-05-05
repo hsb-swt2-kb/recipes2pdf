@@ -1,67 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane prefHeight="351.0" prefWidth="576.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerManageCookBook">
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="395.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="sample.ui.ControllerManageCookBook">
     <children>
-        <Button layoutX="270.0" layoutY="91.0" mnemonicParsing="false">
-            <font>
-                <Font name="System Bold" size="12.0" />
-            </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@right.png" />
-               </image>
-            </ImageView>
-         </graphic>
-        </Button>
-        <Text layoutX="315.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch:" underline="true">
-            <font>
-                <Font name="System Bold" size="21.0" />
-            </font>
-        </Text>
-        <Button layoutX="270.0" layoutY="132.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0">
-            <font>
-                <Font name="System Bold" size="12.0" />
-            </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@left.png" />
-               </image>
-            </ImageView>
-         </graphic>
-        </Button>
-        <Button fx:id="changeRecipeButton" layoutX="90.0" layoutY="310.0" mnemonicParsing="false" onAction="#changeRecipe" prefHeight="25.0" prefWidth="34.0" text="*" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="90.0">
+        <Button fx:id="changeRecipeButton" layoutX="83.0" layoutY="352.0" mnemonicParsing="false"
+                onAction="#changeRecipe" prefHeight="25.0" prefWidth="34.0" text="*" AnchorPane.bottomAnchor="3.0"
+                AnchorPane.leftAnchor="83.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="delteButtonRecipe" layoutX="52.0" layoutY="311.0" mnemonicParsing="false" onAction="#delteRecipe" prefHeight="25.0" prefWidth="34.0" text="-" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="52.0">
+        <Button fx:id="delteButtonRecipe" layoutX="45.0" layoutY="353.0" mnemonicParsing="false" onAction="#delteRecipe"
+                prefHeight="25.0" prefWidth="34.0" text="-" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="45.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="plusButton" layoutX="14.0" layoutY="311.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="25.0" prefWidth="34.0" text="+" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="14.0">
+        <Button fx:id="plusButton" layoutX="7.0" layoutY="353.0" mnemonicParsing="false" onAction="#addRecipe"
+                prefHeight="25.0" prefWidth="34.0" text="+" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="7.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="export2pdfButton" layoutX="466.0" layoutY="310.0" mnemonicParsing="false" onAction="#export2pdf" prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="16.0" />
-      <ComboBox layoutX="429.0" layoutY="2.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="131.0" />
-        <Text layoutX="15.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte:" underline="true" GridPane.columnIndex="1">
-            <font>
-                <Font name="System Bold Italic" size="21.0" />
-            </font>
-        </Text>
-      <TextField layoutX="13.0" layoutY="35.0" prefHeight="25.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <ListView fx:id="listViewRecipes" layoutX="13.0" layoutY="59.0" prefHeight="248.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <ListView fx:id="listViewCookBook" layoutX="315.0" layoutY="59.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="248.0" prefWidth="245.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <TextField layoutX="315.0" layoutY="35.0" prefHeight="19.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <Button fx:id="export2pdfButton" layoutX="474.0" layoutY="352.0" mnemonicParsing="false" onAction="#export2pdf"
+                prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" AnchorPane.bottomAnchor="3.0"
+                AnchorPane.rightAnchor="7.0"/>
+        <GridPane fx:id="gridPane" layoutX="7.0" layoutY="6.0" prefHeight="343.0" prefWidth="561.0"
+                  AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0"
+                  AnchorPane.topAnchor="6.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="254.0"/>
+                <ColumnConstraints hgrow="NEVER" maxWidth="391.0" minWidth="10.0" prefWidth="48.0"/>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="250.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="183.0" minHeight="0.0" prefHeight="23.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="118.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES"/>
+                <RowConstraints/>
+            </rowConstraints>
+            <children>
+                <ListView fx:id="listViewCookBook" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                          nodeOrientation="LEFT_TO_RIGHT" prefHeight="289.0" prefWidth="266.0" GridPane.columnIndex="2"
+                          GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3"
+                          GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"/>
+                <ListView fx:id="listViewRecipes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                          prefHeight="248.0" prefWidth="245.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS"
+                          GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"/>
+                <TextField prefHeight="25.0" prefWidth="245.0" promptText="Suche*" GridPane.rowIndex="1"/>
+                <TextField prefHeight="19.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="2"
+                           GridPane.rowIndex="1"/>
+                <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
+                        prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                        GridPane.valignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@right.png"/>
+                            </image>
+                            <viewport>
+                                <Rectangle2D/>
+                            </viewport>
+                        </ImageView>
+                    </graphic>
+                    <GridPane.margin>
+                        <Insets bottom="125.0" left="6.0" right="10.0"/>
+                    </GridPane.margin>
+                    <opaqueInsets>
+                        <Insets left="3.0" right="3.0"/>
+                    </opaqueInsets>
+                </Button>
+                <Button maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0"
+                        GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@left.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <GridPane.margin>
+                        <Insets bottom="60.0" left="6.0" right="10.0"/>
+                    </GridPane.margin>
+                </Button>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch:" underline="true" GridPane.columnIndex="2">
+                    <font>
+                        <Font name="System Bold" size="21.0"/>
+                    </font>
+                    <GridPane.margin>
+                        <Insets bottom="10.0"/>
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte:" underline="true">
+                    <font>
+                        <Font name="System Bold Italic" size="21.0"/>
+                    </font>
+                    <GridPane.margin>
+                        <Insets bottom="10.0"/>
+                    </GridPane.margin>
+                </Text>
+                <ComboBox maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0"
+                          prefWidth="142.0" GridPane.columnIndex="2">
+                    <GridPane.margin>
+                        <Insets bottom="7.0" left="110.0"/>
+                    </GridPane.margin>
+                </ComboBox>
+            </children>
+        </GridPane>
     </children>
 </AnchorPane>
