@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="445.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
+            minWidth="-Infinity" prefHeight="346.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
             fx:controller="sample.ui.ControllerDefault">
     <children>
+        <AnchorPane fx:id="content" layoutY="4.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0"
+                    prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0"/>
         <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <menus>
                 <Menu mnemonicParsing="false" text="%menu.program">
@@ -33,7 +35,5 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <AnchorPane fx:id="content" prefHeight="443.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
     </children>
 </AnchorPane>

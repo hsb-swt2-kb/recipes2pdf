@@ -36,8 +36,10 @@ public class GUI extends Application {
 
         primaryStage.setTitle("Kochbuchmanager");
         primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
-        primaryStage.setScene(new Scene(root, 605, 455));
+        primaryStage.setScene(new Scene(root, 600, 390));
         primaryStage.setResizable(true);
+        primaryStage.setMinHeight(500);
+        primaryStage.setMinWidth(600);
         primaryStage.show();
 
         //Sets the default Pane in the default Controller

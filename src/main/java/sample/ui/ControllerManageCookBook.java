@@ -51,8 +51,8 @@ public class ControllerManageCookBook {
 
     @FXML
     void delteRecipe(ActionEvent event) {
-        controllerDefault.newWindow(deleteFXML, deleteText);
-        controllerDefault.newWindow(noElementSelectedFXML, noElementSelectedText);
+        controllerDefault.newWindowNotResizable(deleteFXML, deleteText);
+        controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
 
         //Test
         ObservableList<String> recipes = FXCollections.observableArrayList ("Chilli", "Pizza", "Eintopf", "Bohnenauflauf","Rindsschmorbraten");
@@ -63,19 +63,19 @@ public class ControllerManageCookBook {
 
     @FXML
     void changeRecipe(ActionEvent event) {
-        controllerDefault.newWindow(changeRecipeFXML, changeText);
+        controllerDefault.newWindow(changeRecipeFXML, changeText, 415, 545);
 
     }
 
     @FXML
     void export2pdf(ActionEvent event) {
-        controllerDefault.newWindow(exportFXML, export);
+        controllerDefault.newWindow(exportFXML, export, 290, 200);
 
     }
 
     @FXML
     void addRecipe(ActionEvent event) {
-        controllerDefault.newWindow(loadRecipeFXML, loadRecipeText);
+        controllerDefault.newWindow(loadRecipeFXML, loadRecipeText, 290, 160);
     }
 
 }

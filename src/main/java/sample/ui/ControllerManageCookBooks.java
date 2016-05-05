@@ -4,9 +4,9 @@ package sample.ui;
  * Created by Tobias on 28.04.2016.
  */
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.event.*;
 import javafx.stage.Stage;
 
 public class ControllerManageCookBooks {
@@ -25,7 +25,7 @@ public class ControllerManageCookBooks {
     @FXML
     void changeCookBook(ActionEvent event) {
         ControllerDefault controllerDefault = new ControllerDefault();
-        controllerDefault.newWindow(changeCookBookFXML, changeCookBookText);
+        controllerDefault.newWindow(changeCookBookFXML, changeCookBookText, 370, 245);
 
     }
 

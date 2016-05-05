@@ -70,10 +70,10 @@ public class ControllerDefault {
         }
 
         //Set Constrains Back to the defaults
-        content.setTopAnchor(newContent, 25.0);
-        content.setBottomAnchor(newContent, 2.0);
-        content.setRightAnchor(newContent, 0.0);
-        content.setLeftAnchor(newContent, 0.0);
+        AnchorPane.setTopAnchor(newContent, 25.0);
+        AnchorPane.setBottomAnchor(newContent, 2.0);
+        AnchorPane.setRightAnchor(newContent, 0.0);
+        AnchorPane.setLeftAnchor(newContent, 0.0);
         content.getChildren().setAll(newContent);
     }
 
@@ -81,7 +81,7 @@ public class ControllerDefault {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
         try {
-            root = (Parent) loader.load();
+            root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(wrongPathException);
@@ -93,10 +93,46 @@ public class ControllerDefault {
         stage.show();
     }
 
+    void newWindowNotResizable(String fxml, String windowTitel) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(wrongPathException);
+        }
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
+        stage.setScene(new Scene(root));
+        stage.setTitle(windowTitel);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    void newWindow(String fxml, String windowTitel, double minValueWidth, double maxValueHeight) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(wrongPathException);
+        }
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
+        stage.setScene(new Scene(root));
+        stage.setTitle(windowTitel);
+        stage.setMinWidth(minValueWidth);
+        stage.setMinHeight(maxValueHeight);
+        stage.show();
+        stage.show();
+    }
+
     @FXML
     void addCookBook(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-        newWindow(addCookBookFXML, addCookBookWindowTitel);
+        newWindow(addCookBookFXML, addCookBookWindowTitel, 370, 245);
     }
 
     @FXML
@@ -106,23 +142,23 @@ public class ControllerDefault {
 
     @FXML
     void addReceipe(ActionEvent event) {
-        newWindow(loadRecipeFXML, loadRecipeText);
+        newWindowNotResizable(loadRecipeFXML, loadRecipeText);
     }
 
     @FXML
     void openHelp(ActionEvent event) {
-        newWindow(helpFXML, helpWindowTitel);
+        newWindow(helpFXML, helpWindowTitel, 250, 200);
 
     }
 
     @FXML
     void openAbout(ActionEvent event) {
-        newWindow(aboutFXML, aboutWindowTitel);
+        newWindow(aboutFXML, aboutWindowTitel, 300, 220);
     }
 
     @FXML
     void openManageCookBooks(ActionEvent event) {
-        newWindow(manageCookBooksFXML, manageCookBooksTitel);
+        newWindow(manageCookBooksFXML, manageCookBooksTitel, 265, 350);
 
     }
 
