@@ -216,6 +216,7 @@ public class RecipeDBO extends Model implements IRecipe {
             this.add(recipeIngredient);
             LOG.info("Added new recipe ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "]");
         } else {
+            recipeIngredient.delete();
             LOG.info("Rejected adding of new recipe ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "] (already exists)");
         }
 
