@@ -46,16 +46,14 @@
                 <RowConstraints/>
             </rowConstraints>
             <children>
-                <ListView fx:id="listViewCookBook" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                           nodeOrientation="LEFT_TO_RIGHT" prefHeight="289.0" prefWidth="266.0" GridPane.columnIndex="2"
                           GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3"
                           GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"/>
-                <ListView fx:id="listViewRecipes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                          prefHeight="248.0" prefWidth="245.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS"
-                          GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"/>
-                <TextField prefHeight="25.0" prefWidth="245.0" promptText="Suche*" GridPane.rowIndex="1"/>
-                <TextField prefHeight="19.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="2"
+                <TextField fx:id="searchFieldRecipes" prefHeight="25.0" prefWidth="245.0" promptText="Suche*"
                            GridPane.rowIndex="1"/>
+                <TextField fx:id="searchFieldCookBooks" prefHeight="19.0" prefWidth="245.0" promptText="Suche*"
+                           GridPane.columnIndex="2" GridPane.rowIndex="1"/>
                 <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
                         prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3"
                         GridPane.valignment="CENTER">
@@ -117,6 +115,9 @@
                         <Insets bottom="7.0" left="110.0"/>
                     </GridPane.margin>
                 </ComboBox>
+                <ListView fx:id="listViewRecipes" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3"/>
+                <ListView fx:id="listViewCookBook" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2"
+                          GridPane.rowIndex="3"/>
             </children>
         </GridPane>
     </children>
