@@ -22,6 +22,7 @@ public class ControllerManageCookBook {
     private final String export = "Exportieren";
     private final String deleteFXML = "/sample/ui/DeleteDialog.fxml";
     private final String noElementSelectedFXML = "/sample/ui/NoElementSelectedDialog.fxml";
+    private final String defaultIconPath = "/sample/ui/icon_bg_small.png";
     private final String changeRecipeFXML = "/sample/ui/ChangeRecipe.fxml";
     private final String loadRecipeFXML = "/sample/ui/LoadRecipe.fxml";
     private final String loadRecipeText = "Rezept laden";
@@ -92,19 +93,19 @@ public class ControllerManageCookBook {
 
     @FXML
     void changeRecipe(ActionEvent event) {
-        controllerDefault.newWindow(changeRecipeFXML, changeText, 415, 545);
+        controllerDefault.newWindow(changeRecipeFXML, changeText, 415, 545, defaultIconPath);
 
     }
 
     @FXML
     void export2pdf(ActionEvent event) {
-        controllerDefault.newWindow(exportFXML, export, 290, 200);
+        controllerDefault.newWindow(exportFXML, export, 290, 200, defaultIconPath);
 
     }
 
     @FXML
     void addRecipe(ActionEvent event) {
-        controllerDefault.newWindow(loadRecipeFXML, loadRecipeText, 290, 160);
+        controllerDefault.newWindow(loadRecipeFXML, loadRecipeText, 290, 160, defaultIconPath);
     }
 
 }
