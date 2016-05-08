@@ -1,5 +1,9 @@
 package sample.ui;
 
+/**
+ * @author Tobias Stelter
+ */
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

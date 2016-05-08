@@ -1,7 +1,8 @@
 package sample.ui;
 
 /**
- * Created by Tobias on 24.04.2016.
+ * @author Tobias Stelter
  */
+
 public class ControllerHelp {
 }

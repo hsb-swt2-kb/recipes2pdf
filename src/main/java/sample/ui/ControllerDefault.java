@@ -1,5 +1,10 @@
 package sample.ui;
 
+/**
+ * @author Tobias Stelter
+ */
+
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,6 +64,12 @@ public class ControllerDefault {
     @FXML
     private MenuItem data;
 
+
+    /**
+     * These method changes the layout in the main window.
+     *
+     * @param fxml defenies the path of the new FXML-Layout-File.
+     */
     void changeLayout(String fxml) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
         Parent newContent = null;
@@ -77,6 +88,12 @@ public class ControllerDefault {
         content.getChildren().setAll(newContent);
     }
 
+    /**
+     * Opens a new not resizable window.
+     * @param fxml defenies the path of the FXML-File.
+     * @param windowTitel defenies the window titel
+     */
+
     void newWindowNotResizable(String fxml, String windowTitel) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
@@ -94,6 +111,13 @@ public class ControllerDefault {
         stage.show();
     }
 
+    /**
+     * Opens a new resizable window.
+     * @param fxml defenies the path of the FXML-File.
+     * @param windowTitel defenies the window titel
+     * @param minValueWidth defenies the min value for the window size
+     * @param maxValueHeight defenies the max value for the window size
+     */
     void newWindow(String fxml, String windowTitel, double minValueWidth, double maxValueHeight) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;

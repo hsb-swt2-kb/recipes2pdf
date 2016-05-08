@@ -1,10 +1,11 @@
 package sample.ui;
 
 /**
- * Created by Tobias on 30.04.2016.
+ * @author Tobias Stelter
  */
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.event.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -49,6 +50,10 @@ public class ControllerLoadRecipe {
         groupRadioButtons();
     }
 
+    /**
+     * These method groups the RadioButtons File,Folder and Hyperlink.
+     */
+
     void groupRadioButtons() {
         radioButtonFile.setToggleGroup(group);
         radioButtonFolder.setToggleGroup(group);
@@ -57,6 +62,9 @@ public class ControllerLoadRecipe {
 
     }
 
+    /**
+     * These method defines the initial state of the opened window.
+     */
     void controllRadioButtons()
     {
         boolean radioButtonFileBoolean = false;
@@ -127,6 +135,11 @@ public class ControllerLoadRecipe {
         Stage stage = (Stage) loadButton.getScene().getWindow();
         stage.close();
     }
+
+
+    /**
+     * These method selects the options for loading in reference of the RadioButtons and the Load-Button.
+     */
 
     @FXML
     void selectOptionsForLoading(ActionEvent event) {

@@ -1,22 +1,26 @@
 package sample.ui;
 
 /**
- * Created by Tobias on 02.05.2016.
+ * @author Tobias Stelter
  */
+
+
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.List;
-import javafx.stage.FileChooser;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 
 
 public class FileHandler {
 
-    private Stage stage  = new Stage();
     private final String windowText = "File Chooser";
+    private Stage stage = new Stage();
 
-
+    /**
+     * These method imports the data of a single folder.
+     */
     void importFolder(){
         stage.setTitle(windowText);
         final DirectoryChooser chooser = new DirectoryChooser();
@@ -25,6 +29,10 @@ public class FileHandler {
         File selectedDirectory = chooser.showDialog(stage);
     }
 
+
+    /**
+     * These method imports a single or multiple files.
+     */
     void importFiles(){
         stage.setTitle(windowText);
         final FileChooser fileChooser = new FileChooser();
@@ -34,6 +42,9 @@ public class FileHandler {
             fileChooser.showOpenMultipleDialog(stage);
     }
 
+    /**
+     * These method imports a single file.
+     */
     void importFile(){
        stage.setTitle(windowText);
         final FileChooser fileChooser = new FileChooser();

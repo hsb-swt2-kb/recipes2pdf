@@ -1,8 +1,9 @@
 package sample.ui;
 
 /**
- * Created by Tobias on 28.04.2016.
+ * @author Tobias Stelter
  */
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -6,8 +6,9 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
- * Created by Tobias on 30.04.2016.
+ * @author Tobias Stelter
  */
+
 public class ControllerNoElementSelectedDialog {
     @FXML
     private Button closeButton;

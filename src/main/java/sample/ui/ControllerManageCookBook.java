@@ -1,8 +1,9 @@
 package sample.ui;
 
 /**
- * Created by Tobias on 24.04.2016.
+ * @author Tobias Stelter
  */
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,6 +61,13 @@ public class ControllerManageCookBook {
     }
 
 
+    /**
+     * These method enables searching in a ListView. The specify list will bei filtered and sorted.
+     *
+     * @param list        defines the observable list for searching
+     * @param searchField searchfield defines the searchField for the search
+     * @param listView    listView defines the listView for the search
+     */
     void searchInListView(ObservableList<String> list, TextField searchField, ListView<String> listView) {
         FilteredList<String> filteredData = new FilteredList<>(list, s -> true);
 

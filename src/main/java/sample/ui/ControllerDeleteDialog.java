@@ -1,13 +1,15 @@
 package sample.ui;
 
 /**
- * Created by Tobias on 27.04.2016.
+ * @author Tobias Stelter
  */
 
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.event.*;
 import javafx.stage.Stage;
+
 public class ControllerDeleteDialog {
 
     @FXML

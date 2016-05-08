@@ -1,5 +1,10 @@
 package sample.ui;
 
+/**
+ * @author Tobias Stelter
+ */
+
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +24,9 @@ public class GUI extends Application {
     private final String manageCookBookFXML = "/sample/ui/ManageCookBook.fxml";
 
 
+    /**
+     * @author Tobias Stelter
+     */
     @Override
     public void start(Stage primaryStage) {
 
