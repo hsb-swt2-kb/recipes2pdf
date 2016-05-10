@@ -2,8 +2,7 @@ package sample.builder.pdfBuilder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
-import sample.builder.IBuilder;
-import sample.config.IConfig;
+import sample.builder.IConcreteBuilder;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 
@@ -16,7 +15,7 @@ import java.nio.file.Files;
  * @author Kai Nortmann
  */
 
-public class PdfBuilder implements IBuilder {
+public class PdfBuilder implements IConcreteBuilder {
 
 
     private final PdfBuilderConfig config;
