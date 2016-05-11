@@ -297,8 +297,11 @@ public class ConreteTextParser extends Parser implements Konstanten
       Double.parseDouble(s);
       
       quanti[0] = s;
-      quanti[1] = sTemp.replaceFirst(s, null);
-      
+      quanti[1] = sTemp.replaceFirst(s, "").trim();
+      if (quanti[1].length() == 0 ) {
+        quanti[1] = null;
+      }
+    
       return quanti;
     }
     catch (Exception e) { return quanti; }

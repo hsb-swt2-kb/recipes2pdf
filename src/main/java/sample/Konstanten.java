@@ -13,12 +13,4 @@ public interface Konstanten
     "Portionen",
     "Kalorien"
   }; 
-final String Name = "class=\"page-title\"",
-          Zutaten = "id=\"recipe-incredients\"",
-          Zubereitung = "class=\"instructions\"";
-
-
-final String[] Tags = {""};
-
-
 }
