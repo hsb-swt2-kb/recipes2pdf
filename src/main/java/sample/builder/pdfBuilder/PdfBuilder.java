@@ -3,6 +3,7 @@ package sample.builder.pdfBuilder;
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
 import sample.builder.IConcreteBuilder;
+import sample.config.IConfig;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 
@@ -20,8 +21,8 @@ public class PdfBuilder implements IConcreteBuilder {
 
     private final PdfBuilderConfig config;
 
-    public PdfBuilder(PdfBuilderConfig config) {
-        this.config = config;
+    public PdfBuilder(IConfig config) {
+        this.config = new PdfBuilderConfig(config);
     }
 
     private void parseTexFile(File outputTexFile, ICookbook cookbook) throws Exception {

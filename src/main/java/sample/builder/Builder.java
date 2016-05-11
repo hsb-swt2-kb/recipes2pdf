@@ -16,7 +16,7 @@ public class Builder implements  IBuilder{
         this.builders = builders;
     }
 
-    public File build(ICookbook cookbook, String builderOutputFiletype) throws Exception {
+    public File build(ICookbook cookbook) throws Exception {
         for (IConcreteBuilder builder : builders) {
             if ( builder.builds(builderOutputFiletype) ) {
                 return builder.build(cookbook);
@@ -26,7 +26,7 @@ public class Builder implements  IBuilder{
     }
 
     @Override
-    public File build(IRecipe recipe, String builderOutputFiletype) throws Exception {
+    public File build(IRecipe recipe) throws Exception {
         for (IConcreteBuilder builder : builders) {
             if ( builder.builds(builderOutputFiletype) ) {
                 return builder.build(recipe);
