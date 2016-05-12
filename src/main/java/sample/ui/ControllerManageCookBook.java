@@ -31,8 +31,8 @@ public class ControllerManageCookBook {
     private final String deleteText = "Löschen";
     private final String noElementSelectedText = "Error";
         private final String changeText = "Rezept ändern";
-    ObservableList<String> recipes;
-    ObservableList<String> cookbook;
+    private ObservableList<String> recipes;
+    private ObservableList<String> cookbook;
     private ControllerDefault controllerDefault = new ControllerDefault();
     @FXML
     private ListView<String> listViewRecipes;
@@ -62,15 +62,15 @@ public class ControllerManageCookBook {
         this.cookbook = FXCollections.observableArrayList("Rindsschmorbraten", "Tomahawk Steak", "Veganes basisches Chili", "Cheeseburgerauflauf", "Curry aus Süßkartoffel-Streifen");
          /* TESTDATA END */
         refreshListViews(recipes, cookbook);
-        searchInListView(recipes, searchFieldRecipes, listViewRecipes);
-        searchInListView(cookbook, searchFieldCookBooks, listViewCookBook);
     }
 
-    void refreshListViews(ObservableList<String> recipes, ObservableList<String> cookbook) {
+    private void refreshListViews(ObservableList<String> recipes, ObservableList<String> cookbook) {
         FXCollections.sort(recipes);
         FXCollections.sort(cookbook);
         this.listViewRecipes.setItems(recipes);
         this.listViewCookBook.setItems(cookbook);
+        searchInListView(recipes, searchFieldRecipes, listViewRecipes);
+        searchInListView(cookbook, searchFieldCookBooks, listViewCookBook);
     }
 
     private void initializeListeners() {
@@ -133,15 +133,22 @@ public class ControllerManageCookBook {
                 dragEvent.setDropCompleted(true);
             }
         });
-    }
 
-    @FXML
-    void moveRecipeToCookBook(ActionEvent event) {
+        leftArrowButton.setOnAction((ActionEvent event) -> {
+            String recipe = listViewCookBook.getSelectionModel().getSelectedItem();
+            if (recipe != null) {
+                listViewCookBook.getSelectionModel().clearSelection();
+                cookbook.remove(recipe);
+            }
+        });
 
-    }
-
-    @FXML
-    void delteRecipeFromCookBook(ActionEvent event) {
+        rightArrowButton.setOnAction((ActionEvent event) -> {
+            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
+            if (recipe != null) {
+                listViewRecipes.getSelectionModel().clearSelection();
+                listViewCookBook.getItems().addAll(recipe);
+            }
+        });
 
     }
 
