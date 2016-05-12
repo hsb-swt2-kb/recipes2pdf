@@ -9,10 +9,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 
 
@@ -40,6 +42,13 @@ public class ControllerManageCookBook {
     private Button plusButton;
     @FXML
     private TextField searchFieldRecipes;
+
+    @FXML
+    private Button leftArrowButton;
+
+    @FXML
+    private Button rightArrowButton;
+
     @FXML
     private TextField searchFieldCookBooks;
     @FXML
@@ -47,6 +56,7 @@ public class ControllerManageCookBook {
 
     @FXML
     private void initialize() {
+        initializeListeners();
         /* TESTDATA */
         this.recipes = FXCollections.observableArrayList("Chilli", "Pizza", "Eintopf", "Bohnenauflauf", "Rindsschmorbraten", "Veganes basisches Chili", "Curry aus Süßkartoffel-Streifen", "Gegrillte Mettbrötchen", "Schwälmer Zwiebelplatz", "Bärlauch - Sahnesuppe mit Croutons", "EIS", "Cheeseburgerauflauf", "Tomahawk Steak", "Tijuana Coffee Chili", "Rindersteak mit Pilzen", "Spaghetti in cremiger Brokkoli-Hackleisch-Sauce", "Flankrolle mit Ananas-Tomaten-Salsa");
         this.cookbook = FXCollections.observableArrayList("Rindsschmorbraten", "Tomahawk Steak", "Veganes basisches Chili", "Cheeseburgerauflauf", "Curry aus Süßkartoffel-Streifen");
@@ -57,8 +67,82 @@ public class ControllerManageCookBook {
     }
 
     void refreshListViews(ObservableList<String> recipes, ObservableList<String> cookbook) {
+        FXCollections.sort(recipes);
+        FXCollections.sort(cookbook);
         this.listViewRecipes.setItems(recipes);
         this.listViewCookBook.setItems(cookbook);
+    }
+
+    private void initializeListeners() {
+        // drag from left to right
+        listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (listViewRecipes.getSelectionModel().getSelectedItem() == null) {
+                    return;
+                }
+
+                Dragboard dragBoard = listViewRecipes.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(listViewRecipes.getSelectionModel().getSelectedItem());
+                dragBoard.setContent(content);
+            }
+        });
+        // drag from right to left
+        listViewCookBook.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Dragboard dragBoard = listViewCookBook.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
+                dragBoard.setContent(content);
+            }
+        });
+
+        listViewCookBook.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+
+        listViewCookBook.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                String selectedItem = dragEvent.getDragboard().getString();
+                listViewCookBook.getItems().addAll(selectedItem);
+                listViewRecipes.setItems(recipes);
+                dragEvent.setDropCompleted(true);
+            }
+        });
+
+        listViewRecipes.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+
+        listViewRecipes.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                String selectedItem = dragEvent.getDragboard().getString();
+
+
+                cookbook.remove(selectedItem);
+                dragEvent.setDropCompleted(true);
+            }
+        });
+    }
+
+    @FXML
+    void moveRecipeToCookBook(ActionEvent event) {
+
+    }
+
+    @FXML
+    void delteRecipeFromCookBook(ActionEvent event) {
+
     }
 
 
