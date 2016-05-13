@@ -52,7 +52,11 @@
             </graphic>
         </Button>
         <Button fx:id="closeButton" layoutX="163.0" layoutY="310.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="25.0" prefWidth="94.0" text="Schließen" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="11.0" />
-        <ListView layoutX="12.0" layoutY="59.0" prefHeight="248.0" prefWidth="245.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="59.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <TextField layoutX="12.0" layoutY="35.0" prefHeight="19.0" prefWidth="245.0" promptText="Suche*" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="11.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <ListView fx:id="listViewCookBooks" layoutX="12.0" layoutY="59.0" prefHeight="248.0" prefWidth="245.0"
+                  AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="11.0"
+                  AnchorPane.topAnchor="59.0" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+        <TextField fx:id="searchFieldCookBooks" layoutX="12.0" layoutY="35.0" prefHeight="19.0" prefWidth="245.0"
+                   promptText="Suche*" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="11.0"
+                   GridPane.columnIndex="3" GridPane.rowIndex="2"/>
     </children>
 </AnchorPane>
