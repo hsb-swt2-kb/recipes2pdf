@@ -16,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
+import org.apache.commons.lang3.StringUtils;
 
 
 public class ControllerManageCookBook {
@@ -165,10 +166,10 @@ public class ControllerManageCookBook {
 
         searchField.textProperty().addListener(obs -> {
             String filter = searchField.getText();
-            if (filter == null || filter.length() == 0) {
+            if (filter == null || filter.isEmpty()) {
                 filteredData.setPredicate(s -> true);
             } else {
-                filteredData.setPredicate(s -> s.contains(filter));
+                filteredData.setPredicate(s -> StringUtils.containsIgnoreCase( s, filter ));
             }
             listView.setItems(filteredData);
         });
