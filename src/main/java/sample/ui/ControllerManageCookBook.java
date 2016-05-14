@@ -46,6 +46,12 @@ public class ControllerManageCookBook {
     private TextField searchFieldRecipes;
 
     @FXML
+    private Button changeRecipeButton;
+
+    @FXML
+    private Button delteButtonRecipe;
+
+    @FXML
     private Button leftArrowButton;
 
     @FXML
@@ -141,6 +147,8 @@ public class ControllerManageCookBook {
             if (recipe != null) {
                 listViewCookBook.getSelectionModel().clearSelection();
                 cookbook.remove(recipe);
+            } else {
+                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
             }
         });
 
@@ -149,6 +157,26 @@ public class ControllerManageCookBook {
             if (recipe != null) {
                 listViewRecipes.getSelectionModel().clearSelection();
                 listViewCookBook.getItems().addAll(recipe);
+            } else {
+                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
+            }
+        });
+        delteButtonRecipe.setOnAction((ActionEvent event) -> {
+            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
+            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+            if (recipe != null && cookbook != null) {
+                controllerDefault.newWindowNotResizable(deleteFXML, deleteText);
+            } else {
+                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
+            }
+        });
+        changeRecipeButton.setOnAction((ActionEvent event) -> {
+            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
+            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+            if (recipe != null && cookbook != null) {
+                controllerDefault.newWindow(changeRecipeFXML, changeText, 415, 545, defaultIconPath);
+            } else {
+                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
             }
         });
 
@@ -176,19 +204,6 @@ public class ControllerManageCookBook {
         });
     }
 
-    @FXML
-    void delteRecipe(ActionEvent event) {
-        controllerDefault.newWindowNotResizable(deleteFXML, deleteText);
-        controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
-
-
-    }
-
-    @FXML
-    void changeRecipe(ActionEvent event) {
-        controllerDefault.newWindow(changeRecipeFXML, changeText, 415, 545, defaultIconPath);
-
-    }
 
     @FXML
     void export2pdf(ActionEvent event) {

@@ -29,10 +29,10 @@ public class ControllerDefault {
     private final String defaultIconPath = "/sample/ui/icon_bg_small.png";
     private final String helpIconPath = "/sample/ui/Help.png";
     private final String aboutIconPath = "/sample/ui/Info.png";
-    private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
     private final String helpFXML =  "/sample/ui/Help.fxml";
     private final String aboutWindowTitel = "Über";
     private final String helpWindowTitel = "Hilfe";
+    private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
     private final String addCookBookWindowTitel = "Kochbuch hinzufügen";
     private final String manageCookBooksTitel = "Kochbuchverwaltung";
 
