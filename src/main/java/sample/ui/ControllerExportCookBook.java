@@ -5,12 +5,13 @@ package sample.ui;
  */
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ControllerExportCookBook {
 
@@ -21,7 +22,7 @@ public class ControllerExportCookBook {
     private Button saveButton;
 
     @FXML
-    private MenuButton menuButtonFormat;
+    private ComboBox<String> comboBoxFormat;
 
     @FXML
     private MenuItem menuItemA5;
@@ -29,19 +30,50 @@ public class ControllerExportCookBook {
     @FXML
     private MenuItem menuItemA4;
 
+    private ObservableList<String> format;
+
 
 
     @FXML
     private Button closeButton;
 
     @FXML
-    void chooseA4(ActionEvent event) {
-        menuButtonFormat.setText("A4");
+    private void initialize() {
+        initializeListeners();
+        format = FXCollections.observableArrayList("A4", "A5");
+        refreshComboBox(format);
+
     }
 
-    @FXML
-    void chooseA5(ActionEvent event) {
-        menuButtonFormat.setText("A5");
+    private void initializeListeners() {
+        comboBoxFormat
+            .setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+                @Override
+                public ListCell<String> call(ListView<String> param) {
+                    final ListCell<String> cell = new ListCell<String>() {
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item != null) {
+                                setText(item);
+                                if (item.contains("A4")) {
+                                    // DO
+                                } else if (item.contains("A5")) {
+                                    // DO
+                                }
+                            } else {
+                                setText(null);
+                            }
+                        }
+                    };
+                    return cell;
+                }
+            });
+    }
+
+    private void refreshComboBox(ObservableList<String> format) {
+        comboBoxFormat.setItems(format);
     }
 
     @FXML

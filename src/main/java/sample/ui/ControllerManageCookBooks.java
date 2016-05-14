@@ -24,6 +24,8 @@ public class ControllerManageCookBooks {
     private final String noElementSelectedTEXT = "Error";
     private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
     private final String addCookBookWindowTitel = "Kochbuch hinzufügen";
+    private final String deleteText = "Löschen";
+    private final String deleteFXML = "/sample/ui/DeleteDialog.fxml";
     ControllerDefault controllerDefault = new ControllerDefault();
     @FXML
     private Button closeButton;
@@ -52,7 +54,7 @@ public class ControllerManageCookBooks {
         deleteButton.setOnAction((ActionEvent event) -> {
             String recipe = listViewCookBooks.getSelectionModel().getSelectedItem();
             if (recipe != null) {
-                // DO
+                controllerDefault.newWindowNotResizable(deleteFXML, deleteText);
             } else {
                 controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedTEXT);
             }

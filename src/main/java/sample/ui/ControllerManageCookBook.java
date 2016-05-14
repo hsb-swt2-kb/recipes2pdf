@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
@@ -35,6 +36,7 @@ public class ControllerManageCookBook {
         private final String changeText = "Rezept ändern";
     private ObservableList<String> recipes;
     private ObservableList<String> cookbook;
+    private ObservableList<String> cookbooks;
     private ControllerDefault controllerDefault = new ControllerDefault();
     @FXML
     private ListView<String> listViewRecipes;
@@ -47,6 +49,9 @@ public class ControllerManageCookBook {
 
     @FXML
     private Button changeRecipeButton;
+
+    @FXML
+    private ComboBox<String> comboBoxCookBooks;
 
     @FXML
     private Button delteButtonRecipe;
@@ -68,7 +73,9 @@ public class ControllerManageCookBook {
         /* TESTDATA */
         this.recipes = FXCollections.observableArrayList("Chilli", "Pizza", "Eintopf", "Bohnenauflauf", "Rindsschmorbraten", "Veganes basisches Chili", "Curry aus Süßkartoffel-Streifen", "Gegrillte Mettbrötchen", "Schwälmer Zwiebelplatz", "Bärlauch - Sahnesuppe mit Croutons", "EIS", "Cheeseburgerauflauf", "Tomahawk Steak", "Tijuana Coffee Chili", "Rindersteak mit Pilzen", "Spaghetti in cremiger Brokkoli-Hackleisch-Sauce", "Flankrolle mit Ananas-Tomaten-Salsa");
         this.cookbook = FXCollections.observableArrayList("Rindsschmorbraten", "Tomahawk Steak", "Veganes basisches Chili", "Cheeseburgerauflauf", "Curry aus Süßkartoffel-Streifen");
+        this.cookbooks = FXCollections.observableArrayList("Tobias Kochbuch", "Henriks Kochbuch", "Florians Kochbuch", "Danys Kochbuch", "Christians Kochbuch", "Markuss Kochbuch", "Kais Kochbuch");
          /* TESTDATA END */
+        refreshComboBox(cookbooks);
         refreshListViews(recipes, cookbook);
     }
 
@@ -79,6 +86,10 @@ public class ControllerManageCookBook {
         this.listViewCookBook.setItems(cookbook);
         searchInListView(recipes, searchFieldRecipes, listViewRecipes);
         searchInListView(cookbook, searchFieldCookBooks, listViewCookBook);
+    }
+
+    private void refreshComboBox(ObservableList<String> cookbooks) {
+        comboBoxCookBooks.setItems(cookbooks);
     }
 
     private void initializeListeners() {

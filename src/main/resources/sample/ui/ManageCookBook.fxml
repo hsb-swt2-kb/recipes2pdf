@@ -128,8 +128,8 @@
                         <Insets bottom="10.0"/>
                     </GridPane.margin>
                 </Text>
-                <ComboBox maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0"
-                          prefWidth="142.0" GridPane.columnIndex="2">
+                <ComboBox fx:id="comboBoxCookBooks" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT"
+                          prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="2">
                     <GridPane.margin>
                         <Insets bottom="7.0" left="110.0"/>
                     </GridPane.margin>
