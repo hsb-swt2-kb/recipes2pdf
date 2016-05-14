@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 
 public class ControllerChangeRecipe {
 
-    private final String notEnoughArgumentsFXML = "/sample/ui/NotEnoughArguments.fxml";
-    private final String error = "Error";
 
     @FXML
     private Button fileChooserButton;
@@ -35,7 +33,7 @@ public class ControllerChangeRecipe {
     void changeRecipe(ActionEvent event) {
 
         ControllerDefault controllerDefault = new ControllerDefault();
-        controllerDefault.newWindowNotResizable(notEnoughArgumentsFXML, error);
+        controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
 
         Stage stage = (Stage) changeButton.getScene().getWindow();
         stage.close();

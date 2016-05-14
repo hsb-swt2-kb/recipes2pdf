@@ -21,20 +21,7 @@ import java.io.IOException;
 public class ControllerDefault {
 
     private final String wrongPathException = "The FXML-file is wrong or the FXML-file does not exist or there are other problems with the loader.";
-    private final String aboutFXML = "/sample/ui/About.fxml";
-    private final String manageCookBookFXML = "/sample/ui/ManageCookBook.fxml";
-    private final String manageCookBooksFXML = "/sample/ui/ManageCookBooks.fxml";
-    private final String loadRecipeFXML = "/sample/ui/LoadRecipe.fxml";
-    private final String loadRecipeText = "Rezept laden";
-    private final String defaultIconPath = "/sample/ui/icon_bg_small.png";
-    private final String helpIconPath = "/sample/ui/Help.png";
-    private final String aboutIconPath = "/sample/ui/Info.png";
-    private final String helpFXML =  "/sample/ui/Help.fxml";
-    private final String aboutWindowTitel = "Über";
-    private final String helpWindowTitel = "Hilfe";
-    private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
-    private final String addCookBookWindowTitel = "Kochbuch hinzufügen";
-    private final String manageCookBooksTitel = "Kochbuchverwaltung";
+
 
     @FXML
     private MenuItem endMenuItem;
@@ -106,7 +93,7 @@ public class ControllerDefault {
             System.out.println(wrongPathException);
         }
         Stage stage = new Stage();
-        stage.getIcons().add(new Image(this.getClass().getResourceAsStream(defaultIconPath)));
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream(Resources.getDefaultIcon())));
         stage.setScene(new Scene(root));
         stage.setTitle(windowTitel);
         stage.setResizable(false);
@@ -141,7 +128,7 @@ public class ControllerDefault {
     @FXML
     void addCookBook(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
-        newWindow(addCookBookFXML, addCookBookWindowTitel, 370, 245, defaultIconPath);
+        newWindow(Resources.getAddCookBookFXML(), Resources.getAddCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
     }
 
     @FXML
@@ -151,23 +138,23 @@ public class ControllerDefault {
 
     @FXML
     void addReceipe(ActionEvent event) {
-        newWindowNotResizable(loadRecipeFXML, loadRecipeText);
+        newWindowNotResizable(Resources.getloadRecipeFXML(), Resources.getLoadWindowText());
     }
 
     @FXML
     void openHelp(ActionEvent event) {
-        newWindow(helpFXML, helpWindowTitel, 250, 200, helpIconPath);
+        newWindow(Resources.getHelpFXML(), Resources.getHelpWindowText(), 250, 200, Resources.getHelpIcon());
 
     }
 
     @FXML
     void openAbout(ActionEvent event) {
-        newWindow(aboutFXML, aboutWindowTitel, 300, 220, aboutIconPath);
+        newWindow(Resources.getAboutFXML(), Resources.getAboutWindowText(), 300, 220, Resources.getInfoIcon());
     }
 
     @FXML
     void openManageCookBooks(ActionEvent event) {
-        newWindow(manageCookBooksFXML, manageCookBooksTitel, 265, 350, defaultIconPath);
+        newWindow(Resources.getMangeCookBooksFXML(), Resources.getManageCookBooksWindowText(), 265, 350, Resources.getDefaultIcon());
 
     }
 

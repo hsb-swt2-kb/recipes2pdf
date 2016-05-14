@@ -15,14 +15,13 @@ import java.util.List;
 
 public class FileHandler {
 
-    private final String windowText = "File Chooser";
     private Stage stage = new Stage();
 
     /**
      * These method imports the data of a single folder.
      */
     void importFolder(){
-        stage.setTitle(windowText);
+        stage.setTitle(Resources.getFileChooserWindowText());
         final DirectoryChooser chooser = new DirectoryChooser();
         //File defaultDirectory = new File("c:/dev/javafx");
         //chooser.setInitialDirectory(defaultDirectory);
@@ -34,7 +33,7 @@ public class FileHandler {
      * These method imports a single or multiple files.
      */
     void importFiles(){
-        stage.setTitle(windowText);
+        stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
         //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.stl", "*.STL");
         //fileChooser.setSelectedExtensionFilter(extFilter);
@@ -46,7 +45,7 @@ public class FileHandler {
      * These method imports a single file.
      */
     void importFile(){
-       stage.setTitle(windowText);
+        stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
              //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.stl", "*.STL");
         //fileChooser.setSelectedExtensionFilter(extFilter);

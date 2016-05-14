@@ -17,15 +17,7 @@ import javafx.stage.Stage;
 public class ControllerManageCookBooks {
 
 
-    private final String changeCookBookFXML = "/sample/ui/ChangeCookBook.fxml";
-    private final String defaultIconPath = "/sample/ui/icon_bg_small.png";
-    private final String changeCookBookText = "Kochbuch ändern";
-    private final String noElementSelectedFXML = "/sample/ui/NoElementSelectedDialog.fxml";
-    private final String noElementSelectedTEXT = "Error";
-    private final String addCookBookFXML = "/sample/ui/AddCookBook.fxml";
-    private final String addCookBookWindowTitel = "Kochbuch hinzufügen";
-    private final String deleteText = "Löschen";
-    private final String deleteFXML = "/sample/ui/DeleteDialog.fxml";
+
     ControllerDefault controllerDefault = new ControllerDefault();
     @FXML
     private Button closeButton;
@@ -54,18 +46,18 @@ public class ControllerManageCookBooks {
         deleteButton.setOnAction((ActionEvent event) -> {
             String recipe = listViewCookBooks.getSelectionModel().getSelectedItem();
             if (recipe != null) {
-                controllerDefault.newWindowNotResizable(deleteFXML, deleteText);
+                controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedTEXT);
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
             }
         });
 
         changeButton.setOnAction((ActionEvent event) -> {
             String recipe = listViewCookBooks.getSelectionModel().getSelectedItem();
             if (recipe != null) {
-                controllerDefault.newWindow(changeCookBookFXML, changeCookBookText, 370, 245, defaultIconPath);
+                controllerDefault.newWindow(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
             } else {
-                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedTEXT);
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
             }
         });
     }
@@ -79,7 +71,7 @@ public class ControllerManageCookBooks {
 
     @FXML
     void addCookBook(ActionEvent event) {
-        controllerDefault.newWindow(addCookBookFXML, addCookBookWindowTitel, 370, 245, defaultIconPath);
+        controllerDefault.newWindow(Resources.getAddCookBookFXML(), Resources.getAddCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
 
     }
 

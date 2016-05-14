@@ -23,17 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ControllerManageCookBook {
 
-    private final String exportFXML = "/sample/ui/ExportCookBook.fxml";
-    private final String export = "Exportieren";
-    private final String deleteFXML = "/sample/ui/DeleteDialog.fxml";
-    private final String noElementSelectedFXML = "/sample/ui/NoElementSelectedDialog.fxml";
-    private final String defaultIconPath = "/sample/ui/icon_bg_small.png";
-    private final String changeRecipeFXML = "/sample/ui/ChangeRecipe.fxml";
-    private final String loadRecipeFXML = "/sample/ui/LoadRecipe.fxml";
-    private final String loadRecipeText = "Rezept laden";
-    private final String deleteText = "Löschen";
-    private final String noElementSelectedText = "Error";
-        private final String changeText = "Rezept ändern";
+
     private ObservableList<String> recipes;
     private ObservableList<String> cookbook;
     private ObservableList<String> cookbooks;
@@ -159,7 +149,7 @@ public class ControllerManageCookBook {
                 listViewCookBook.getSelectionModel().clearSelection();
                 cookbook.remove(recipe);
             } else {
-                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
             }
         });
 
@@ -169,25 +159,25 @@ public class ControllerManageCookBook {
                 listViewRecipes.getSelectionModel().clearSelection();
                 listViewCookBook.getItems().addAll(recipe);
             } else {
-                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
             }
         });
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
             String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
             String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-            if (recipe != null && cookbook != null) {
-                controllerDefault.newWindowNotResizable(deleteFXML, deleteText);
+            if (recipe != null || recipeInCookBook != null) {
+                controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
             }
         });
         changeRecipeButton.setOnAction((ActionEvent event) -> {
             String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
             String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-            if (recipe != null && cookbook != null) {
-                controllerDefault.newWindow(changeRecipeFXML, changeText, 415, 545, defaultIconPath);
+            if (recipe != null || recipeInCookBook != null) {
+                controllerDefault.newWindow(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText(), 415, 545, Resources.getDefaultIcon());
             } else {
-                controllerDefault.newWindowNotResizable(noElementSelectedFXML, noElementSelectedText);
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
             }
         });
 
@@ -218,13 +208,13 @@ public class ControllerManageCookBook {
 
     @FXML
     void export2pdf(ActionEvent event) {
-        controllerDefault.newWindow(exportFXML, export, 290, 200, defaultIconPath);
+        controllerDefault.newWindow(Resources.getExportFXML(), Resources.getExportWindowText(), 290, 200, Resources.getDefaultIcon());
 
     }
 
     @FXML
     void addRecipe(ActionEvent event) {
-        controllerDefault.newWindow(loadRecipeFXML, loadRecipeText, 290, 160, defaultIconPath);
+        controllerDefault.newWindow(Resources.getloadRecipeFXML(), Resources.getLoadWindowText(), 290, 160, Resources.getDefaultIcon());
     }
 
 }
