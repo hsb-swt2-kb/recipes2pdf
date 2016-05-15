@@ -1,142 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0"
-            prefWidth="575.0" xmlns="http://javafx.com/javafx/8" fx:controller="sample.ui.ControllerManageCookBook">
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerManageCookBook">
     <children>
-        <Button fx:id="changeRecipeButton" layoutX="83.0" layoutY="352.0" mnemonicParsing="false" prefHeight="25.0"
-                prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="83.0">
+        <Button fx:id="changeRecipeButton" layoutX="83.0" layoutY="352.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="83.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
-            <graphic>
-                <ImageView fitHeight="16.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@change.png"/>
-                    </image>
-                </ImageView>
-            </graphic>
+         <graphic>
+            <FontAwesomeIconView glyphName="COG" size="15" />
+         </graphic>
         </Button>
-        <Button fx:id="delteButtonRecipe" layoutX="45.0" layoutY="353.0" mnemonicParsing="false" prefHeight="24.0"
-                prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="45.0">
+        <Button fx:id="delteButtonRecipe" layoutX="45.0" layoutY="353.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="45.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
-            <graphic>
-                <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@Minus.png"/>
-                    </image>
-                </ImageView>
-            </graphic>
+         <graphic>
+            <FontAwesomeIconView glyphName="TRASH" size="15" />
+         </graphic>
         </Button>
-        <Button fx:id="plusButton" layoutX="7.0" layoutY="353.0" mnemonicParsing="false" onAction="#addRecipe"
-                prefHeight="24.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="7.0">
+        <Button fx:id="plusButton" layoutX="7.0" layoutY="353.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="24.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="7.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
-            <graphic>
-                <ImageView fitHeight="14.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@Plus.png"/>
-                    </image>
-                </ImageView>
-            </graphic>
+         <graphic>
+            <FontAwesomeIconView glyphName="PLUS" size="15" />
+         </graphic>
         </Button>
-        <Button fx:id="export2pdfButton" layoutX="474.0" layoutY="352.0" mnemonicParsing="false" onAction="#export2pdf"
-                prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" AnchorPane.bottomAnchor="3.0"
-                AnchorPane.rightAnchor="7.0"/>
-        <GridPane fx:id="gridPane" layoutX="7.0" layoutY="6.0" prefHeight="343.0" prefWidth="561.0"
-                  AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0"
-                  AnchorPane.topAnchor="6.0">
+        <Button fx:id="export2pdfButton" layoutX="474.0" layoutY="352.0" mnemonicParsing="false" onAction="#export2pdf" prefHeight="25.0" prefWidth="94.0" text="PDF erzeugen" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="7.0" />
+        <GridPane fx:id="gridPane" layoutX="7.0" layoutY="6.0" prefHeight="343.0" prefWidth="561.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="6.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="254.0"/>
-                <ColumnConstraints hgrow="NEVER" maxWidth="391.0" minWidth="10.0" prefWidth="48.0"/>
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="250.0"/>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="260.0" />
+                <ColumnConstraints hgrow="NEVER" maxWidth="391.0" minWidth="10.0" prefWidth="45.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="255.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="183.0" minHeight="0.0" prefHeight="23.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="118.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES"/>
-                <RowConstraints/>
+                <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="183.0" minHeight="0.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="118.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                <RowConstraints />
             </rowConstraints>
             <children>
-                <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                          nodeOrientation="LEFT_TO_RIGHT" prefHeight="289.0" prefWidth="266.0" GridPane.columnIndex="2"
-                          GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3"
-                          GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"/>
-                <TextField fx:id="searchFieldRecipes" prefHeight="25.0" prefWidth="245.0" promptText="Suche*"
-                           GridPane.rowIndex="1"/>
-                <TextField fx:id="searchFieldCookBooks" prefHeight="19.0" prefWidth="245.0" promptText="Suche*"
-                           GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                <Button fx:id="rightArrowButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
-                        mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1"
-                        GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="289.0" prefWidth="266.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
+                <TextField fx:id="searchFieldRecipes" prefHeight="25.0" prefWidth="245.0" promptText="Suche*" GridPane.rowIndex="1" />
+                <TextField fx:id="searchFieldCookBooks" prefHeight="19.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Button fx:id="rightArrowButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                     <font>
-                        <Font name="System Bold" size="12.0"/>
+                        <Font name="System Bold" size="12.0" />
                     </font>
-                    <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@right.png"/>
-                            </image>
-                            <viewport>
-                                <Rectangle2D/>
-                            </viewport>
-                        </ImageView>
-                    </graphic>
                     <GridPane.margin>
-                        <Insets bottom="125.0" left="6.0" right="10.0"/>
+                        <Insets bottom="125.0" left="6.0" right="10.0" />
                     </GridPane.margin>
                     <opaqueInsets>
-                        <Insets left="3.0" right="3.0"/>
+                        <Insets left="3.0" right="3.0" />
                     </opaqueInsets>
+               <graphic>
+                  <FontAwesomeIconView glyphName="ARROW_RIGHT" size="20" wrappingWidth="16.14285659790039" />
+               </graphic>
                 </Button>
-                <Button fx:id="leftArrowButton" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0"
-                        prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                <Button fx:id="leftArrowButton" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                     <font>
-                        <Font name="System Bold" size="12.0"/>
+                        <Font name="System Bold" size="12.0" />
                     </font>
-                    <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@left.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
                     <GridPane.margin>
-                        <Insets bottom="60.0" left="6.0" right="10.0"/>
+                        <Insets bottom="60.0" left="6.0" right="10.0" />
                     </GridPane.margin>
+               <graphic>
+                  <FontAwesomeIconView glyphName="ARROW_LEFT" size="20" />
+               </graphic>
                 </Button>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch:" underline="true" GridPane.columnIndex="2">
                     <font>
-                        <Font name="System Bold" size="21.0"/>
+                        <Font name="System Bold" size="21.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0"/>
+                        <Insets bottom="10.0" />
                     </GridPane.margin>
                 </Text>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte:" underline="true">
                     <font>
-                        <Font name="System Bold Italic" size="21.0"/>
+                        <Font name="System Bold Italic" size="21.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0"/>
+                        <Insets bottom="10.0" />
                     </GridPane.margin>
                 </Text>
-                <ComboBox fx:id="comboBoxCookBooks" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT"
-                          prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="2">
+                <ComboBox fx:id="comboBoxCookBooks" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="2">
                     <GridPane.margin>
-                        <Insets bottom="7.0" left="110.0"/>
+                        <Insets bottom="7.0" left="110.0" />
                     </GridPane.margin>
                 </ComboBox>
-                <ListView fx:id="listViewRecipes" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3"/>
-                <ListView fx:id="listViewCookBook" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2"
-                          GridPane.rowIndex="3"/>
+                <ListView fx:id="listViewRecipes" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
+                <ListView fx:id="listViewCookBook" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             </children>
         </GridPane>
     </children>

@@ -48,6 +48,7 @@ public class ControllerLoadRecipe {
     public void initialize(){
 
         groupRadioButtons();
+        setHyperLinkNotEditable();
     }
 
     /**
@@ -74,17 +75,12 @@ public class ControllerLoadRecipe {
 
     void setHyperLinkEditable() {
         hyperLinkTextField.setEditable(true);
-        hyperLinkTextField.getStyleClass().clear();
-        hyperLinkTextField.getStyleClass().addAll("text-field", "text-input");
-
-
+        hyperLinkTextField.setDisable(false);
     }
     void setHyperLinkNotEditable() {
         hyperLinkTextField.setEditable(false);
         hyperLinkTextField.clear();
-        hyperLinkTextField.getStyleClass().clear();
-        hyperLinkTextField.getStyleClass().add("textfieldDisabled");
-
+        hyperLinkTextField.setDisable(true);
     }
 
     @FXML
