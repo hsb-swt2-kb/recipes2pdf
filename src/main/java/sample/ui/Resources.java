@@ -8,23 +8,23 @@ public class Resources {
     /**
      * FXMLs
      */
-    public static String getDefaultFXML() {
+    protected static String getDefaultFXML() {
         return "/sample/ui/Default.fxml";
     }
 
-    public static String getMangeCookBookFXML() {
+    protected static String getMangeCookBookFXML() {
         return "/sample/ui/ManageCookBook.fxml";
     }
 
-    public static String getMangeCookBooksFXML() {
+    protected static String getMangeCookBooksFXML() {
         return "/sample/ui/ManageCookBooks.fxml";
     }
 
-    public static String getChangeCookBooksFXML() {
+    protected static String getChangeCookBooksFXML() {
         return "/sample/ui/ChangeCookBook.fxml";
     }
 
-    public static String getNoElementsSelectedFXML() {
+    protected static String getNoElementsSelectedFXML() {
         return "/sample/ui/NoElementSelectedDialog.fxml";
     }
 

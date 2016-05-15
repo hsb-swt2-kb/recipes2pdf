@@ -43,6 +43,11 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
+
+    //Icons
+    compile 'de.jensd:fontawesomefx-commons:8.11'
+    compile 'de.jensd:fontawesomefx-controls:8.11'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.5.0'
 }
 
 idea{
@@ -73,3 +78,6 @@ jacocoTestReport {
 }
 
 check.dependsOn jacocoTestReport
+
+
+
