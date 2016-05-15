@@ -12,6 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -19,6 +22,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
+import org.controlsfx.control.PopOver;
+
+import java.io.IOException;
 
 
 public class ControllerManageCookBook {
@@ -214,7 +220,25 @@ public class ControllerManageCookBook {
 
     @FXML
     void addRecipe(ActionEvent event) {
-        controllerDefault.newWindow(Resources.getloadRecipeFXML(), Resources.getLoadWindowText(), 290, 160, Resources.getDefaultIcon());
+        Node node = loadResource( Resources.getloadRecipeFXML() );
+        PopOver popOver = new PopOver( node );
+        popOver.setDetachable(false);
+        popOver.setCornerRadius(4);
+        popOver.setArrowLocation(PopOver.ArrowLocation.BOTTOM_LEFT);
+        popOver.show(this.plusButton);
+        //controllerDefault.newWindow(Resources.getloadRecipeFXML(), Resources.getLoadWindowText(), 290, 160, Resources.getDefaultIcon());
+    }
+
+    public Node loadResource(String fxml) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Path is wrong");
+        }
+        return root;
     }
 
 }

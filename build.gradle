@@ -48,6 +48,9 @@ dependencies {
     compile 'de.jensd:fontawesomefx-commons:8.11'
     compile 'de.jensd:fontawesomefx-controls:8.11'
     compile 'de.jensd:fontawesomefx-fontawesome:4.5.0'
+
+    // Extra Controls
+    compile 'org.controlsfx:controlsfx:8.40.10'
 }
 
 idea{
