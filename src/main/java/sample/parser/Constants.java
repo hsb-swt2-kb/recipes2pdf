@@ -1,8 +1,10 @@
-public interface Konstanten
+package sample.parser;
+
+public interface Constants
 {
 
   //Sigalwörter
-  final String[] signalwoerter = 
+  final String[] signalwoerter =
   {
     "Name",
     "Zutaten",
@@ -12,5 +14,5 @@ public interface Konstanten
     "Gerichtsart",
     "Portionen",
     "Kalorien"
-  }; 
+  };
 }
