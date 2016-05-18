@@ -52,6 +52,10 @@ public class Resources {
         return "/sample/ui/ExportCookBook.fxml";
     }
 
+    public static String getConfigFXML() {
+        return "/sample/ui/Config.fxml";
+    }
+
     public static String getChangeRecipeFXML() {
         return "/sample/ui/ChangeRecipe.fxml";
     }
@@ -80,6 +84,10 @@ public class Resources {
 
     public static String getDeleteWindowText() {
         return "Löschen";
+    }
+
+    public static String getConfigWindowText() {
+        return "Einstellungen";
     }
 
     public static String getChangeCookBookWindowText() {

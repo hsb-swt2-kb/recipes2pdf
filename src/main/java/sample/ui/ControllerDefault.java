@@ -43,6 +43,9 @@ public class ControllerDefault {
 
     @FXML
     private MenuItem openHelp;
+    @FXML
+    private MenuItem openConfig;
+
 
     @FXML
     private AnchorPane content;
@@ -139,6 +142,11 @@ public class ControllerDefault {
     @FXML
     void addReceipe(ActionEvent event) {
         newWindowNotResizable(Resources.getloadRecipeFXML(), Resources.getLoadWindowText());
+    }
+
+    @FXML
+    void openConfig(ActionEvent event) {
+        newWindowNotResizable(Resources.getConfigFXML(), Resources.getConfigWindowText());
     }
 
     @FXML
