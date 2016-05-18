@@ -9,6 +9,7 @@
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
+apply plugin: 'org.javalite.activejdbc'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
@@ -25,17 +26,35 @@ task initSourceFolders { // add << before { to prevent executing during configur
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
 }
 
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url 'http://repo.javalite.io' }
+    }
+    dependencies {
+        classpath group: 'org.javalite', name: 'activejdbc-gradle-plugin', version: '1.4.12-SNAPSHOT'
+    }
+}
+
 // In this section you declare where to find the dependencies of your project
  repositories {
     // Use 'jcenter' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
-}
+    mavenCentral()
+    maven { url 'http://repo.javalite.io' }
+ }
+
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.13'
+    compile group: 'org.javalite', name: 'activejdbc', version: '1.4.11'
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.5'
+    compile 'org.slf4j:slf4j-api:1.7.13'
+    compile 'org.xerial:sqlite-jdbc:3.8.11'
     compile 'org.apache.commons:commons-lang3:3.4'
 
     // Declare the dependency for your favourite test framework you want to use in your tests.
@@ -43,6 +62,7 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:1.+"
 
     //Icons
     compile 'de.jensd:fontawesomefx-commons:8.11'
@@ -53,7 +73,8 @@ dependencies {
     compile 'org.controlsfx:controlsfx:8.40.10'
 }
 
-idea{
+
+idea {
     project {
         languageLevel = '1.8'
     }
