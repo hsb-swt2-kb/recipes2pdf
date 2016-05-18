@@ -1,20 +1,15 @@
 package sample.model;
 
-import sample.model.dummy.DummyIngredient;
+import static org.apache.commons.lang3.ObjectUtils.compare;
 
 /**
- * Created by kai on 07.04.16.
+ * Created by czoeller on 02.04.16.
  */
-public interface IIngredient {
-    static IIngredient getInstance() {
-        return new DummyIngredient();
-    }
-
+public interface IIngredient extends IIdentifiable, Comparable<IIngredient> {
     String getName();
-
     void setName(String name);
-
-    boolean saveIt();
-
-    boolean delete();
+    @Override
+    default int compareTo(IIngredient o) {
+        return compare(getName(), o.getName());
+    }
 }

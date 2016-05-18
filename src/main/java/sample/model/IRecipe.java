@@ -1,32 +1,82 @@
 package sample.model;
 
-import sample.model.dummy.DummyRecipe;
+import org.apache.commons.lang3.tuple.Triple;
 
-import java.util.Map;
+import java.util.List;
 
 /**
- * Created by kai on 07.04.16.
+ * Created by czoeller on 01.04.16.
  */
-public interface IRecipe {
-    static DummyRecipe getInstance() {
-        return new DummyRecipe();
-    }
-
-    boolean saveIt();
-
+public interface IRecipe extends IIdentifiable {
     String getTitle();
 
     void setTitle(String title);
 
+    void setText(String text);
+
+    String getText();
+
+    void setPortions(int portions);
+
+    int getPortions();
+
+    void setDuration(int duration);
+
+    int getDuration();
+
+    void setImage(byte[] image);
+
+    byte[] getImage();
+
+    void setCalories(int calories);
+
+    int getCalories();
+
+    void setCategory(ICategory category);
+
+    ICategory getCategory();
+
+    void setCourse(ICourse course);
+
+    ICourse getCourse();
+
+    void setRegion(IRegion region);
+
+    IRegion getRegion();
+
+    void setDaytime(IDaytime daytime);
+
+    IDaytime getDaytime();
+
+    void setSeason(ISeason season);
+
+    ISeason getSeason();
+
+    void setNurture(INurture nurture);
+
+    INurture getNurture();
+
+    /**
+     * Add ingredient with amount and unit.
+     * This is a convenience method that creates missing entities on the fly.
+     *
+     * @param ingredientName the name of ingredient
+     * @param amount         amount of ingredient
+     * @param unitName       name of the unit
+     */
     void add(String ingredientName, int amount, String unitName);
 
-    Long getID();
+    /**
+     * Retrieve Map of Ingredients with details amount and unit per ingredient.
+     *
+     * @return map
+     */
+    List<Triple<IIngredient, Integer, IUnit>> getIngredients();
 
-    Map<IIngredient, Map<Integer, IUnit>> getIngredients();
-
-    String getCategory();
-
-    int getCategoryNumber();
-
-    String getRecipeText();
+    /**
+     * Insert recipe ingredient directly.
+     * In most cases you should use <code>add(String ingredientName, int amount, String unitName)</code>
+     * @param recipeIngredient
+     */
+    void add(Triple<IIngredient, Integer, IUnit> recipeIngredient);
 }

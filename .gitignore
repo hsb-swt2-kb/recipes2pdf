@@ -36,6 +36,7 @@ hs_err_pid*
 .gradle/
 build/
 bin/
+*.db
 
 #tempFiles
 .recipes2pdf/

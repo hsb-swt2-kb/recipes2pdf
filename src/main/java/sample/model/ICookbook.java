@@ -1,21 +1,11 @@
 package sample.model;
 
-import sample.model.dummy.DummyCookbook;
-
 import java.util.List;
 
 /**
  * Created by czoeller on 01.04.16.
  */
-public interface ICookbook {
-    static ICookbook getInstance() {
-        return new DummyCookbook();
-    }
-
-    boolean saveIt();
-
-    boolean delete();
-
+public interface ICookbook extends IIdentifiable {
     String getTitle();
 
     void setTitle(String title);
@@ -26,4 +16,3 @@ public interface ICookbook {
 
     void removeRecipe(IRecipe recipe);
 }
-
