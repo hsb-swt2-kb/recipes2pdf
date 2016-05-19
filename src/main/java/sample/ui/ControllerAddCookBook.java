@@ -8,7 +8,10 @@ package sample.ui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class ControllerAddCookBook {
 
@@ -16,6 +19,9 @@ public class ControllerAddCookBook {
 
     @FXML
         private Button closeButton;
+
+    @FXML
+    private TextField textFieldPicture;
 
     @FXML
     private Button generateButton;
@@ -34,7 +40,8 @@ public class ControllerAddCookBook {
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.importFolder();
+        File file = fileHandler.importFolder();
+        textFieldPicture.setText(file.getAbsolutePath());
 
     }
     @FXML
