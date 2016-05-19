@@ -11,9 +11,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import org.controlsfx.control.PopOver;
 
 
 public class ControllerLoadRecipe {
+
+
 
     final ToggleGroup group = new ToggleGroup();
 
@@ -128,8 +131,8 @@ public class ControllerLoadRecipe {
     }
 
     void closeStage(){
-        Stage stage = (Stage) loadButton.getScene().getWindow();
-        stage.close();
+        PopOver popOver = (PopOver) loadButton.getScene().getWindow();
+        popOver.hide();
     }
 
 
@@ -153,10 +156,8 @@ public class ControllerLoadRecipe {
 
     @FXML
     void closeWindow(ActionEvent event) {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-
-
+        PopOver popOver = (PopOver) closeButton.getScene().getWindow();
+        popOver.hide();
     }
 
 
