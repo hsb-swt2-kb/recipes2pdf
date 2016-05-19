@@ -31,8 +31,8 @@
                <Font size="21.0" />
            </font>
        </Text>
-       <TextField layoutX="192.0" layoutY="58.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" />
-      <TextArea layoutX="192.0" layoutY="136.0" prefHeight="52.0" prefWidth="171.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="136.0" />
+       <TextField fx:id="textFieldName" layoutX="192.0" layoutY="58.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" />
+      <TextArea fx:id="textAreaVorwort" layoutX="192.0" layoutY="136.0" prefHeight="52.0" prefWidth="171.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="136.0" />
       <Button fx:id="closeButton" alignment="BOTTOM_RIGHT" layoutX="221.0" layoutY="199.0" mnemonicParsing="false" onAction="#closeAddCookBook" text="Schließen" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="85.0" />
       <TextField fx:id="textFieldPicture" editable="false" layoutX="220.0" layoutY="98.0" prefHeight="25.0" prefWidth="143.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="10.0" />
       <Button fx:id="browseButton" layoutX="192.0" layoutY="98.0" mnemonicParsing="false" onAction="#openFileChooser" prefHeight="25.0" prefWidth="28.0" />

@@ -114,14 +114,14 @@ public class ControllerExportCookBook {
 
     @FXML
     void saveCookBook(ActionEvent event){
-        if ((this.comboBoxFormat.getValue() == "A4") && (this.file.getName() != null)){
+        if ((this.comboBoxFormat.getValue() == "A4") && (this.file != null)){
             ///
             closeWindow();
         }
-        if ((this.comboBoxFormat.getValue() == "A5") && (this.file.getName() != null)){
+        if ((this.comboBoxFormat.getValue() == "A5") && (this.file != null)){
             //
             closeWindow();
-        }
+        }else{}
 
     }
 }

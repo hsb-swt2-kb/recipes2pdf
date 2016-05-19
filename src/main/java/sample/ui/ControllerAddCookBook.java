@@ -8,6 +8,7 @@ package sample.ui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -22,6 +23,12 @@ public class ControllerAddCookBook {
 
     @FXML
     private TextField textFieldPicture;
+
+    @FXML
+    private TextField textFieldName;
+
+    @FXML
+    private TextArea textAreaVorwort;
 
     @FXML
     private Button generateButton;
