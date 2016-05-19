@@ -82,7 +82,7 @@ public class ControllerChangeRecipe {
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
-        File file = fileHandler.importFile();
+        File file = fileHandler.importPicture();
         if(file != null) {
             textFieldPicture.setText(file.getAbsolutePath());
         }

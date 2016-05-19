@@ -19,7 +19,7 @@ public class ControllerAddCookBook {
 
 
     @FXML
-        private Button closeButton;
+    private Button closeButton;
 
     @FXML
     private TextField textFieldPicture;
@@ -47,7 +47,7 @@ public class ControllerAddCookBook {
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
-        File file = fileHandler.importFolder();
+        File file = fileHandler.importPicture();
         if(file != null) {
             textFieldPicture.setText(file.getAbsolutePath());
         }

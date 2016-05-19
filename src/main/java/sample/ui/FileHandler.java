@@ -48,17 +48,18 @@ public class FileHandler {
     /**
      * These method imports a single file.
      */
-    File importFile(){
+    File importPicture(){
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
-        //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.txt", "*.TXT","*.html", "*.HTML");
-        //fileChooser.setSelectedExtensionFilter(extFilter);
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.PNG", "*.png","*.JPG","*.jpg");
+        fileChooser.setSelectedExtensionFilter(extFilter);
         File file = fileChooser.showOpenDialog(stage);
 
         return file;
 
     }
+
 
     File exportFile(){
         Stage stage = new Stage();
