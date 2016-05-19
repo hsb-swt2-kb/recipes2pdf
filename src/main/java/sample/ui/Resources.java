@@ -40,6 +40,10 @@ public class Resources {
         return "/sample/ui/LoadRecipe.fxml";
     }
 
+    public static String getloadRecipePopOverFXML() {
+        return "/sample/ui/LoadRecipePopOver.fxml";
+    }
+
     public static String getHelpFXML() {
         return "/sample/ui/Help.fxml";
     }

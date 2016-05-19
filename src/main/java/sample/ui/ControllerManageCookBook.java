@@ -220,7 +220,7 @@ public class ControllerManageCookBook {
 
     @FXML
     void addRecipe(ActionEvent event) {
-        Node node = loadResource( Resources.getloadRecipeFXML() );
+        Node node = loadResource( Resources.getloadRecipePopOverFXML());
         PopOver popOver = new PopOver( node );
         popOver.setDetachable(false);
         popOver.setCornerRadius(4);

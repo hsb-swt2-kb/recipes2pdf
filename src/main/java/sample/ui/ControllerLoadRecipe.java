@@ -131,8 +131,18 @@ public class ControllerLoadRecipe {
     }
 
     void closeStage(){
-        PopOver popOver = (PopOver) loadButton.getScene().getWindow();
-        popOver.hide();
+        try {
+            Stage stage = (Stage) loadButton.getScene().getWindow();
+            stage.close();
+            }
+        /**
+         *  If the stage can't close, beaucause its a PopOver, close the PopOver
+         */
+        catch (Exception e)
+        {
+            PopOver popOver = (PopOver) loadButton.getScene().getWindow();
+            popOver.hide();
+        }
     }
 
 
@@ -154,10 +164,24 @@ public class ControllerLoadRecipe {
 
     }
 
+    /**
+     * The method closes the Load-Recipe-Window by clicking the Close-Button
+     */
+
     @FXML
     void closeWindow(ActionEvent event) {
-        PopOver popOver = (PopOver) closeButton.getScene().getWindow();
-        popOver.hide();
+        try {
+            Stage stage = (Stage) closeButton.getScene().getWindow();
+            stage.close();
+        }
+        /**
+         *  If the stage can't close, beaucause its a PopOver, close the PopOver
+         */
+        catch (Exception e)
+        {
+            PopOver popOver = (PopOver) closeButton.getScene().getWindow();
+            popOver.hide();
+        }
     }
 
 
