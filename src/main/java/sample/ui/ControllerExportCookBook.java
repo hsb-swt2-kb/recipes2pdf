@@ -107,7 +107,9 @@ public class ControllerExportCookBook {
     void browse(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
         this.file = fileHandler.exportFile();
-        textFieldPath.setText(file.getAbsolutePath());
+        if(this.file != null) {
+            textFieldPath.setText(file.getAbsolutePath());
+        }
     }
 
     @FXML

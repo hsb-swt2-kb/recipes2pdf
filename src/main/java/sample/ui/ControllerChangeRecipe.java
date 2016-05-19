@@ -8,13 +8,18 @@ package sample.ui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.io.File;
 
 public class ControllerChangeRecipe {
 
 
     @FXML
     private Button fileChooserButton;
+
+    @FXML
+    private TextField textFieldPicture;
 
         @FXML
         private Button closeButton;
@@ -43,7 +48,9 @@ public class ControllerChangeRecipe {
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.importFile();
+        File file = fileHandler.importFile();
+        textFieldPicture.setText(file.getAbsolutePath());
+
 
     }
 

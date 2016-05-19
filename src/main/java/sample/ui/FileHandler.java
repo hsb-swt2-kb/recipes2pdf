@@ -37,8 +37,8 @@ public class FileHandler {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
-        //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.txt", "*.TXT","*.html", "*.HTML");
-        //fileChooser.setSelectedExtensionFilter(extFilter);
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.txt", "*.TXT","*.html", "*.HTML");
+        fileChooser.setSelectedExtensionFilter(extFilter);
         List<File> files =
             fileChooser.showOpenMultipleDialog(stage);
 
