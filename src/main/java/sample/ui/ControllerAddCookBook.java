@@ -41,7 +41,9 @@ public class ControllerAddCookBook {
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
         File file = fileHandler.importFolder();
-        textFieldPicture.setText(file.getAbsolutePath());
+        if(file != null) {
+            textFieldPicture.setText(file.getAbsolutePath());
+        }
 
     }
     @FXML
