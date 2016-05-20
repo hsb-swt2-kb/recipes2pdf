@@ -72,7 +72,7 @@ public class ControllerAddCookBook {
     void generateCookBook(ActionEvent event) {
         getName();
         getForeWord();
-        if(this.name != null) {
+        if(this.textFieldName.getText().trim().isEmpty() == false) {
             System.out.println(name + foreword + "file.getName()");
             //Close Stage
             Stage stage = (Stage) generateButton.getScene().getWindow();
