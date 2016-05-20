@@ -152,14 +152,17 @@ public class ControllerLoadRecipe {
 
     @FXML
     void selectOptionsForLoading(ActionEvent event) {
-        if (radioButtonLinkBoolean == true) {
-            //
+        if ((radioButtonLinkBoolean == true) && (this.hyperLinkTextField.getText().trim().isEmpty() == false)) {
+            System.out.println("(this.hyperLinkTextField.getText()");
+            closeStage();
         } else if (radioButtonFolderBoolean == true) {
             openFolder();
+            closeStage();
         } else if (radioButtonFileBoolean == true) {
             openFileChooser();
+            closeStage();
         }
-        closeStage();
+
 
 
     }

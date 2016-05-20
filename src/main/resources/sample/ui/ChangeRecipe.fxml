@@ -98,5 +98,6 @@
       <TextField fx:id="textFieldPicture" editable="false" layoutX="229.0" layoutY="207.0" prefHeight="25.0" prefWidth="171.0" AnchorPane.leftAnchor="229.0" AnchorPane.rightAnchor="15.0" />
       <Button fx:id="fileChooserButton" layoutX="201.0" layoutY="207.0" mnemonicParsing="false" onAction="#openFileChooser" prefHeight="25.0" prefWidth="28.0" />
       <FontAwesomeIconView glyphName="FOLDER_OPEN" layoutX="208.0" layoutY="226.0" size="15" />
+      <TextField layoutX="199.0" layoutY="350.0" prefHeight="25.0" prefWidth="201.0" />
    </children>
 </AnchorPane>
