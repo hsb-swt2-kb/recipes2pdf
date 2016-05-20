@@ -18,6 +18,11 @@ public class ControllerChangeCookBook {
     @FXML
     private Button fileChooserButton;
 
+
+    File file;
+    String name;
+    String foreword;
+
         @FXML
         private Button closeButton;
 
@@ -35,8 +40,16 @@ public class ControllerChangeCookBook {
 
     @FXML
     void changeCookBook(ActionEvent event) {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
+        getName();
+        getForeWord();
+        if(this.name != null) {
+            System.out.println(name + foreword + "file.getName()");
+            //Close Stage
+            Stage stage = (Stage) changeButton.getScene().getWindow();
+            stage.close();
+        }else{
+            //Exception
+        }
 
     }
 
@@ -50,11 +63,20 @@ public class ControllerChangeCookBook {
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
-        File file = fileHandler.importPicture();
-        if(file != null) {
+        this.file = fileHandler.importPicture();
+        if(this.file != null) {
             textFieldPicture.setText(file.getAbsolutePath());
         }
 
+    }
+
+    private String getForeWord(){
+        foreword = textAreaVorwort.getText();
+        return foreword;
+    }
+    private String getName(){
+        name = textFieldName.getText();
+        return  name;
     }
 
     }

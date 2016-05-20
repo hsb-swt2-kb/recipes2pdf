@@ -73,7 +73,7 @@ public class ControllerAddCookBook {
         getName();
         getForeWord();
         if(this.name != null) {
-            System.out.println(name + foreword + file.getName());
+            System.out.println(name + foreword + "file.getName()");
             //Close Stage
             Stage stage = (Stage) generateButton.getScene().getWindow();
             stage.close();
