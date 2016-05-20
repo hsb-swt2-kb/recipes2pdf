@@ -33,6 +33,10 @@ public class ControllerAddCookBook {
     @FXML
     private Button generateButton;
 
+    File file;
+    String name;
+    String foreword;
+
 
     @FXML
     private Button browseButton;
@@ -47,17 +51,35 @@ public class ControllerAddCookBook {
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
-        File file = fileHandler.importPicture();
+        this.file = fileHandler.importPicture();
         if(file != null) {
             textFieldPicture.setText(file.getAbsolutePath());
         }
 
     }
+
+    private String getForeWord(){
+        foreword = textAreaVorwort.getText();
+        return foreword;
+    }
+    private String getName(){
+        name = textFieldName.getText();
+        return  name;
+    }
+
+
     @FXML
     void generateCookBook(ActionEvent event) {
-        //
-        Stage stage = (Stage) generateButton.getScene().getWindow();
-        stage.close();
+        getName();
+        getForeWord();
+        if(this.name != null) {
+            System.out.println(name + foreword + file.getName());
+            //Close Stage
+            Stage stage = (Stage) generateButton.getScene().getWindow();
+            stage.close();
+        }else{
+            //Exception
+        }
 
     }
 
