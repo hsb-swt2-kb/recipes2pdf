@@ -8,6 +8,6 @@ import java.util.ArrayList;
  * Created by sabine on 21.05.16.
  */
 public interface IConcreteParser {
-    public Recipe parse(ArrayList<String> text);
+    public Recipe parse(ArrayList<String> text) throws Exception;
     public boolean accepts(ArrayList<String> text);
 }

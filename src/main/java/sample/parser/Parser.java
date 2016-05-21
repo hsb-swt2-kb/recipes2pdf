@@ -61,7 +61,12 @@ public class Parser implements IParser
             for(int i=0;i<parsers.size();i++)
             {
                 if(parsers.get(i).accepts(fileContent)){
-                    recipe = parsers.get(i).parse(fileContent);
+                    try{
+                        recipe = parsers.get(i).parse(fileContent);
+                    }
+                    catch(Exception e){
+                        // TODO: Exception behandeln
+                    }
                 }
             }
             // Rezept prüfen

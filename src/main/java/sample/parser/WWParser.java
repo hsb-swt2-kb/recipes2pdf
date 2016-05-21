@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import sample.model.Course;
 import sample.model.Recipe;
 
 import java.util.ArrayList;
@@ -24,8 +25,8 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @throws Exception
      */
     //@Override
-    public Recipe parse(final String text) throws Exception {
-        Document htmlDoc = Jsoup.parse(text);
+    public Recipe parse(final ArrayList<String> text) throws Exception {
+        Document htmlDoc = Jsoup.parse(text.toString());
 
         int decision = this.decideVersion(htmlDoc);
 
@@ -49,13 +50,13 @@ public class WWParser extends AConcreteParser implements WWConstants{
         System.out.println("Arbeitszeit: " + recipe.getDuration());
         System.out.println("Kcal: " + recipe.getCalories());
         System.out.println("Portionen: " + recipe.getPortions());
-        for (int i=0;i<recipe.zutaten.size();i++){
-            System.out.println("Name: " + recipe.zutaten.get(i)[0] +"   |   "+recipe.zutaten.get(i)[1]+"   |   "+recipe.zutaten.get(i)[2]);
+        for (int i=0;i<recipe.getIngredients().size();i++){
+            //System.out.println("Name: " + recipe.getIngredients().get(i)[0] +"   |   "+recipe.getIngredients().get(i)[1]+"   |   "+recipe.getIngredients().get(i)[2]);
         }
-        System.out.println("Zubereitung: " + recipe.zubereitung);
+        System.out.println("Zubereitung: " + recipe.getText());
 
         // Mandatory fields, which need to be set
-        if(recipe.name.isEmpty() || recipe.zutaten.isEmpty() || recipe.zubereitung.isEmpty()){
+        if(recipe.getTitle().isEmpty() || recipe.getIngredients().isEmpty() || recipe.getText().isEmpty()){
             //TODO
             throw new Exception();
         }
@@ -71,8 +72,8 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @return true if accepts
      */
     //@Override
-    public boolean accepts(final String text) {
-        return text.contains("weightwatchers");
+    public boolean accepts(final ArrayList<String> text) {
+        return text.toString().contains("weightwatchers");
     }
 
     /**
@@ -84,24 +85,27 @@ public class WWParser extends AConcreteParser implements WWConstants{
     private void parseVersion2015(Document htmlDoc){
         Elements elements = htmlDoc.getAllElements();
 
-        recipe.name = this.searchName(elements, WWConstants.name2015);
+        recipe.setTitle(this.searchName(elements, WWConstants.name2015));
         ArrayList<String> images = this.searchImage(elements, WWConstants.image2015);
         // TODO
         // IMAGES
 
-        recipe.arbeitszeit = this.searchPreparingTime2015(elements, WWConstants.preparingTime2015);
+        recipe.setDuration(Integer.parseInt(this.searchPreparingTime2015(elements, WWConstants.preparingTime2015)));
 
         int servings = this.searchServings(elements);
         if(servings > 0){
-            recipe.portionen = servings;
+            recipe.setPortions(servings);
         }
 
-        recipe.gerichtsart = this.searchType2015(elements, WWConstants.type2015);
+
+        Course course = new Course();
+        course.setName(this.searchType2015(elements, WWConstants.type2015));
+        recipe.setCourse(course);
 
         ArrayList<String> ingredientsListToConvert = this.searchIngredients2015(elements, WWConstants.ingredientsAndDescr2015);
-        recipe.zutaten = convertIngredientList(ingredientsListToConvert);
-
-        recipe.zubereitung = this.searchDescription2015(elements, WWConstants.ingredientsAndDescr2015);
+        // recipe.zutaten = convertIngredientList(ingredientsListToConvert);
+        // TODO: Zutaten zu Recipe hinzufügen.
+        recipe.setText(this.searchDescription2015(elements, WWConstants.ingredientsAndDescr2015));
     }
 
     /**
@@ -113,22 +117,25 @@ public class WWParser extends AConcreteParser implements WWConstants{
     private void parseVersion2016(Document htmlDoc){
         Elements elements = htmlDoc.select(WWConstants.htmlDoc2016);
 
-        recipe.name = this.searchName(elements, WWConstants.name2016);
+        recipe.setTitle(this.searchName(elements, WWConstants.name2016));
         ArrayList<String> images = this.searchImage(elements, WWConstants.image2016);
         // TODO
         // IMAGES
 
         int servings = this.searchServings(elements);
         if(servings > 0){
-            recipe.portionen = servings;
+            recipe.setPortions(servings);
         }
 
-        recipe.gerichtsart = this.searchType(elements);
+        Course course = new Course();
+        course.setName(this.searchType(elements));
+        recipe.setCourse(course);
 
         ArrayList<String> ingredientsListToConvert = this.searchIngredients2016(elements, WWConstants.ingredients2016);
-        recipe.zutaten = convertIngredientList(ingredientsListToConvert);
+        //recipe.zutaten = convertIngredientList(ingredientsListToConvert);
+        // TODO: Zutaten zu Recipe hinzufügen.
 
-        recipe.zubereitung = this.searchDescription2016(elements, WWConstants.tableTd);
+        recipe.setText(this.searchDescription2016(elements, WWConstants.tableTd));
     }
 
     /**
