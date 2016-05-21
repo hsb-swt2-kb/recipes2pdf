@@ -2,7 +2,6 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
- *
  */
 
 
@@ -15,10 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
@@ -89,6 +85,8 @@ public class ControllerManageCookBook {
     }
 
     private void initializeListeners() {
+        setupMultipleSelection();
+
         // drag from left to right
         listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -189,6 +187,16 @@ public class ControllerManageCookBook {
 
     }
 
+    /**
+     * Setup multiple selection for listviews.
+     */
+    private void setupMultipleSelection() {
+        //set this to SINGLE to allow selecting just one item
+        listViewRecipes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listViewRecipes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+            listViewRecipes.getSelectionModel().getSelectedItems().forEach(System.out::println));
+    }
+
 
     /**
      * These method enables searching in a ListView. The specify list will bei filtered and sorted.
@@ -205,7 +213,7 @@ public class ControllerManageCookBook {
             if (filter == null || filter.isEmpty()) {
                 filteredData.setPredicate(s -> true);
             } else {
-                filteredData.setPredicate(s -> StringUtils.containsIgnoreCase( s, filter ));
+                filteredData.setPredicate(s -> StringUtils.containsIgnoreCase(s, filter));
             }
             listView.setItems(filteredData);
         });
@@ -220,8 +228,8 @@ public class ControllerManageCookBook {
 
     @FXML
     void addRecipe(ActionEvent event) {
-        Node node = loadResource( Resources.getloadRecipePopOverFXML());
-        PopOver popOver = new PopOver( node );
+        Node node = loadResource(Resources.getloadRecipePopOverFXML());
+        PopOver popOver = new PopOver(node);
         popOver.setDetachable(false);
         popOver.setCornerRadius(4);
         popOver.setArrowLocation(PopOver.ArrowLocation.BOTTOM_LEFT);
