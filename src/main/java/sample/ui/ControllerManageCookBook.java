@@ -148,53 +148,44 @@ public class ControllerManageCookBook {
         });
 
         leftArrowButton.setOnAction((ActionEvent event) -> {
-            String recipe = listViewCookBook.getSelectionModel().getSelectedItem();
-            if (recipe != null) {
-                listViewCookBook.getSelectionModel().clearSelection();
-                cookbook.remove(recipe);
-            } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-            }
+            listViewCookBook.getSelectionModel().getSelectedItems().forEach(name -> {
+                if (name != null) {
+                    cookbook.remove(name);
+                } else {
+                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                }
+            });
+            listViewCookBook.getSelectionModel().clearSelection();
         });
 
         rightArrowButton.setOnAction((ActionEvent event) -> {
-            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
-            if (recipe != null) {
-                listViewRecipes.getSelectionModel().clearSelection();
-                listViewCookBook.getItems().addAll(recipe);
-            } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-            }
+            listViewRecipes.getSelectionModel().getSelectedItems().forEach(name -> {
+                if (name != null) {
+                    listViewCookBook.getItems().addAll(name);
+                } else {
+                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                }
+            });
+            listViewRecipes.getSelectionModel().clearSelection();
         });
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
-            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
-            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-            if (recipe != null || recipeInCookBook != null) {
-                controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
-            } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-            }
+            listViewRecipes.getSelectionModel().getSelectedItems().forEach(recipe -> {
+                String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+                System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
+                if (recipe != null || recipeInCookBook != null) {
+                    controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
+                } else {
+                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                }
+            });
         });
-        changeRecipeButton.setOnAction((ActionEvent event) -> {
-            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
-            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-            if (recipe != null || recipeInCookBook != null) {
-                controllerDefault.newWindow(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText(), 415, 545, Resources.getDefaultIcon());
-            } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-            }
-        });
-
     }
 
     /**
      * Setup multiple selection for listviews.
      */
     private void setupMultipleSelection() {
-        //set this to SINGLE to allow selecting just one item
         listViewRecipes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        listViewRecipes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-            listViewRecipes.getSelectionModel().getSelectedItems().forEach(System.out::println));
     }
 
 
