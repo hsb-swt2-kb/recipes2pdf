@@ -1,5 +1,11 @@
 package sample.parser;
 
+import sample.model.Category;
+import sample.model.Recipe;
+import sample.model.Region;
+
+import java.lang.reflect.Array;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +17,7 @@ import java.util.regex.Pattern;
 
   After exctracting all availible information, the recipe will be check for
   minimal data like recipename, Ingredientlist with at least one incredient
-  and a preperationtext.
+  d a preperationtext.
 
   All additional data like region of the recipe (ex. Greece, France, Africans etc..)
   have to be declared in the Textfile like "Region: France"
@@ -22,44 +28,61 @@ import java.util.regex.Pattern;
 
 
 
-public class TxtParser extends Parser implements Constants
+public class TxtParser extends AConcreteParser implements Constants
 {
   public Recipe parse(ArrayList<String> textFileContent) {
     Recipe recipe = new Recipe();
 
     //Try to extract minimal recipdata
-    recipe.name = extractRecipename(textFileContent);
-    recipe.zutaten = extractIncredentsList(textFileContent);
-    recipe.zubereitung = findPreparationOfRecipe(textFileContent);
+    recipe.setTitle(extractRecipename(textFileContent));
+    //recipe.setNurture();zutaten = extractIncredentsList(textFileContent);
+    // recipe.zubereitung = findPreparationOfRecipe(textFileContent);
 
-    //Try to exctract additional recipedata
-    recipe.region = findDatafield(textFileContent,"Region");
-    recipe.gerichtsart = findDatafield(textFileContent,"Gerichtsart");
-    recipe.kategorie = findDatafield(textFileContent,"Kategorie");
-    recipe.arbeitszeit = findDatafield(textFileContent,"Arbeitszeit");
+    // Try to exctract additional recipedata
+      Region region = new Region();
+      region.setName(findDatafield(textFileContent,"Region"));
+      recipe.setRegion(region);
+    // recipe.gerichtsart = findDatafield(textFileContent,"Gerichtsart");
+      Category category = new Category();
+      category.setName(findDatafield(textFileContent,"Kategorie"));
+      recipe.setCategory(category);
 
-    recipe.kcal = parseStringToNumeric(findDatafield(textFileContent,"Kcal"));
-    recipe.portionen =  Double.parseDouble(findDatafield(textFileContent,"Portionen"));
+      recipe.setDuration(Integer.parseInt(findDatafield(textFileContent,"Arbeitszeit")));
+      recipe.setCalories(Integer.parseInt(findDatafield(textFileContent,"Kcal")));
+      recipe.setPortions(Integer.parseInt(findDatafield(textFileContent,"Portionen")));
 
     //Checking Data will be deletet later
-    System.out.println(recipe.name);
-    for (int i=0;i<recipe.zutaten.size();i++){
-      System.out.println(recipe.zutaten.get(i)[0] +"   |   "+recipe.zutaten.get(i)[1]+"   |   "+recipe.zutaten.get(i)[2]);
-    }
-    System.out.println(recipe.zubereitung);
-    System.out.println(recipe.region);
-    System.out.println(recipe.gerichtsart);
-    System.out.println(recipe.kategorie);
-    System.out.println(recipe.arbeitszeit);
-    System.out.println(recipe.kcal);
-    System.out.println(recipe.portionen);
+    //System.out.println(recipe.getTitle());
+    //for (int i=0;i<recipe.zutaten.size();i++){
+    //  System.out.println(recipe.zutaten.get(i)[0] +"   |   "+recipe.zutaten.get(i)[1]+"   |   "+recipe.zutaten.get(i)[2]);
+    //}
+    //System.out.println(recipe.zubereitung);
+    //System.out.println(recipe.region);
+    //System.out.println(recipe.gerichtsart);
+    //System.out.println(recipe.kategorie);
+    //System.out.println(recipe.arbeitszeit);
+    //System.out.println(recipe.kcal);
+    //System.out.println(recipe.portionen);
     return recipe;
   }
 
+  public boolean accepts(ArrayList<String> fileContent){
+      boolean acceptance = false;
+
+      if(true) // TODO: Akzeptanzbedingungen prüfen
+      {
+          acceptance=false;
+      }
+      else{
+          acceptance = true;
+      }
+      return acceptance;
+  }
   public boolean accepts(Recipe recipe) {
     boolean acceptance = false;
 
-    if(recipe.name == null || recipe.zubereitung == null || recipe.zutaten.size()==0)
+    //if(recipe.getTitle() == null || recipe.get == null || recipe.zutaten.size()==0)
+    if(true)
     {
       return false;
     }

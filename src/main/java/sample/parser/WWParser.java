@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import sample.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.Arrays;
 /**
  * Created by Kinith on 18.05.2016.
  */
-public class WWParser extends Parser implements WWConstants{
+public class WWParser extends AConcreteParser implements WWConstants{
     private Recipe recipe;
 
     /**
@@ -41,13 +42,13 @@ public class WWParser extends Parser implements WWConstants{
         }
 
         //Checking Data will be deletet later
-        System.out.println("Name: " + recipe.name);
-        System.out.println("Region: " + recipe.region);
-        System.out.println("Gerichtsart: " + recipe.gerichtsart);
-        System.out.println("Kategorie: " + recipe.kategorie);
-        System.out.println("Arbeitszeit: " + recipe.arbeitszeit);
-        System.out.println("Kcal: " + recipe.kcal);
-        System.out.println("Portionen: " + recipe.portionen);
+        System.out.println("Name: " + recipe.getTitle());
+        System.out.println("Region: " + recipe.getRegion());
+        System.out.println("Gerichtsart: " + recipe.getCourse());
+        System.out.println("Kategorie: " + recipe.getCalories());
+        System.out.println("Arbeitszeit: " + recipe.getDuration());
+        System.out.println("Kcal: " + recipe.getCalories());
+        System.out.println("Portionen: " + recipe.getPortions());
         for (int i=0;i<recipe.zutaten.size();i++){
             System.out.println("Name: " + recipe.zutaten.get(i)[0] +"   |   "+recipe.zutaten.get(i)[1]+"   |   "+recipe.zutaten.get(i)[2]);
         }
