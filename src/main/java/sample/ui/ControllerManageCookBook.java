@@ -179,6 +179,17 @@ public class ControllerManageCookBook {
                 }
             });
         });
+        changeRecipeButton.setOnAction((ActionEvent event) -> {
+            listViewRecipes.getSelectionModel().getSelectedItems().forEach(recipe -> {
+                String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+                System.out.println("Would change " + recipe); //TODO: Consider choice of user to really delete
+                if (recipe != null || recipeInCookBook != null) {
+                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+                } else {
+                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                }
+            });
+        });
     }
 
     /**
