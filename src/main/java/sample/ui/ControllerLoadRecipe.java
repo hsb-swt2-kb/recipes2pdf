@@ -173,18 +173,11 @@ public class ControllerLoadRecipe {
 
     @FXML
     void closeWindow(ActionEvent event) {
-        try {
+
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
-        }
-        /**
-         *  If the stage can't close, beaucause its a PopOver, close the PopOver
-         */
-        catch (Exception e)
-        {
-            PopOver popOver = (PopOver) closeButton.getScene().getWindow();
-            popOver.hide();
-        }
+
+
     }
 
 
