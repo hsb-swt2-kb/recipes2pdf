@@ -27,13 +27,12 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("IMAGE_FOLDER_NAME")));
     }
 
-    public File getOutputImage(Long ImageID) throws IOException {
-        ImageID = new Long(1); //TODO: Just for testing, delete later, when recipes come out of database
-        return new File(getImageDir() + File.separator + "image_" + ImageID + "_out.jpg");
+    public File getImage() throws IOException {
+        return new File(getImageDir() + File.separator + "tmpRecipeImage.jpg");
     }
 
-    public File getInputImage() throws IOException { //TODO: MEthod just for testing purposes, Image will come out of database later
-        return new File(this.getClass().getClassLoader().getResource("sample/builder/images/default_image.jpg").getFile());
+    public File getDefaultImage() {
+       return new File(this.getClass().getClassLoader().getResource("sample/builder/images/default_image.jpg").getPath());
     }
 
     public File getTempDir() {

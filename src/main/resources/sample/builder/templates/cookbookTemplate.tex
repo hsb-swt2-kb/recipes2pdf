@@ -24,8 +24,7 @@
 
 
     #foreach( $recipe in $cookbook.getRecipes() )
-        #set($ingredientList = $recipe.getIngredients())
-        \fancyhead[C]{$recipe.getCategory()} %Kopfzeile mittig
+        \fancyhead[C]{$recipe.getCategory().getName()} %Kopfzeile mittig
         \fancyfoot[ol]{Rezept $referenceNumber} %Fußzeile ungerade links
         \fancyfoot[er]{Rezept $referenceNumber} %Fußzeile gerade links
 
@@ -33,20 +32,18 @@
 	    \begin{minipage}[t]{0.4\textwidth}
 	        \subsection*{Zutaten}
 	        \begin{itemize}
-                #foreach( $key in $ingredientList.keySet() )
-                    #foreach( $ingreddetail in $ingredientList.get($key).keySet())
-                        \item {$key.getName() $ingreddetail $ingredientList.get($key).get($ingreddetail).getName()}
-                    #end
+                #foreach( $ingredient in $recipe.getIngredients())
+                    \item {$ingredient.getLeft().getName() $ingredient.getMiddle() $ingredient.getRight().getName()}
                 #end
 	        \end{itemize}
 	    \end{minipage}
 	    \hfill
         \begin{minipage}[t]{0.4\textwidth}
             \vspace{-2ex}
-            \includegraphics[width=\linewidth]{${imgDir}/image_${recipe.getID()}_out.jpg}
+            \includegraphics[width=\linewidth]{${imgDir}/tmpRecipeImage.jpg}
         \end{minipage}
         \subsection*{Zubereitung}
-        $recipe.getRecipeText()\\
+        $recipe.getText()\\
 
         \checkoddpage
         \ifoddpage

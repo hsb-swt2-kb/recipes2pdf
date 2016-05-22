@@ -4,6 +4,7 @@ import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
 import sample.builder.IConcreteBuilder;
 import sample.config.IConfig;
+import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 
@@ -11,6 +12,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * @author Kai Nortmann
@@ -47,10 +50,22 @@ public class PdfBuilder implements IConcreteBuilder {
         }
     }
 
-    private void createImage(Long recipeID) {
+
+    private byte[] createImageByteArray(File image)
+    {
         try {
-            byte[] img = Files.readAllBytes(config.getInputImage().toPath());
-            FileOutputStream outputStream = new FileOutputStream(config.getOutputImage(recipeID));
+            return Files.readAllBytes(config.getDefaultImage().toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private void createImage(IRecipe recipe) throws  Exception{
+        try {
+            //byte[] img = Files.readAllBytes(config.getInputImage().toPath());
+            byte[] img = Optional.ofNullable(recipe.getImage()).orElseGet(() -> createImageByteArray(config.getDefaultImage()));
+
+            FileOutputStream outputStream = new FileOutputStream(config.getImage());
             outputStream.write(img);
             outputStream.close();
         } catch (IOException e) {
@@ -63,7 +78,7 @@ public class PdfBuilder implements IConcreteBuilder {
         File outputTexFile = config.getOutputTexFile(cookbook.getTitle());
 
         for (IRecipe recipe : cookbook.getRecipes()) {
-            createImage(recipe.getID());
+            createImage(recipe);
         }
         parseTexFile(outputTexFile, cookbook);
 
@@ -71,14 +86,13 @@ public class PdfBuilder implements IConcreteBuilder {
     }
 
     public File build(IRecipe recipe) throws Exception {
-        ICookbook cookbook = ICookbook.getInstance();
+        ICookbook cookbook = new Cookbook();
         cookbook.addRecipe(recipe);
 
         File outputTexFile = config.getOutputTexFile(recipe.getTitle());
 
-        for (IRecipe tempRecipe : cookbook.getRecipes()) {
-            createImage(tempRecipe.getID());
-        }
+        createImage(recipe);
+
         parseTexFile(outputTexFile, cookbook);
 
         return createPDFFile(outputTexFile, cookbook);

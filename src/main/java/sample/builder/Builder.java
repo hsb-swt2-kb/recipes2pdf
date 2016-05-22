@@ -1,5 +1,6 @@
 package sample.builder;
 
+import sample.config.IConfig;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 
@@ -18,7 +19,7 @@ public class Builder implements  IBuilder{
 
     public File build(ICookbook cookbook) throws Exception {
         for (IConcreteBuilder builder : builders) {
-            if ( builder.builds(builderOutputFiletype) ) {
+            if ( builder.builds(IConfig.getInstance().getProperty("OUTPUT_FILETYPE")) ) {
                 return builder.build(cookbook);
             }
         }
@@ -28,7 +29,7 @@ public class Builder implements  IBuilder{
     @Override
     public File build(IRecipe recipe) throws Exception {
         for (IConcreteBuilder builder : builders) {
-            if ( builder.builds(builderOutputFiletype) ) {
+            if ( builder.builds(IConfig.getInstance().getProperty("OUTPUT_FILETYPE"))) {
                 return builder.build(recipe);
             }
         }

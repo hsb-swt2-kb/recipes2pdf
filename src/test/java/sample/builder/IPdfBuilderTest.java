@@ -7,8 +7,7 @@ import org.junit.Test;
 import sample.builder.pdfBuilder.PdfBuilder;
 import sample.builder.pdfBuilder.PdfBuilderConfig;
 import sample.config.IConfig;
-import sample.model.ICookbook;
-import sample.model.IRecipe;
+import sample.model.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,19 +17,30 @@ public class IPdfBuilderTest {
 
     public void testRecipePdfBuilder() throws Throwable {
         ArrayList<IConcreteBuilder> builderList = new ArrayList<>();
-        IConcreteBuilder pdfBuilder = new PdfBuilder(new PdfBuilderConfig(IConfig.getInstance()));
+        IConfig config = IConfig.getInstance();
+        config.setProperty("OUTPUT_FILETYPE","PDF");
+
+        IConcreteBuilder pdfBuilder = new PdfBuilder(config);
         builderList.add(pdfBuilder);
         Builder builderController = new Builder(builderList);
 
-        ICookbook cookbook = ICookbook.getInstance();
+        ICookbook cookbook = new Cookbook();
+        cookbook.setTitle("DasKochbuch");
 
         for (int i = 1; i <= 10; i++) {
-            IRecipe tempRecipe = IRecipe.getInstance();
+            IRecipe tempRecipe = new Recipe();
+            ICategory category = new Category();
+
+            tempRecipe.add("Salz",5,"g");
+            category.setName("kategorie" + i);
             tempRecipe.setTitle(i + ". Rezept");
+            tempRecipe.setCategory(category);
+            tempRecipe.setText("Das ist ein Rezepttext");
+
             cookbook.addRecipe(tempRecipe);
         }
 
-        File recipePDF = builderController.build(cookbook,"pdf");
+        File recipePDF = builderController.build(cookbook);
         PDDocument pdfDoc;
 
         pdfDoc = PDDocument.load(recipePDF);
@@ -42,10 +52,4 @@ public class IPdfBuilderTest {
 
     }
 
-
-    public void testCookbookPdfBuilder() {
-        IConcreteBuilder builder = new PdfBuilder(new PdfBuilderConfig(IConfig.getInstance()));
-
-
-    }
 }
