@@ -148,28 +148,29 @@ public class ControllerManageCookBook {
         });
 
         leftArrowButton.setOnAction((ActionEvent event) -> {
-            listViewCookBook.getSelectionModel().getSelectedItems().forEach(name -> {
+            String name =listViewCookBook.getSelectionModel().getSelectedItem();
                 if (name != null) {
                     cookbook.remove(name);
                 } else {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
-            });
             listViewCookBook.getSelectionModel().clearSelection();
         });
 
         rightArrowButton.setOnAction((ActionEvent event) -> {
-            listViewRecipes.getSelectionModel().getSelectedItems().forEach(name -> {
+            String name =listViewRecipes.getSelectionModel().getSelectedItem();
                 if (name != null) {
                     listViewCookBook.getItems().addAll(name);
                 } else {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
-            });
             listViewRecipes.getSelectionModel().clearSelection();
         });
+
+
+
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
-            listViewRecipes.getSelectionModel().getSelectedItems().forEach(recipe -> {
+            String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
                 String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
                 System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
                 if (recipe != null || recipeInCookBook != null) {
@@ -178,18 +179,19 @@ public class ControllerManageCookBook {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
             });
-        });
+
+
         changeRecipeButton.setOnAction((ActionEvent event) -> {
-            listViewRecipes.getSelectionModel().getSelectedItems().forEach(recipe -> {
+            String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
                 String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-                System.out.println("Would change " + recipe); //TODO: Consider choice of user to really delete
+                System.out.println("Would change " + recipe); //TODO: Consider choice of user to change
                 if (recipe != null || recipeInCookBook != null) {
                     controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
                 } else {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
             });
-        });
+
     }
 
     /**
