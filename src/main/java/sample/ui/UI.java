@@ -24,20 +24,6 @@ abstract class UI {
         }
     }
 
-    void addRecipes (List<File> files){
-        try{
-            Parser parser = new Parser();
-            for( int  i=0;i<files.size();i++){
-                // parse file -> Recipe
-                Recipe recipe = parser.parse(files.get(i));
-                // save recipe in DB.
-                new RecipeDAO().insert(recipe);
-            }
-        }
-        catch(FileNotFoundException e) {
-            // TODO: FileNotFoundException behandeln
-        }
-    }
 
     void delRecipes (String[] recipeNames){
         Recipe recipe = new Recipe();

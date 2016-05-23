@@ -12,6 +12,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
+import sample.database.dao.RecipeDAO;
+import sample.model.Recipe;
+import sample.parser.Parser;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.List;
 
 
 public class ControllerLoadRecipe {
@@ -96,7 +103,21 @@ public class ControllerLoadRecipe {
     @FXML
     void openFileChooser() {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.importFiles();
+        addRecipes(fileHandler.importFiles());
+    }
+
+    void addRecipes (List<File> files){
+        try{
+            for( int  i=0;i<files.size();i++){
+                // parse file -> Recipe
+                Recipe recipe = Parser.getInstance().parse(files.get(i));
+                // save recipe in DB.
+                new RecipeDAO().insert(recipe);
+            }
+        }
+        catch(FileNotFoundException e) {
+            // TODO: FileNotFoundException behandeln
+        }
     }
 
     @FXML

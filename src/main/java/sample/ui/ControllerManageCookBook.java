@@ -19,17 +19,22 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.PopOver;
+import sample.database.dao.RecipeDAO;
+import sample.model.Recipe;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ControllerManageCookBook {
 
 
-    private ObservableList<String> recipes;
-    private ObservableList<String> cookbook;
-    private ObservableList<String> cookbooks;
+    private ObservableList<String> recipeNames;
+    private ObservableList<String> recipeNamesOfCookBook;
+    private ObservableList<String> cookBookNames;
     private ControllerDefault controllerDefault = new ControllerDefault();
+
     @FXML
     private ListView<String> listViewRecipes;
     @FXML
@@ -38,22 +43,16 @@ public class ControllerManageCookBook {
     private Button plusButton;
     @FXML
     private TextField searchFieldRecipes;
-
     @FXML
     private Button changeRecipeButton;
-
     @FXML
     private ComboBox<String> comboBoxCookBooks;
-
     @FXML
     private Button delteButtonRecipe;
-
     @FXML
     private Button leftArrowButton;
-
     @FXML
     private Button rightArrowButton;
-
     @FXML
     private TextField searchFieldCookBooks;
     @FXML
@@ -63,14 +62,24 @@ public class ControllerManageCookBook {
     private void initialize() {
         initializeListeners();
         /* TESTDATA */
-        this.recipes = FXCollections.observableArrayList("Chilli", "Pizza", "Eintopf", "Bohnenauflauf", "Rindsschmorbraten", "Veganes basisches Chili", "Curry aus Süßkartoffel-Streifen", "Gegrillte Mettbrötchen", "Schwälmer Zwiebelplatz", "Bärlauch - Sahnesuppe mit Croutons", "EIS", "Cheeseburgerauflauf", "Tomahawk Steak", "Tijuana Coffee Chili", "Rindersteak mit Pilzen", "Spaghetti in cremiger Brokkoli-Hackleisch-Sauce", "Flankrolle mit Ananas-Tomaten-Salsa");
-        this.cookbook = FXCollections.observableArrayList("Rindsschmorbraten", "Tomahawk Steak", "Veganes basisches Chili", "Cheeseburgerauflauf", "Curry aus Süßkartoffel-Streifen");
-        this.cookbooks = FXCollections.observableArrayList("Tobias Kochbuch", "Henriks Kochbuch", "Florians Kochbuch", "Danys Kochbuch", "Christians Kochbuch", "Markuss Kochbuch", "Kais Kochbuch");
+        this.recipeNames = FXCollections.observableArrayList("Chilli", "Pizza", "Eintopf", "Bohnenauflauf", "Rindsschmorbraten", "Veganes basisches Chili", "Curry aus Süßkartoffel-Streifen", "Gegrillte Mettbrötchen", "Schwälmer Zwiebelplatz", "Bärlauch - Sahnesuppe mit Croutons", "EIS", "Cheeseburgerauflauf", "Tomahawk Steak", "Tijuana Coffee Chili", "Rindersteak mit Pilzen", "Spaghetti in cremiger Brokkoli-Hackleisch-Sauce", "Flankrolle mit Ananas-Tomaten-Salsa");
+        //this.recipeNames = getAllRecipeNamesFromDB();
+        this.recipeNamesOfCookBook = FXCollections.observableArrayList("Rindsschmorbraten", "Tomahawk Steak", "Veganes basisches Chili", "Cheeseburgerauflauf", "Curry aus Süßkartoffel-Streifen");
+        this.cookBookNames = FXCollections.observableArrayList("Tobias Kochbuch", "Henriks Kochbuch", "Florians Kochbuch", "Danys Kochbuch", "Christians Kochbuch", "Markuss Kochbuch", "Kais Kochbuch");
          /* TESTDATA END */
-        refreshComboBox(cookbooks);
-        refreshListViews(recipes, cookbook);
+        refreshComboBox(cookBookNames);
+        refreshListViews(recipeNames, recipeNamesOfCookBook);
     }
 
+    private ObservableList<String> getAllRecipeNamesFromDB(){
+        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+        List<Recipe> recipeList = new RecipeDAO().getAll();
+        recipes.addAll(recipeList);
+        for(int i=0;i<recipes.size();i++){
+            recipeNames.add(recipes.get(i).getTitle());
+        }
+        return recipeNames;
+    }
     private void refreshListViews(ObservableList<String> recipes, ObservableList<String> cookbook) {
         FXCollections.sort(recipes);
         FXCollections.sort(cookbook);
@@ -124,7 +133,7 @@ public class ControllerManageCookBook {
             public void handle(DragEvent dragEvent) {
                 String selectedItem = dragEvent.getDragboard().getString();
                 listViewCookBook.getItems().addAll(selectedItem);
-                listViewRecipes.setItems(recipes);
+                listViewRecipes.setItems(recipeNames);
                 dragEvent.setDropCompleted(true);
             }
         });
@@ -142,7 +151,7 @@ public class ControllerManageCookBook {
                 String selectedItem = dragEvent.getDragboard().getString();
 
 
-                cookbook.remove(selectedItem);
+                recipeNamesOfCookBook.remove(selectedItem);
                 dragEvent.setDropCompleted(true);
             }
         });
@@ -150,7 +159,7 @@ public class ControllerManageCookBook {
         leftArrowButton.setOnAction((ActionEvent event) -> {
             String name =listViewCookBook.getSelectionModel().getSelectedItem();
                 if (name != null) {
-                    cookbook.remove(name);
+                    recipeNamesOfCookBook.remove(name);
                 } else {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
