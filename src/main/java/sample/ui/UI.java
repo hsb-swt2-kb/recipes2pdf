@@ -9,6 +9,7 @@ import sample.parser.Parser;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by markus on 18.05.16.
@@ -23,12 +24,12 @@ abstract class UI {
         }
     }
 
-    void addRecipes (String[] filenamesWithPath){
+    void addRecipes (List<File> files){
         try{
             Parser parser = new Parser();
-            for( String file:filenamesWithPath ){
+            for( int  i=0;i<files.size();i++){
                 // parse file -> Recipe
-                Recipe recipe = parser.parse(new File(file));
+                Recipe recipe = parser.parse(files.get(i));
                 // save recipe in DB.
                 new RecipeDAO().insert(recipe);
             }
