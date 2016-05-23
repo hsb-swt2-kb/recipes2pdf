@@ -9,12 +9,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import java.io.File;
 
 public class ControllerExportCookBook {
 
@@ -22,7 +21,12 @@ public class ControllerExportCookBook {
     private Button browseButton;
 
     @FXML
+    private TextField textFieldPath;
+
+    @FXML
     private Button saveButton;
+
+    File file;
 
     @FXML
     private ComboBox<String> comboBoxFormat;
@@ -31,6 +35,8 @@ public class ControllerExportCookBook {
 
     @FXML
     private Button closeButton;
+
+    private String formatChoice;
 
     @FXML
     private void initialize() {
@@ -43,6 +49,7 @@ public class ControllerExportCookBook {
     private void initializeListeners() {
         comboBoxFormat
             .setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+
                 @Override
                 public ListCell<String> call(ListView<String> param) {
                     final ListCell<String> cell = new ListCell<String>() {
@@ -53,19 +60,29 @@ public class ControllerExportCookBook {
                             if (item != null) {
                                 setText(item);
                                 if (item.contains("A4")) {
-                                    // DO
+
+
                                 } else if (item.contains("A5")) {
-                                    // DO
+
+
                                 }
                             } else {
                                 setText(null);
+
+
                             }
+
                         }
                     };
                     return cell;
+
                 }
+
             });
+
+
     }
+
 
     private void refreshComboBox(ObservableList<String> format) {
         comboBoxFormat.setItems(format);
@@ -79,9 +96,32 @@ public class ControllerExportCookBook {
     }
 
     @FXML
-    void saveCookBook(ActionEvent event){
+    void closeWindow() {
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
+
+
+    }
+
+    @FXML
+    void browse(ActionEvent event) {
+        FileHandler fileHandler = new FileHandler();
+        this.file = fileHandler.exportFile();
+        if(this.file != null) {
+            textFieldPath.setText(file.getAbsolutePath());
+        }
+    }
+
+    @FXML
+    void saveCookBook(ActionEvent event){
+        if ((this.comboBoxFormat.getValue() == "A4") && (this.file != null)){
+            ///
+            closeWindow();
+        }
+        if ((this.comboBoxFormat.getValue() == "A5") && (this.file != null)){
+            //
+            closeWindow();
+        }else{}
 
     }
 }

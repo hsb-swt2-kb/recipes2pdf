@@ -2,7 +2,6 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
- *
  */
 
 
@@ -15,10 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
@@ -89,6 +85,8 @@ public class ControllerManageCookBook {
     }
 
     private void initializeListeners() {
+        setupMultipleSelection();
+
         // drag from left to right
         listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -150,43 +148,57 @@ public class ControllerManageCookBook {
         });
 
         leftArrowButton.setOnAction((ActionEvent event) -> {
-            String recipe = listViewCookBook.getSelectionModel().getSelectedItem();
-            if (recipe != null) {
-                listViewCookBook.getSelectionModel().clearSelection();
-                cookbook.remove(recipe);
-            } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-            }
+            String name =listViewCookBook.getSelectionModel().getSelectedItem();
+                if (name != null) {
+                    cookbook.remove(name);
+                } else {
+                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                }
+            listViewCookBook.getSelectionModel().clearSelection();
         });
 
         rightArrowButton.setOnAction((ActionEvent event) -> {
-            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
-            if (recipe != null) {
-                listViewRecipes.getSelectionModel().clearSelection();
-                listViewCookBook.getItems().addAll(recipe);
-            } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-            }
-        });
-        delteButtonRecipe.setOnAction((ActionEvent event) -> {
-            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
-            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-            if (recipe != null || recipeInCookBook != null) {
-                controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
-            } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-            }
-        });
-        changeRecipeButton.setOnAction((ActionEvent event) -> {
-            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
-            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-            if (recipe != null || recipeInCookBook != null) {
-                controllerDefault.newWindow(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText(), 415, 545, Resources.getDefaultIcon());
-            } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-            }
+            String name =listViewRecipes.getSelectionModel().getSelectedItem();
+                if (name != null) {
+                    listViewCookBook.getItems().addAll(name);
+                } else {
+                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                }
+            listViewRecipes.getSelectionModel().clearSelection();
         });
 
+
+
+        delteButtonRecipe.setOnAction((ActionEvent event) -> {
+            String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
+                String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+                System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
+                if (recipe != null || recipeInCookBook != null) {
+                    controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
+                } else {
+                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                }
+            });
+
+
+        changeRecipeButton.setOnAction((ActionEvent event) -> {
+            String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
+                String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+                System.out.println("Would change " + recipe); //TODO: Consider choice of user to change
+                if (recipe != null || recipeInCookBook != null) {
+                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+                } else {
+                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                }
+            });
+
+    }
+
+    /**
+     * Setup multiple selection for listviews.
+     */
+    private void setupMultipleSelection() {
+        listViewRecipes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
 
@@ -205,7 +217,7 @@ public class ControllerManageCookBook {
             if (filter == null || filter.isEmpty()) {
                 filteredData.setPredicate(s -> true);
             } else {
-                filteredData.setPredicate(s -> StringUtils.containsIgnoreCase( s, filter ));
+                filteredData.setPredicate(s -> StringUtils.containsIgnoreCase(s, filter));
             }
             listView.setItems(filteredData);
         });
@@ -220,8 +232,8 @@ public class ControllerManageCookBook {
 
     @FXML
     void addRecipe(ActionEvent event) {
-        Node node = loadResource( Resources.getloadRecipeFXML() );
-        PopOver popOver = new PopOver( node );
+        Node node = loadResource(Resources.getloadRecipePopOverFXML());
+        PopOver popOver = new PopOver(node);
         popOver.setDetachable(false);
         popOver.setCornerRadius(4);
         popOver.setArrowLocation(PopOver.ArrowLocation.BOTTOM_LEFT);
