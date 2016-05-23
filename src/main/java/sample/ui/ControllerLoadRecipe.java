@@ -16,36 +16,25 @@ import org.controlsfx.control.PopOver;
 
 public class ControllerLoadRecipe {
 
-
-
     final ToggleGroup group = new ToggleGroup();
 
     @FXML
     private RadioButton radioButtonHyperLink;
-
     @FXML
     private RadioButton radioButtonFolder;
     @FXML
     private RadioButton radioButtonFile;
-
-
     @FXML
     private TextField hyperLinkTextField;
-
     @FXML
     private Button loadButton;
-
-
     @FXML
     private Button closeButton;
 
-
     private boolean editability = false;
-
     private boolean radioButtonFileBoolean = false;
     private boolean radioButtonFolderBoolean = false;
     private boolean radioButtonLinkBoolean = false;
-
 
     @FXML
     public void initialize(){
@@ -57,13 +46,10 @@ public class ControllerLoadRecipe {
     /**
      * These method groups the RadioButtons File,Folder and Hyperlink.
      */
-
     void groupRadioButtons() {
         radioButtonFile.setToggleGroup(group);
         radioButtonFolder.setToggleGroup(group);
         radioButtonHyperLink.setToggleGroup(group);
-
-
     }
 
     /**
@@ -91,8 +77,6 @@ public class ControllerLoadRecipe {
         controllRadioButtons();
         setHyperLinkNotEditable();
         radioButtonFolderBoolean = true;
-
-
     }
 
     @FXML
@@ -100,34 +84,25 @@ public class ControllerLoadRecipe {
         controllRadioButtons();
         setHyperLinkNotEditable();
         radioButtonFileBoolean = true;
-
-
-
-
     }
-
 
     @FXML
     void changeHyperLinkEditability(ActionEvent event) {
         controllRadioButtons();
          setHyperLinkEditable();
         radioButtonLinkBoolean = true;
-
-
     }
 
     @FXML
     void openFileChooser() {
         FileHandler fileHandler = new FileHandler();
         fileHandler.importFiles();
-
     }
 
     @FXML
     void openFolder() {
         FileHandler fileHandler = new FileHandler();
         fileHandler.importFolder();
-
     }
 
     void closeStage(){
@@ -145,11 +120,9 @@ public class ControllerLoadRecipe {
         }
     }
 
-
     /**
      * These method selects the options for loading in reference of the RadioButtons and the Load-Button.
      */
-
     @FXML
     void selectOptionsForLoading(ActionEvent event) {
         if ((radioButtonLinkBoolean == true) && (this.hyperLinkTextField.getText().trim().isEmpty() == false)) {
@@ -162,25 +135,17 @@ public class ControllerLoadRecipe {
             openFileChooser();
             closeStage();
         }
-
-
-
     }
 
     /**
      * The method closes the Load-Recipe-Window by clicking the Close-Button
      */
-
     @FXML
     void closeWindow(ActionEvent event) {
 
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
-
-
     }
-
-
 }
 
 

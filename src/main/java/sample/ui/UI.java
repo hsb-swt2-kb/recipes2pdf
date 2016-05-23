@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Created by markus on 18.05.16.
  */
 abstract class UI {
-    abstract void      start         (String[] parameter);
+    abstract void start (String[] parameter);
 
     void      addRecipes    (String   dirPath){
         File file=new File(dirPath);
@@ -23,12 +23,13 @@ abstract class UI {
         }
     }
 
-    void      addRecipes    (String[] filenamesWithPath){
+    void addRecipes (String[] filenamesWithPath){
         try{
             Parser parser = new Parser();
-            for(int i=0;i<filenamesWithPath.length;i++){
-                File f = new File(filenamesWithPath[i]);
-                Recipe recipe = parser.parse(f);
+            for( String file:filenamesWithPath ){
+                // parse file -> Recipe
+                Recipe recipe = parser.parse(new File(file));
+                // save recipe in DB.
                 new RecipeDAO().insert(recipe);
             }
         }
@@ -37,7 +38,7 @@ abstract class UI {
         }
     }
 
-    void      delRecipes    (String[] recipeNames){
+    void delRecipes (String[] recipeNames){
         Recipe recipe = new Recipe();
         for(String recipeName : recipeNames){
             recipe.setTitle(recipeName);
