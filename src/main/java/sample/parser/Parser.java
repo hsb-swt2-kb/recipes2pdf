@@ -5,15 +5,19 @@ import sample.model.Recipe;
 import java.io.*;
 import java.util.ArrayList;
 
-/*
+/* Class Parser
  *
- * @author Henrik
+ * Class Parser is Singleton.
+ *
+ * @author Markus
  */
 public class Parser implements IParser
 {
+    private static Parser ourInstance = new Parser();
+    public static Parser getInstance() {return ourInstance;}
     private ArrayList<AConcreteParser> parsers;
 
-    public Parser()
+    private Parser()
     {
         // Parser instantiieren
         parsers.add(new TxtParser());
@@ -21,7 +25,7 @@ public class Parser implements IParser
         parsers.add(new WWParser ());
     }
 
-    public Parser(ArrayList<AConcreteParser> parsers)
+    //public Parser(ArrayList<AConcreteParser> parsers)
     {
         this.parsers=parsers;
     }
