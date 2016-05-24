@@ -14,13 +14,14 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class GUI extends Application {
+public class GUI extends Application implements UI{
 
     private final String wrongPathException = "The path of the FXML-file is wrong or there are other problems with the loader.";
 
     /**
      * @author Tobias Stelter
      */
+    public void start(String[] args){}
     @Override
     public void start(Stage primaryStage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Resources.getDefaultFXML()));

@@ -10,5 +10,5 @@ import java.io.FileNotFoundException;
  */
 public interface IParser
 {
-    public Recipe parse(File recipeFile) throws FileNotFoundException;
+    public boolean parse(File recipeFile) throws FileNotFoundException;
 }

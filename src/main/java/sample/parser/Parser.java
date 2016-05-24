@@ -46,7 +46,7 @@ public class Parser implements IParser
         }
     }
 
-    public Recipe parse(File recipeFile) throws  FileNotFoundException
+    public boolean parse(File recipeFile) throws  FileNotFoundException
     {
         // Format raten
         if(recipeFile.exists())
@@ -75,7 +75,7 @@ public class Parser implements IParser
             }
             // Rezept prüfen
             // TODO: Rezept prüfen
-            return recipe;
+            return recipe.isIncomplete();
         }
         else
         {

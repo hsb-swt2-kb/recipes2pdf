@@ -174,6 +174,20 @@ public class Recipe implements IRecipe {
         this.ingredients.add(new ImmutableTriple<>(ingredient, amount, unit));
     }
 
+    public boolean isEmpty(){
+        if (this.title.isEmpty() && this.text.isEmpty() && this.ingredients.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isIncomplete(){
+        if (this.title.isEmpty() || this.text.isEmpty() || this.ingredients.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
     /**
      * Retrieve Map of Ingredients with details amount and unit per ingredient.
      *
