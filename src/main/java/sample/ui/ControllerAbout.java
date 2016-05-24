@@ -15,13 +15,6 @@ public class ControllerAbout {
     private Button closeButton;
 
     @FXML
-    public void initialize() {
-
-
-    }
-
-
-    @FXML
     void closeAbout(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
