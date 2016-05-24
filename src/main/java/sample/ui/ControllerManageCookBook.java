@@ -19,12 +19,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.PopOver;
-import sample.database.dao.RecipeDAO;
-import sample.model.Recipe;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ControllerManageCookBook {
@@ -71,15 +66,6 @@ public class ControllerManageCookBook {
         refreshListViews(recipeNames, recipeNamesOfCookBook);
     }
 
-    private ObservableList<String> getAllRecipeNamesFromDB(){
-        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-        List<Recipe> recipeList = new RecipeDAO().getAll();
-        recipes.addAll(recipeList);
-        for(int i=0;i<recipes.size();i++){
-            recipeNames.add(recipes.get(i).getTitle());
-        }
-        return recipeNames;
-    }
     private void refreshListViews(ObservableList<String> recipes, ObservableList<String> cookbook) {
         FXCollections.sort(recipes);
         FXCollections.sort(cookbook);

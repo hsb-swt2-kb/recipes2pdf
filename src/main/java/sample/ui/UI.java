@@ -1,12 +1,10 @@
 package sample.ui;
 
-import sample.database.dao.CookbookDAO;
 import sample.database.dao.RecipeDAO;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.Recipe;
 import sample.parser.Parser;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +12,33 @@ import java.util.List;
 /**
  * Created by markus on 18.05.16.
  */
-abstract class UI {
+public interface UI {
     abstract void start (String[] parameter);
 
-    void      addRecipes    (String   dirPath){
-        File file=new File(dirPath);
-        for(File f : file.listFiles()){
-            addRecipes(f.getAbsolutePath());
+    default ArrayList<String> addRecipes (File[] files) throws FileNotFoundException {
+        ArrayList<String> recipeNames = new ArrayList<String>();
+        ArrayList<File> recipesNotFound = new ArrayList<File>();
+        for(File f : files){
+                recipeNames.add(addRecipes(f));
         }
+        return recipeNames;
+    }
+    default String addRecipes (File recipeFile) throws FileNotFoundException {
+        return Parser.getInstance().parse(recipeFile).getTitle();
     }
 
+    default List<String> getAllRecipeNamesFromDB(){
+        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+        List<Recipe> recipeList = new RecipeDAO().getAll();
+        List<String> recipeNames;
+        //for (int i=0;i<recipeList.size();i++){
+        //    recipeNames.add(recipeList.get(i).getTitle());
+        //}
+        //return recipeNames;
+        return null;
+    }
 
-    void delRecipes (String[] recipeNames){
+    default void delRecipes (String[] recipeNames){
         Recipe recipe = new Recipe();
         for(String recipeName : recipeNames){
             recipe.setTitle(recipeName);
@@ -33,24 +46,24 @@ abstract class UI {
         }
     }
 
-    void      showRecipe    (String   recipeName){
+    default void      showRecipe    (String   recipeName){
 
 
     }
 
-    void      editRecipe    (String   reciepeName){
+    default void      editRecipe    (String   reciepeName){
 
 
 
     }
 
-    void      createCookBook(String   cookBookName,String pictureFileName,String preamble){
+    default void      createCookBook(String   cookBookName,String pictureFileName,String preamble){
         new Cookbook().setTitle(cookBookName);
         //cookbook.setPicture(pictureFileName);
         //cookbook.setPreamble(preamble);
     }
 
-    protected ArrayList<String> readFile(String file) throws IOException {
+    default ArrayList<String> readFile(String file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String         line = null;
         ArrayList<String> lines = new ArrayList<String>();
@@ -66,11 +79,11 @@ abstract class UI {
             reader.close();
         }
     }
-    void      showCookBook  (String   cookBookName){
+    default void      showCookBook  (String   cookBookName){
 
     }
 
-    ICookbook editCookBook  (String cookBookName,String keyAndValue){
+    default ICookbook editCookBook  (String cookBookName,String keyAndValue){
         return null;
     }
 }
