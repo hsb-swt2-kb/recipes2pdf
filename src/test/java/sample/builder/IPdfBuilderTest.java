@@ -8,17 +8,22 @@ import sample.builder.pdfBuilder.PdfBuilder;
 import sample.builder.pdfBuilder.PdfBuilderConfig;
 import sample.config.IConfig;
 import sample.model.*;
-
+import static org.javalite.test.jspec.JSpec.the;
 import java.io.File;
 import java.util.ArrayList;
+import static org.junit.Assert.*;
 
 public class IPdfBuilderTest {
     @Test
-
-    public void testRecipePdfBuilder() throws Throwable {
+    /**
+     * This Method tests, if a PDF-File is beeing created by the Builder
+     * Precondition: No PDF file exists
+     * Nachbed: PDF File is saved on HDD. T
+     */
+    public void testCookbookPdfBuilder() throws Throwable {
         ArrayList<IConcreteBuilder> builderList = new ArrayList<>();
         IConfig config = IConfig.getInstance();
-        config.setProperty("OUTPUT_FILETYPE","PDF");
+
 
         IConcreteBuilder pdfBuilder = new PdfBuilder(config);
         builderList.add(pdfBuilder);
@@ -27,29 +32,25 @@ public class IPdfBuilderTest {
         ICookbook cookbook = new Cookbook();
         cookbook.setTitle("DasKochbuch");
 
-        for (int i = 1; i <= 10; i++) {
-            IRecipe tempRecipe = new Recipe();
-            ICategory category = new Category();
-
-            tempRecipe.add("Salz",5,"g");
-            category.setName("kategorie" + i);
-            tempRecipe.setTitle(i + ". Rezept");
-            tempRecipe.setCategory(category);
-            tempRecipe.setText("Das ist ein Rezepttext");
-
-            cookbook.addRecipe(tempRecipe);
-        }
-
         File recipePDF = builderController.build(cookbook);
-        PDDocument pdfDoc;
 
-        pdfDoc = PDDocument.load(recipePDF);
-
-        PDFTextStripper stripper = new PDFTextStripper("ISO-8859-1");
-        stripper.setStartPage(3); //Start extracting from page 3
-        stripper.setEndPage(4); //Extract till page 5
-        System.out.println(stripper.getText(pdfDoc));
-
+        assertFalse(new File(config.getProperty("PROGRAM_USERDATA_DIR") + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + cookbook.getTitle() + ".pdf").exists());
     }
 
+    public void testRecipePdfBuilder() throws Throwable {
+        ArrayList<IConcreteBuilder> builderList = new ArrayList<>();
+        IConfig config = IConfig.getInstance();
+
+
+        IConcreteBuilder pdfBuilder = new PdfBuilder(config);
+        builderList.add(pdfBuilder);
+        Builder builderController = new Builder(builderList);
+
+        IRecipe recipe = new Recipe();
+        recipe.setTitle("DasRezept");
+
+        File recipePDF = builderController.build(recipe);
+
+        assertFalse(new File(config.getProperty("PROGRAM_USERDATA_DIR") + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + recipe.getTitle() + ".pdf").exists());
+    }
 }
