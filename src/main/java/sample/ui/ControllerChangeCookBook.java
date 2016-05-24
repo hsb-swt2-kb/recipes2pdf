@@ -39,6 +39,12 @@ public class ControllerChangeCookBook {
     private Button changeButton;
 
     @FXML
+    public void initialize() {
+
+
+    }
+
+    @FXML
     void changeCookBook(ActionEvent event) {
         getName();
         getForeWord();

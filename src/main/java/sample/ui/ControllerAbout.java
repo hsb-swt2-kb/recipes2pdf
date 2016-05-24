@@ -15,7 +15,6 @@ public class ControllerAbout {
     private Button closeButton;
 
     @FXML
-
     public void initialize() {
 
 

@@ -73,6 +73,12 @@ public class ControllerChangeRecipe {
     String zubereitungszeit;
     String zubereitungstext;
 
+    @FXML
+    public void initialize() {
+
+
+    }
+
 
         @FXML
         void closeChangeRecipe(ActionEvent event) {
