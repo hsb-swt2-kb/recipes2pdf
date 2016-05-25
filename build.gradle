@@ -26,6 +26,7 @@ task initSourceFolders { // add << before { to prevent executing during configur
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
 }
 
+
 buildscript {
     repositories {
         jcenter()
@@ -102,6 +103,12 @@ jacocoTestReport {
     reports {
         xml.enabled = true
         html.enabled = true
+    }
+}
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
     }
 }
 
