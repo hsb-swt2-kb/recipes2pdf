@@ -106,12 +106,6 @@ jacocoTestReport {
     }
 }
 
-test {
-    testLogging {
-        exceptionFormat = 'full'
-    }
-}
-
 check.dependsOn jacocoTestReport
 
 
