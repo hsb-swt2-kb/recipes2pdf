@@ -27,17 +27,19 @@ import java.util.regex.Pattern;
 */
 
 
-
 public class TxtParser extends AConcreteParser implements Constants
 {
   public Recipe parse(ArrayList<String> textFileContent) {
     Recipe recipe = new Recipe();
-
+    ArrayList<String[]> tempIncredient = new ArrayList<String[]>();
 
     //Try to extract minimal recipdata
+    //TODO Try to find name-tag
+    //Try to find Name without Tag
     recipe.setTitle(extractRecipename(textFileContent));
 
-    //recipe.setNurture();zutaten = extractIncredentsList(textFileContent);
+    //recipe.setNurture()
+    tempIncredient = extractIncredentsList(textFileContent);
     // recipe.zubereitung = findPreparationOfRecipe(textFileContent);
 
     // Try to exctract additional recipedata
@@ -49,9 +51,9 @@ public class TxtParser extends AConcreteParser implements Constants
       category.setName(findDatafield(textFileContent,"Kategorie"));
       recipe.setCategory(category);
 
-      recipe.setDuration(Integer.parseInt(findDatafield(textFileContent,"Arbeitszeit")));
-      recipe.setCalories(Integer.parseInt(findDatafield(textFileContent,"Kcal")));
-      recipe.setPortions(Integer.parseInt(findDatafield(textFileContent,"Portionen")));
+     // recipe.setDuration(Integer.parseInt(findDatafield(textFileContent,"Arbeitszeit")));
+      //recipe.setCalories(Integer.parseInt(findDatafield(textFileContent,"Kcal")));
+      //recipe.setPortions(Integer.parseInt(findDatafield(textFileContent,"Portionen")));
 
     //Checking Data will be deletet later
     System.out.println(recipe.getTitle());

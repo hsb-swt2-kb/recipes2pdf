@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 abstract class AConcreteParser implements Constants,IConcreteParser {
 
-  public String readFilecontent(String absoluterDateiPfad) throws IOException
+  public ArrayList<String> readFilecontent(String absoluterDateiPfad) throws IOException
   {
     String  thisFilerow = null;
     ArrayList<String> fileContent = new ArrayList<String>();
@@ -26,6 +26,6 @@ abstract class AConcreteParser implements Constants,IConcreteParser {
     fr.close();
     br.close();
 
-    return fileContent.toString();
+    return fileContent;
   }
 }
