@@ -19,7 +19,7 @@ public class Parser implements IParser
     {
     }
 
-    static Recipe parse(File recipeFile) throws FileNotFoundException,CouldNotParseException
+    static public Recipe parse(File recipeFile) throws FileNotFoundException,CouldNotParseException
     {
         ArrayList<AConcreteParser> parsers= new ArrayList<>();
         // Parser instantiieren

@@ -21,7 +21,7 @@ public class UI {
         boolean success=true;
         Recipe recipe = new Recipe();
         for(int i=0;i<files.size();i++) {
-            recipe = Parser.getInstance().parse(files.get(i));
+            recipe = Parser.parse(files.get(i));
             if (recipe.isIncomplete())
                 success = false;
             else
@@ -35,7 +35,7 @@ public class UI {
     static boolean addRecipe (File file) throws FileNotFoundException,CouldNotParseException {
         boolean success=true;
         Recipe recipe = new Recipe();
-        recipe = Parser.getInstance().parse(file);
+        recipe = Parser.parse(file);
         if (recipe.isIncomplete())
             success = false;
         else
