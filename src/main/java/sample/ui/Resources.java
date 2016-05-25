@@ -9,7 +9,7 @@ public class Resources {
      * FXMLs
      */
     protected static String getDefaultFXML() {
-        return "/sample/ui/Default.fxml";
+        return "/sample/ui/SortLevel.fxml";
     }
 
     protected static String getMangeCookBookFXML() {
