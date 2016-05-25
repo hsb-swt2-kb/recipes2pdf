@@ -12,7 +12,6 @@
             <menus>
                 <Menu mnemonicParsing="false" text="%menu.program">
                     <items>
-                  <MenuItem fx:id="configMenuItem" mnemonicParsing="false" onAction="#openConfig" text="%menu.program.config" />
                         <MenuItem fx:id="endMenuItem" mnemonicParsing="false" onAction="#endProgramm" text="%menu.program.quit" />
                     </items>
                 </Menu>

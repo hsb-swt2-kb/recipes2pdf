@@ -1,7 +1,7 @@
 package sample.ui;
 
 /**
- * @author Tobias Stelter
+ * @author Tobias Stelter.
  */
 
 
