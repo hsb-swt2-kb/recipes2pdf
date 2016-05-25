@@ -4,4 +4,4 @@ jdk:
 after_success:
     - bash <(curl -s https://codecov.io/bash)
 install: 
-    - ./gradlew build --stacktrace
+    - ./gradlew build --stacktrace --info
