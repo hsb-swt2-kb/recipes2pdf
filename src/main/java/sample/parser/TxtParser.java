@@ -33,8 +33,10 @@ public class TxtParser extends AConcreteParser implements Constants
   public Recipe parse(ArrayList<String> textFileContent) {
     Recipe recipe = new Recipe();
 
+
     //Try to extract minimal recipdata
     recipe.setTitle(extractRecipename(textFileContent));
+
     //recipe.setNurture();zutaten = extractIncredentsList(textFileContent);
     // recipe.zubereitung = findPreparationOfRecipe(textFileContent);
 
@@ -52,32 +54,32 @@ public class TxtParser extends AConcreteParser implements Constants
       recipe.setPortions(Integer.parseInt(findDatafield(textFileContent,"Portionen")));
 
     //Checking Data will be deletet later
-    //System.out.println(recipe.getTitle());
-    //for (int i=0;i<recipe.zutaten.size();i++){
-    //  System.out.println(recipe.zutaten.get(i)[0] +"   |   "+recipe.zutaten.get(i)[1]+"   |   "+recipe.zutaten.get(i)[2]);
-    //}
-    //System.out.println(recipe.zubereitung);
-    //System.out.println(recipe.region);
-    //System.out.println(recipe.gerichtsart);
-    //System.out.println(recipe.kategorie);
-    //System.out.println(recipe.arbeitszeit);
-    //System.out.println(recipe.kcal);
-    //System.out.println(recipe.portionen);
+    System.out.println(recipe.getTitle());
+    for (int i=0;i<recipe.getIngredients().size();i++){
+      System.out.println(recipe.getIngredients().get(i).getLeft() +"   |   "+recipe.getIngredients().get(i).getMiddle()+"   |   "+recipe.getIngredients().get(i).getRight());
+    }
+    System.out.println(recipe.getText());
+    System.out.println(recipe.getRegion());
+    System.out.println(recipe.getCourse());
+    System.out.println(recipe.getCategory());
+    System.out.println(recipe.getDuration());
+    System.out.println(recipe.getCalories());
+    System.out.println(recipe.getPortions());
     return recipe;
   }
 
-  public boolean accepts(ArrayList<String> fileContent){
+  public boolean accepts(ArrayList<String> fileContent) {
       boolean acceptance = false;
 
-      if(true) // TODO: Akzeptanzbedingungen prüfen
+      if (true) // TODO: Akzeptanzbedingungen prüfen
       {
-          acceptance=false;
-      }
-      else{
+          acceptance = false;
+      } else {
           acceptance = true;
       }
       return acceptance;
   }
+
   public boolean accepts(Recipe recipe) {
     boolean acceptance = false;
 
