@@ -152,6 +152,19 @@ public class RecipeTest extends ADatabaseTest {
     }
 
     @Test
+    public void testSource() {
+        SourceDAO sourceDAO = new SourceDAO();
+        Source source = new Source();
+        String sourceName = "chefkoch.de";
+        source.setName(sourceName);
+        sourceDAO.insert(source);
+        recipe.setSource(source);
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
+        the(byId.getSource().getName()).shouldBeEqual(sourceName);
+    }
+
+    @Test
     public void testGetIngredients() {
         recipe.add("Nudeln", 2, "kg");
         recipe.add("Nüsse", 3, "kleine Stück");
