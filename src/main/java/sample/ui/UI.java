@@ -12,26 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * implemented by on 18.05.16 by  markus
+ * Class UI
+ *
+ * Class UI holds static methods that are used in GUI and CLI.
+ *
+ * Created by markus
  */
 public class UI {
-    static void start (String[] parameter){};
 
-    static boolean addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
-        boolean success=true;
-        Recipe recipe = new Recipe();
+
+    // multiple calls of addRecipe
+    static List<Recipe> addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
+        ArrayList<Recipe> recipeList = new ArrayList<>();
         for(int i=0;i<files.size();i++) {
-            recipe = Parser.parse(files.get(i));
-            if (recipe.isIncomplete())
-                success = false;
-            else
-                if(!new RecipeDAO().insert(recipe))
-                    success=false;
+            recipeList.add(Parser.parse(files.get(i)));
         }
-        return success;
+        return recipeList;
     }
 
-
+    // Calls Parser to parse the Recipe out of the given File
     static boolean addRecipe (File file) throws FileNotFoundException,CouldNotParseException {
         boolean success=true;
         Recipe recipe = new Recipe();
@@ -54,7 +53,6 @@ public class UI {
             if(!new RecipeDAO().delete(recipes.get(i)))
                 success=false;
         return success;
-
     }
 
     /*
