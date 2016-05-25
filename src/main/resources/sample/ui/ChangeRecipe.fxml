@@ -57,27 +57,27 @@
             <Font size="21.0" />
          </font>
       </Text>
-      <Text layoutX="16.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptbild">
+      <Text layoutX="16.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptbild:">
          <font>
             <Font size="21.0" />
          </font>
       </Text>
-      <Text layoutX="17.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saison">
+      <Text layoutX="17.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saison:">
          <font>
             <Font size="21.0" />
          </font>
       </Text>
-      <Text layoutX="17.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tageszeit">
+      <Text layoutX="17.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tageszeit:">
          <font>
             <Font size="21.0" />
          </font>
       </Text>
-      <Text layoutX="17.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptkategorie">
+      <Text layoutX="17.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptkategorie:">
          <font>
             <Font size="21.0" />
          </font>
       </Text>
-      <Text layoutX="17.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptquelle">
+      <Text layoutX="17.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezeptquelle:">
          <font>
             <Font size="21.0" />
          </font>
