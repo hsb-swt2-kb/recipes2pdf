@@ -9,9 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by sabine on 21.05.16.
+ * Created by markus
  */
 public interface IParser
 {
-
+  // parse Methode wurde im Laufe der Entwicklung zu static geändert und
+  // ist somit nun nur noch in der Klasse Parser vorhanden.
 }

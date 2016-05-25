@@ -30,7 +30,7 @@ public class Parser implements IParser
         // Format raten
         if(recipeFile.exists())
         {
-            ArrayList<String> fileContent = new ArrayList<String>();
+            ArrayList<String> fileContent = new ArrayList<>();
             Recipe            recipe      = new Recipe();
 
             try {
