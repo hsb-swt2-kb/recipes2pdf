@@ -17,7 +17,6 @@ public interface Constants
     "Region",
     "Tageszeit",
     "Saison",
-    "Gang",
     "Ernährungsart"
   };
 }
