@@ -13,6 +13,11 @@ public interface Constants
     "Arbeitszeit",
     "Gerichtsart",
     "Portionen",
-    "Kalorien"
+    "Kalorien",
+    "Region",
+    "Tageszeit",
+    "Saison",
+    "Gang",
+    "Ernährungsart"
   };
 }

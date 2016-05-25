@@ -35,6 +35,7 @@ public class TxtParser extends AConcreteParser implements Constants
 
     //Try to extract minimal recipdata
     recipe.setTitle(extractRecipename(textFileContent));
+
     //recipe.setNurture();zutaten = extractIncredentsList(textFileContent);
     // recipe.zubereitung = findPreparationOfRecipe(textFileContent);
 
