@@ -22,12 +22,14 @@ public class UI {
 
 
     // multiple calls of addRecipe
-    static List<Recipe> addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
+    static boolean addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
         ArrayList<Recipe> recipeList = new ArrayList<>();
+        boolean success=true;
         for(int i=0;i<files.size();i++) {
-            recipeList.add(Parser.parse(files.get(i)));
+            if(!addRecipe(files.get(i)))
+                success=false;
         }
-        return recipeList;
+        return success;
     }
 
     // Calls Parser to parse the Recipe out of the given File
@@ -67,17 +69,5 @@ public class UI {
         //cookbook.setPreamble(preamble);
 
         return new CookbookDAO().insert(cookbook);
-    }
-
-    static ArrayList<String> readFile(String file) throws IOException {
-        String line;
-        ArrayList<String> lines = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-            return lines;
-        }
     }
 }

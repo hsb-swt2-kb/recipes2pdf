@@ -77,19 +77,15 @@ public class Parser implements IParser
             throw new FileNotFoundException();
         }
     }
-    static public ArrayList<String> readFile(String file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String         line = null;
-        ArrayList<String> lines = new ArrayList<String>();
+    static ArrayList<String> readFile(String file) throws IOException {
+        String line;
+        ArrayList<String> lines = new ArrayList<>();
 
-        try {
-            while((line = reader.readLine()) != null) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            while ((line = reader.readLine()) != null) {
                 lines.add(line);
             }
-
             return lines;
-        } finally {
-            reader.close();
         }
     }
 }
