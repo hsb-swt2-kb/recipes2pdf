@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Properties;
 
 /**
@@ -24,6 +25,10 @@ class Config implements IConfig {
 
             try {
                 properties.load(this.getClass().getClassLoader().getResourceAsStream("sample/config/default_config.cfg"));
+                File userdataDir = new File(PROGRAM_USERDATA_DIR);
+                if(!userdataDir.exists()){
+                    userdataDir.mkdirs();
+                }
                 properties.store(new FileOutputStream(PROGRAM_USERDATA_DIR + File.separator + "config.txt"), "Properties");
             } catch (IOException ex) {
                 ex.printStackTrace();
