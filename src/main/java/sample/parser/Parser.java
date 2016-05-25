@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /* Class Parser
  *
- * Class Parser is Singleton.
+ * Class Parser
  *
  * @author Markus
  */
@@ -54,6 +54,19 @@ public class Parser implements IParser
             }
             // Rezept prüfen
             // TODO: Rezept prüfen
+
+            // Defaultwert für leere Felder setzen
+            if(recipe.getCategory().getName() == null)
+                recipe.getCategory().setName("");
+            if(recipe.getCourse().getName() == null)
+                recipe.getCourse().setName("");
+            if(recipe.getSeason().getName() == null)
+                recipe.getSeason().setName("");
+            if(recipe.getRegion().getName() == null)
+                recipe.getRegion().setName("");
+            if(recipe.getNurture().getName() == null)
+                recipe.getNurture().setName("");
+
             if(!recipe.isIncomplete())
                 return recipe;
             else
