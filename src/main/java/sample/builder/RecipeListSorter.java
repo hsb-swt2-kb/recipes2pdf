@@ -2,12 +2,10 @@ package sample.builder;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import sample.model.IRecipe;
-import sample.model.Recipe;
 import sample.model.comparator.CategoryComparator;
 import sample.model.comparator.RegionComparator;
 import sample.model.comparator.SeasonComparator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -19,12 +17,10 @@ import java.util.stream.Collectors;
  */
 public class RecipeListSorter {
 
-    static void sort(List<IRecipe> recipeList, String sortLevelChain)
+    static List<IRecipe> sort(List<IRecipe> recipeList, List<String> sortLevelList)
     {
         ComparatorChain compChain = new ComparatorChain();
         Comparator comparator = null;
-
-        List<String> sortLevelList  = Pattern.compile("\\.").splitAsStream(sortLevelChain).collect(Collectors.toList());
 
         for(String sortLevel:sortLevelList){
 
@@ -44,5 +40,6 @@ public class RecipeListSorter {
         }
 
         Collections.sort(recipeList,compChain);
+        return recipeList;
     }
 }
