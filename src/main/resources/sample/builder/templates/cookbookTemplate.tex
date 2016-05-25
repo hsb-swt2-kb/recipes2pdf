@@ -19,14 +19,14 @@
 %Fußzeile gerade rechts
 
 \renewcommand{\footrulewidth}{0.5pt} %Linie unten
-
+#set($i = 0)
 \begin{document}
 
 
     #foreach( $recipe in $cookbook.getRecipes() )
         \fancyhead[C]{$recipe.getCategory().getName()} %Kopfzeile mittig
-        \fancyfoot[ol]{Rezept $referenceNumber} %Fußzeile ungerade links
-        \fancyfoot[er]{Rezept $referenceNumber} %Fußzeile gerade links
+        \fancyfoot[ol]{$refNumList.get($i)} %Fußzeile ungerade links
+        \fancyfoot[er]{$refNumList.get($i)} %Fußzeile gerade links
 
         \section*{$recipe.getTitle()}
 	    \begin{minipage}[t]{0.4\textwidth}
@@ -54,5 +54,6 @@
        	\else
        		\newpage{}
         \fi
+        #set($i=$i+1)
     #end
 \end{document}

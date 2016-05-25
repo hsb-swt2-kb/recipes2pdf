@@ -85,8 +85,12 @@ public class RecipeListSorterTest {
         sortedRecipeList.add(r1);
         sortedRecipeList.add(r4);
 
+        List<String> sortLevelList = new ArrayList();
+        sortLevelList.add("category");
+        sortLevelList.add("region");
+        sortLevelList.add("season");
 
-        rSorter.sort(unsortedRecipeList, "category.region.season");
+        rSorter.sort(unsortedRecipeList, sortLevelList);
         assertEquals(unsortedRecipeList,sortedRecipeList);
 
         //gewuenschtes Ergebnis bei sortierung region.category.season
@@ -96,7 +100,11 @@ public class RecipeListSorterTest {
         sortedRecipeList.add(r2);
         sortedRecipeList.add(r4);
 
-        rSorter.sort(unsortedRecipeList, "region.category.season");
+        sortLevelList.clear();
+        sortLevelList.add("region");
+        sortLevelList.add("category");
+        sortLevelList.add("season");
+        rSorter.sort(unsortedRecipeList, sortLevelList);
         assertEquals(unsortedRecipeList,sortedRecipeList);
     }
 }

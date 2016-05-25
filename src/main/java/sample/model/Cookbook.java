@@ -26,6 +26,10 @@ public class Cookbook implements ICookbook {
         return this.id;
     }
 
+    public void setRecipes(List<IRecipe> recipes){
+        this.recipes = recipes;
+    }
+
     @Override
     public String getTitle() {
         return this.title;
