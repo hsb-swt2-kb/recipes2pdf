@@ -9,13 +9,13 @@ import javafx.scene.control.Button;
 import javafx.event.*;
 import javafx.stage.Stage;
 
-public class ControllerConfig {
+public class ControllerSortLevel {
 
     @FXML
     private Button closeButton;
 
     @FXML
-    void closeConfig(ActionEvent event) {
+    void closeSortLevel(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
 
