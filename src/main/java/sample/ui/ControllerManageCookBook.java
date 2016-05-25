@@ -19,7 +19,11 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.PopOver;
+import sample.database.dao.RecipeDAO;
+import sample.model.Recipe;
+
 import java.io.IOException;
+import java.util.List;
 
 
 public class ControllerManageCookBook {
@@ -57,6 +61,12 @@ public class ControllerManageCookBook {
     private void initialize() {
         initializeListeners();
         /* TESTDATA */
+        //RecipeDAO recipeDAO = new RecipeDAO();
+        //recipeDAO.getAll();
+        //List<Recipe> recipes = new RecipeDAO().getAll();
+        //for(int i=0;i< recipes.size();i++){
+        //    this.recipeNames.addAll(recipes.get(i).getTitle());
+        //}
         this.recipeNames = FXCollections.observableArrayList("Chilli", "Pizza", "Eintopf", "Bohnenauflauf", "Rindsschmorbraten", "Veganes basisches Chili", "Curry aus Süßkartoffel-Streifen", "Gegrillte Mettbrötchen", "Schwälmer Zwiebelplatz", "Bärlauch - Sahnesuppe mit Croutons", "EIS", "Cheeseburgerauflauf", "Tomahawk Steak", "Tijuana Coffee Chili", "Rindersteak mit Pilzen", "Spaghetti in cremiger Brokkoli-Hackleisch-Sauce", "Flankrolle mit Ananas-Tomaten-Salsa");
         //this.recipeNames = getAllRecipeNamesFromDB();
         this.recipeNamesOfCookBook = FXCollections.observableArrayList("Rindsschmorbraten", "Tomahawk Steak", "Veganes basisches Chili", "Cheeseburgerauflauf", "Curry aus Süßkartoffel-Streifen");

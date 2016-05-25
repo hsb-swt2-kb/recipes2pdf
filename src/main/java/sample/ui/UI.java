@@ -2,6 +2,7 @@ package sample.ui;
 
 import sample.database.dao.CookbookDAO;
 import sample.database.dao.RecipeDAO;
+import sample.exceptions.CouldNotParseException;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.Recipe;
@@ -13,33 +14,41 @@ import java.util.List;
 /**
  * implemented by on 18.05.16 by  markus
  */
-public interface UI {
-    abstract void start (String[] parameter);
+public class UI {
+    static void start (String[] parameter){};
 
-    default boolean addRecipes (ArrayList<File> files) throws FileNotFoundException {
+    static boolean addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
         boolean success=true;
-        for(File f : files)
-            if(!Parser.getInstance().parse(f))
-                success=false;
+        Recipe recipe = new Recipe();
+        for(int i=0;i<files.size();i++) {
+            recipe = Parser.getInstance().parse(files.get(i));
+            if (recipe.isIncomplete())
+                success = false;
+            else
+                if(!new RecipeDAO().insert(recipe))
+                    success=false;
+        }
         return success;
     }
 
 
-    default boolean addRecipe (File file) throws FileNotFoundException {
-            if(!Parser.getInstance().parse(file))
-                return false;
-        return true;
+    static boolean addRecipe (File file) throws FileNotFoundException,CouldNotParseException {
+        boolean success=true;
+        Recipe recipe = new Recipe();
+        recipe = Parser.getInstance().parse(file);
+        if (recipe.isIncomplete())
+            success = false;
+        else
+        if(!new RecipeDAO().insert(recipe))
+            success=false;
+        return success;
     }
 
-    default boolean addRecipes (File recipeFile) throws FileNotFoundException {
-        return Parser.getInstance().parse(recipeFile);
-    }
-
-    default List<Recipe> getAllRecipesFromDB(){
+    static List<Recipe> getAllRecipesFromDB(){
         return new RecipeDAO().getAll();
     }
 
-    default boolean delRecipes (ArrayList<Recipe> recipes){
+    static boolean delRecipes (ArrayList<Recipe> recipes){
         boolean success = true;
         for(int i=0;i<recipes.size();i++)
             if(!new RecipeDAO().delete(recipes.get(i)))
@@ -48,18 +57,12 @@ public interface UI {
 
     }
 
-    abstract void showRecipe (String recipeName);
-
-    default boolean editRecipe (Recipe recipe){
-        return new RecipeDAO().update(recipe);
-    }
-
     /*
      * createCookBook
      *
      * inserts a cookbook to the database and returns the title if success, otherwise null
      */
-    default boolean createCookBook(String cookBookName,String pictureFileName,String preamble){
+    static boolean createCookBook(String cookBookName,String pictureFileName,String preamble){
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle(cookBookName);
         //cookbook.setPicture(pictureFileName);
@@ -68,7 +71,7 @@ public interface UI {
         return new CookbookDAO().insert(cookbook);
     }
 
-    default ArrayList<String> readFile(String file) throws IOException {
+    static ArrayList<String> readFile(String file) throws IOException {
         String line;
         ArrayList<String> lines = new ArrayList<>();
 
@@ -79,7 +82,4 @@ public interface UI {
             return lines;
         }
     }
-    abstract void      showCookBook  (String   cookBookName);
-
-    abstract ICookbook editCookBook  (String cookBookName,String keyAndValue);
 }

@@ -1,5 +1,6 @@
 package sample.parser;
 
+import sample.exceptions.CouldNotParseException;
 import sample.model.Recipe;
 
 import java.io.*;
@@ -13,41 +14,19 @@ import java.util.ArrayList;
  */
 public class Parser implements IParser
 {
-    private static Parser ourInstance = new Parser();
-    public static Parser getInstance() {return ourInstance;}
-    private ArrayList<AConcreteParser> parsers;
 
-    private Parser()
+    public Parser()
     {
+    }
+
+    static Recipe parse(File recipeFile) throws FileNotFoundException,CouldNotParseException
+    {
+        ArrayList<AConcreteParser> parsers= new ArrayList<>();
         // Parser instantiieren
         parsers.add(new TxtParser());
         //parsers.add(new CKParser ());
         parsers.add(new WWParser ());
-    }
 
-    //public Parser(ArrayList<AConcreteParser> parsers)
-    {
-        this.parsers=parsers;
-    }
-
-    private ArrayList<String> readFile(String file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String         line = null;
-        ArrayList<String> lines = new ArrayList<String>();
-
-        try {
-            while((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-
-            return lines;
-        } finally {
-            reader.close();
-        }
-    }
-
-    public boolean parse(File recipeFile) throws  FileNotFoundException
-    {
         // Format raten
         if(recipeFile.exists())
         {
@@ -75,11 +54,29 @@ public class Parser implements IParser
             }
             // Rezept prüfen
             // TODO: Rezept prüfen
-            return recipe.isIncomplete();
+            if(!recipe.isIncomplete())
+                return recipe;
+            else
+                throw new CouldNotParseException();
         }
         else
         {
             throw new FileNotFoundException();
+        }
+    }
+    static public ArrayList<String> readFile(String file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String         line = null;
+        ArrayList<String> lines = new ArrayList<String>();
+
+        try {
+            while((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+
+            return lines;
+        } finally {
+            reader.close();
         }
     }
 }
