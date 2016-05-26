@@ -78,6 +78,7 @@ public class ControllerSortLevel {
     void saveSortLevel(ActionEvent event) {
         if (listViewSortLevels.getItems().isEmpty()==false)
         {
+            listViewSortLevels.getItems(); // <--- ObserVableList für Kai
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
 

@@ -66,19 +66,19 @@ public class ControllerManageCookBook {
         this.recipeNamesOfCookBook = FXCollections.observableArrayList();
         this.cookBookNames = FXCollections.observableArrayList();
 
-        //List<Recipe> recipes =  UI.getAllRecipesFromDB();
-        //for (Recipe recipe : recipes){
-          //  recipeNames.add(recipe.getTitle());
-        //}
+        List<Recipe> recipes =  UI.getAllRecipesFromDB();
+        for (Recipe recipe : recipes){
+           recipeNames.add(recipe.getTitle());
+        }
 
-        //List<Cookbook> cookbooks = UI.getAllCookbooksFromDB();
-        //for (Cookbook cookbook: cookbooks){
-          //  cookBookNames.add(cookbook.getTitle());
-            //List<Recipe> iRecipes = UI.castIRecipeToRecipe(cookbook.getRecipes());
-          //  for(Recipe recipe : iRecipes){
-            //    recipeNamesOfCookBook.add(recipe.getTitle());
-          //  }
-        //}
+        List<Cookbook> cookbooks = UI.getAllCookbooksFromDB();
+        for (Cookbook cookbook: cookbooks){
+            cookBookNames.add(cookbook.getTitle());
+            List<Recipe> iRecipes = UI.castIRecipeToRecipe(cookbook.getRecipes());
+            for(Recipe recipe : iRecipes){
+               recipeNamesOfCookBook.add(recipe.getTitle());
+            }
+        }
 
         refreshComboBox(cookBookNames);
         refreshListViews(recipeNames, recipeNamesOfCookBook);
