@@ -23,7 +23,17 @@ import java.util.List;
  */
 public class UI {
 
-    // multiple calls of addRecipe
+    /**
+     *
+     *  addRecipes
+     *
+     *  multiple calls of addRecipe
+     *
+     * @param files List of the Files of the recipes to add to DB
+     * @return boolean success of the insetions, false if one is not inserted
+     * @throws FileNotFoundException
+     * @throws CouldNotParseException
+     */
     static boolean addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         ArrayList<Recipe> recipeList = new ArrayList<>();
@@ -35,7 +45,18 @@ public class UI {
         return success;
     }
 
-    // Calls Parser to parse the Recipe out of the given File
+    /**
+     *
+     *  addRecipe
+     *
+     *  calls Parser to parse the Recipe out of the given File,
+     *  uses the RecipeDAO to save the Recipe to the database.
+     *
+     * @param file File of the recipe to add to DB
+     * @return boolean success of the insertion
+     * @throws FileNotFoundException
+     * @throws CouldNotParseException
+     */
     static boolean addRecipe (File file) throws FileNotFoundException,CouldNotParseException {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         boolean success=true;
@@ -49,21 +70,55 @@ public class UI {
         return success;
     }
 
+    /**
+     *
+     *  updateRecipe
+     *
+     *  uses the RecipeDAO to update the data of the Recipe in the Database
+     *
+     * @param recipe recipe to update
+     * @return boolean success of the update
+     */
     static boolean updateRecipe(Recipe recipe){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new RecipeDAO().update(recipe);
     }
 
+    /**
+     *
+     *  getAllRecipesFromDB
+     *
+     *  uses the RecipeDAO to get all Recipes out of the DB.
+     *
+     * @return List<Recipe> List of all Recipes present in DB
+     */
     static List<Recipe> getAllRecipesFromDB(){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new RecipeDAO().getAll();
     }
 
+    /**
+     *
+     *  getAllCookbooksFromDB
+     *
+     *  uses the CookBookDAO to get all CookBooks out of the DB.
+     *
+     * @return List<Recipe> List of all Cookbooks present in DB
+     */
     static List<Cookbook> getAllCookbooksFromDB(){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().getAll();
     }
 
+    /**
+     *
+     *  castIRecipeToRecipe
+     *
+     *  converts an IRecipe to a Recipe.
+     *
+     * @param iRecipes iRecipes to cast to Recipe
+     * @return List<Recipe> List of the converted Recipes
+     */
     static public List<Recipe> castIRecipeToRecipe(List<IRecipe> iRecipes){
         List<Recipe> recipes = new ArrayList<>();
         for(IRecipe iRecipe : iRecipes){
@@ -72,6 +127,15 @@ public class UI {
         return recipes;
     }
 
+    /**
+     *
+     *  castICookBookToCookBook
+     *
+     *  converts an ICookBook to a Cookbook.
+     *
+     * @param iCookbooks iCookbook to cast to Cookbook
+     * @return List<Cookbook> List of the converted Cookbooks
+     */
     static public List<Cookbook> castICookBookToCookBook(List<ICookbook> iCookbooks){
         List<Cookbook> cookbooks = new ArrayList<>();
         for(ICookbook iCookBook : iCookbooks){
@@ -80,6 +144,15 @@ public class UI {
         return cookbooks;
     }
 
+    /**
+     *
+     *  desRecipe
+     *
+     *  uses RecipeDAO to delete the given Recipe(s) from the DB
+     *
+     * @param recipes recipes to delete in DB
+     * @return boolean successs of the deletion
+     */
     static boolean delRecipes (ArrayList<Recipe> recipes){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         boolean success = true;
@@ -89,17 +162,30 @@ public class UI {
         return success;
     }
 
-    /*
+    /**
+     *
      * createCookBook
      *
      * inserts a cookbook to the database and returns the title if success, otherwise null
+     *
+     * @param cookbook cookbooks to add to DB
+     * @return boolean success of the insertion
      */
     static boolean addCookBook(Cookbook cookbook){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().insert(cookbook);
     }
 
-    static boolean relCookBook(Cookbook cookbook){
+    /**
+     *
+     *  delCookBook
+     *
+     *  uses CookBookDAO to delete a Cookbook (only, not the Recipes of it) from the DB
+     *
+     * @param cookbook cookbook to delete from DB
+     * @return boolean success of the deletion
+     */
+    static boolean delCookBook(Cookbook cookbook){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().delete(cookbook);
 

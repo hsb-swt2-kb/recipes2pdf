@@ -14,6 +14,16 @@ import java.util.ArrayList;
  */
 public class Parser implements IParser
 {
+    /**
+     * parse
+     *
+     * implementation of the parse method from IParser
+     *
+     * @param recipeFile
+     * @return
+     * @throws FileNotFoundException
+     * @throws CouldNotParseException
+     */
     public static Recipe parse(File recipeFile) throws  FileNotFoundException,CouldNotParseException
     {
         ArrayList<AConcreteParser> parsers = new ArrayList<>();
@@ -60,7 +70,17 @@ public class Parser implements IParser
         }
     }
 
-    static ArrayList<String> readFile(String file) throws IOException {
+    /**
+     * readFile
+     *
+     * helpful function, because textparser can handle ArrayList<String>
+     * easier than the content as one complete String.
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static ArrayList<String> readFile(String file) throws IOException {
         String line;
         ArrayList<String> lines = new ArrayList<>();
 
