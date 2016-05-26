@@ -16,7 +16,7 @@
             <Font name="System Bold Italic" size="21.0" />
          </font>
       </Text>
-       <Button fx:id="saveButton" alignment="BOTTOM_RIGHT" layoutX="286.0" layoutY="248.0" mnemonicParsing="false" text="Speichern" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="7.0" />
+       <Button fx:id="saveButton" alignment="BOTTOM_RIGHT" layoutX="286.0" layoutY="248.0" mnemonicParsing="false" onAction="#saveSortLevel" text="Speichern" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="7.0" />
        <ListView fx:id="listViewSortLevels" layoutX="11.0" layoutY="71.0" prefHeight="170.0" prefWidth="342.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="71.0" />
        <ComboBox fx:id="comboBoxSortLevels" layoutX="12.0" layoutY="40.0" prefHeight="26.0" prefWidth="277.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="73.0" />
        <Button fx:id="plusButton" layoutX="295.0" layoutY="41.0" mnemonicParsing="false" AnchorPane.rightAnchor="41.0">

@@ -62,12 +62,7 @@ public class ControllerSortLevel {
         });
     }
 
-    private void refreshSortLevels(ObservableList<String> sortLevelsOfTheCookbook)
-    {
-        this.listViewSortLevels.setItems(sortLevelsOfTheCookbook);
-    }
-
-    private void refreshComboBox(ObservableList<String> sortLevels) {
+        private void refreshComboBox(ObservableList<String> sortLevels) {
         comboBoxSortLevels.setItems(sortLevels);
     }
 
@@ -76,6 +71,17 @@ public class ControllerSortLevel {
     void closeSortLevel(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
+
+    }
+
+    @FXML
+    void saveSortLevel(ActionEvent event) {
+        if (listViewSortLevels.getItems().isEmpty()==false)
+        {
+            Stage stage = (Stage) closeButton.getScene().getWindow();
+            stage.close();
+
+        }
 
     }
 
