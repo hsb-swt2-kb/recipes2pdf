@@ -39,7 +39,7 @@ public class ControllerSortLevel {
     @FXML
     private void initialize() {
         this.sortLevels = FXCollections.observableArrayList("Region", "Saison", "Tageszeit", "Gerichtart", "Kategorie", "Ernährungsart", "Rezeptquelle");
-        refreshComboBox(this.sortLevels);
+        //refreshComboBox(this.sortLevels);
     }
 
     private void refreshSortLevels(ObservableList<String> sortLevelsOfTheCookbook)

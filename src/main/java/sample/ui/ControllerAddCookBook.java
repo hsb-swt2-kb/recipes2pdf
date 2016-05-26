@@ -8,6 +8,7 @@ package sample.ui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,6 +21,12 @@ public class ControllerAddCookBook {
 
     @FXML
     private Button closeButton;
+
+    @FXML
+    private Button buttonSortLevel;
+
+    @FXML
+    private ListView<?> listViewSortLevel;
 
     @FXML
     private TextField textFieldPicture;
@@ -65,6 +72,13 @@ public class ControllerAddCookBook {
     private String getName(){
         name = textFieldName.getText();
         return  name;
+    }
+
+    @FXML
+    void openSortLevel(ActionEvent event) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindow(Resources.getSortLevelFXML(), Resources.getSortLevelWindowText(), 300, 200, Resources.getDefaultIcon());
+
     }
 
 
