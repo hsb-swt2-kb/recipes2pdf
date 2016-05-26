@@ -6,6 +6,7 @@ import sample.database.dao.CookbookDAO;
 import sample.database.dao.RecipeDAO;
 import sample.exceptions.CouldNotParseException;
 import sample.model.Cookbook;
+import sample.model.ICookbook;
 import sample.model.IRecipe;
 import sample.model.Recipe;
 import sample.parser.Parser;
@@ -21,7 +22,6 @@ import java.util.List;
  * Created by markus
  */
 public class UI {
-
 
     // multiple calls of addRecipe
     static boolean addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
@@ -49,11 +49,16 @@ public class UI {
         return success;
     }
 
+    static boolean updateRecipe(Recipe recipe){
+        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        return new RecipeDAO().update(recipe);
+    }
 
     static List<Recipe> getAllRecipesFromDB(){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new RecipeDAO().getAll();
     }
+
     static List<Cookbook> getAllCookbooksFromDB(){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().getAll();
@@ -65,6 +70,14 @@ public class UI {
             recipes.add((Recipe) iRecipe);
         }
         return recipes;
+    }
+
+    static public List<Cookbook> castICookBookToCookBook(List<ICookbook> iCookbooks){
+        List<Cookbook> cookbooks = new ArrayList<>();
+        for(ICookbook iCookBook : iCookbooks){
+            cookbooks.add((Cookbook) iCookBook);
+        }
+        return cookbooks;
     }
 
     static boolean delRecipes (ArrayList<Recipe> recipes){
@@ -84,5 +97,11 @@ public class UI {
     static boolean addCookBook(Cookbook cookbook){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().insert(cookbook);
+    }
+
+    static boolean relCookBook(Cookbook cookbook){
+        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        return new CookbookDAO().delete(cookbook);
+
     }
 }
