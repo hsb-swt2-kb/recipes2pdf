@@ -62,22 +62,22 @@ public class ControllerManageCookBook {
     @FXML
     private void initialize() {
         initializeListeners();
-        this.recipeNames = FXCollections.observableArrayList();
+        this.recipeNames = FXCollections.observableArrayList("Test","Neu");
         this.recipeNamesOfCookBook = FXCollections.observableArrayList();
         this.cookBookNames = FXCollections.observableArrayList();
 
         List<Recipe> recipes =  UI.getAllRecipesFromDB();
         for (Recipe recipe : recipes){
-            recipeNames.add(recipe.getTitle());
+           recipeNames.add(recipe.getTitle());
         }
 
         List<Cookbook> cookbooks = UI.getAllCookbooksFromDB();
         for (Cookbook cookbook: cookbooks){
             cookBookNames.add(cookbook.getTitle());
             List<Recipe> iRecipes = UI.castIRecipeToRecipe(cookbook.getRecipes());
-            for(Recipe recipe : iRecipes){
-                recipeNamesOfCookBook.add(recipe.getTitle());
-            }
+           for(Recipe recipe : iRecipes){
+               recipeNamesOfCookBook.add(recipe.getTitle());
+           }
         }
 
         refreshComboBox(cookBookNames);
@@ -127,9 +127,12 @@ public class ControllerManageCookBook {
             @Override
             public void handle(DragEvent dragEvent) {
                 String selectedItem = dragEvent.getDragboard().getString();
-                listViewCookBook.getItems().addAll(selectedItem);
-                listViewRecipes.setItems(recipeNames);
-                dragEvent.setDropCompleted(true);
+                boolean insite = listViewCookBook.getItems().contains(selectedItem);
+                if(insite==false) {
+                    listViewCookBook.getItems().addAll(selectedItem);
+                    listViewRecipes.setItems(recipeNames);
+                    dragEvent.setDropCompleted(true);
+                }
             }
         });
 
@@ -174,9 +177,10 @@ public class ControllerManageCookBook {
 
         rightArrowButton.setOnAction((ActionEvent event) -> {
             String name =listViewRecipes.getSelectionModel().getSelectedItem();
-                if (name != null) {
+            boolean insite = listViewCookBook.getItems().contains(name);
+                if (name != null && insite==false) {
                     listViewCookBook.getItems().addAll(name);
-                } else {
+                } else if(name==null) {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
             listViewRecipes.getSelectionModel().clearSelection();

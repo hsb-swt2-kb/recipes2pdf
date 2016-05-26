@@ -1,25 +1,31 @@
 package sample.ui;
 
-/**
- * @author Tobias Stelter
- */
-
-
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.File;
 
+/**
+ * Created by Tobias on 26.05.2016.
+ */
 public class ControllerAddCookBook {
-
-
 
     @FXML
     private Button closeButton;
+
+    @FXML
+    private Button buttonSortLevel;
+
+    @FXML
+    private ListView<String> listViewSortLevel;
 
     @FXML
     private TextField textFieldPicture;
@@ -30,6 +36,8 @@ public class ControllerAddCookBook {
     @FXML
     private TextArea textAreaVorwort;
 
+    private ObservableList<String> sortLevelsOfTheCookbook;
+
     @FXML
     private Button generateButton;
 
@@ -39,14 +47,19 @@ public class ControllerAddCookBook {
 
 
     @FXML
+    private void initialize() {
+        this.sortLevelsOfTheCookbook= FXCollections.observableArrayList();
+    }
+
+    @FXML
     private Button browseButton;
 
-        @FXML
-        void closeAddCookBook(ActionEvent event) {
-            Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.close();
+    @FXML
+    void closeAddCookBook(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
 
-        }
+    }
 
     @FXML
     void openFileChooser(ActionEvent event) {
@@ -67,6 +80,17 @@ public class ControllerAddCookBook {
         return  name;
     }
 
+      public void refreshSortLevel(ObservableList<String> sortLevelsOfTheCookbook){
+       listViewSortLevel.setItems(sortLevelsOfTheCookbook);
+    }
+
+    @FXML
+    void openSortLevel(ActionEvent event) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindow(Resources.getSortLevelFXML(), Resources.getSortLevelWindowText(), 300, 200, Resources.getDefaultIcon());
+
+    }
+
 
     @FXML
     void generateCookBook(ActionEvent event) {
@@ -83,6 +107,4 @@ public class ControllerAddCookBook {
 
     }
 
-    }
-
-
+}
