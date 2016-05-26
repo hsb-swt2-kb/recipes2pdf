@@ -43,9 +43,6 @@ public class ControllerDefault {
 
     @FXML
     private MenuItem openHelp;
-    @FXML
-    private MenuItem openConfig;
-
 
     @FXML
     private AnchorPane content;

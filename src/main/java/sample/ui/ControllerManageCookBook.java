@@ -114,16 +114,7 @@ public class ControllerManageCookBook {
                 dragBoard.setContent(content);
             }
         });
-        // drag from right to left
-        listViewCookBook.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Dragboard dragBoard = listViewCookBook.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
-                dragBoard.setContent(content);
-            }
-        });
+
 
         listViewCookBook.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -139,6 +130,17 @@ public class ControllerManageCookBook {
                 listViewCookBook.getItems().addAll(selectedItem);
                 listViewRecipes.setItems(recipeNames);
                 dragEvent.setDropCompleted(true);
+            }
+        });
+
+        // drag from right to left
+        listViewCookBook.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Dragboard dragBoard = listViewCookBook.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
+                dragBoard.setContent(content);
             }
         });
 
