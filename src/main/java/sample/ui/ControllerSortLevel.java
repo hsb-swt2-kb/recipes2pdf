@@ -39,6 +39,7 @@ public class ControllerSortLevel {
     private ObservableList<String> sortLevels;
     private ObservableList<String> sortLevelsOfTheCookbook;
 
+
     @FXML
     private void initialize() {
         initializeListeners();
@@ -50,7 +51,8 @@ public class ControllerSortLevel {
     private void initializeListeners() {
         plusButton.setOnAction((ActionEvent event) -> {
             String name = comboBoxSortLevels.getSelectionModel().getSelectedItem();
-            if (name != null) {
+            boolean insite = listViewSortLevels.getItems().contains(name);
+            if (name != null && insite==false) {
                 listViewSortLevels.getItems().addAll(name);
             }
         });
