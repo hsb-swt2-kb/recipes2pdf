@@ -56,7 +56,7 @@ public class Resources {
         return "/sample/ui/ExportCookBook.fxml";
     }
 
-    public static String getConfigFXML() {
+    public static String getSortLevelFXML() {
         return "/sample/ui/SortLevel.fxml";
     }
 
@@ -90,7 +90,7 @@ public class Resources {
         return "Löschen";
     }
 
-    public static String getConfigWindowText() {
+    public static String getSortLevelWindowText() {
         return "Einstellungen";
     }
 
