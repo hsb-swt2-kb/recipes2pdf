@@ -81,13 +81,8 @@ public class UI {
      *
      * inserts a cookbook to the database and returns the title if success, otherwise null
      */
-    static boolean createCookBook(String cookBookName,String pictureFileName,String preamble){
+    static boolean addCookBook(Cookbook cookbook){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        Cookbook cookbook = new Cookbook();
-        cookbook.setTitle(cookBookName);
-        //cookbook.setPicture(pictureFileName);
-        //cookbook.setPreamble(preamble);
-
         return new CookbookDAO().insert(cookbook);
     }
 }
