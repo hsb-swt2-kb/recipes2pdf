@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 
 public class ControllerSortLevel {
 
+
+
     @FXML
     private Button closeButton;
 
@@ -24,8 +26,6 @@ public class ControllerSortLevel {
     @FXML
     private ListView<String> listViewSortLevels;
 
-    @FXML
-    private ComboBox<String> comboBoxSortLevels;
 
     @FXML
     private Button plusButton;
@@ -33,13 +33,33 @@ public class ControllerSortLevel {
     @FXML
     private Button minusButton;
 
+    @FXML
+    private ComboBox<String> comboBoxSortLevels;
+
     private ObservableList<String> sortLevels;
     private ObservableList<String> sortLevelsOfTheCookbook;
 
     @FXML
     private void initialize() {
+        initializeListeners();
         this.sortLevels = FXCollections.observableArrayList("Region", "Saison", "Tageszeit", "Gerichtart", "Kategorie", "Ernährungsart", "Rezeptquelle");
-        //refreshComboBox(this.sortLevels);
+        refreshComboBox(sortLevels);
+    }
+
+
+    private void initializeListeners() {
+        plusButton.setOnAction((ActionEvent event) -> {
+            String name = comboBoxSortLevels.getSelectionModel().getSelectedItem();
+            if (name != null) {
+                listViewSortLevels.getItems().addAll(name);
+            }
+        });
+        minusButton.setOnAction((ActionEvent event) -> {
+            String name = comboBoxSortLevels.getSelectionModel().getSelectedItem();
+            if (name != null) {
+                listViewSortLevels.getItems().remove(name);
+            }
+        });
     }
 
     private void refreshSortLevels(ObservableList<String> sortLevelsOfTheCookbook)
@@ -47,7 +67,8 @@ public class ControllerSortLevel {
         this.listViewSortLevels.setItems(sortLevelsOfTheCookbook);
     }
 
-    private void refreshComboBox(ObservableList<String> sortLevels) {comboBoxSortLevels.setItems(sortLevels);
+    private void refreshComboBox(ObservableList<String> sortLevels) {
+        comboBoxSortLevels.setItems(sortLevels);
     }
 
 
@@ -58,9 +79,5 @@ public class ControllerSortLevel {
 
     }
 
-    @FXML
-    void saveSortLevel(ActionEvent event) {
-
-    }
 
 }
