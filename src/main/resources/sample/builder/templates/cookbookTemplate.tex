@@ -19,15 +19,16 @@
 %Fußzeile gerade rechts
 
 \renewcommand{\footrulewidth}{0.5pt} %Linie unten
-
 \begin{document}
 
 
     #foreach( $recipe in $cookbook.getRecipes() )
-        \fancyhead[C]{$recipe.getCategory().getName()} %Kopfzeile mittig
-        \fancyfoot[ol]{Rezept $referenceNumber} %Fußzeile ungerade links
-        \fancyfoot[er]{Rezept $referenceNumber} %Fußzeile gerade links
 
+        \fancyhf{}
+
+        #set ($refNum = $refNumList.get($recipe))
+        #set ($index = $refNum.indexOf('.'))
+        \chead{$refNum.substring(0,$index)}
         \section*{$recipe.getTitle()}
 	    \begin{minipage}[t]{0.4\textwidth}
 	        \subsection*{Zutaten}
@@ -40,18 +41,20 @@
 	    \hfill
         \begin{minipage}[t]{0.4\textwidth}
             \vspace{-2ex}
-            \includegraphics[width=\linewidth]{${imgDir}/tmpRecipeImage.jpg}
+            \includegraphics[width=\linewidth]{"${imgDir}/${recipe.getTitle()}${recipe.getID()}"}
         \end{minipage}
         \subsection*{Zubereitung}
         $recipe.getText()\\
 
         \checkoddpage
         \ifoddpage
+            \lfoot{$refNum}
         	\newpage{}
        	    \thispagestyle{empty}
      	    \mbox{}
      	    \newpage
        	\else
+       	    \rfoot{$refNum}
        		\newpage{}
         \fi
     #end

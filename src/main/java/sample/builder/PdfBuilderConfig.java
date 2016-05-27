@@ -1,11 +1,10 @@
-package sample.builder.pdfBuilder;
+package sample.builder;
 
 import sample.config.IConfig;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Properties;
 
 /**
  * Created by kai on 11.04.16.
@@ -14,8 +13,7 @@ public class PdfBuilderConfig {
 
     IConfig baseConfig;
 
-    public PdfBuilderConfig(IConfig config)
-    {
+    public PdfBuilderConfig(IConfig config) {
         this.baseConfig = config;
     }
 
@@ -27,12 +25,8 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("IMAGE_FOLDER_NAME")));
     }
 
-    public File getImage() throws IOException {
-        return new File(getImageDir() + File.separator + "tmpRecipeImage.jpg");
-    }
-
     public File getDefaultImage() {
-       return new File(this.getClass().getClassLoader().getResource("sample/builder/images/default_image.jpg").getPath());
+        return new File(this.getClass().getResource("images/default_image.jpg").getPath());
     }
 
     public File getTempDir() {
@@ -43,8 +37,8 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("TEMPLATE_FOLDER_NAME")));
     }
 
-    public File getTemplateFile() throws IOException {
-        File defaultTemplate = new File(this.getClass().getClassLoader().getResource("sample/builder/templates/cookbookTemplate.tex").getPath());
+    public File getTemplateFile() {
+        File defaultTemplate = new File(this.getClass().getClassLoader().getResource("sample" + File.separator + "builder" + File.separator + "templates" + File.separator + "cookbookTemplate.tex").getPath());
         File userTemplate = getUserTemplate();
         try {
             if (!userTemplate.exists()) {
@@ -57,7 +51,7 @@ public class PdfBuilderConfig {
         return userTemplate;
     }
 
-    public File getUserTemplate() throws IOException {
+    private File getUserTemplate() {
         return new File(getTemplateDir() + File.separator + baseConfig.getProperty("TEMPLATE_FILE_NAME"));
     }
 
@@ -65,11 +59,11 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("OUTPUT_FOLDER_NAME")));
     }
 
-    public File getOutputTexFile(String cookbookName) throws IOException {
+    public File getOutputTexFile(String cookbookName) {
         return new File(getOutputDir() + File.separator + cookbookName + ".tex");
     }
 
-    public File getOutputPdfFile(String cookbookName) throws IOException {
+    public File getOutputPdfFile(String cookbookName) {
         return new File(getOutputDir() + File.separator + cookbookName + ".pdf");
     }
 
