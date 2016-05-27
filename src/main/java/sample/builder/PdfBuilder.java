@@ -69,7 +69,7 @@ public class PdfBuilder implements IConcreteBuilder {
             //byte[] img = Files.readAllBytes(config.getInputImage().toPath());
             byte[] img = Optional.ofNullable(recipe.getImage()).orElseGet(() -> createImageByteArray(config.getDefaultImage()));
 
-            FileOutputStream outputStream = new FileOutputStream(config.getImage());
+            FileOutputStream outputStream = new FileOutputStream(config.getImage("tmpRecipeImage.jpg"));
             outputStream.write(img);
             outputStream.close();
         } catch (IOException e) {
