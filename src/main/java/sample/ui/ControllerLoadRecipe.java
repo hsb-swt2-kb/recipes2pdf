@@ -22,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static sample.ui.UI.addRecipes;
+
 public class ControllerLoadRecipe {
 
     final ToggleGroup group = new ToggleGroup();
@@ -104,7 +106,16 @@ public class ControllerLoadRecipe {
     @FXML
     void openFileChooser() {
         FileHandler fileHandler = new FileHandler();
-        //addRecipes(fileHandler.importFiles());
+        try {
+            addRecipes(fileHandler.importFiles());
+        }
+        catch (CouldNotParseException e){
+            // TODO: handle exception
+        }
+        catch(FileNotFoundException e){
+            // TODO: handle exception
+        }
+
     }
 
     @FXML
