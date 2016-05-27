@@ -188,7 +188,7 @@ public class PdfBuilderTest {
         //Check generated Text
         assertThat(texFile,containsString("\\chead{Vorspeise}"));
         assertThat(texFile,containsString("\\lfoot{Vorspeise.Griechenland}"));
-        assertThat(texFile,containsString("\\rfoot{Vorspeise.Griechenland}{Vorspeise.Griechenland}"));
+        assertThat(texFile,containsString("\\rfoot{Vorspeise.Griechenland}"));
         assertThat(texFile,containsString("\\item {Zutat1 5 g}"));
         List<String> substrings = new ArrayList<>();
         substrings.add("\\includegraphics[width=\\linewidth]{");
