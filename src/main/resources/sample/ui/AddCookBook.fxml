@@ -40,7 +40,7 @@
       <Button fx:id="browseButton" layoutX="189.0" layoutY="119.0" mnemonicParsing="false" onAction="#openFileChooser" prefHeight="25.0" prefWidth="28.0" />
       <FontAwesomeIconView glyphName="FOLDER_OPEN" layoutX="196.0" layoutY="137.0" size="15.0" />
       <Label layoutX="16.0" layoutY="235.0" text="* Pflichtfelder" />
-      <Text layoutX="13.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sortierebene:">
+      <Text layoutX="13.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sortierebene:*">
          <font>
             <Font size="21.0" />
          </font>

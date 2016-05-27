@@ -62,7 +62,7 @@ public class ControllerManageCookBook {
     @FXML
     private void initialize() {
         initializeListeners();
-        this.recipeNames = FXCollections.observableArrayList("Test","Neu");
+        this.recipeNames = FXCollections.observableArrayList();
         this.recipeNamesOfCookBook = FXCollections.observableArrayList();
         this.cookBookNames = FXCollections.observableArrayList();
 
