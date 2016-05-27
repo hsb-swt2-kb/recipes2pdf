@@ -18,6 +18,12 @@ import java.io.File;
  */
 public class ControllerAddCookBook {
 
+    private static ControllerAddCookBook ourInstance = new ControllerAddCookBook();
+
+    public static ControllerAddCookBook getInstance() {
+        return ourInstance;
+    }
+
     @FXML
     private Button closeButton;
 
@@ -80,9 +86,7 @@ public class ControllerAddCookBook {
         return  name;
     }
 
-      public void refreshSortLevel(ObservableList<String> sortLevelsOfTheCookbook){
-       listViewSortLevel.setItems(sortLevelsOfTheCookbook);
-    }
+
 
     @FXML
     void openSortLevel(ActionEvent event) {
