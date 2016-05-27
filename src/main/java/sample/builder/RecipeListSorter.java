@@ -19,16 +19,16 @@ public class RecipeListSorter {
         ComparatorChain compChain = new ComparatorChain();
         Comparator comparator = null;
 
-        for (String sortLevel : sortLevelList) {
+        for (int i=0; i<sortLevelList.size();i++) {
 
-            if (sortLevel.equalsIgnoreCase("category")) {
+            if (sortLevelList.get(i).equalsIgnoreCase("category")) {
                 comparator = new CategoryComparator();
-            } else if (sortLevel.equalsIgnoreCase("region")) {
+            } else if (sortLevelList.get(i).equalsIgnoreCase("region")) {
                 comparator = new RegionComparator();
-            } else if (sortLevel.equalsIgnoreCase("season")) {
+            } else if (sortLevelList.get(i).equalsIgnoreCase("season")) {
                 comparator = new SeasonComparator();
             } else {
-                throw new IllegalArgumentException("Illegal Sortlevel \"" + sortLevel + "\"");
+                throw new IllegalArgumentException("Illegal Sortlevel \"" + sortLevelList.get(i) + "\"");
             }
             compChain.addComparator(comparator);
         }
