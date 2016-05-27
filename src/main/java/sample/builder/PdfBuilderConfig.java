@@ -5,7 +5,6 @@ import sample.config.IConfig;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Properties;
 
 /**
  * Created by kai on 11.04.16.
@@ -14,8 +13,7 @@ public class PdfBuilderConfig {
 
     IConfig baseConfig;
 
-    public PdfBuilderConfig(IConfig config)
-    {
+    public PdfBuilderConfig(IConfig config) {
         this.baseConfig = config;
     }
 
@@ -28,7 +26,7 @@ public class PdfBuilderConfig {
     }
 
     public File getDefaultImage() {
-       return new File(this.getClass().getClassLoader().getResource("sample/builder/images/default_image.jpg").getPath());
+        return new File(this.getClass().getClassLoader().getResource("sample/builder/images/default_image.jpg").getPath());
     }
 
     public File getTempDir() {
@@ -53,7 +51,7 @@ public class PdfBuilderConfig {
         return userTemplate;
     }
 
-    private File getUserTemplate(){
+    private File getUserTemplate() {
         return new File(getTemplateDir() + File.separator + baseConfig.getProperty("TEMPLATE_FILE_NAME"));
     }
 
@@ -61,11 +59,11 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("OUTPUT_FOLDER_NAME")));
     }
 
-    public File getOutputTexFile(String cookbookName){
+    public File getOutputTexFile(String cookbookName) {
         return new File(getOutputDir() + File.separator + cookbookName + ".tex");
     }
 
-    public File getOutputPdfFile(String cookbookName){
+    public File getOutputPdfFile(String cookbookName) {
         return new File(getOutputDir() + File.separator + cookbookName + ".pdf");
     }
 

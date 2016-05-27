@@ -2,18 +2,19 @@ package sample.builder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
-import org.apache.commons.lang3.StringUtils;
 import sample.config.IConfig;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
-import sample.model.Recipe;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
 
 /**
  * @author Kai Nortmann
@@ -36,7 +37,7 @@ public class PdfBuilder implements IConcreteBuilder {
         sortAttributes.add("region");
 
         converter.replace("cookbook", cookbook);
-        converter.replace("refNumList",generateRefNumList(cookbook.getRecipes(),sortAttributes));
+        converter.replace("refNumList", generateRefNumList(cookbook.getRecipes(), sortAttributes));
         converter.replace("imgDir", imageDir.getAbsolutePath());
 
         if (!converter.parse(templateFile, outputTexFile)) {
@@ -44,7 +45,7 @@ public class PdfBuilder implements IConcreteBuilder {
         }
     }
 
-    private File createPDFFile(File outputTexFile, File outputPDFFile,File rootDir) throws Exception {
+    private File createPDFFile(File outputTexFile, File outputPDFFile, File rootDir) throws Exception {
 
         JLRGenerator generator = new JLRGenerator();
         if (generator.generate(outputTexFile, outputTexFile.getParentFile(), rootDir)) {
@@ -55,8 +56,7 @@ public class PdfBuilder implements IConcreteBuilder {
     }
 
 
-    private byte[] createImageByteArray(File image)
-    {
+    private byte[] createImageByteArray(File image) {
         try {
             return Files.readAllBytes(config.getDefaultImage().toPath());
         } catch (IOException e) {
@@ -67,15 +67,16 @@ public class PdfBuilder implements IConcreteBuilder {
 
     private void createAllImages(ICookbook cookcook, File imgDir) throws Exception {
         for (IRecipe recipe : cookcook.getRecipes()) {
-            createImage(recipe,imgDir);
+            createImage(recipe, imgDir);
         }
     }
-    private void createImage(IRecipe recipe, File imgDir) throws  Exception{
+
+    private void createImage(IRecipe recipe, File imgDir) throws Exception {
         try {
             //byte[] img = Files.readAllBytes(config.getInputImage().toPath());
             byte[] img = Optional.ofNullable(recipe.getImage()).orElseGet(() -> createImageByteArray(config.getDefaultImage()));
 
-            FileOutputStream outputStream = new FileOutputStream(new File(imgDir + File.separator + recipe.getTitle() + recipe.getID()) +".jpg");
+            FileOutputStream outputStream = new FileOutputStream(new File(imgDir + File.separator + recipe.getTitle() + recipe.getID()) + ".jpg");
             outputStream.write(img);
             outputStream.close();
         } catch (IOException e) {
@@ -99,10 +100,10 @@ public class PdfBuilder implements IConcreteBuilder {
         List<String> sortLevelList = new ArrayList(); //TODO: get this List out of Cookbook
         sortLevelList.add("region");
         sortLevelList.add("category");
-        myCookbook.setRecipes(RecipeListSorter.sort(myCookbook.getRecipes(),sortLevelList));
+        myCookbook.setRecipes(RecipeListSorter.sort(myCookbook.getRecipes(), sortLevelList));
 
-        createAllImages(myCookbook,imgDir);
-        parseTexFile(outputTexFile,templateFile,imgDir,myCookbook);
+        createAllImages(myCookbook, imgDir);
+        parseTexFile(outputTexFile, templateFile, imgDir, myCookbook);
 
         return createPDFFile(outputTexFile, outputPdfFile, rootDir);
     }
@@ -118,26 +119,26 @@ public class PdfBuilder implements IConcreteBuilder {
         File templateFile = config.getTemplateFile();
         File imgDir = config.getImageDir();
 
-        createImage(recipe,imgDir);
+        createImage(recipe, imgDir);
 
-        parseTexFile(outputTexFile,templateFile,imgDir,myCookbook);
+        parseTexFile(outputTexFile, templateFile, imgDir, myCookbook);
 
-        return createPDFFile(outputTexFile,outputPdfFile,rootDir);
+        return createPDFFile(outputTexFile, outputPdfFile, rootDir);
 
     }
 
 
-    private List<String> generateRefNumList(List<IRecipe> recipes,List<String> sortChain) {
+    private List<String> generateRefNumList(List<IRecipe> recipes, List<String> sortChain) {
         List<String> refNumList = new ArrayList();
         List<Properties> propList = generatePropertyList(recipes);
         String refNum = "";
 
-        for (int i=0;i<recipes.size();i++){
+        for (int i = 0; i < recipes.size(); i++) {
             refNum = "";
-            for(String sortLevel : sortChain){
-                refNum += propList.get(i).getProperty(sortLevel) + "." ;
+            for (String sortLevel : sortChain) {
+                refNum += propList.get(i).getProperty(sortLevel) + ".";
             }
-            refNumList.add(refNum.substring(0, refNum.length()-1));
+            refNumList.add(refNum.substring(0, refNum.length() - 1));
         }
         return refNumList;
     }
@@ -145,13 +146,12 @@ public class PdfBuilder implements IConcreteBuilder {
     private List<Properties> generatePropertyList(List<IRecipe> recipes) { //TODO: Meybe get the List of Sortable Attributes out of database and work with reflections on recipe?
         List<Properties> propList = new ArrayList();
         Properties props = new Properties();
-        for(IRecipe recipe : recipes)
-        {
-            props.setProperty("category",(recipe.getCategory()==null) ? "" : recipe.getCategory().getName());
-            props.setProperty("season",(recipe.getSeason()==null) ? "" : recipe.getSeason().getName());
-            props.setProperty("nurture",(recipe.getNurture()==null) ? "" : recipe.getNurture().getName());
-            props.setProperty("curse",(recipe.getCourse()==null) ? "" : recipe.getCourse().getName());
-            props.setProperty("region",(recipe.getRegion()==null) ? "" : recipe.getRegion().getName());
+        for (IRecipe recipe : recipes) {
+            props.setProperty("category", (recipe.getCategory() == null) ? "" : recipe.getCategory().getName());
+            props.setProperty("season", (recipe.getSeason() == null) ? "" : recipe.getSeason().getName());
+            props.setProperty("nurture", (recipe.getNurture() == null) ? "" : recipe.getNurture().getName());
+            props.setProperty("curse", (recipe.getCourse() == null) ? "" : recipe.getCourse().getName());
+            props.setProperty("region", (recipe.getRegion() == null) ? "" : recipe.getRegion().getName());
             propList.add(props);
         }
         return propList;
