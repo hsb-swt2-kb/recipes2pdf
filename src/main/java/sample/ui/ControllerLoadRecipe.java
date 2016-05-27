@@ -132,8 +132,8 @@ public class ControllerLoadRecipe {
         //If the stage can't close, beaucause its a PopOver, close the PopOver
         catch (Exception e)
         {
-            //PopOver popOver = (PopOver) loadButton.getScene().getWindow();
-            //popOver.hide();
+            PopOver popOver = (PopOver) loadButton.getScene().getWindow();
+            popOver.hide();
         }
     }
 
