@@ -2,21 +2,18 @@ package sample.builder;
 
 
 import org.apache.commons.io.FileUtils;
-import org.apache.velocity.texen.util.FileUtil;
-import org.hamcrest.Matcher;
+import org.apache.commons.io.FilenameUtils;
 import org.junit.Test;
 import sample.config.IConfig;
 import sample.model.*;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.stringContainsInOrder;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class PdfBuilderTest {
     @Test
@@ -120,7 +117,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\item {Zutat1 5 g}"));
         List<String> substrings = new ArrayList<>();
         substrings.add("\\includegraphics[width=\\linewidth]{");
-        substrings.add(System.getProperty("user.home") +"/.recipes2pdf/images/Rezepttitel11" );
+        substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) +"/.recipes2pdf/images/Rezepttitel11" );
         assertThat(texFile,stringContainsInOrder(substrings));
         assertThat(texFile,containsString("Rezepttext 1"));
 
@@ -131,7 +128,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\item {Zutat2 8 g}"));
         substrings.clear();
         substrings.add("\\includegraphics[width=\\linewidth]{");
-        substrings.add(System.getProperty("user.home") +"/.recipes2pdf/images/Rezepttitel22" );
+        substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) +"/.recipes2pdf/images/Rezepttitel22" );
         assertThat(texFile,stringContainsInOrder(substrings));
         assertThat(texFile,containsString("Rezepttext 2"));
 
@@ -142,7 +139,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\item {Zutat3 6 g}"));
         substrings.clear();
         substrings.add("\\includegraphics[width=\\linewidth]{");
-        substrings.add(System.getProperty("user.home") +"/.recipes2pdf/images/Rezepttitel33" );
+        substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) +"/.recipes2pdf/images/Rezepttitel33" );
         assertThat(texFile,stringContainsInOrder(substrings));
         assertThat(texFile,containsString("Rezepttext 3"));
 
@@ -154,7 +151,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\item {Zutat4 4 g}"));
         substrings.clear();
         substrings.add("\\includegraphics[width=\\linewidth]{");
-        substrings.add(System.getProperty("user.home") +"/.recipes2pdf/images/Rezepttitel44" );
+        substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) +"/.recipes2pdf/images/Rezepttitel44" );
         assertThat(texFile,stringContainsInOrder(substrings));
         assertThat(texFile,containsString("Rezepttext 4"));
 
@@ -192,7 +189,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\item {Zutat1 5 g}"));
         List<String> substrings = new ArrayList<>();
         substrings.add("\\includegraphics[width=\\linewidth]{");
-        substrings.add(System.getProperty("user.home") +"/.recipes2pdf/images/Testrezept1" );
+        substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) + "/.recipes2pdf/images/Testrezept1");
         assertThat(texFile,stringContainsInOrder(substrings));
         assertThat(texFile,containsString("Rezepttext 1"));
 
