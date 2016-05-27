@@ -7,11 +7,18 @@ package sample.ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.event.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.io.InputStream;
+
+import static sample.ui.ControllerAddCookBook.getInstance;
 
 public class ControllerSortLevel {
 
@@ -80,7 +87,11 @@ public class ControllerSortLevel {
     void saveSortLevel(ActionEvent event) {
         if (listViewSortLevels.getItems().isEmpty()==false)
         {
-            listViewSortLevels.getItems(); // <--- ObserVableList für Kai
+            getInstance().setSortLevel(listViewSortLevels.getItems());
+
+
+
+
 
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
