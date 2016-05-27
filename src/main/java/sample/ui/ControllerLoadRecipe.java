@@ -155,7 +155,7 @@ public class ControllerLoadRecipe {
     }
 
     /**
-     * The method closes the Load-Recipe-Window by clicking the Close-Button
+     * The method closes the Load-Recipe-Window by clicking the Close-Button.
      */
     @FXML
     void closeWindow(ActionEvent event) {
