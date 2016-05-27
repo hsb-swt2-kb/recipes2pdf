@@ -84,4 +84,9 @@ public class ControllerManageCookBooks {
 
     }
 
+    @FXML
+    void changeCookBook(ActionEvent event) {
+
+    }
+
 }

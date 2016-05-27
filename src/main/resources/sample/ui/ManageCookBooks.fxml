@@ -16,7 +16,7 @@
                 <Font name="System Bold Italic" size="21.0" />
             </font>
         </Text>
-        <Button fx:id="changeButton" layoutX="88.0" layoutY="310.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="88.0">
+        <Button fx:id="changeButton" layoutX="88.0" layoutY="310.0" mnemonicParsing="false" onAction="#changeCookBook" prefHeight="25.0" prefWidth="34.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="88.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
