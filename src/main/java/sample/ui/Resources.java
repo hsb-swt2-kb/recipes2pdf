@@ -2,12 +2,14 @@ package sample.ui;
 
 /**
  * Created by Tobias on 14.05.2016.
+ * The Class ''Ressources'' stores the FXML-pathes, the icon-pathes and the window-titles.
  */
 public class Resources {
 
     /**
      * FXMLs
      */
+
     protected static String getDefaultFXML() {
         return "/sample/ui/Default.fxml";
     }
@@ -67,6 +69,7 @@ public class Resources {
     /**
      * Icons
      */
+
     public static String getDefaultIcon() {
         return "/sample/ui/icon_bg_small.png";
     }
@@ -82,6 +85,7 @@ public class Resources {
     /**
      * Window-Titles
      */
+
     public static String getFileChooserWindowText() {
         return "File Chooser";
     }

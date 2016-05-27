@@ -15,11 +15,21 @@ import javafx.collections.ObservableList;
 import java.io.File;
 
 /**
- * Created by Tobias on 26.05.2016.
+ * @author Tobias Stelter
+ * The Class ''ControllerAddCookBook'' manages the AddCookBook-FXML.
+ * It provides methods for adding a new cookbook.
+ * The cookbook contains at least a name and a sortlevel - a foreword and a picture are optional.
  */
+
 public class ControllerAddCookBook  {
 
     private static ControllerAddCookBook instance;
+
+    /**
+     * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerAddCookBook and ControllerSortLevel.
+     *
+     * @return controllerInstance
+     */
 
     public static ControllerAddCookBook getInstance() {
 
@@ -49,6 +59,9 @@ public class ControllerAddCookBook  {
     private TextField textFieldName;
 
     @FXML
+    private Button browseButton;
+
+    @FXML
     private TextArea textAreaVorwort;
 
     private ObservableList<String> sortLevelsOfTheCookbook;
@@ -61,6 +74,10 @@ public class ControllerAddCookBook  {
     String foreword;
 
 
+    /**
+     * The ControllerAddCookBook initializes the ControllerInstance and the SortLevel-list.
+     */
+
     @FXML
     private void initialize() {
 
@@ -68,8 +85,10 @@ public class ControllerAddCookBook  {
         this.sortLevelsOfTheCookbook= FXCollections.observableArrayList();
     }
 
-    @FXML
-    private Button browseButton;
+    /**
+     * The method ''closeAddCookBook()'' closes the AddCookBook-Window after a interaction with the close-button.
+     * @param event
+     */
 
     @FXML
     void closeAddCookBook(ActionEvent event) {
@@ -77,6 +96,12 @@ public class ControllerAddCookBook  {
         stage.close();
 
     }
+
+    /**
+     * The method ''openFileChooser()'' opens the filechooser after a interaction with the browse-Button.
+     * If the user imports a picture, the path will display in the textField-picture.
+     * @param event
+     */
 
     @FXML
     void openFileChooser(ActionEvent event) {
@@ -98,7 +123,10 @@ public class ControllerAddCookBook  {
     }
 
 
-
+    /**
+     * The method ''openSortLevel()'' opens the SortLevel-Window after a interaction with the sortLevel-button.
+     * @param event
+     */
     @FXML
     void openSortLevel(ActionEvent event) {
         ControllerDefault controllerDefault = new ControllerDefault();
@@ -106,16 +134,24 @@ public class ControllerAddCookBook  {
 
     }
 
+    /**
+     * The method ''setSortLevel()'' sets the SortLevel and refreshs the SortLevel-ListView.
+     * It will used in ControllerSortLevel after a interaction with the save-Button.
+     * @param sortLevelsOfTheCookbook
+     */
     void setSortLevel(ObservableList<String> sortLevelsOfTheCookbook){
 
 
         this.sortLevelsOfTheCookbook = sortLevelsOfTheCookbook;
-        System.out.println(this.sortLevelsOfTheCookbook);
         this.listViewSortLevel.getItems().clear();
         this.listViewSortLevel.getItems().addAll(this.sortLevelsOfTheCookbook);
     }
 
-
+    /**
+     * The method ''generateCookBook()'' finally generates the cookbook,
+     * when at least the name and the sortlevel setted.
+     * @param event
+     */
     @FXML
     void generateCookBook(ActionEvent event) {
         getName();
