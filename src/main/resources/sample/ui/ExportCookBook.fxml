@@ -22,11 +22,11 @@
         </Text>
         <Button fx:id="saveButton" layoutX="206.0" layoutY="141.0" mnemonicParsing="false" onAction="#saveCookBook" text="Speichern" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="19.0" />
         <Button fx:id="closeButton" layoutX="126.0" layoutY="141.0" mnemonicParsing="false" onAction="#closeWindow" text="Abbrechen" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="94.0" />
-      <Button layoutX="123.0" layoutY="38.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0">
+      <Button fx:id="browseButton" layoutX="123.0" layoutY="38.0" mnemonicParsing="false" onAction="#browse" prefHeight="25.0" prefWidth="28.0">
          <graphic>
             <FontAwesomeIconView glyphName="FOLDER_OPEN" size="15" />
          </graphic></Button>
-        <TextField editable="false" layoutX="151.0" layoutY="38.0" prefHeight="25.0" prefWidth="127.0" AnchorPane.leftAnchor="151.0" AnchorPane.rightAnchor="16.0" />
+        <TextField fx:id="textFieldPath" editable="false" layoutX="151.0" layoutY="38.0" prefHeight="25.0" prefWidth="127.0" AnchorPane.leftAnchor="151.0" AnchorPane.rightAnchor="16.0" />
         <ComboBox fx:id="comboBoxFormat" layoutX="123.0" layoutY="82.0" prefWidth="150.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="21.0" />
     </children>
 </AnchorPane>

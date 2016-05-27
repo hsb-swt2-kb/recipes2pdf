@@ -2,12 +2,14 @@ package sample.ui;
 
 /**
  * Created by Tobias on 14.05.2016.
+ * The Class ''Ressources'' stores the FXML-pathes, the icon-pathes and the window-titles.
  */
 public class Resources {
 
     /**
      * FXMLs
      */
+
     protected static String getDefaultFXML() {
         return "/sample/ui/Default.fxml";
     }
@@ -40,6 +42,10 @@ public class Resources {
         return "/sample/ui/LoadRecipe.fxml";
     }
 
+    public static String getloadRecipePopOverFXML() {
+        return "/sample/ui/LoadRecipePopOver.fxml";
+    }
+
     public static String getHelpFXML() {
         return "/sample/ui/Help.fxml";
     }
@@ -52,6 +58,10 @@ public class Resources {
         return "/sample/ui/ExportCookBook.fxml";
     }
 
+    public static String getSortLevelFXML() {
+        return "/sample/ui/SortLevel.fxml";
+    }
+
     public static String getChangeRecipeFXML() {
         return "/sample/ui/ChangeRecipe.fxml";
     }
@@ -59,6 +69,7 @@ public class Resources {
     /**
      * Icons
      */
+
     public static String getDefaultIcon() {
         return "/sample/ui/icon_bg_small.png";
     }
@@ -74,12 +85,17 @@ public class Resources {
     /**
      * Window-Titles
      */
+
     public static String getFileChooserWindowText() {
         return "File Chooser";
     }
 
     public static String getDeleteWindowText() {
         return "Löschen";
+    }
+
+    public static String getSortLevelWindowText() {
+        return "Einstellungen";
     }
 
     public static String getChangeCookBookWindowText() {

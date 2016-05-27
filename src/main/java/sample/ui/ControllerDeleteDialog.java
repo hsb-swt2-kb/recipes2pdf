@@ -2,6 +2,8 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerDeleteDialog'' manages the DeleteDialog-FXML.
+ * It displays the delete-dialog.
  */
 
 
@@ -23,6 +25,12 @@ public class ControllerDeleteDialog {
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * The method ''closeDeleteDialog()'' closes the delete-dialog after a interaction with the close-button.
+     *
+     * @param event
+     */
 
     @FXML
     void closeDeleteDialog(ActionEvent event) {

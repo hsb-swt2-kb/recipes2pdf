@@ -1,31 +1,95 @@
 package sample.parser;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import sample.exceptions.CouldNotParseException;
+import sample.model.Recipe;
+
+import java.io.*;
 import java.util.ArrayList;
 
-/**
+/* Class Parser
  *
- * @author Henrik
- * last changed on 02.05.2016
+ * Class Parser
+ *
+ * @author Markus
  */
-public class Parser implements Constants {
-
-  public ArrayList<String> readFilecontent(String absoluterDateiPfad) throws IOException
-  {
-    String  thisFilerow = null;
-    ArrayList<String> fileContent = new ArrayList<String>();
-
-    FileReader fr = new FileReader(absoluterDateiPfad);
-    BufferedReader br = new BufferedReader(fr);
-    while ((thisFilerow = br.readLine()) != null)
+public class Parser implements IParser
+{
+    /**
+     * parse
+     *
+     * implementation of the parse method from IParser
+     *
+     * @param recipeFile
+     * @return
+     * @throws FileNotFoundException
+     * @throws CouldNotParseException
+     */
+    public static Recipe parse(File recipeFile) throws  FileNotFoundException,CouldNotParseException
     {
-      fileContent.add(thisFilerow);
-    }
-    fr.close();
-    br.close();
+        ArrayList<AConcreteParser> parsers = new ArrayList<>();
+        // Parser instantiieren
+        parsers.add(new TxtParser());
+        //parsers.add(new CKParser ());
+        parsers.add(new WWParser());
 
-    return fileContent;
-  }
+        // Format raten
+        if(recipeFile.exists())
+        {
+            ArrayList<String> fileContent = new ArrayList<>();
+            Recipe            recipe      = new Recipe();
+
+            try {
+                fileContent = readFile(recipeFile.toString());
+            }
+            catch(IOException e){
+                // TODO: IOException behandeln
+            }
+
+            // Parser fragen
+            for(int i=0;i<parsers.size();i++)
+            {
+                if(parsers.get(i).accepts(fileContent)){
+                    try{
+                        recipe = parsers.get(i).parse(fileContent);
+                    }
+                    catch(Exception e){
+                        // TODO: Exception behandeln
+                    }
+                }
+            }
+            // Rezept prüfen
+            // TODO: Rezept prüfen
+            if(!recipe.isIncomplete())
+                return recipe;
+            else
+                throw new CouldNotParseException();
+        }
+        else
+        {
+            throw new FileNotFoundException();
+        }
+    }
+
+    /**
+     * readFile
+     *
+     * helpful function, because textparser can handle ArrayList<String>
+     * easier than the content as one complete String.
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static ArrayList<String> readFile(String file) throws IOException {
+        String line;
+        ArrayList<String> lines = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            return lines;
+        }
+    }
 }
+

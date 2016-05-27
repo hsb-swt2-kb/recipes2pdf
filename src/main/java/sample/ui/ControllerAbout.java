@@ -2,6 +2,8 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerAbout'' manages the Close-About-FXML.
+ * The About-FXML contains information about the developers.
  */
 
 import javafx.event.ActionEvent;
@@ -14,13 +16,11 @@ public class ControllerAbout {
     @FXML
     private Button closeButton;
 
-    @FXML
-
-    public void initialize() {
-
-
-    }
-
+    /**
+     * The method ''closeAbout()'' closes the About-Window.
+     *
+     * @param event
+     */
 
     @FXML
     void closeAbout(ActionEvent event) {

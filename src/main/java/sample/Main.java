@@ -1,10 +1,21 @@
 package sample;
 
+import sample.ui.CLI;
 import sample.ui.GUI;
+import sample.ui.Shell;
 
-public class Main {
-
+/**
+ * The Main starts the program.
+ */
+public class Main
+{
     public static void main(String[] args) {
-        new GUI().start();
+        // select UI
+        if(args.length==0)
+            new GUI().start();
+        else if (args[0].equals("shell"))
+            new Shell().start();
+        else
+            new CLI().start(args);
     }
 }
