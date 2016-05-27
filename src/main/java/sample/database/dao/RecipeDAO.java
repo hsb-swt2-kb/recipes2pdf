@@ -53,6 +53,11 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
             recipe.setNurture( new NurtureDAO().toPOJO( nurtureDBO ) );
         }
 
+        final SourceDBO sourceDBO = (SourceDBO) recipeDBO.getSource();
+        if( null != sourceDBO ) {
+            recipe.setSource( new SourceDAO().toPOJO( sourceDBO ) );
+        }
+
         final List<Triple<IIngredient, Integer, IUnit>> ingredients = recipeDBO.getIngredients();
         for ( Triple<IIngredient, Integer, IUnit> triple : ingredients) {
             Ingredient ingredient = new IngredientDAO().toPOJO( (IngredientDBO) triple.getLeft() );
@@ -118,6 +123,13 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
             final NurtureDBO nurtureDBO = new NurtureDAO().toDBO(nurture);
             nurtureDBO.saveIt();
             recipeDBO.setNurture( nurtureDBO );
+        }
+
+        final Source source = (Source) recipe.getSource();
+        if( null != source ) {
+            final SourceDBO sourceDBO = new SourceDAO().toDBO(source);
+            sourceDBO.saveIt();
+            recipeDBO.setSource( sourceDBO );
         }
 
         final List<Triple<IIngredient, Integer, IUnit>> ingredients = recipe.getIngredients();

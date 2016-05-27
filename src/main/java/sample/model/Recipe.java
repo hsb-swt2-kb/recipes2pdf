@@ -24,6 +24,7 @@ public class Recipe implements IRecipe {
     private IDaytime daytime;
     private ISeason season;
     private INurture nurture;
+    private ISource source;
     private List<Triple<IIngredient, Integer, IUnit>> ingredients = new ArrayList<>(10);
 
     @Override
@@ -154,6 +155,16 @@ public class Recipe implements IRecipe {
     @Override
     public void setNurture(INurture nurture) {
         this.nurture = nurture;
+    }
+
+    @Override
+    public ISource getSource() {
+        return source;
+    }
+
+    @Override
+    public void setSource(ISource source) {
+        this.source = source;
     }
 
     /**

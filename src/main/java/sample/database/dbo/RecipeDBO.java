@@ -28,7 +28,8 @@ import java.util.Optional;
     @BelongsTo(foreignKeyName = "region_id", parent = RegionDBO.class),
     @BelongsTo(foreignKeyName = "daytime_id", parent = DaytimeDBO.class),
     @BelongsTo(foreignKeyName = "season_id", parent = SeasonDBO.class),
-    @BelongsTo(foreignKeyName = "nurture_id", parent = NurtureDBO.class)
+    @BelongsTo(foreignKeyName = "nurture_id", parent = NurtureDBO.class),
+    @BelongsTo(foreignKeyName = "source_id", parent = SourceDBO.class)
 })
 public class RecipeDBO extends Model implements IRecipe {
 
@@ -164,10 +165,15 @@ public class RecipeDBO extends Model implements IRecipe {
         return parent(NurtureDBO.class);
     }
 
-   /* @Override
-    public void add(String ingredientName, int amount, String unitName) {
-        throw new IllegalStateException("Unimplemented");
-    }*/
+    @Override
+    public ISource getSource() {
+        return parent(SourceDBO.class);
+    }
+
+    @Override
+    public void setSource(ISource source) {
+        ((Model) source).add(this);
+    }
 
     /**
      * {@inheritDoc}
