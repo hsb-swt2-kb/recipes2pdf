@@ -2,6 +2,7 @@ package sample.builder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
+import org.apache.commons.lang3.StringUtils;
 import sample.config.IConfig;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
@@ -27,30 +28,29 @@ public class PdfBuilder implements IConcreteBuilder {
         this.config = new PdfBuilderConfig(config);
     }
 
-    private void parseTexFile(File outputTexFile, ICookbook cookbook) throws Exception {
-        JLRConverter converter = new JLRConverter(config.getTemplateDir());
+    private void parseTexFile(File outputTexFile, File templateFile, File imageDir, ICookbook cookbook) throws Exception {
+        JLRConverter converter = new JLRConverter(templateFile.getParentFile());
 
-        List<String> sortAttributes = new ArrayList();
+        List<String> sortAttributes = new ArrayList(); //TODO: Get this List out of Database (attribute of cookbook)
         sortAttributes.add("category");
         sortAttributes.add("region");
 
         converter.replace("cookbook", cookbook);
         converter.replace("refNumList",generateRefNumList(cookbook.getRecipes(),sortAttributes));
-        converter.replace("imgDir", config.getImageDir().getAbsolutePath());
+        converter.replace("imgDir", imageDir.getAbsolutePath());
 
-        if (!converter.parse(config.getTemplateFile(), outputTexFile)) {
-            throw new Exception("Convert template to " + config.getOutputTexFile(cookbook.getTitle()) + " failed! Error Message:\n" + converter.getErrorMessage()); //TODO: Display ErrorMessage in GUI?
+        if (!converter.parse(templateFile, outputTexFile)) {
+            throw new Exception("Convert template to " + outputTexFile + " failed! Error Message:\n" + converter.getErrorMessage()); //TODO: Display ErrorMessage in GUI?
         }
     }
 
-    private File createPDFFile(File outputTexFile, ICookbook cookbook) throws Exception {
+    private File createPDFFile(File outputTexFile, File outputPDFFile,File rootDir) throws Exception {
 
         JLRGenerator generator = new JLRGenerator();
-        if (generator.generate(outputTexFile, config.getOutputDir(), config.getParserRootDir())) {
-            return config.getOutputPdfFile(cookbook.getTitle());
+        if (generator.generate(outputTexFile, outputTexFile.getParentFile(), rootDir)) {
+            return outputPDFFile;
         } else {
-            throw new Exception("Parse \"" + config.getOutputTexFile(cookbook.getTitle()) + "\" to \"" + config.getOutputPdfFile(cookbook.getTitle()) + "\" failed! Error Message:\n" + generator.getErrorMessage());
-
+            throw new Exception("Parse \"" + outputTexFile + "\" to \"" + outputPDFFile + "\" failed! Error Message:\n" + generator.getErrorMessage());
         }
     }
 
@@ -64,12 +64,18 @@ public class PdfBuilder implements IConcreteBuilder {
         }
         return null;
     }
-    private void createImage(IRecipe recipe) throws  Exception{
+
+    private void createAllImages(ICookbook cookcook, File imgDir) throws Exception {
+        for (IRecipe recipe : cookcook.getRecipes()) {
+            createImage(recipe,imgDir);
+        }
+    }
+    private void createImage(IRecipe recipe, File imgDir) throws  Exception{
         try {
             //byte[] img = Files.readAllBytes(config.getInputImage().toPath());
             byte[] img = Optional.ofNullable(recipe.getImage()).orElseGet(() -> createImageByteArray(config.getDefaultImage()));
 
-            FileOutputStream outputStream = new FileOutputStream(config.getImage("tmpRecipeImage.jpg"));
+            FileOutputStream outputStream = new FileOutputStream(new File(imgDir + File.separator + recipe.getTitle() + recipe.getID()) +".jpg");
             outputStream.write(img);
             outputStream.close();
         } catch (IOException e) {
@@ -79,34 +85,45 @@ public class PdfBuilder implements IConcreteBuilder {
 
 
     public File build(ICookbook cookbook) throws Exception {
-        File outputTexFile = config.getOutputTexFile(cookbook.getTitle());
+
         Cookbook myCookbook = (Cookbook) cookbook;
-        List<String> sortLevelList = new ArrayList();
+
+        File rootDir = config.getParserRootDir();
+        File outputTexFile = config.getOutputTexFile(myCookbook.getTitle());
+        File outputPdfFile = config.getOutputPdfFile(myCookbook.getTitle());
+        File templateFile = config.getTemplateFile();
+        File imgDir = config.getImageDir();
+
+        System.out.println(imgDir);
+
+        List<String> sortLevelList = new ArrayList(); //TODO: get this List out of Cookbook
         sortLevelList.add("region");
         sortLevelList.add("category");
-        myCookbook.setRecipes(RecipeListSorter.sort(myCookbook.getRecipes(),sortLevelList)); //TODO: cookbook.getSortLevelChain
+        myCookbook.setRecipes(RecipeListSorter.sort(myCookbook.getRecipes(),sortLevelList));
 
+        createAllImages(myCookbook,imgDir);
+        parseTexFile(outputTexFile,templateFile,imgDir,myCookbook);
 
-        for (IRecipe recipe : myCookbook.getRecipes()) {
-            createImage(recipe);
-        }
-        parseTexFile(outputTexFile, myCookbook);
-
-        return createPDFFile(outputTexFile, myCookbook);
+        return createPDFFile(outputTexFile, outputPdfFile, rootDir);
     }
 
     public File build(IRecipe recipe) throws Exception {
-        ICookbook cookbook = new Cookbook();
-        cookbook.setTitle(recipe.getTitle());
-        cookbook.addRecipe(recipe);
+        ICookbook myCookbook = new Cookbook();
+        myCookbook.setTitle(recipe.getTitle());
+        myCookbook.addRecipe(recipe);
 
-        File outputTexFile = config.getOutputTexFile(recipe.getTitle());
+        File rootDir = config.getParserRootDir();
+        File outputTexFile = config.getOutputTexFile(myCookbook.getTitle());
+        File outputPdfFile = config.getOutputPdfFile(myCookbook.getTitle());
+        File templateFile = config.getTemplateFile();
+        File imgDir = config.getImageDir();
 
-        createImage(recipe);
+        createImage(recipe,imgDir);
 
-        parseTexFile(outputTexFile, cookbook);
+        parseTexFile(outputTexFile,templateFile,imgDir,myCookbook);
 
-        return createPDFFile(outputTexFile, cookbook);
+        return createPDFFile(outputTexFile,outputPdfFile,rootDir);
+
     }
 
 
@@ -125,12 +142,11 @@ public class PdfBuilder implements IConcreteBuilder {
         return refNumList;
     }
 
-    private List<Properties> generatePropertyList(List<IRecipe> recipes) {
+    private List<Properties> generatePropertyList(List<IRecipe> recipes) { //TODO: Meybe get the List of Sortable Attributes out of database and work with reflections on recipe?
         List<Properties> propList = new ArrayList();
         Properties props = new Properties();
         for(IRecipe recipe : recipes)
         {
-
             props.setProperty("category",(recipe.getCategory()==null) ? "" : recipe.getCategory().getName());
             props.setProperty("season",(recipe.getSeason()==null) ? "" : recipe.getSeason().getName());
             props.setProperty("nurture",(recipe.getNurture()==null) ? "" : recipe.getNurture().getName());
@@ -146,3 +162,4 @@ public class PdfBuilder implements IConcreteBuilder {
         return filetype.equalsIgnoreCase("pdf");
     }
 }
+

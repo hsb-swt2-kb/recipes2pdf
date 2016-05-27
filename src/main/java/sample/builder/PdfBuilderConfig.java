@@ -27,10 +27,6 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("IMAGE_FOLDER_NAME")));
     }
 
-    public File getImage(String imagename){
-        return new File(getImageDir() + File.separator + imagename);
-    }
-
     public File getDefaultImage() {
        return new File(this.getClass().getClassLoader().getResource("sample/builder/images/default_image.jpg").getPath());
     }

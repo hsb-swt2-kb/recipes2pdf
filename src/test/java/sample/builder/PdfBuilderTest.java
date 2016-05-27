@@ -39,6 +39,11 @@ public class PdfBuilderTest {
         IRecipe r3 = new Recipe();
         IRecipe r4 = new Recipe();
 
+        r1.setID(1L);
+        r2.setID(2L);
+        r3.setID(3L);
+        r4.setID(4L);
+
         Season fruehling = new Season();
         Season sommer = new Season();
         Season herbst = new Season();
