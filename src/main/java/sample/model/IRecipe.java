@@ -56,6 +56,10 @@ public interface IRecipe extends IIdentifiable {
 
     INurture getNurture();
 
+    ISource getSource();
+
+    void setSource(ISource source);
+
     /**
      * Add ingredient with amount and unit.
      * This is a convenience method that creates missing entities on the fly.

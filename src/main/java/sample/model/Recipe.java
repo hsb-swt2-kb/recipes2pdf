@@ -24,6 +24,7 @@ public class Recipe implements IRecipe {
     private IDaytime daytime;
     private ISeason season;
     private INurture nurture;
+    private ISource source;
     private List<Triple<IIngredient, Integer, IUnit>> ingredients = new ArrayList<>(10);
 
     @Override
@@ -156,6 +157,16 @@ public class Recipe implements IRecipe {
         this.nurture = nurture;
     }
 
+    @Override
+    public ISource getSource() {
+        return source;
+    }
+
+    @Override
+    public void setSource(ISource source) {
+        this.source = source;
+    }
+
     /**
      * Add ingredient with amount and unit.
      * This is a convenience method that creates missing entities on the fly.
@@ -172,6 +183,20 @@ public class Recipe implements IRecipe {
         unit.setName(unitName);
 
         this.ingredients.add(new ImmutableTriple<>(ingredient, amount, unit));
+    }
+
+    public boolean isEmpty(){
+        if (this.title.isEmpty() && this.text.isEmpty() && this.ingredients.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isIncomplete(){
+        if (this.title.isEmpty() || this.text.isEmpty() || this.ingredients.isEmpty())
+            return true;
+        else
+            return false;
     }
 
     /**

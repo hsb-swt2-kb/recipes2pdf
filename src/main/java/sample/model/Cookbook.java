@@ -1,8 +1,5 @@
 package sample.model;
 
-import sample.model.ICookbook;
-import sample.model.IRecipe;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +10,11 @@ public class Cookbook implements ICookbook {
     private Long id;
     private String title;
     private List<IRecipe> recipes;
+    private List<ISortlevel> sortlevel;
 
     public Cookbook() {
         this.recipes = new ArrayList<>();
+        this.sortlevel = new ArrayList<>();
     }
 
     public void setID(Long id) {
@@ -38,6 +37,16 @@ public class Cookbook implements ICookbook {
     @Override
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public List<ISortlevel> getSortlevel() {
+        return this.sortlevel;
+    }
+
+    @Override
+    public void addSortlevel(ISortlevel sortlevel) {
+        this.sortlevel.add(sortlevel);
     }
 
     @Override
