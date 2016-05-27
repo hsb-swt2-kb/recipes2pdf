@@ -78,7 +78,7 @@ CREATE TABLE "cookbook_sortlevel"
   cookbook_id INTEGER,
   sortlevel_id INTEGER,
   FOREIGN KEY (cookbook_id) REFERENCES cookbook(id),
-  FOREIGN KEY (sortlevel_id) REFERENCES sortlevel(id),
+  FOREIGN KEY (sortlevel_id) REFERENCES sortlevel(id)
   UNIQUE(cookbook_id, sortlevel_id) ON CONFLICT ABORT
 );
 
