@@ -26,7 +26,7 @@ public class PdfBuilderConfig {
     }
 
     public File getDefaultImage() {
-        return new File(this.getClass().getClassLoader().getResource("sample/builder/images/default_image.jpg").getPath());
+        return new File(this.getClass().getResource("images/default_image.jpg").getPath());
     }
 
     public File getTempDir() {
@@ -38,7 +38,7 @@ public class PdfBuilderConfig {
     }
 
     public File getTemplateFile() {
-        File defaultTemplate = new File(this.getClass().getClassLoader().getResource("sample/builder/templates/cookbookTemplate.tex").getPath());
+        File defaultTemplate = new File(this.getClass().getClassLoader().getResource("sample" + File.separator + "builder" + File.separator + "templates" + File.separator + "cookbookTemplate.tex").getPath());
         File userTemplate = getUserTemplate();
         try {
             if (!userTemplate.exists()) {
