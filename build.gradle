@@ -52,6 +52,10 @@ buildscript {
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.13'
+    compile 'org.apache.pdfbox:pdfbox:1.5.0'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //compile 'commons-configuration:commons-configuration:1.6' //For configuration files: alternative to java.util.properties
+    //compile 'com.itextpdf:itextpdf:5.0.6' //fuer iText: Alternative zu JLR
     compile group: 'org.javalite', name: 'activejdbc', version: '1.4.11'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.5'
     compile 'org.slf4j:slf4j-api:1.7.13'

@@ -10,6 +10,10 @@ public interface ICookbook extends IIdentifiable {
 
     void setTitle(String title);
 
+    List<ISortlevel> getSortlevel();
+
+    void addSortlevel(ISortlevel sortlevel);
+
     List<IRecipe> getRecipes();
 
     void addRecipe(IRecipe recipe);

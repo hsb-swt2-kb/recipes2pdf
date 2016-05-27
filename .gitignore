@@ -37,3 +37,6 @@ hs_err_pid*
 build/
 bin/
 *.db
+
+#tempFiles
+.recipes2pdf/
