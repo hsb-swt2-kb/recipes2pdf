@@ -7,6 +7,7 @@ import sample.config.IConfig;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
+import sample.model.ISortlevel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,15 +29,11 @@ public class PdfBuilder implements IConcreteBuilder {
 
     private void parseTexFile(File outputTexFile, File templateFile, File imageDir, ICookbook cookbook) throws Exception {
         JLRConverter converter = new JLRConverter(templateFile.getParentFile());
-
-        List<String> sortAttributes = new ArrayList(); //TODO: Get this List out of Database (attribute of cookbook)
-        sortAttributes.add("category");
-        sortAttributes.add("region");
-
-        ((Cookbook)cookbook).setRecipes(RecipeListSorter.sort(cookbook.getRecipes(), sortAttributes));
+        List <ISortlevel> sortAttributeChain = cookbook.getSortlevel();
+        ((Cookbook)cookbook).setRecipes(RecipeListSorter.sort(cookbook.getRecipes(), sortAttributeChain));
 
         converter.replace("cookbook", cookbook);
-        converter.replace("refNumList", generateRefNumList(cookbook.getRecipes(), sortAttributes));
+        converter.replace("refNumList", generateRefNumList(cookbook.getRecipes(), sortAttributeChain));
         converter.replace("imgDir", imageDir.getAbsolutePath());
 
         if (!converter.parse(templateFile, outputTexFile)) {
@@ -92,12 +89,12 @@ public class PdfBuilder implements IConcreteBuilder {
 
         return createPDFFile(outputTexFile, outputPdfFile, rootDir);
     }
-
-    public File build(IRecipe recipe) throws Exception {
+    @Override
+    public File build(IRecipe recipe, List<ISortlevel> sortLevels) throws Exception {
         ICookbook myCookbook = new Cookbook();
         myCookbook.setTitle(recipe.getTitle());
         myCookbook.addRecipe(recipe);
-
+        ((Cookbook)myCookbook).setSortlevel(sortLevels);
 
         File rootDir = config.getParserRootDir();
         File outputTexFile = config.getOutputTexFile(myCookbook.getTitle());
@@ -114,22 +111,23 @@ public class PdfBuilder implements IConcreteBuilder {
     }
 
 
-    private Map<IRecipe, String> generateRefNumList(List<IRecipe> recipes, List<String> sortChain) {
+    private Map<IRecipe, String> generateRefNumList(List<IRecipe> recipes, List<ISortlevel> sortChain) {
         Map<IRecipe, String> refNumList = new HashMap<>();
-        Map<IRecipe, Properties> propList = generatePropertyList(recipes);
+        Map<IRecipe, Properties> propList = generateRecipePropertyList(recipes);
         String refNum = "";
 
         for (IRecipe recipe : recipes) {
             refNum = "";
-            for (String sortLevel : sortChain) {
-                refNum += propList.get(recipe).getProperty(sortLevel) + ".";
+            for (ISortlevel sortLevel : sortChain) {
+                refNum += propList.get(recipe).getProperty(sortLevel.getName()) + ".";
             }
-            refNumList.put(recipe, refNum.substring(0, refNum.length() - 1));
+
+            refNumList.put(recipe,(refNum =="") ? "" : refNum.substring(0, refNum.length() - 1));
         }
         return refNumList;
     }
 
-    private Map<IRecipe,Properties> generatePropertyList(List<IRecipe> recipes) { //TODO: Meybe get the List of Sortable Attributes out of database and work with reflections on recipe?
+    private Map<IRecipe,Properties> generateRecipePropertyList(List<IRecipe> recipes) { //TODO: Meybe get the List of Sortable Attributes out of database and work with reflections on recipe?
         Map<IRecipe,Properties> propList = new HashMap<>();
 
         for (IRecipe recipe : recipes) {
