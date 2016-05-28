@@ -1,11 +1,11 @@
-package sample.model.activejdbc;
+/*package sample.model.activejdbc;
 
 import sample.model.IUnit;
 
 /**
  * Created by czoeller on 16.04.16.
  */
-public class Unit implements IUnit {
+/*public class Unit implements IUnit {
 
     private String name;
 
@@ -24,3 +24,4 @@ public class Unit implements IUnit {
         this.name = name;
     }
 }
+*/
