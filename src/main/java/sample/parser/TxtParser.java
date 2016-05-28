@@ -1,8 +1,6 @@
 package sample.parser;
 
-import sample.model.Category;
-import sample.model.Recipe;
-import sample.model.Region;
+import sample.model.*;
 
 import java.lang.reflect.Array;
 import java.time.Duration;
@@ -32,7 +30,7 @@ public class TxtParser extends AConcreteParser implements Constants
   public Recipe parse(ArrayList<String> textFileContent) {
     Recipe recipe = new Recipe();
     ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
-
+    int tempNumber = 0;
     //Try to extract minimal recipdata
     //TODO Try to find name-tag
     //Try to find Name without Tag
@@ -42,55 +40,65 @@ public class TxtParser extends AConcreteParser implements Constants
     // Set IngredientList from RecipeObject from temporaryList
     tempIncredientList = extractIncredentsList(textFileContent);
     for (int i = 0;i<tempIncredientList.size();i++) {
-      /*try
-      {
-        if (tempIncredientList.get(i)[0] == null) {
-          String[] tempIngredient = new String[2];
-          tempIngredient[0] = "0";
-          tempIngredient[1] = tempIncredientList.get(i)[1];
-          tempIngredient[2] = tempIncredientList.get(i)[2];
-
-          tempIncredientList.set(i,tempIngredient);
-        }
-        Integer.parseInt(tempIncredientList.get(i)[0];
-        }
-        catch(NumberFormatException e)
-        {
-
-        }*/
-
-        recipe.add("Name",1,"UnitName");
-
-        //recipe.add(tempIncredientList.get(i)[2],null,tempIncredientList.get(i)[1]);
+      recipe.add(tempIncredientList.get(i)[2],1,tempIncredientList.get(i)[1]);
     }
     recipe.setText(findPreparationOfRecipe(textFileContent));
 
-    // Try to exctract additional recipedata
-      Region region = new Region();
-      region.setName(findDatafield(textFileContent,"Region"));
-      recipe.setRegion(region);
-    // recipe.gerichtsart = findDatafield(textFileContent,"Gerichtsart");
-      Category category = new Category();
-      category.setName(findDatafield(textFileContent,"Kategorie"));
-      recipe.setCategory(category);
+    // Try to extract additional recipedata
+    Region region = new Region();
+    region.setName(findDatafield(textFileContent,"Region"));
+    recipe.setRegion(region);
+    //=============================
+    Course course = new Course();
+    course.setName(findDatafield(textFileContent,"Gerichtsart"));
+       recipe.setCourse(course);
+    //=============================
+    Category category = new Category();
+    category.setName(findDatafield(textFileContent,"Kategorie"));
+    recipe.setCategory(category);
+    //=============================
+    Season season = new Season();
+    season.setName(findDatafield(textFileContent,"Saison"));
+    recipe.setSeason(season);
+    //=============================
+    Nurture nurture = new Nurture();
+    nurture.setName(findDatafield(textFileContent,"Ernährungsart"));
+    recipe.setNurture(nurture);
 
-     
+    try{
       recipe.setDuration(Integer.parseInt(findDatafield(textFileContent,"Arbeitszeit")));
+    }
+    catch(NumberFormatException | NullPointerException e) {
+      recipe.setDuration(0);
+    }
+    try{
       recipe.setCalories(Integer.parseInt(findDatafield(textFileContent,"Kalorien")));
+    }
+    catch(NumberFormatException | NullPointerException e) {
+      recipe.setCalories(0);
+    }
+    try{
       recipe.setPortions(Integer.parseInt(findDatafield(textFileContent,"Portionen")));
+    }
+    catch(NumberFormatException | NullPointerException e){
+      recipe.setPortions(0);
+    }
 
     //Checking Data will be deletet later
     System.out.println(recipe.getTitle());
     for (int i=0;i<recipe.getIngredients().size();i++){
-      System.out.println(recipe.getIngredients().get(i).getLeft() +"   |   "+recipe.getIngredients().get(i).getMiddle()+"   |   "+recipe.getIngredients().get(i).getRight());
+      System.out.println(recipe.getIngredients().get(i).getLeft().getName() +"   |   "+recipe.getIngredients().get(i).getMiddle()+"   |   "+recipe.getIngredients().get(i).getRight().getName());
     }
+
     System.out.println(recipe.getText());
-    System.out.println(recipe.getRegion());
-    System.out.println(recipe.getCourse());
-    System.out.println(recipe.getCategory());
+    System.out.println(recipe.getRegion().getName());
+    System.out.println(recipe.getCourse().getName());
+    System.out.println(recipe.getCategory().getName());
     System.out.println(recipe.getDuration());
     System.out.println(recipe.getCalories());
     System.out.println(recipe.getPortions());
+    System.out.println(recipe.getCourse().getName());
+    System.out.println(recipe.getNurture().getName());
     return recipe;
   }
 
@@ -153,8 +161,8 @@ public class TxtParser extends AConcreteParser implements Constants
       tempIncredent = textfileContent.get(i).trim();
       if(tempIncredent.startsWith("-")) {
         temporaryIingredients.add(tempIncredent.replaceFirst("-","").trim());
-        //checking next line to stop incredents-parsing
-        //to prevent wrong incredents in the rest of the recipe
+        //checking next line to stop ingredients-parsing
+        //to prevent wrong ingredients in the rest of the recipe
         if(((textfileContent.get(i+1).trim().startsWith("-")==false)
            &&  textfileContent.get(i+1).trim().length()>0 ))
           { break;}
@@ -287,7 +295,7 @@ public class TxtParser extends AConcreteParser implements Constants
     return false;
   }
 
-  private double parseStringToNumeric(String str) {
+  private double parseStringToNatural(String str) {
 
     double d=0;
     str = str.replaceAll(",", ".");
