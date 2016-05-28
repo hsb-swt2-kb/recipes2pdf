@@ -19,79 +19,32 @@ public class RecipeListSorterTest {
     public void testSort(){
 
         RecipeListSorter rSorter = new RecipeListSorter();
-        List<IRecipe> unsortedRecipeList = new ArrayList();
+        List<IRecipe> recipeListToSort = new ArrayList();
         List<IRecipe> sortedRecipeList = new ArrayList();
-        Category vorspeise = new Category();
-        Category hauptspeise = new Category();
-        Category grundrezept = new Category();
-        Category nachspeise = new Category();
+        List<ISortlevel> sortlevel = new ArrayList<>();
 
-        Region china = new Region();
-        Region mexiko = new Region();
-        Region grichenland = new Region();
-        Region frankreich = new Region();
+        IRecipe r1 = generateRecipe("Vorspeise","Griechenland","Frühling");
+        IRecipe r2 = generateRecipe("Nachspeise","Mexiko","Sommer");
+        IRecipe r3 = generateRecipe("Hauptspeise","China","Frühling");
+        IRecipe r4 = generateRecipe("Vorspeise","Mexiko","Winter");
 
-        IRecipe r1 = new Recipe();
-        IRecipe r2 = new Recipe();
-        IRecipe r3 = new Recipe();
-        IRecipe r4 = new Recipe();
+        recipeListToSort.add(r1);
+        recipeListToSort.add(r2);
+        recipeListToSort.add(r3);
+        recipeListToSort.add(r4);
 
-        Season fruehling = new Season();
-        Season sommer = new Season();
-        Season herbst = new Season();
-        Season winter = new Season();
-
-
-        fruehling.setName("Fruehling");
-        sommer.setName("Sommer");
-        herbst.setName("Herbst");
-        winter.setName("Winter");
-
-        vorspeise.setName("Vorspeise");
-        hauptspeise.setName("Hauptspeise");
-        grundrezept.setName("Grundrezept");
-        nachspeise.setName("Nachspeise");
-
-        china.setName("China");
-        mexiko.setName("Mexiko");
-        grichenland.setName("Grichenland");
-        frankreich.setName("Frankreich");
-
-
-        r1.setCategory(vorspeise);
-        r2.setCategory(nachspeise);
-        r3.setCategory(hauptspeise);
-        r4.setCategory(vorspeise);
-
-        r1.setSeason(fruehling);
-        r2.setSeason(sommer);
-        r3.setSeason(fruehling);
-        r4.setSeason(winter);
-
-        r1.setRegion(grichenland);
-        r2.setRegion(mexiko);
-        r3.setRegion(china);
-        r4.setRegion(mexiko);
-
-
-        unsortedRecipeList.add(r1);
-        unsortedRecipeList.add(r2);
-        unsortedRecipeList.add(r3);
-        unsortedRecipeList.add(r4);
-
-        //gewuenschtes Ergebnis bei sortierung category.region.season
+        //Expected result with category.region.season
         sortedRecipeList.add(r3);
         sortedRecipeList.add(r2);
         sortedRecipeList.add(r1);
         sortedRecipeList.add(r4);
 
-        List<String> sortLevelList = new ArrayList();
-        sortLevelList.add("category");
-        sortLevelList.add("region");
-        sortLevelList.add("season");
+        sortlevel.add(generateSortlevel("category"));
+        sortlevel.add(generateSortlevel("region"));
+        sortlevel.add(generateSortlevel("season"));
 
-        rSorter.sort(unsortedRecipeList, sortLevelList);
-        assertEquals(unsortedRecipeList,sortedRecipeList);
+        rSorter.sort(recipeListToSort, sortlevel);
+        assertEquals(recipeListToSort,sortedRecipeList);
 
         //gewuenschtes Ergebnis bei sortierung region.category.season
         sortedRecipeList.clear();
@@ -100,11 +53,34 @@ public class RecipeListSorterTest {
         sortedRecipeList.add(r2);
         sortedRecipeList.add(r4);
 
-        sortLevelList.clear();
-        sortLevelList.add("region");
-        sortLevelList.add("category");
-        sortLevelList.add("season");
-        rSorter.sort(unsortedRecipeList, sortLevelList);
-        assertEquals(unsortedRecipeList,sortedRecipeList);
+        sortlevel.clear();
+        sortlevel.add(generateSortlevel("region"));
+        sortlevel.add(generateSortlevel("category"));
+        sortlevel.add(generateSortlevel("season"));
+        rSorter.sort(recipeListToSort, sortlevel);
+        assertEquals(recipeListToSort,sortedRecipeList);
+    }
+
+    ISortlevel generateSortlevel(String sortlevelName){
+        ISortlevel sortlevel = new Sortlevel();
+        sortlevel.setName(sortlevelName);
+        return sortlevel;
+    }
+
+    IRecipe generateRecipe(String category, String region,String season)
+    {
+        IRecipe recipe = new Recipe();
+        ICategory testCategory = new Category();
+        IRegion testRegion = new Region();
+        ISeason testSeason = new Season();
+
+        testCategory.setName(category);
+        testRegion.setName(region);
+        testSeason.setName(season);
+
+        recipe.setCategory(testCategory);
+        recipe.setRegion(testRegion);
+        recipe.setSeason(testSeason);
+        return recipe;
     }
 }
