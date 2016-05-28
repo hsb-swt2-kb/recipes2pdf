@@ -1,6 +1,6 @@
 package sample.model;
 
-import static org.apache.commons.lang3.ObjectUtils.compare;
+    import static org.apache.commons.lang3.ObjectUtils.compare;
 
 /**
  * Created by czoeller on 02.04.16.

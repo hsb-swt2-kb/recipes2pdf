@@ -7,11 +7,17 @@ import org.jsoup.select.Elements;
 import sample.model.Course;
 import sample.model.Recipe;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Created by Kinith on 18.05.2016.
+ * Created by fpfennig on 18.05.2016.
  */
 public class WWParser extends AConcreteParser implements WWConstants{
     private Recipe recipe;
@@ -42,21 +48,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
                 break;
         }
 
-        //Checking Data will be deletet later
-        System.out.println("Name: " + recipe.getTitle());
-        System.out.println("Region: " + recipe.getRegion());
-        System.out.println("Gerichtsart: " + recipe.getCourse());
-        System.out.println("Kategorie: " + recipe.getCalories());
-        System.out.println("Arbeitszeit: " + recipe.getDuration());
-        System.out.println("Kcal: " + recipe.getCalories());
-        System.out.println("Portionen: " + recipe.getPortions());
-        for (int i=0;i<recipe.getIngredients().size();i++){
-            //System.out.println("Name: " + recipe.getIngredients().get(i)[0] +"   |   "+recipe.getIngredients().get(i)[1]+"   |   "+recipe.getIngredients().get(i)[2]);
-        }
-        System.out.println("Zubereitung: " + recipe.getText());
-
-        // Mandatory fields, which need to be set
-        if(recipe.getTitle().isEmpty() || recipe.getIngredients().isEmpty() || recipe.getText().isEmpty()){
+        if(!checkRecipe()){
             //TODO
             throw new Exception();
         }
@@ -77,6 +69,37 @@ public class WWParser extends AConcreteParser implements WWConstants{
     }
 
     /**
+     * Method to check all fields of the recipe.
+     *
+     * @return true if all mandatory fields are set, false if not.
+     */
+    private boolean checkRecipe(){
+        boolean result = false;
+
+        //Checking Data will be deletet later
+        System.out.println("Name: " + recipe.getTitle());
+        System.out.println("Region: " + recipe.getRegion());
+        System.out.println("Gerichtsart: " + recipe.getCourse());
+        System.out.println("Kategorie: " + recipe.getCalories());
+        System.out.println("Arbeitszeit: " + recipe.getDuration());
+        System.out.println("Kcal: " + recipe.getCalories());
+        System.out.println("Portionen: " + recipe.getPortions());
+        for (int counter = 0; counter < recipe.getIngredients().size(); counter++){
+            System.out.println( "Name: " + recipe.getIngredients().get(counter).getMiddle() +
+                                "   |   " + recipe.getIngredients().get(counter).getRight() +
+                                "   |   " + recipe.getIngredients().get(counter).getLeft());
+        }
+        System.out.println("Zubereitung: " + recipe.getText());
+
+        // Mandatory fields, which need to be set
+        if(!recipe.getTitle().isEmpty() && !recipe.getIngredients().isEmpty() && !recipe.getText().isEmpty()){
+            result = true;
+        }
+
+        return result;
+    }
+
+    /**
      * The parse method for the 2015 version of the recipes.
      *
      * @param htmlDoc The parsed recipe as a JSoup Document
@@ -85,27 +108,33 @@ public class WWParser extends AConcreteParser implements WWConstants{
     private void parseVersion2015(Document htmlDoc){
         Elements elements = htmlDoc.getAllElements();
 
-        recipe.setTitle(this.searchName(elements, WWConstants.name2015));
-        ArrayList<String> images = this.searchImage(elements, WWConstants.image2015);
-        // TODO
-        // IMAGES
+        String name = this.searchName(elements, WWConstants.name2015);
 
-        recipe.setDuration(Integer.parseInt(this.searchPreparingTime2015(elements, WWConstants.preparingTime2015)));
+        ArrayList<String> images = this.searchImage(elements, WWConstants.image2015);
+        byte[] image = downloadImage(images);
+
+        int preparingTime = this.searchPreparingTime2015(elements, WWConstants.preparingTime2015);
 
         int servings = this.searchServings(elements);
+
+        String type = this.searchType2015(elements, WWConstants.type2015);
+        Course course = new Course();
+        course.setName(type);
+
+        ArrayList<String> ingredientsListToConvert = this.searchIngredients2015(elements, WWConstants.ingredientsAndDescr2015);
+        ArrayList<String[]> ingredientsList = convertIngredientList(ingredientsListToConvert);
+
+        String description = this.searchDescription2015(elements, WWConstants.ingredientsAndDescr2015);
+
+        recipe.setTitle(name);
+        recipe.setImage(image);
+        recipe.setDuration(preparingTime);
         if(servings > 0){
             recipe.setPortions(servings);
         }
-
-
-        Course course = new Course();
-        course.setName(this.searchType2015(elements, WWConstants.type2015));
         recipe.setCourse(course);
-
-        ArrayList<String> ingredientsListToConvert = this.searchIngredients2015(elements, WWConstants.ingredientsAndDescr2015);
-        // recipe.zutaten = convertIngredientList(ingredientsListToConvert);
-        // TODO: Zutaten zu Recipe hinzufügen.
-        recipe.setText(this.searchDescription2015(elements, WWConstants.ingredientsAndDescr2015));
+        setRecipeIngredientsList(ingredientsList);
+        recipe.setText(description);
     }
 
     /**
@@ -117,25 +146,84 @@ public class WWParser extends AConcreteParser implements WWConstants{
     private void parseVersion2016(Document htmlDoc){
         Elements elements = htmlDoc.select(WWConstants.htmlDoc2016);
 
-        recipe.setTitle(this.searchName(elements, WWConstants.name2016));
+        String name = this.searchName(elements, WWConstants.name2016);
+
         ArrayList<String> images = this.searchImage(elements, WWConstants.image2016);
-        // TODO
-        // IMAGES
+        byte[] image = downloadImage(images);
 
         int servings = this.searchServings(elements);
+
+        String type = this.searchType(elements);
+        Course course = new Course();
+        course.setName(type);
+
+        ArrayList<String> ingredientsListToConvert = this.searchIngredients2016(elements, WWConstants.ingredients2016);
+        ArrayList<String[]> ingredientsList = convertIngredientList(ingredientsListToConvert);
+
+        String description = this.searchDescription2016(elements, WWConstants.tableTd);
+
+        recipe.setTitle(name);
+        recipe.setImage(image);
         if(servings > 0){
             recipe.setPortions(servings);
         }
-
-        Course course = new Course();
-        course.setName(this.searchType(elements));
         recipe.setCourse(course);
+        setRecipeIngredientsList(ingredientsList);
+        recipe.setText(description);
+    }
 
-        ArrayList<String> ingredientsListToConvert = this.searchIngredients2016(elements, WWConstants.ingredients2016);
-        //recipe.zutaten = convertIngredientList(ingredientsListToConvert);
+    /**
+     * Method to put the IngredientsList into the recipe.
+     *
+     * @param ingredientsList ArrayList<String[]> containing all the ingredients split into amount, unit and ingredient.
+     */
+    private void setRecipeIngredientsList(ArrayList<String[]> ingredientsList){
         // TODO: Zutaten zu Recipe hinzufügen.
+        for (String[] ingredient : ingredientsList) {
+            // TODO: amount = Integer?
+            double amount = 0;
+            try{
+                amount = Double.parseDouble(ingredient[0]);
+                amount = round(amount);
+                // amount double, not integer!
+                //recipe.add(ingredient[2], amount, ingredient[1]);
+            }
+            catch (Exception e){
+                // TODO: exception handling? maybe ignore?
+            }
+        }
+    }
 
-        recipe.setText(this.searchDescription2016(elements, WWConstants.tableTd));
+    /**
+     * Method to download the image of an recipe, at the moment only possible if there is only one image.
+     *
+     * @param images ArrayList containing all images found.
+     * @return the downloaded image as Byte Array.
+     */
+    private byte[] downloadImage(ArrayList<String> images){
+        byte[] result = null;
+
+        if(images.size() == 1){
+            try {
+                URL url = new URL(images.get(0));
+                InputStream input = new BufferedInputStream(url.openStream());
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                byte[] buf = new byte[1024];
+                int next = 0;
+                while ((next = input.read(buf)) != -1) {
+                    output.write(buf, 0, next);
+                }
+                output.close();
+                input.close();
+                result = output.toByteArray();
+            }
+            catch(Exception e){
+                // TODO: Exception handling
+                //e.printStackTrace();
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -201,6 +289,10 @@ public class WWParser extends AConcreteParser implements WWConstants{
                     }
                 }
             }
+        }
+
+        if(result.length() > WWConstants.maxFieldsize){
+            result = result.substring(0, WWConstants.maxFieldsize);
         }
 
         return result;
@@ -293,7 +385,15 @@ public class WWParser extends AConcreteParser implements WWConstants{
 
         for (Element element: elements){
             if (element.hasText() && !element.text().replaceAll(WWConstants.replaceSpaces," ").trim().isEmpty()) {
-                result.add(element.text().replaceAll(WWConstants.replaceSpaces, " ").trim());
+                String working = element.text().replaceAll(WWConstants.replaceSpaces, " ").trim();
+
+                // Remove some double spaces
+                working.replaceAll("( ){2}", " ");
+                while(working.contains("  ")){
+                    working = working.replaceAll("( ){2}", " ");
+                }
+
+                result.add(working);
             }
         }
 
@@ -313,55 +413,33 @@ public class WWParser extends AConcreteParser implements WWConstants{
 
         for (Element element: elements){
             if (element.text().contains(WWConstants.ingredientsTag)) {
-                String workingString = element.text().replaceAll(WWConstants.replaceSpaces," ").trim();
-                String[] working = workingString.split(" ");
-                ArrayList<String> list = new ArrayList<>();
+
+                // Old version, problem with finding new lines
+                //String workingString = element.text().replaceAll(WWConstants.replaceSpaces," ").trim();
+
+                String workingString = element.getAllElements().first().html().replaceAll(WWConstants.replaceSpaces," ");
+                workingString = workingString.replaceAll(WWConstants.version2016Linebreaks, "\n");
+
+                // Remove some double spaces
+                workingString.replaceAll("( ){2}", " ");
+                while(workingString.contains("  ")){
+                    workingString = workingString.replaceAll("( ){2}", " ");
+                }
+
+                String[] working = workingString.split("\n");
 
                 // Putting the splitted results into the list, with an empty entry filter
+                boolean firstTime = true; // Ignoring "Zutaten" entry
+
                 for (String splittedString : working) {
                     if (!splittedString.isEmpty()) {
-                        list.add(splittedString);
-                    }
-                }
-
-                // Remove empty entries
-                for (int counter = 0; counter < list.size(); counter++) {
-                    if (!list.get(counter).isEmpty()) {
-                        if (list.get(counter).trim().matches(WWConstants.numberWithCharacters)) {
-                            if (list.get(counter + 1).trim().matches(WWConstants.numberWithCharacters)) {
-                                list.remove(counter);
-                            }
+                        if(!firstTime) {
+                            result.add(splittedString.trim());
                         }
-                    }
-                }
-
-                boolean firstTime = true; // Ignoring "Zutaten" entry
-                String buildResult = "";
-
-                for (String entry : list) {
-                    if (!entry.isEmpty()) {
-                        if (!firstTime) {
-                            if(entry.trim().matches(WWConstants.numberWithCharacters)) {
-                                if (!buildResult.equals("")) {
-                                    result.add(buildResult);
-                                    buildResult = "";
-                                }
-                            }
-                            else {
-                                if (!buildResult.equals("")) {
-                                    buildResult = buildResult + " ";
-                                }
-                            }
-                            buildResult = buildResult + entry;
-                        }
-                        else {
+                        else{
                             firstTime = false;
                         }
                     }
-                }
-
-                if (!buildResult.equals("")) {
-                    result.add(buildResult);
                 }
             }
         }
@@ -379,7 +457,24 @@ public class WWParser extends AConcreteParser implements WWConstants{
         ArrayList<String[]> result = new ArrayList<>();
 
         for (String listEntry : ingredientList) {
-            String[] workingArray = listEntry.split(" ");
+            String[] filtering = listEntry.split(" ");
+            String filteredString = "";
+
+            // Removing non numeral characters
+            Pattern filterRegex = Pattern.compile(WWConstants.numberWithCharacters);
+            Matcher filterMatcher = filterRegex.matcher(filtering[0]);
+            Matcher filterMatcher2 = filterRegex.matcher(filtering[1]);
+
+            if(filterMatcher.find() && filterMatcher2.find()){
+                for(int counter = 1; counter < filtering.length; counter++){
+                    filteredString = filteredString + " " + filtering[counter];
+                }
+            }
+            else{
+                filteredString = listEntry;
+            }
+
+            String[] workingArray = filteredString.trim().split(" ");
             String amount = "";
             String unit = "";
             String ingredient = "";
@@ -387,18 +482,31 @@ public class WWParser extends AConcreteParser implements WWConstants{
             if(workingArray[0].matches(WWConstants.numberWithCharacters)){
                 // Characters need to be removed from the amount, and will be used as unit.
                 // The whole String will be used as amount, if there are no characters.
-                if(workingArray[0].contains(WWConstants.charactersWithoutNumbers)){
+                Pattern regexPattern = Pattern.compile(WWConstants.charactersWithoutNumbers);
+                Matcher regexMatcher = regexPattern.matcher(workingArray[0]);
+
+                if(regexMatcher.find()){
                     // Search for the index of the characters IN the amount String.
-                    int index = workingArray[0].indexOf(WWConstants.charactersWithoutNumbers);
+                    int index = regexMatcher.start();
                     String amountRaw = workingArray[0].substring(0,index);
 
                     amount = replaceDecimalSeperators(amountRaw);
+
+                    /*int indexOfDecimalSeperator = amount.indexOf(".");
+                    if(indexOfDecimalSeperator >= 0 && indexOfDecimalSeperator + 1 + WWConstants.fractionalDigits < amount.length()){
+                        amount = amount.substring(0, indexOfDecimalSeperator + 1 + WWConstants.fractionalDigits);
+                    }*/
 
                     // The characters in the amount String are the unit.
                     unit = workingArray[0].substring(index);
                 }
                 else {
-                    amount = workingArray[0];
+                    amount = replaceDecimalSeperators(workingArray[0]);
+
+                    /*int index = amount.indexOf(".");
+                    if(index > 0 && index + 1 + WWConstants.fractionalDigits < amount.length()){
+                        amount = amount.substring(0, index + 1 + WWConstants.fractionalDigits);
+                    }*/
                 }
             }
 
@@ -409,6 +517,16 @@ public class WWParser extends AConcreteParser implements WWConstants{
 
                 for(int counter = 2; counter < workingArray.length; counter++){
                     if(counter == 2){
+                        ingredient = ingredient + workingArray[counter];
+                    }
+                    else{
+                        ingredient = ingredient + " " + workingArray[counter];
+                    }
+                }
+            }
+            else if(!unit.isEmpty()){
+                for(int counter = 1; counter < workingArray.length; counter++){
+                    if(counter == 1){
                         ingredient = ingredient + workingArray[counter];
                     }
                     else{
@@ -431,12 +549,42 @@ public class WWParser extends AConcreteParser implements WWConstants{
 
             // Collecting needed Data into one array
             String[] ingredientArray = new String[3];
-            ingredientArray[0] = amount;
-            ingredientArray[1] = unit;
-            ingredientArray[2] = ingredient;
+            if(amount.length() > WWConstants.maxFieldsize){
+                ingredientArray[0] = amount.substring(0, WWConstants.maxFieldsize);
+            }
+            else {
+                ingredientArray[0] = amount;
+            }
+
+            if(unit != null && unit.length() > WWConstants.maxFieldsize){
+                ingredientArray[1] = unit.substring(0, WWConstants.maxFieldsize);
+            }
+            else{
+                ingredientArray[1] = unit;
+            }
+
+            if(ingredient.length() > WWConstants.maxFieldsize){
+                ingredientArray[2] = ingredient.substring(0, WWConstants.maxFieldsize);
+            }
+            else{
+                ingredientArray[2] = ingredient;
+            }
 
             result.add(ingredientArray);
         }
+
+        return result;
+    }
+
+    /**
+     * Method to round the double values.
+     *
+     * @param amount
+     * @return
+     */
+    private double round(double amount){
+        double rounding = Math.pow(10, WWConstants.fractionalDigits);
+        double result = (double)Math.round(amount * rounding) / rounding;
 
         return result;
     }
@@ -449,21 +597,26 @@ public class WWParser extends AConcreteParser implements WWConstants{
      */
     private String replaceDecimalSeperators(String number){
         String result = "";
+        Pattern regexPattern = Pattern.compile(WWConstants.numberSeperator);
+        Matcher regexMatcher = regexPattern.matcher(number);
 
-        if(number.contains(WWConstants.numberSeperator)){
+        if(regexMatcher.find()){
             String[] seperate = number.split(WWConstants.numberSeperator);
             boolean firstSperator = true;
 
             for (int counter = 0; counter < seperate.length; counter++){
-                if(firstSperator && seperate[counter].isEmpty()){
-                    if(counter == 0){
-                        result = result + "0";
-                    }
-                    result = result + ".";
-                }
 
                 if(!seperate[counter].isEmpty()){
                     result = result + seperate[counter];
+                }
+
+                if(firstSperator){
+                    if(counter == 0 && seperate[counter].isEmpty()){
+                        result = result + "0";
+                    }
+                    result = result + ".";
+
+                    firstSperator = false;
                 }
             }
         }
@@ -481,8 +634,9 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @param searchString
      * @return
      */
-    private String searchPreparingTime2015(Elements htmlDoc, String searchString){
-        String result = "";
+    private int searchPreparingTime2015(Elements htmlDoc, String searchString){
+        int result = 0;
+        String working = "";
         Elements elements = htmlDoc.select(searchString);
         // Description needs to be filtered
         boolean firstTime = true;
@@ -490,18 +644,47 @@ public class WWParser extends AConcreteParser implements WWConstants{
         for (Element element : elements) {
             // Protected spaces needs to be filtered
             String[] splits = element.text().replaceAll(WWConstants.replaceSpaces, " ").trim().split(" ");
+
+            // Remove some double spaces
+            working.replaceAll("( ){2}", " ");
+            while(working.contains("  ")){
+                working = working.replaceAll("( ){2}", " ");
+            }
+
             for (String split : splits) {
                 if(!firstTime) {
                     if (!split.trim().isEmpty()) {
-                        if (!result.isEmpty()) {
-                            result = result + " ";
+                        if (!working.isEmpty()) {
+                            working = working + " ";
                         }
-                        result = result + split.trim();
+                        working = working + split.trim();
                     }
                 }
                 else {
                     firstTime = false;
                 }
+            }
+        }
+
+        // Removing non numeral characters
+        Pattern regexPattern = Pattern.compile(WWConstants.notANumber);
+        Matcher regexMatcher = regexPattern.matcher(working);
+
+        if(regexMatcher.find()){
+            working = working.replaceAll(WWConstants.notANumber, "").trim();
+        }
+
+        if(!working.isEmpty() && working.matches(WWConstants.onlyNumber)){
+
+            if(working.length() > WWConstants.maxFieldsize){
+                working = working.substring(0, WWConstants.maxFieldsize);
+            }
+
+            try {
+                result = Integer.parseInt(working);
+            }
+            catch(NumberFormatException nfe){
+                result = 0;
             }
         }
 
@@ -535,15 +718,21 @@ public class WWParser extends AConcreteParser implements WWConstants{
         }
 
         // Removing non numeral characters
-        if(working.contains(WWConstants.notANumber)){
+        Pattern regexPattern = Pattern.compile(WWConstants.notANumber);
+        Matcher regexMatcher = regexPattern.matcher(working);
+
+        if(regexMatcher.find()){
             working.replaceAll(WWConstants.notANumber, "");
         }
 
         if(!working.isEmpty() && working.matches(WWConstants.onlyNumber)){
-            try {
-                result = Integer.getInteger(working);
+            if(working.length() > WWConstants.maxFieldsize){
+                working = working.substring(0, WWConstants.maxFieldsize);
             }
-            catch(NumberFormatException nfe){
+            try {
+                result = Integer.parseInt(working);
+            }
+            catch(Exception e){
                 result = 0;
             }
         }
@@ -585,6 +774,10 @@ public class WWParser extends AConcreteParser implements WWConstants{
                 result = result + WWConstants.separator;
             }
             result = result + element.text().replaceAll(WWConstants.replaceSpaces, " ").trim();
+        }
+
+        if(result.length() > WWConstants.maxFieldsize){
+            result = result.substring(0, WWConstants.maxFieldsize);
         }
 
         return result;
