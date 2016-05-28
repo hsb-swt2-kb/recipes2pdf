@@ -4,6 +4,7 @@ import sample.config.IConfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 
 import static org.apache.commons.io.IOUtils.toByteArray;
@@ -40,12 +41,11 @@ public class PdfBuilderConfig {
     }
 
     public File getTemplateFile() {
-        File defaultTemplate = new File(this.getClass().getClassLoader().getResource("sample/builder/templates/cookbookTemplate.tex").getPath());
+        final InputStream in = this.getClass().getResourceAsStream("templates/cookbookTemplate.tex");
         File userTemplate = getUserTemplate();
         try {
             if (!userTemplate.exists()) {
-                Files.copy(defaultTemplate.toPath(), userTemplate.toPath());
-
+                Files.copy(in, userTemplate.toPath());
             }
         } catch (IOException e) {
             e.printStackTrace();

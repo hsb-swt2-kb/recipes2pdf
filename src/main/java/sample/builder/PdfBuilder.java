@@ -2,6 +2,7 @@ package sample.builder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import sample.config.IConfig;
 import sample.model.Cookbook;
@@ -12,7 +13,10 @@ import sample.model.ISortlevel;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Kai Nortmann
@@ -34,11 +38,15 @@ public class PdfBuilder implements IConcreteBuilder {
 
         converter.replace("cookbook", cookbook);
         converter.replace("refNumList", generateRefNumList(cookbook.getRecipes(), sortAttributeChain));
-        converter.replace("imgDir", imageDir.getAbsolutePath());
+        converter.replace("imgDir", toLatexStylePath(imageDir.getAbsolutePath()));
 
         if (!converter.parse(templateFile, outputTexFile)) {
             throw new Exception("Convert template to " + outputTexFile + " failed! Error Message:\n" + converter.getErrorMessage()); //TODO: Display ErrorMessage in GUI?
         }
+    }
+
+    private String toLatexStylePath(String path) {
+        return FilenameUtils.separatorsToUnix(path);
     }
 
     private File createPDFFile(File outputTexFile, File outputPDFFile, File rootDir) throws Exception {
