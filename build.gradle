@@ -104,6 +104,7 @@ task fatJar(type: Jar) {
         attributes 'Main-Class': mainClass
     }
 }
+fatJar.dependsOn assemble
 
 jacocoTestReport {
     reports {
