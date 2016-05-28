@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import static org.apache.commons.io.IOUtils.toByteArray;
+
 /**
  * Created by kai on 11.04.16.
  */
@@ -25,8 +27,8 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("IMAGE_FOLDER_NAME")));
     }
 
-    public File getDefaultImage() {
-        return new File(this.getClass().getResource("images/default_image.jpg").getPath());
+    public byte[] getDefaultImage() throws IOException {
+        return toByteArray(this.getClass().getResourceAsStream("images/default_image.jpg"));
     }
 
     public File getTempDir() {
@@ -38,7 +40,7 @@ public class PdfBuilderConfig {
     }
 
     public File getTemplateFile() {
-        File defaultTemplate = new File(this.getClass().getClassLoader().getResource("sample" + File.separator + "builder" + File.separator + "templates" + File.separator + "cookbookTemplate.tex").getPath());
+        File defaultTemplate = new File(this.getClass().getClassLoader().getResource("sample/builder/templates/cookbookTemplate.tex").getPath());
         File userTemplate = getUserTemplate();
         try {
             if (!userTemplate.exists()) {

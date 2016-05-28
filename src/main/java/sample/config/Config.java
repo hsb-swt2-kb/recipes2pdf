@@ -23,7 +23,7 @@ class Config implements IConfig {
         } catch (IOException e) {
 
             try {
-                properties.load(this.getClass().getClassLoader().getResourceAsStream("sample/config/default_config.cfg"));
+                properties.load(this.getClass().getResourceAsStream("default_config.cfg"));
                 File userdataDir = new File(PROGRAM_USERDATA_DIR);
                 if (!userdataDir.exists()) {
                     userdataDir.mkdirs();

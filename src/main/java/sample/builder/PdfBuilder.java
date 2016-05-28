@@ -2,17 +2,20 @@ package sample.builder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
-import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import sample.config.IConfig;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
+import sample.model.Recipe;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+
+import static org.apache.commons.io.IOUtils.toByteArray;
 
 /**
  * @author Kai Nortmann
@@ -38,15 +41,11 @@ public class PdfBuilder implements IConcreteBuilder {
 
         converter.replace("cookbook", cookbook);
         converter.replace("refNumList", generateRefNumList(cookbook.getRecipes(), sortAttributes));
-        converter.replace("imgDir", toLatexStylePath(imageDir.getAbsolutePath()));
+        converter.replace("imgDir", imageDir.getAbsolutePath());
 
         if (!converter.parse(templateFile, outputTexFile)) {
             throw new Exception("Convert template to " + outputTexFile + " failed! Error Message:\n" + converter.getErrorMessage()); //TODO: Display ErrorMessage in GUI?
         }
-    }
-
-    private String toLatexStylePath(String path) {
-        return FilenameUtils.separatorsToUnix(path);
     }
 
     private File createPDFFile(File outputTexFile, File outputPDFFile, File rootDir) throws Exception {
@@ -59,16 +58,6 @@ public class PdfBuilder implements IConcreteBuilder {
         }
     }
 
-
-    private byte[] createImageByteArray(File image) {
-        try {
-            return Files.readAllBytes(config.getDefaultImage().toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     private void createAllImages(ICookbook cookcook, File imgDir) throws Exception {
         for (IRecipe recipe : cookcook.getRecipes()) {
             createImage(recipe, imgDir);
@@ -77,8 +66,7 @@ public class PdfBuilder implements IConcreteBuilder {
 
     private void createImage(IRecipe recipe, File imgDir) throws Exception {
         try {
-            //byte[] img = Files.readAllBytes(config.getInputImage().toPath());
-            byte[] img = Optional.ofNullable(recipe.getImage()).orElseGet(() -> createImageByteArray(config.getDefaultImage()));
+            byte[] img = (recipe.getImage() == null) ? defaultImagetoByteArray() : recipe.getImage();
 
             FileOutputStream outputStream = new FileOutputStream(new File(imgDir + File.separator + recipe.getTitle() + recipe.getID()) + ".jpg");
             outputStream.write(img);
@@ -86,6 +74,10 @@ public class PdfBuilder implements IConcreteBuilder {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private byte[] defaultImagetoByteArray() throws IOException {
+        return IOUtils.toByteArray(this.getClass().getResourceAsStream("images/default_image.jpg"));
     }
 
 
