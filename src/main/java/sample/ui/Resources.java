@@ -30,39 +30,39 @@ public class Resources {
         return "/sample/ui/NoElementSelectedDialog.fxml";
     }
 
-    public static String getAddCookBookFXML() {
+    protected static String getAddCookBookFXML() {
         return "/sample/ui/AddCookBook.fxml";
     }
 
-    public static String getDeleteFXML() {
+    protected static String getDeleteFXML() {
         return "/sample/ui/DeleteDialog.fxml";
     }
 
-    public static String getloadRecipeFXML() {
+    protected static String getloadRecipeFXML() {
         return "/sample/ui/LoadRecipe.fxml";
     }
 
-    public static String getloadRecipePopOverFXML() {
+    protected static String getloadRecipePopOverFXML() {
         return "/sample/ui/LoadRecipePopOver.fxml";
     }
 
-    public static String getHelpFXML() {
+    protected static String getHelpFXML() {
         return "/sample/ui/Help.fxml";
     }
 
-    public static String getAboutFXML() {
+    protected static String getAboutFXML() {
         return "/sample/ui/About.fxml";
     }
 
-    public static String getExportFXML() {
+    protected static String getExportFXML() {
         return "/sample/ui/ExportCookBook.fxml";
     }
 
-    public static String getSortLevelFXML() {
+    protected static String getSortLevelFXML() {
         return "/sample/ui/SortLevel.fxml";
     }
 
-    public static String getChangeRecipeFXML() {
+    protected static String getChangeRecipeFXML() {
         return "/sample/ui/ChangeRecipe.fxml";
     }
 
@@ -70,15 +70,15 @@ public class Resources {
      * Icons
      */
 
-    public static String getDefaultIcon() {
+    protected static String getDefaultIcon() {
         return "/sample/ui/icon_bg_small.png";
     }
 
-    public static String getHelpIcon() {
+    protected static String getHelpIcon() {
         return "/sample/ui/Help.png";
     }
 
-    public static String getInfoIcon() {
+    protected static String getInfoIcon() {
         return "/sample/ui/Info.png";
     }
 
@@ -86,51 +86,51 @@ public class Resources {
      * Window-Titles
      */
 
-    public static String getFileChooserWindowText() {
+    protected static String getFileChooserWindowText() {
         return "File Chooser";
     }
 
-    public static String getDeleteWindowText() {
+    protected static String getDeleteWindowText() {
         return "Löschen";
     }
 
-    public static String getSortLevelWindowText() {
+    protected static String getSortLevelWindowText() {
         return "Einstellungen";
     }
 
-    public static String getChangeCookBookWindowText() {
+    protected static String getChangeCookBookWindowText() {
         return "Kochbuch ändern";
     }
 
-    public static String getErrorWindowText() {
+    protected static String getErrorWindowText() {
         return "Error";
     }
 
-    public static String getAddCookBookWindowText() {
+    protected static String getAddCookBookWindowText() {
         return "Kochbuch hinzufügen";
     }
 
-    public static String getExportWindowText() {
+    protected static String getExportWindowText() {
         return "Exportieren";
     }
 
-    public static String getChangeRecipeWindowText() {
+    protected static String getChangeRecipeWindowText() {
         return "Rezept ändern";
     }
 
-    public static String getLoadWindowText() {
+    protected static String getLoadWindowText() {
         return "Rezept laden";
     }
 
-    public static String getHelpWindowText() {
+    protected static String getHelpWindowText() {
         return "Hilfe";
     }
 
-    public static String getAboutWindowText() {
+    protected static String getAboutWindowText() {
         return "Über";
     }
 
-    public static String getManageCookBooksWindowText() {
+    protected static String getManageCookBooksWindowText() {
         return "Kochbuchverwaltung";
     }
 
