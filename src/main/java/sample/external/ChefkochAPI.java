@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.model.IRecipe;
+import sample.model.Recipe;
 import sample.util.Image;
 
 import java.io.File;
@@ -24,14 +24,14 @@ public class ChefkochAPI {
     public static final String SEARCH_API = "http://api.chefkoch.de/api/1.0/api-recipe-search.php";
     public static final String RECIPE_DETAIL_API = "http://api.chefkoch.de/api/1.0/api-recipe.php";
     final Logger LOG = LoggerFactory.getLogger(this.getClass());
-    private IRecipe recipe;
+    private Recipe recipe;
 
     public ChefkochAPI() {
-        this.recipe = IRecipe.getInstance();
+        this.recipe = new Recipe();
     }
 
     // Used for mock injection in unit tests
-    void setRecipe(IRecipe recipe) {
+    void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
 
@@ -56,7 +56,7 @@ public class ChefkochAPI {
         return Optional.ofNullable(rezeptShowID);
     }
 
-    public Optional<IRecipe> findById(String showID) {
+    public Optional<Recipe> findById(String showID) {
         try {
             String url = "";
             final JSONObject body = query(RECIPE_DETAIL_API, "ID", showID );
