@@ -1,4 +1,4 @@
-package sample.model.activejdbc;
+/*package sample.model.activejdbc;
 
 import org.javalite.activejdbc.Model;
 import sample.model.IIngredient;
@@ -6,7 +6,7 @@ import sample.model.IIngredient;
 /**
  * Created by czoeller on 18.04.16.
  */
-public class Ingredient extends Model implements IIngredient  {
+/*public class Ingredient extends Model implements IIngredient  {
     private String name;
 
     @Override
@@ -39,3 +39,4 @@ public class Ingredient extends Model implements IIngredient  {
         return 0;
     }
 }
+*/
