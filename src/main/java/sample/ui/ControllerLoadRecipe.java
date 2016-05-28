@@ -2,6 +2,8 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerCLoadRecipe'' manages the LoadRecipe-FXML and the LoadRecipePopOver-FXML.
+ * It provides methods for adding new recipes.
  */
 
 import javafx.event.ActionEvent;
@@ -12,15 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
-import sample.database.dao.RecipeDAO;
 import sample.exceptions.CouldNotParseException;
-import sample.model.Recipe;
-import sample.parser.Parser;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static sample.ui.UI.addRecipes;
 

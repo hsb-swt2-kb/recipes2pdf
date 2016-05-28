@@ -2,6 +2,8 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerManageCookBooks'' manages the ManageCookBooks-FXML.
+ * It displays all cookbooks and provides methods for adding, changing and deleting a CookBook.
  */
 
 
@@ -75,6 +77,11 @@ public class ControllerManageCookBooks {
 
     }
 
+    /**
+     * The method ''closeWindow()'' closes the manage-cookbooks-window after a interaction with the close-button.
+     *
+     * @param event
+     */
 
     @FXML
     void closeWindow(ActionEvent event) {

@@ -1,7 +1,9 @@
 package sample.ui;
 
 /**
- * @author Tobias Stelter.
+ * @author Tobias Stelter
+ * The Class ''ControllerManageCookBook'' manages the ManageCookBook-FXML.
+ * It displays all recipes and provides methods for managing a cookbook (addRecipes,deleteRecipes,etc.).
  */
 
 
@@ -19,9 +21,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.PopOver;
-import sample.database.dao.RecipeDAO;
 import sample.model.Cookbook;
-import sample.model.IRecipe;
 import sample.model.Recipe;
 
 import java.io.IOException;

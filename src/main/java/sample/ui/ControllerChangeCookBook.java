@@ -14,18 +14,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import java.io.File;
 
 public class ControllerChangeCookBook {
 
-    @FXML
-    private Button fileChooserButton;
-
-
     File file;
     String name;
     String foreword;
-
+    @FXML
+    private Button fileChooserButton;
         @FXML
         private Button closeButton;
 
@@ -64,7 +62,6 @@ public class ControllerChangeCookBook {
 
     /**
      * The method ''closeChangeCookBook()'' closes the ChangeCookBook-Window after a interaction with the close-button.
-     *
      * @param event
      */
 

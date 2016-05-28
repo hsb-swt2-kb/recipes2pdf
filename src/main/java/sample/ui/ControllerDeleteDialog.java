@@ -28,7 +28,6 @@ public class ControllerDeleteDialog {
 
     /**
      * The method ''closeDeleteDialog()'' closes the delete-dialog after a interaction with the close-button.
-     *
      * @param event
      */
 
