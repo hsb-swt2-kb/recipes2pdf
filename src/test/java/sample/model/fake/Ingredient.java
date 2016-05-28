@@ -1,11 +1,11 @@
-package sample.model.fake;
+/*package sample.model.fake;
 
 import sample.model.IIngredient;
 
 /**
  * Created by czoeller on 16.04.16.
  */
-public class Ingredient implements IIngredient {
+/*public class Ingredient implements IIngredient {
 
     private String name;
     @Override
@@ -38,3 +38,4 @@ public class Ingredient implements IIngredient {
         return this.getName().compareTo(o.getName());
     }
 }
+*/
