@@ -1,8 +1,9 @@
-Name: Vegetarische Lasagne
+ 
+ Vegetarische Lasagne 
 
+- 5 Tomaten
 - 3,5 Kilo Tofu
 - 1 EL Olivenöl
-- 5 Tomaten
 - 3 Prise(n) Zucker
 - Salz (grob)
 - 2 Beutel

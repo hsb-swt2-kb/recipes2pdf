@@ -30,7 +30,7 @@ public class TxtParser extends AConcreteParser implements Constants
   public Recipe parse(ArrayList<String> textFileContent) {
     Recipe recipe = new Recipe();
     ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
-    int tempNumber = 0;
+
     //Try to extract minimal recipdata
     //TODO Try to find name-tag
     //Try to find Name without Tag
@@ -84,7 +84,7 @@ public class TxtParser extends AConcreteParser implements Constants
       recipe.setPortions(0);
     }
 
-    //Checking Data will be deletet later
+    /*Checking Data will be deletet later
     System.out.println(recipe.getTitle());
     for (int i=0;i<recipe.getIngredients().size();i++){
       System.out.println(recipe.getIngredients().get(i).getLeft().getName() +"   |   "+recipe.getIngredients().get(i).getMiddle()+"   |   "+recipe.getIngredients().get(i).getRight().getName());
@@ -98,7 +98,7 @@ public class TxtParser extends AConcreteParser implements Constants
     System.out.println(recipe.getCalories());
     System.out.println(recipe.getPortions());
     System.out.println(recipe.getCourse().getName());
-    System.out.println(recipe.getNurture().getName());
+    System.out.println(recipe.getNurture().getName());*/
     return recipe;
   }
 
@@ -279,7 +279,12 @@ public class TxtParser extends AConcreteParser implements Constants
       datafield = textDateiInhalt.get(zeileS);
       datafield=datafield.replaceFirst(signalwort+":","");
       datafield=datafield.trim();
+      if (datafield.length()==0) {
+        datafield=null;
+      }
+
     }
+
     else {
       return null;
     }
@@ -295,7 +300,7 @@ public class TxtParser extends AConcreteParser implements Constants
     return false;
   }
 
-  private double parseStringToNatural(String str) {
+  private double parseStringToDouble(String str) {
 
     double d=0;
     str = str.replaceAll(",", ".");
