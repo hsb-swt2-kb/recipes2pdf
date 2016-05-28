@@ -46,12 +46,6 @@ public class PdfBuilderConfigTest {
     }
 
     @Test
-    public void getDefaultImage() {
-        // method and test do the same, but since the ressourcepath is dynamic for each user, there is no other way to 'test' it
-        assertEquals(new File(this.getClass().getResource("images/default_image.jpg").getPath()).getAbsolutePath(), config.getDefaultImage().getAbsolutePath());
-    }
-
-    @Test
     public void getTempDir() {
         assertEquals(userdir + ".recipes2pdf" + File.separator + "temp", config.getTempDir().getPath());
         assertTrue(new File(userdir + ".recipes2pdf" + File.separator + "temp").exists());
