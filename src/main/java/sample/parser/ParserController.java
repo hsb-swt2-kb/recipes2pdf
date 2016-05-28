@@ -1,4 +1,4 @@
-package sample.parser;
+/*package sample.parser;
 
 import sample.model.IRecipe;
 
@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * Created by czoeller on 31.03.16.
  */
-public class ParserController {
+/*public class ParserController {
 
     private ArrayList<AParser> parsers;
 
@@ -28,3 +28,4 @@ public class ParserController {
     }
 
 }
+*/
