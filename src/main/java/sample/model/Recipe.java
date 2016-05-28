@@ -25,7 +25,7 @@ public class Recipe implements IRecipe {
     private ISeason season;
     private INurture nurture;
     private ISource source;
-    private List<Triple<IIngredient, Integer, IUnit>> ingredients = new ArrayList<>(10);
+    private List<Triple<IIngredient, Double, IUnit>> ingredients = new ArrayList<>(10);
 
     @Override
     public Long getID() {
@@ -175,7 +175,7 @@ public class Recipe implements IRecipe {
      * @param amount         amount of ingredient
      * @param unitName       name of the unit
      */
-    public void add(String ingredientName, int amount, String unitName) {
+    public void add(String ingredientName, double amount, String unitName) {
         IIngredient ingredient = new Ingredient();
         ingredient.setName(ingredientName);
 
@@ -204,7 +204,7 @@ public class Recipe implements IRecipe {
      *
      * @return map
      */
-    public List<Triple<IIngredient, Integer, IUnit>> getIngredients() {
+    public List<Triple<IIngredient, Double, IUnit>> getIngredients() {
         return this.ingredients;
     }
 
@@ -215,7 +215,7 @@ public class Recipe implements IRecipe {
      * @param recipeIngredient
      */
     @Override
-    public void add(Triple<IIngredient, Integer, IUnit> recipeIngredient) {
+    public void add(Triple<IIngredient, Double, IUnit> recipeIngredient) {
         this.ingredients.add(recipeIngredient);
     }
 
