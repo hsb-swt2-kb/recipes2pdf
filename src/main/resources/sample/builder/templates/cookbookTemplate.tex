@@ -28,6 +28,10 @@
 
         #set ($refNum = $refNumList.get($recipe))
         #set ($index = $refNum.indexOf('.'))
+        #if($index < 0)
+            #set($index = 0)
+        #end
+
         \chead{$refNum.substring(0,$index)}
         \section*{$recipe.getTitle()}
 	    \begin{minipage}[t]{0.4\textwidth}
