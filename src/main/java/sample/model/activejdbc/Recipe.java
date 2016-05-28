@@ -1,4 +1,4 @@
-package sample.model.activejdbc;
+/*package sample.model.activejdbc;
 
 import sample.model.IIngredient;
 import sample.model.IRecipe;
@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by czoeller on 16.04.16.
  */
-public class Recipe implements IRecipe {
+/*public class Recipe implements IRecipe {
 
     private byte[] image;
 
@@ -64,3 +64,4 @@ public class Recipe implements IRecipe {
     }
 
 }
+*/
