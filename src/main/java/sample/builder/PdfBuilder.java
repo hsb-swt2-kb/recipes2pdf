@@ -7,15 +7,11 @@ import sample.config.IConfig;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
-import sample.model.Recipe;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
-
-import static org.apache.commons.io.IOUtils.toByteArray;
 
 /**
  * @author Kai Nortmann
