@@ -1,4 +1,4 @@
-package sample.parser;
+/*package sample.parser;
 
 import sample.model.IRecipe;
 
@@ -6,7 +6,7 @@ import sample.model.IRecipe;
  * This is a demo parser to show the basic implementation of a concrete parser.
  * Created by czoeller on 31.03.16.
  */
-public class DemoParser extends AParser {
+/*public class DemoParser extends AParser {
 
     public DemoParser() {
     }
@@ -18,7 +18,7 @@ public class DemoParser extends AParser {
      * @return IRecipe The populated IRecipe
      * @throws Exception
      */
-    @Override
+ /*   @Override
     public IRecipe parse(String text) throws Exception {
         return recipe;
     }
@@ -28,8 +28,9 @@ public class DemoParser extends AParser {
      * @param text The recipe as text.
      * @return true if accepts
      */
-    @Override
+ /*   @Override
     public boolean accepts(String text) {
         return text.contains( "hello" );
     }
 }
+*/
