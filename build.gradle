@@ -51,14 +51,18 @@ buildscript {
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.13'
-    compile group: 'org.javalite', name: 'activejdbc', version: '1.4.11'
+
+    // Merged start
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.5'
-    compile 'org.slf4j:slf4j-api:1.7.13'
     compile 'org.xerial:sqlite-jdbc:3.8.11'
     compile 'org.apache.commons:commons-lang3:3.4'
+    // Merged end
 
-    // Jsoup
+    compile group: 'org.javalite', name: 'activejdbc', version: '1.4.11'
+    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
     compile 'org.jsoup:jsoup:1.8.3'
+    compile 'com.googlecode.json-simple:json-simple:1.1'
+    compile 'one.util:streamex:0.6.0'
 
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
