@@ -44,6 +44,10 @@ public class ControllerManageCookBooks {
         refreshListViews(cookbooks);
     }
 
+    /**
+     * The method ''initializeListeners()'' initializes the listeners.
+     */
+
     private void initializeListeners() {
         deleteButton.setOnAction((ActionEvent event) -> {
             String recipe = listViewCookBooks.getSelectionModel().getSelectedItem();
@@ -64,12 +68,22 @@ public class ControllerManageCookBooks {
         });
     }
 
+    /**
+     * The method ''refreshListView(ObservableList<String> cookbooks)'' refreshs the listView.
+     */
+
     private void refreshListViews(ObservableList<String> cookbooks) {
         FXCollections.sort(cookbooks);
         this.listViewCookBooks.setItems(cookbooks);
         ControllerManageCookBook controllerManageCookBook = new ControllerManageCookBook();
         controllerManageCookBook.searchInListView(cookbooks, searchFieldCookBooks, listViewCookBooks);
     }
+
+    /**
+     * The method ''addCookBook(ActionEvent event)'' opens the addCookBook-window.
+     *
+     * @param event
+     */
 
     @FXML
     void addCookBook(ActionEvent event) {

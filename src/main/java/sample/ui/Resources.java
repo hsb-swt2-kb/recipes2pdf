@@ -6,10 +6,8 @@ package sample.ui;
  */
 public class Resources {
 
-    /**
-     * FXMLs
-     */
 
+    //FXMLs
     protected static String getDefaultFXML() {
         return "/sample/ui/Default.fxml";
     }
@@ -66,10 +64,7 @@ public class Resources {
         return "/sample/ui/ChangeRecipe.fxml";
     }
 
-    /**
-     * Icons
-     */
-
+    //Icons
     protected static String getDefaultIcon() {
         return "/sample/ui/icon_bg_small.png";
     }
@@ -82,10 +77,8 @@ public class Resources {
         return "/sample/ui/Info.png";
     }
 
-    /**
-     * Window-Titles
-     */
 
+    //Window-Titles
     protected static String getFileChooserWindowText() {
         return "File Chooser";
     }

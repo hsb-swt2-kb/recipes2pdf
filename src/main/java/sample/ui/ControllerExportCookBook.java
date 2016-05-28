@@ -44,6 +44,10 @@ public class ControllerExportCookBook {
 
     }
 
+    /**
+     * The method ''initializeListeners()'' initializes the listeners.
+     */
+
     private void initializeListeners() {
         comboBoxFormat
             .setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -110,6 +114,9 @@ public class ControllerExportCookBook {
 
     }
 
+    /**
+     * The method '' browse(ActionEvent event)'' opens the filechooser and set the choosen path to the path-textField.
+     */
     @FXML
     void browse(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();

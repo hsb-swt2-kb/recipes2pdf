@@ -84,6 +84,10 @@ public class ControllerManageCookBook {
         refreshListViews(recipeNames, recipeNamesOfCookBook);
     }
 
+    /**
+     * The method ''refreshListView(ObservableList<String> recipes, ObservableList<String> cookbook)'' refreshs the listViews.
+     */
+
     private void refreshListViews(ObservableList<String> recipes, ObservableList<String> cookbook) {
         FXCollections.sort(recipes);
         FXCollections.sort(cookbook);
@@ -93,14 +97,22 @@ public class ControllerManageCookBook {
         searchInListView(cookbook, searchFieldCookBooks, listViewCookBook);
     }
 
+    /**
+     * The method ''refreshComboBox(ObservableList<String> cookbooks)'' refreshs the comboBox.
+     */
+
     private void refreshComboBox(ObservableList<String> cookbooks) {
         comboBoxCookBooks.setItems(cookbooks);
     }
 
+    /**
+     * The method ''initializeListeners()'' initializes the listeners.
+     */
+
     private void initializeListeners() {
         setupMultipleSelection();
 
-        // drag from left to right
+        // drag from the left listView to right the right listView
         listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -136,7 +148,7 @@ public class ControllerManageCookBook {
             }
         });
 
-        // drag from right to left
+        // drag from the right listView to the left listView
         listViewCookBook.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -187,7 +199,7 @@ public class ControllerManageCookBook {
         });
 
 
-
+        //Buttonactions
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
             String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
                 String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
@@ -243,11 +255,21 @@ public class ControllerManageCookBook {
     }
 
 
+    /**
+     * The method ''export2pdf()'' opens the export-window after a interaction with the export-button.
+     *
+     * @param event
+     */
     @FXML
     void export2pdf(ActionEvent event) {
         controllerDefault.newWindow(Resources.getExportFXML(), Resources.getExportWindowText(), 290, 200, Resources.getDefaultIcon());
 
     }
+
+    /**
+     * The method ''addRecipe(ActionEvent event)'' opens the addRecipe-Popover after a interaction with the plus-button.
+     * @param event
+     */
 
     @FXML
     void addRecipe(ActionEvent event) {
@@ -260,6 +282,11 @@ public class ControllerManageCookBook {
         //controllerDefault.newWindow(Resources.getloadRecipeFXML(), Resources.getLoadWindowText(), 290, 160, Resources.getDefaultIcon());
     }
 
+    /**
+     * The method 'loadResource(String fxml)' loads the FXML-files.
+     * @param fxml path of the FXML-file
+     * @return root
+     */
     public Node loadResource(String fxml) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;

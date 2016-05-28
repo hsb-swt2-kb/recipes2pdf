@@ -78,6 +78,10 @@ public class ControllerSortLevel {
         });
     }
 
+    /**
+     * The method ''refreshComboBox(ObservableList<String> sortLevels)'' refreshs the comboBox.
+     */
+
     private void refreshComboBox(ObservableList<String> sortLevels) {
         comboBoxSortLevels.setItems(sortLevels);
     }
