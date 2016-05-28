@@ -31,7 +31,7 @@ public class TxtParser extends AConcreteParser implements Constants
 {
   public Recipe parse(ArrayList<String> textFileContent) {
     Recipe recipe = new Recipe();
-    ArrayList<String[]> tempIncredient = new ArrayList<String[]>();
+    ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
 
     //Try to extract minimal recipdata
     //TODO Try to find name-tag
@@ -39,8 +39,31 @@ public class TxtParser extends AConcreteParser implements Constants
     recipe.setTitle(extractRecipename(textFileContent));
 
     //recipe.setNurture()
-    tempIncredient = extractIncredentsList(textFileContent);
-    // recipe.zubereitung = findPreparationOfRecipe(textFileContent);
+    // Set IngredientList from RecipeObject from temporaryList
+    tempIncredientList = extractIncredentsList(textFileContent);
+    for (int i = 0;i<tempIncredientList.size();i++) {
+      /*try
+      {
+        if (tempIncredientList.get(i)[0] == null) {
+          String[] tempIngredient = new String[2];
+          tempIngredient[0] = "0";
+          tempIngredient[1] = tempIncredientList.get(i)[1];
+          tempIngredient[2] = tempIncredientList.get(i)[2];
+
+          tempIncredientList.set(i,tempIngredient);
+        }
+        Integer.parseInt(tempIncredientList.get(i)[0];
+        }
+        catch(NumberFormatException e)
+        {
+
+        }*/
+
+        recipe.add("Name",1,"UnitName");
+
+        //recipe.add(tempIncredientList.get(i)[2],null,tempIncredientList.get(i)[1]);
+    }
+    recipe.setText(findPreparationOfRecipe(textFileContent));
 
     // Try to exctract additional recipedata
       Region region = new Region();
@@ -51,9 +74,10 @@ public class TxtParser extends AConcreteParser implements Constants
       category.setName(findDatafield(textFileContent,"Kategorie"));
       recipe.setCategory(category);
 
-     // recipe.setDuration(Integer.parseInt(findDatafield(textFileContent,"Arbeitszeit")));
-      //recipe.setCalories(Integer.parseInt(findDatafield(textFileContent,"Kcal")));
-      //recipe.setPortions(Integer.parseInt(findDatafield(textFileContent,"Portionen")));
+     
+      recipe.setDuration(Integer.parseInt(findDatafield(textFileContent,"Arbeitszeit")));
+      recipe.setCalories(Integer.parseInt(findDatafield(textFileContent,"Kalorien")));
+      recipe.setPortions(Integer.parseInt(findDatafield(textFileContent,"Portionen")));
 
     //Checking Data will be deletet later
     System.out.println(recipe.getTitle());
@@ -191,7 +215,7 @@ public class TxtParser extends AConcreteParser implements Constants
     for(int i=0;i<fileContent.size();i++){
 
       row = fileContent.get(i).trim();
-      if(row.length()==0) {;continue;}
+      if(row.length()==0) {continue;}
       else if(row.length()>0 && fileContent.get(i).startsWith("-") == false ){
         nameFound = true;
       }
