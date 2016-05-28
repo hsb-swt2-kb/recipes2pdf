@@ -73,4 +73,19 @@ public class TxtParserTest {
         Setup("TestGericht8.txt");
         the(recipe.getTitle()).shouldBeEqual("Vegetarische Lasagne");
     }
+    @Test
+    public void testParseMethod9(){
+        Setup("TestGericht9.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
+    @Test
+    public void testParseMethod10(){
+        Setup("TestGericht10.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
+
 }

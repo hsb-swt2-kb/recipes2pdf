@@ -141,6 +141,8 @@ public class TxtParser extends AConcreteParser implements Constants
         break;
       }
     }
+    name = row.replaceAll("name:","").trim();
+    name = row.replaceAll("Name:","").trim();
     return name;
   }
 
@@ -282,9 +284,7 @@ public class TxtParser extends AConcreteParser implements Constants
       if (datafield.length()==0) {
         datafield=null;
       }
-
     }
-
     else {
       return null;
     }
