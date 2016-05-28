@@ -1,4 +1,4 @@
-package sample.model.fake;
+/*package sample.model.fake;
 
 import sample.model.*;
 
@@ -8,7 +8,7 @@ import java.util.TreeMap;
 /**
  * Created by czoeller on 18.04.16.
  */
-public class Recipe implements IRecipe {
+/*public class Recipe implements IRecipe {
 
     private Long id = new Long(0);
     private String title;
@@ -79,5 +79,5 @@ public class Recipe implements IRecipe {
     public void setImage(byte[] image) {
         this.image = image;
     }
-}
+}*/
 
