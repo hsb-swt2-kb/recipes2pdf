@@ -1,5 +1,7 @@
 package sample.database;
 
+import java.io.File;
+
 /**
  * Created by czoeller on 26.03.16.
  */
@@ -11,7 +13,7 @@ public class DatabaseConnection {
     public String PASSWORD;
 
     private DatabaseConnection() {
-        final String path = System.getProperty("user.dir") + "/database.db";
+        final String path = System.getProperty("user.dir") + File.separator + "database.db";
         this.CONNECTOR = "org.sqlite.JDBC";
         this.PATH = "jdbc:sqlite://" + path;
         this.USER = null;
