@@ -3,7 +3,6 @@ package sample.builder;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.hamcrest.core.Is;
 import org.junit.Test;
 import sample.config.IConfig;
 import sample.model.*;
@@ -120,7 +119,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\chead{Vorspeise}"));
         assertThat(texFile,containsString("\\lfoot{Vorspeise.Griechenland}"));
         assertThat(texFile,containsString("\\rfoot{Vorspeise.Griechenland}"));
-        assertThat(texFile,containsString("\\item {Zutat1 5 g}"));
+        assertThat(texFile,containsString("\\item {Zutat1 5.0 g}"));
         List<String> substrings = new ArrayList<>();
         substrings.add("\\includegraphics[width=\\linewidth]{");
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) +"/.recipes2pdf/images/Rezepttitel11" );
@@ -131,7 +130,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\chead{Nachspeise}"));
         assertThat(texFile,containsString("\\lfoot{Nachspeise.Mexiko}"));
         assertThat(texFile,containsString("\\rfoot{Nachspeise.Mexiko}"));
-        assertThat(texFile,containsString("\\item {Zutat2 8 g}"));
+        assertThat(texFile,containsString("\\item {Zutat2 8.0 g}"));
         substrings.clear();
         substrings.add("\\includegraphics[width=\\linewidth]{");
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) +"/.recipes2pdf/images/Rezepttitel22" );
@@ -142,7 +141,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\chead{Hauptspeise}"));
         assertThat(texFile,containsString("\\lfoot{Hauptspeise.China}"));
         assertThat(texFile,containsString("\\rfoot{Hauptspeise.China}"));
-        assertThat(texFile,containsString("\\item {Zutat3 6 g}"));
+        assertThat(texFile,containsString("\\item {Zutat3 6.0 g}"));
         substrings.clear();
         substrings.add("\\includegraphics[width=\\linewidth]{");
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) +"/.recipes2pdf/images/Rezepttitel33" );
@@ -154,7 +153,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\chead{Vorspeise}"));
         assertThat(texFile,containsString("\\lfoot{Vorspeise.Mexiko}"));
         assertThat(texFile,containsString("\\rfoot{Vorspeise.Mexiko}"));
-        assertThat(texFile,containsString("\\item {Zutat4 4 g}"));
+        assertThat(texFile,containsString("\\item {Zutat4 4.0 g}"));
         substrings.clear();
         substrings.add("\\includegraphics[width=\\linewidth]{");
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) +"/.recipes2pdf/images/Rezepttitel44" );
@@ -177,7 +176,7 @@ public class PdfBuilderTest {
         assertThat(texFile,containsString("\\chead{Vorspeise}"));
         assertThat(texFile,containsString("\\lfoot{Vorspeise.Griechenland.Frühling}"));
         assertThat(texFile,containsString("\\rfoot{Vorspeise.Griechenland.Frühling}"));
-        assertThat(texFile,containsString("\\item {Zutat1 5 g}"));
+        assertThat(texFile,containsString("\\item {Zutat1 5.0 g}"));
         List<String> substrings = new ArrayList<>();
         substrings.add("\\includegraphics[width=\\linewidth]{");
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) + "/.recipes2pdf/images/Testrezept1");
