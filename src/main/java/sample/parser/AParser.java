@@ -1,4 +1,4 @@
-package sample.parser;
+/*package sample.parser;
 
 import sample.model.IRecipe;
 
@@ -6,7 +6,7 @@ import sample.model.IRecipe;
  * Abstract Parser to be used for general parser functionality.
  * Created by czoeller on 31.03.16.
  */
-abstract class AParser implements IParser {
+/*abstract class AParser implements IParser {
 
     protected IRecipe recipe;
 
@@ -19,4 +19,4 @@ abstract class AParser implements IParser {
         this.recipe = recipe;
     }
 
-}
+}*/
