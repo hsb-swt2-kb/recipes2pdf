@@ -5,8 +5,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import sample.external.ChefkochAPI;
-import sample.model.IRecipe;
+import sample.model.Recipe;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -15,7 +16,8 @@ import java.util.function.Predicate;
  * Created by czoeller on 16.04.16.
  * Chefkoch parser to parse recipes from chefkoch.de
  */
-public class ChefkochParser extends AParser {
+public class ChefkochParser extends AConcreteParser {
+    private Recipe recipe;
 
     private ChefkochAPI chefkochAPI;
 
@@ -37,8 +39,8 @@ public class ChefkochParser extends AParser {
      * @throws Exception
      */
     @Override
-    public IRecipe parse(final String text) throws Exception {
-        final String showID = extractShowID(text).orElseThrow( () -> new IllegalStateException("Could not extract id from the recipe.") );
+    public Recipe parse(final ArrayList<String> text) throws Exception {
+        final String showID = extractShowID(text.toString()).orElseThrow( () -> new IllegalStateException("Could not extract id from the recipe.") );
         this.recipe = this.chefkochAPI.findById(showID).orElseThrow( () -> new IllegalStateException("Could not parse recipe.") );
         return recipe;
     }
@@ -51,8 +53,8 @@ public class ChefkochParser extends AParser {
      * @return true if accepts
      */
     @Override
-    public boolean accepts(final String text) {
-        return text.contains("chefkoch");
+    public boolean accepts(final ArrayList<String> text) {
+        return text.toString().contains("chefkoch");
     }
 
     /**
