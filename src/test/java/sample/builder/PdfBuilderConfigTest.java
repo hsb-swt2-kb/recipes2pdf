@@ -60,12 +60,13 @@ public class PdfBuilderConfigTest {
     @Test
     public void getTemplateFile() {
         assertEquals(userdir + ".recipes2pdf" + File.separator + "templates" + File.separator + "cookbookTemplate.tex", config.getTemplateFile().getAbsolutePath());
+        assertTrue(new File(userdir + ".recipes2pdf" + File.separator + "templates" + File.separator + "cookbookTemplate.tex").exists());
     }
 
     @Test
     public void getOutputDir() {
         assertEquals(userdir + ".recipes2pdf" + File.separator + "output", config.getOutputDir().getPath());
-        assertTrue(new File(userdir + ".recipes2pdf" + File.separator + "templates").exists());
+        assertTrue(new File(userdir + ".recipes2pdf" + File.separator + "output").exists());
     }
 
     @Test
