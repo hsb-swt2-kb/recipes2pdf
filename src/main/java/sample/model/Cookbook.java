@@ -44,6 +44,10 @@ public class Cookbook implements ICookbook {
         return this.sortlevel;
     }
 
+    public void setSortlevel(List<ISortlevel>  sortlevel){
+        this.sortlevel=sortlevel;
+    }
+
     @Override
     public void addSortlevel(ISortlevel sortlevel) {
         this.sortlevel.add(sortlevel);
