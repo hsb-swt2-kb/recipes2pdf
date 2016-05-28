@@ -68,19 +68,19 @@ public interface IRecipe extends IIdentifiable {
      * @param amount         amount of ingredient
      * @param unitName       name of the unit
      */
-    void add(String ingredientName, int amount, String unitName);
+    void add(String ingredientName, double amount, String unitName);
 
     /**
      * Retrieve Map of Ingredients with details amount and unit per ingredient.
      *
      * @return map
      */
-    List<Triple<IIngredient, Integer, IUnit>> getIngredients();
+    List<Triple<IIngredient, Double, IUnit>> getIngredients();
 
     /**
      * Insert recipe ingredient directly.
      * In most cases you should use <code>add(String ingredientName, int amount, String unitName)</code>
      * @param recipeIngredient
      */
-    void add(Triple<IIngredient, Integer, IUnit> recipeIngredient);
+    void add(Triple<IIngredient, Double, IUnit> recipeIngredient);
 }

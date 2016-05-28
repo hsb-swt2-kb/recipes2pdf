@@ -58,13 +58,13 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
             recipe.setSource( new SourceDAO().toPOJO( sourceDBO ) );
         }
 
-        final List<Triple<IIngredient, Integer, IUnit>> ingredients = recipeDBO.getIngredients();
-        for ( Triple<IIngredient, Integer, IUnit> triple : ingredients) {
+        final List<Triple<IIngredient, Double, IUnit>> ingredients = recipeDBO.getIngredients();
+        for ( Triple<IIngredient, Double, IUnit> triple : ingredients) {
             Ingredient ingredient = new IngredientDAO().toPOJO( (IngredientDBO) triple.getLeft() );
             Unit unit = new UnitDAO().toPOJO( (UnitDBO) triple.getRight() );
-            Integer amout = triple.getMiddle();
+            Double amout = triple.getMiddle();
 
-            Triple<IIngredient, Integer, IUnit> row = new MutableTriple<>(ingredient, amout, unit);
+            Triple<IIngredient, Double, IUnit> row = new MutableTriple<>(ingredient, amout, unit);
             recipe.add(row);
         }
 
@@ -132,8 +132,8 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
             recipeDBO.setSource( sourceDBO );
         }
 
-        final List<Triple<IIngredient, Integer, IUnit>> ingredients = recipe.getIngredients();
-        for ( Triple<IIngredient, Integer, IUnit> triple : ingredients) {
+        final List<Triple<IIngredient, Double, IUnit>> ingredients = recipe.getIngredients();
+        for ( Triple<IIngredient, Double, IUnit> triple : ingredients) {
             recipeDBO.add(triple.getLeft().getName(), triple.getMiddle(), triple.getRight().getName());
         }
         return recipeDBO;

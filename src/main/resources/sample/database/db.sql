@@ -140,7 +140,7 @@ CREATE TABLE recipe_ingredient
   recipe_id INTEGER,
   ingredient_id INTEGER,
   unit_id INTEGER,
-  amount INTEGER,
+  amount REAL,
   FOREIGN KEY (recipe_id) REFERENCES recipe(id),
   FOREIGN KEY (ingredient_id) REFERENCES ingredient(id),
   FOREIGN KEY (unit_id) REFERENCES unit(id),
