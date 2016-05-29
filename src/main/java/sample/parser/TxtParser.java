@@ -253,13 +253,23 @@ public class TxtParser extends AConcreteParser implements Constants {
 
     private String findPreperationWithTag(ArrayList<String> textFileContent){
         String tempStr = null;
+
         int beginRow = findSignalword(textFileContent,"Zubereitung");
         if (beginRow > 0){
             int endRow = findNextSignalword(beginRow,textFileContent,"Zubereitung");
-            for (int i = beginRow;i<endRow;i++){
-                tempStr = tempStr+" "+textFileContent.get(i);
+            for (int i = beginRow;i<=endRow;i++){
 
+                tempStr = tempStr+" "+textFileContent.get(i);
+                try{
+                    if (checkRowForSignalwords(textFileContent.get(i+1)) == true){
+                        break;
+                    }
+                }
+                catch(IndexOutOfBoundsException e){
+                    break;
+                }
             }
+            System.out.println(tempStr);
             tempStr=tempStr.replaceFirst("null","").trim();
             tempStr=tempStr.replaceFirst("Zubereitung:","").trim();
             System.out.println(tempStr);
