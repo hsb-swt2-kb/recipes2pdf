@@ -9,6 +9,8 @@ import java.util.List;
 public class Cookbook implements ICookbook {
     private Long id;
     private String title;
+    private String foreword;
+    private String pathOfpicture;
     private List<IRecipe> recipes;
     private List<ISortlevel> sortlevel;
 
@@ -17,12 +19,20 @@ public class Cookbook implements ICookbook {
         this.sortlevel = new ArrayList<>();
     }
 
+    public Long getID() {
+        return this.id;
+    }
+
     public void setID(Long id) {
         this.id = id;
     }
 
-    public Long getID() {
-        return this.id;
+    public String getForeword() {
+        return this.foreword;
+    }
+
+    public String getPathOfpicture() {
+        return this.pathOfpicture;
     }
 
     @Override

@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.model.Cookbook;
 
 import java.io.File;
 
@@ -56,9 +57,9 @@ public class ControllerChangeCookBook {
      */
 
     private void loadInformation() {
-
-        foreword = "";
-        path = "";
+        Cookbook cookbook = UI.searchCookBook(name);
+        foreword = cookbook.getForeword();
+        path = cookbook.getPathOfpicture();
     }
 
     /**

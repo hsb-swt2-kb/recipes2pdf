@@ -148,7 +148,7 @@ public class UI {
 
     /**
      *
-     *  desRecipe
+     *  delRecipes
      *
      *  uses RecipeDAO to delete the given Recipe(s) from the DB
      *
@@ -190,6 +190,12 @@ public class UI {
     static boolean delCookBook(Cookbook cookbook){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().delete(cookbook);
+
+    }
+
+    static boolean delRecipe(Recipe recipe) {
+        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        return new RecipeDAO().delete(recipe);
 
     }
 

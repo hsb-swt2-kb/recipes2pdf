@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import sample.model.Cookbook;
 
 public class ControllerDeleteDialogCookBook {
 
@@ -25,6 +26,8 @@ public class ControllerDeleteDialogCookBook {
     @FXML
     void deleteElement(ActionEvent event) {
         selectedItem = ControllerManageCookBooks.getInstance().getSelectedItem();
+        Cookbook cookbook = UI.searchCookBook(selectedItem);
+        UI.delCookBook(cookbook);
 
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
