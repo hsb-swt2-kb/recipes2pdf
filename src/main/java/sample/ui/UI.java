@@ -193,6 +193,14 @@ public class UI {
 
     }
 
+    static void changeCookBook(Cookbook cookbook){
+
+    }
+
+    static void changeRecipe(Recipe recipe){
+
+    }
+
     static boolean delRecipe(Recipe recipe) {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new RecipeDAO().delete(recipe);
