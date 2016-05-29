@@ -130,70 +130,9 @@ public class ControllerManageCookBook {
 
     private void initializeListeners() {
         setupMultipleSelection();
-
-        // drag from the left listView to right the right listView
-        listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (listViewRecipes.getSelectionModel().getSelectedItem() == null) {
-                    return;
-                }
-
-                Dragboard dragBoard = listViewRecipes.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putString(listViewRecipes.getSelectionModel().getSelectedItem());
-                dragBoard.setContent(content);
-            }
-        });
-
-
-        listViewCookBook.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                dragEvent.acceptTransferModes(TransferMode.MOVE);
-            }
-        });
-
-        listViewCookBook.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                boolean insite = listViewCookBook.getItems().contains(selectedItem);
-                if(insite==false) {
-                    listViewCookBook.getItems().addAll(selectedItem);
-                    listViewRecipes.setItems(recipeNames);
-                    dragEvent.setDropCompleted(true);
-                }
-            }
-        });
-
-        // drag from the right listView to the left listView
-        listViewCookBook.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Dragboard dragBoard = listViewCookBook.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
-                dragBoard.setContent(content);
-            }
-        });
-
-        listViewRecipes.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                dragEvent.acceptTransferModes(TransferMode.MOVE);
-            }
-        });
-
-        listViewRecipes.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                String selectedItem = dragEvent.getDragboard().getString();
-
-
-                recipeNamesOfCookBook.remove(selectedItem);
-                dragEvent.setDropCompleted(true);
-            }
-        });
+        doubleClick();
+        dragleft2right();
+        dragright2left();
 
         leftArrowButton.setOnAction((ActionEvent event) -> {
             String name =listViewCookBook.getSelectionModel().getSelectedItem();
@@ -245,6 +184,75 @@ public class ControllerManageCookBook {
 
     }
 
+    private void dragleft2right() {
+        // drag from the left listView to right the right listView
+        listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (listViewRecipes.getSelectionModel().getSelectedItem() == null) {
+                    return;
+                }
+
+                Dragboard dragBoard = listViewRecipes.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(listViewRecipes.getSelectionModel().getSelectedItem());
+                dragBoard.setContent(content);
+            }
+        });
+
+
+        listViewCookBook.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+
+        listViewCookBook.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                boolean insite = listViewCookBook.getItems().contains(selectedItem);
+                if (insite == false) {
+                    listViewCookBook.getItems().addAll(selectedItem);
+                    listViewRecipes.setItems(recipeNames);
+                    dragEvent.setDropCompleted(true);
+                }
+            }
+        });
+    }
+
+    private void dragright2left() {
+        // drag from the right listView to the left listView
+        listViewCookBook.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Dragboard dragBoard = listViewCookBook.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
+                dragBoard.setContent(content);
+            }
+        });
+
+        listViewRecipes.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+
+        listViewRecipes.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                String selectedItem = dragEvent.getDragboard().getString();
+
+
+                recipeNamesOfCookBook.remove(selectedItem);
+                dragEvent.setDropCompleted(true);
+            }
+        });
+
+    }
+
     protected String getSelectedItem() {
         return this.selectedItem;
     }
@@ -254,6 +262,20 @@ public class ControllerManageCookBook {
      */
     private void setupMultipleSelection() {
         listViewRecipes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    }
+
+    private void doubleClick() {
+        listViewCookBook.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent click) {
+
+                if (click.getClickCount() == 2) {
+                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+
+                }
+            }
+        });
     }
 
 
