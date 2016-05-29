@@ -36,7 +36,6 @@ public class TxtParser extends AConcreteParser implements Constants
     //Try to find Name without Tag
     recipe.setTitle(extractRecipename(textFileContent));
 
-    //recipe.setNurture()
     // Set IngredientList from RecipeObject from temporaryList
     tempIncredientList = extractIncredentsList(textFileContent);
     for (int i = 0;i<tempIncredientList.size();i++) {
@@ -84,47 +83,16 @@ public class TxtParser extends AConcreteParser implements Constants
       recipe.setPortions(0);
     }
 
-    /*Checking Data will be deletet later
-    System.out.println(recipe.getTitle());
-    for (int i=0;i<recipe.getIngredients().size();i++){
-      System.out.println(recipe.getIngredients().get(i).getLeft().getName() +"   |   "+recipe.getIngredients().get(i).getMiddle()+"   |   "+recipe.getIngredients().get(i).getRight().getName());
-    }
-
-    System.out.println(recipe.getText());
-    System.out.println(recipe.getRegion().getName());
-    System.out.println(recipe.getCourse().getName());
-    System.out.println(recipe.getCategory().getName());
-    System.out.println(recipe.getDuration());
-    System.out.println(recipe.getCalories());
-    System.out.println(recipe.getPortions());
-    System.out.println(recipe.getCourse().getName());
-    System.out.println(recipe.getNurture().getName());*/
     return recipe;
   }
 
   public boolean accepts(ArrayList<String> fileContent) {
-      boolean acceptance = false;
-
-      if (true) // TODO: Akzeptanzbedingungen prüfen
-      {
-          acceptance = false;
-      } else {
-          acceptance = true;
-      }
-      return acceptance;
-  }
-
-  public boolean accepts(Recipe recipe) {
-    boolean acceptance = false;
-
-    //if(recipe.getTitle() == null || recipe.get == null || recipe.zutaten.size()==0)
-    if(true)
-    {
-      return false;
-    }
-    else{
-      return true;
-    }
+      /* parse it to check it :) */
+      Recipe recipe =  this.parse(fileContent);
+      if(!(recipe.isEmpty() || recipe.isIncomplete()))
+          return true;
+      else
+          return false;
   }
 
   //Extract the name of a recpipe. Must be in the first non empty row
