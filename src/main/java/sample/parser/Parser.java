@@ -29,7 +29,7 @@ public class Parser implements IParser
         ArrayList<AConcreteParser> parsers = new ArrayList<>();
         // Parser instantiieren
         parsers.add(new TxtParser());
-        //parsers.add(new CKParser ());
+        parsers.add(new ChefkochParser ());
         parsers.add(new WWParser());
 
         // Format raten
