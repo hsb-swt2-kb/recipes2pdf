@@ -87,5 +87,40 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
     }
+    @Test
+    public void testParseMethod11(){
+        Setup("TestGericht11.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
+    @Test
+    public void testParseMethod12(){
+        Setup("TestGericht12.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
+    @Test
+    public void testParseMethod13(){
+        Setup("TestGericht13.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
+    @Test
+    public void testParseMethod14(){
+        Setup("TestGericht14.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
+    @Test
+    public void testParseMethod15(){
+        Setup("TestGericht15.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
 
 }
