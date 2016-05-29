@@ -262,4 +262,46 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
     }
+    @Test
+    public void testParseMethod32() {
+        Setup("TestGericht32.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("EineEinheitsbezeichnungMit44Zeichen123456789");
+    }
+    @Test
+    public void testParseMethod33() {
+        Setup("TestGericht33.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("EineEinheitsbezeichnungMit45Zeichen1234567890");
+    }
+    @Test
+    public void testParseMethod34() {
+        Setup("TestGericht34.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("EineEinheitsbezeichnungMit46Zeichen1234567890");
+    }
+    @Test
+    public void testParseMethod35() {
+        Setup("TestGericht35.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeType(Double.class);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("pg");
+    }
+    @Test
+    public void testParseMethod36() {
+        Setup("TestGericht36.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeType(Double.class);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("pg");
+    }
+    @Test
+    public void testParseMethod37() {
+        Setup("TestGericht37.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeType(Double.class);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("pg");
+    }
 }

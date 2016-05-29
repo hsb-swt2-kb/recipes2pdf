@@ -275,14 +275,17 @@ public class TxtParser extends AConcreteParser implements Constants {
     private double parseStringToDouble(String str) {
 
         double d = 0;
+
         try {
             str = str.replaceAll(",", ".");
-            int temp = str.indexOf(".");
+            int temp = str.lastIndexOf(".");
             int tempLength = str.length();
             StringBuilder build = new StringBuilder(str);
-            for (int i=tempLength-1;i>temp+3;i--){
-                build.deleteCharAt(i);
-                str = build.toString();
+            if(str.contains(".")==true){
+                for (int i=tempLength-1;i>temp+3;i--){
+                    build.deleteCharAt(i);
+                    str = build.toString();
+                }
             }
             d = Double.parseDouble(str);
 
@@ -363,7 +366,6 @@ public class TxtParser extends AConcreteParser implements Constants {
             int tempLength = str.length();
             String tempStr = str;
             StringBuilder build = new StringBuilder(str);
-            System.out.println(tempLength);
             for (int i = tempLength-1; i >= maxLength; i--) {
                 build.deleteCharAt(i);
                 tempStr = build.toString();

@@ -1,0 +1,23 @@
+Vegetarische Lasagne
+- 2.5 EineEinheitsbezeichnungMit45Zeichen1234567890 Tomaten
+
+Kategorie: Hauptgericht
+
+Werfen sie die Nudeln in den Topf
+
+Region: Deutschland
+
+Saison: Sommer
+
+Tageszeit: Mittag
+
+Gerichtsart: Reis
+
+Portionen: 4
+
+Kalorien: 300
+
+Ernährungsart: Vegan
+
+Arbeitszeit: 40
+
