@@ -10,7 +10,9 @@ import sample.model.ICookbook;
 import sample.model.IRecipe;
 import sample.model.Recipe;
 import sample.parser.Parser;
-import java.io.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -188,6 +190,18 @@ public class UI {
     static boolean delCookBook(Cookbook cookbook){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().delete(cookbook);
+
+    }
+
+    static Cookbook searchCookBook(String cookbookname) {
+        Cookbook cookbookFromSearch = null;
+        return cookbookFromSearch;
+
+    }
+
+    static Recipe searchRecipe(String recipe) {
+        Recipe recipeFromSearch = null;
+        return recipeFromSearch;
 
     }
 }
