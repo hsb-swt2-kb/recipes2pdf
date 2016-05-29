@@ -129,7 +129,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         for (int i = 0; i < textfileContent.size(); i++) {
             tempIncredent = textfileContent.get(i).trim();
             if (tempIncredent.startsWith("-")) {
-                temporaryIingredients.add(tempIncredent.replaceFirst("-", "").trim());
+                temporaryIingredients.add(tempIncredent.replace("-", "").trim());
                 //checking next line to stop ingredients-parsing
                 //to prevent wrong ingredients in the rest of the recipe
                 if (((textfileContent.get(i + 1).trim().startsWith("-") == false)
