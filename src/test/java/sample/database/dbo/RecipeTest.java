@@ -3,10 +3,8 @@ package sample.database.dbo;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-import sample.model.*;
 import sample.database.dao.*;
+import sample.model.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +15,6 @@ import static org.javalite.test.jspec.JSpec.the;
 /**
  * Created by czoeller on 08.04.16.
  */
-@RunWith(MockitoJUnitRunner.class)
 public class RecipeTest extends ADatabaseTest {
 
     Recipe recipe;
