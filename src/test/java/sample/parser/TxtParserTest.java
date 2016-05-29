@@ -2,10 +2,13 @@ package sample.parser;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
+import static org.javalite.test.jspec.JSpec.expect;
 import static org.javalite.test.jspec.JSpec.the;
 
+import org.junit.rules.ExpectedException;
 import sample.model.Recipe;
 
 import java.io.FileNotFoundException;
@@ -179,6 +182,57 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Thunfisch eingelegt in Olivenöl");
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(3);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("Dosen");
+    }
+    @Test
+    public void testParseMethod21() {
+        Setup("TestGericht21.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Salz");
+        the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
+    }
+    @Test
+    public void testParseMethod22() {
+        Setup("TestGericht22.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Salz");
+        the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
+    }
+    @Test
+    public void testParseMethod23() {
+        Setup("TestGericht23.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+    }
+    @Test
+    public void testParseMethod24() {
+        Setup("TestGericht24.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+    }
+    @Test
+    public void testParseMethod25() {
+        Setup("TestGericht25.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+    }
+    @Test
+    public void testParseMethod26() {
+        Setup("TestGericht26.txt");
+        the(recipe.getIngredients().size()).shouldBeEqual(0);
+    }
+    @Test
+    public void testParseMethod27() {
+        Setup("TestGericht27.txt");
+        the(recipe.getIngredients().size()).shouldBeEqual(0);
     }
 
 
