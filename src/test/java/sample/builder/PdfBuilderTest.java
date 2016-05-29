@@ -3,17 +3,25 @@ package sample.builder;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.input.NullInputStream;
 import org.junit.Test;
+import sample.builder.Exceptions.TemplateConverterException;
+import sample.builder.Exceptions.TexParserException;
 import sample.config.IConfig;
 import sample.model.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class PdfBuilderTest {
     @Test
@@ -162,10 +170,9 @@ public class PdfBuilderTest {
     }
 
     @Test
-    public void testRecipePdfBuilder() throws Throwable {
+    public void testRecipePdfBuilder() throws Exception {
         IConfig config = IConfig.getInstance();
         IConcreteBuilder pdfBuilder = new PdfBuilder(config);
-
 
         IRecipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L,"Vorspeise","Griechenland","Frühling","Zutat1",5,"g");
         List<ISortlevel> sortlevels= generateSortlevelList("category","region","season");
@@ -182,6 +189,70 @@ public class PdfBuilderTest {
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) + "/.recipes2pdf/images/Testrezept1");
         assertThat(texFile,stringContainsInOrder(substrings));
         assertThat(texFile,containsString("Rezepttext 1"));
+
+    }
+
+    @Test(expected = TexParserException.class)
+    public void testThrowConverterEsception () throws  Exception{
+        IConfig config = IConfig.getInstance();
+        config.setProperty("TEMPLATE_FILE_NAME","testTexFile.tex");
+        InputStream templateStrem = new NullInputStream(30);
+        File templateFile  = new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + "templates" + File.separator + "testTexFile.tex");
+        TexParserException ex = null;
+
+        try {
+            Files.copy(templateStrem, templateFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            PdfBuilder builder = new PdfBuilder(config);
+            ICookbook cookbook = new Cookbook();
+            cookbook.addRecipe(generateRecipe("Testrezept","Testrezepttext",1L,"Hauptspeise","Deutschland","Sommer","Mehl",400,"g"));
+            builder.build(cookbook);
+        } catch (TexParserException e) {
+            ex = e;
+        } finally {
+            config.setProperty("TEMPLATE_FILE_NAME","cookbookTemplate.tex");
+            throw ex;
+        }
+
+    }
+
+    @Test(expected = TexParserException.class)
+    public void testThrowParserEsception () throws Exception {
+        IConfig config = IConfig.getInstance();
+        PdfBuilder builder = new PdfBuilder(config);
+        ICookbook cookbook = new Cookbook();
+        cookbook.addRecipe(new Recipe());
+        builder.build(cookbook);
+    }
+
+    @Test
+    public void testRicipeNoSortlevel () throws Exception {
+        IConfig config = IConfig.getInstance();
+        PdfBuilder builder = new PdfBuilder(config);
+        ICookbook cookbook = new Cookbook();
+        IRecipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L,"Vorspeise","Griechenland","Frühling","Zutat1",5,"g");
+
+        builder.build(r1);
+        String texFile= FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
+
+        //Check generated Text
+        assertThat(texFile,containsString("\\chead{}"));
+        assertThat(texFile,containsString("\\lfoot{}"));
+        assertThat(texFile,containsString("\\rfoot{}"));
+        assertThat(texFile,containsString("\\item {Zutat1 5.0 g}"));
+        List<String> substrings = new ArrayList<>();
+        substrings.add("\\includegraphics[width=\\linewidth]{");
+        substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) + "/.recipes2pdf/images/Testrezept1");
+        assertThat(texFile,stringContainsInOrder(substrings));
+        assertThat(texFile,containsString("Rezepttext 1"));
+    }
+
+    @Test
+    public void testBuildsMethod () throws Exception {
+        IConfig config = IConfig.getInstance();
+        PdfBuilder builder = new PdfBuilder(config);
+        assertTrue(builder.builds("pdf"));
+        assertTrue(builder.builds("pDf"));
+        assertTrue(builder.builds("PDF"));
 
     }
 
@@ -213,6 +284,7 @@ public class PdfBuilderTest {
         sortlevelList.add(generateSortlevel(thirdLevel));
         return  sortlevelList;
     }
+
     List<ISortlevel> generateSortlevelList(String primaryLevel, String secondaryLevel){
         List<ISortlevel> sortlevelList = new ArrayList<>();
         sortlevelList.add(generateSortlevel(primaryLevel));
@@ -225,4 +297,6 @@ public class PdfBuilderTest {
         sortlevel.setName(sortlevelName);
         return sortlevel;
     }
+
+
 }
