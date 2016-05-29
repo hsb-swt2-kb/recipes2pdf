@@ -170,11 +170,13 @@ public class UI {
      *
      * inserts a cookbook to the database and returns the title if success, otherwise null
      *
-     * @param cookbook cookbooks to add to DB
+     * @param title cookbooks to add to DB
      * @return boolean success of the insertion
      */
-    static boolean addCookBook(Cookbook cookbook){
+    static boolean addCookBook(String title){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        Cookbook cookbook = new Cookbook();
+        cookbook.setTitle(title);
         return new CookbookDAO().insert(cookbook);
     }
 

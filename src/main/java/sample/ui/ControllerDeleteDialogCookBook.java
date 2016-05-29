@@ -28,7 +28,6 @@ public class ControllerDeleteDialogCookBook {
         selectedItem = ControllerManageCookBooks.getInstance().getSelectedItem();
         Cookbook cookbook = UI.searchCookBook(selectedItem);
         UI.delCookBook(cookbook);
-
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
     }

@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.model.Cookbook;
 
 import java.io.File;
 
@@ -141,10 +142,8 @@ public class ControllerAddCookBook  {
      */
     @FXML
     void generateCookBook(ActionEvent event) {
-        getName();
-        getForeWord();
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
-            System.out.println(name + foreword + "file.getName()" + this.sortLevelsOfTheCookbook);
+            UI.addCookBook(getName());
             //Close Stage
             Stage stage = (Stage) generateButton.getScene().getWindow();
             stage.close();
