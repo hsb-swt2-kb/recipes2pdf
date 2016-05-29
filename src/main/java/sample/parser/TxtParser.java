@@ -36,6 +36,7 @@ public class TxtParser extends AConcreteParser implements Constants
     //Try to find Name without Tag
     recipe.setTitle(extractRecipename(textFileContent));
 
+    //recipe.setNurture()
     // Set IngredientList from RecipeObject from temporaryList
     tempIncredientList = extractIncredentsList(textFileContent);
     for (int i = 0;i<tempIncredientList.size();i++) {
