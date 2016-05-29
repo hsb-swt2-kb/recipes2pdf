@@ -15,6 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.model.Cookbook;
+
+import java.util.List;
 
 public class ControllerManageCookBooks {
 
@@ -62,10 +65,12 @@ public class ControllerManageCookBooks {
     private void initialize() {
         instance = this;
         initializeListeners();
-        /* TESTDATA */
-        this.cookbooks = FXCollections.observableArrayList("Tobias Kochbuch", "Henriks Kochbuch", "Florians Kochbuch", "Danys Kochbuch", "Christians Kochbuch", "Markuss Kochbuch", "Kais Kochbuch");
-         /* TESTDATA END */
-        refreshListViews(cookbooks);
+        this.cookbooks = FXCollections.observableArrayList();
+        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
+        for (Cookbook cookbook : cookbooksDB) {
+            this.cookbooks.add(cookbook.getTitle());
+        }
+        refreshListViews(this.cookbooks);
     }
 
     /**
