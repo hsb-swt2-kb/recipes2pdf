@@ -28,6 +28,9 @@ import java.util.regex.Pattern;
 
 
 public class TxtParser extends AConcreteParser implements Constants {
+    private final int fieldLength = 45;
+    private final int preparationLength =4545;
+
     public Recipe parse(ArrayList<String> textFileContent) {
         Recipe recipe = new Recipe();
         ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
@@ -41,7 +44,11 @@ public class TxtParser extends AConcreteParser implements Constants {
         // Set IngredientList from RecipeObject from temporaryList
         tempIncredientList = extractIncredentsList(textFileContent);
         for (int i = 0; i < tempIncredientList.size(); i++) {
-            recipe.add(tempIncredientList.get(i)[2], parseStringToDouble(tempIncredientList.get(i)[0]), tempIncredientList.get(i)[1]);
+            String tempName = cutString(tempIncredientList.get(i)[2],fieldLength);
+            String tempUnit = cutString(tempIncredientList.get(i)[1],fieldLength);
+            String tempAmount = cutString(tempIncredientList.get(i)[0],fieldLength);
+            //         IngredientName, Amount, UnitName
+            recipe.add(tempName, parseStringToDouble(tempAmount), tempUnit);
         }
 
         recipe.setText(findPreparationOfRecipe(textFileContent));
@@ -112,6 +119,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         }
         name = row.replaceAll("name:", "").trim();
         name = row.replaceAll("Name:", "").trim();
+        name = cutString(name,fieldLength);
         return name;
     }
 
@@ -231,6 +239,7 @@ public class TxtParser extends AConcreteParser implements Constants {
                 }
             }
             preperation = preperation.trim();
+            preperation = cutString(preperation,preparationLength);
         }
         return preperation;
     }
@@ -244,6 +253,7 @@ public class TxtParser extends AConcreteParser implements Constants {
             datafield = textDateiInhalt.get(zeileS);
             datafield = datafield.replaceFirst(signalwort + ":", "");
             datafield = datafield.trim();
+            datafield = cutString(datafield,fieldLength);
             if (datafield.length() == 0) {
                 datafield = null;
             }
@@ -346,6 +356,22 @@ public class TxtParser extends AConcreteParser implements Constants {
             tempStr = tempStr + " " + s[i];
         }
         return tempStr.trim();
+    }
+
+    private String cutString(String str, int maxLength){
+        if (str != null && str.length()>maxLength) {
+            int tempLength = str.length();
+            String tempStr = str;
+            StringBuilder build = new StringBuilder(str);
+            System.out.println(tempLength);
+            for (int i = tempLength-1; i >= maxLength; i--) {
+                build.deleteCharAt(i);
+                tempStr = build.toString();
+            }
+            return tempStr;
+        }
+        return str;
+
     }
 }
 

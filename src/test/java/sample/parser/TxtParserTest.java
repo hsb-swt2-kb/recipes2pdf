@@ -241,6 +241,25 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(1.850);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("kg");
     }
-
-
+    @Test
+    public void testParseMethod29() {
+        Setup("TestGericht29.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 44 Zeichen1234567");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
+    @Test
+    public void testParseMethod30() {
+        Setup("TestGericht30.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 45 Zeichen12345678");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
+    @Test
+    public void testParseMethod31() {
+        Setup("TestGericht31.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 46 Zeichen12345678");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+    }
 }
