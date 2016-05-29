@@ -58,8 +58,8 @@ public class ControllerChangeCookBook {
 
     private void loadInformation() {
         Cookbook cookbook = UI.searchCookBook(name);
-        foreword = cookbook.getForeword();
-        path = cookbook.getPathOfpicture();
+        foreword = "";
+        path = "";
     }
 
     /**

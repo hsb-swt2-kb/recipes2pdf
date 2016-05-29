@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.model.Recipe;
 
 import java.io.File;
 
@@ -32,6 +33,7 @@ public class ControllerChangeRecipe {
     String daytime;
     String zubereitungszeit;
     String zubereitungstext;
+    String ingredients;
     @FXML
     private TextField textFieldName;
     @FXML
@@ -81,16 +83,19 @@ public class ControllerChangeRecipe {
      */
 
     private void loadInformation() {
-        String ernaehrungsart = "";
-        String gerichtart = "";
-        String portion = "";
-        String region = "";
-        String category = "";
-        String source = "";
-        String saison = "";
-        String daytime = "";
-        String zubereitungszeit = "";
-        String zubereitungstext = "";
+        Recipe recipe = UI.searchRecipe(name);
+        ernaehrungsart = recipe.getNurture().getName();
+        gerichtart = "";
+        portion = Double.toString(recipe.getPortions());
+        region = recipe.getRegion().getName();
+        category = recipe.getCategory().getName();
+        source = "";
+        path = "";
+        ingredients = "";
+        saison = recipe.getSeason().getName();
+        daytime = recipe.getDaytime().getName();
+        zubereitungszeit = Integer.toString(recipe.getDuration());
+        zubereitungstext = recipe.getText();
 
     }
 
@@ -109,6 +114,7 @@ public class ControllerChangeRecipe {
         textFieldSource.setText(source);
         textFieldSaison.setText(saison);
         textFieldDaytime.setText(daytime);
+        textFieldPicture.setText(path);
         textFieldZubereitungszeit.setText(zubereitungszeit);
         textAreaZubereitungstext.setText(zubereitungstext);
     }
