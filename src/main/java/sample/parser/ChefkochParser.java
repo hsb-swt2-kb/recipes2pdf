@@ -125,20 +125,16 @@ public class ChefkochParser extends AConcreteParser {
      * @param ingredientsList ArrayList<String[]> containing all the ingredients split into amount, unit and ingredient.
      */
     private void setRecipeIngredientsList(ArrayList<String[]> ingredientsList){
-        // TODO: Zutaten zu Recipe hinzufügen.
         for (String[] ingredient : ingredientsList) {
             if(ingredient[0].isEmpty()){
                 ingredient[0] = "0";
             }
 
-            // TODO: amount = Integer?
             double amount = 0;
             try{
                 amount = Double.parseDouble(ingredient[0]);
                 amount = lib.round(amount);
-                System.out.println( "Zutat: '" + amount + "' '" + ingredient[1] + "' '" + ingredient[2] + "'");
-                // amount double, not integer!
-                //recipe.add(ingredient[2], amount, ingredient[1]);
+                recipe.add(ingredient[2], amount, ingredient[1]);
             }
             catch (Exception e){
                 // TODO: exception handling? maybe ignore?
