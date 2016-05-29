@@ -4,13 +4,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import sample.exceptions.CouldNotParseException;
 import sample.model.Course;
 import sample.model.Recipe;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -20,7 +17,8 @@ import java.util.regex.Pattern;
  * Created by fpfennig on 18.05.2016.
  */
 public class WWParser extends AConcreteParser implements WWConstants{
-    private Recipe recipe;
+    private Recipe recipe = new Recipe();
+    private HTMLParserLib lib = new HTMLParserLib();
 
     /**
      * The parse method is used to parse the weight watchers HTML recipe.
@@ -48,9 +46,8 @@ public class WWParser extends AConcreteParser implements WWConstants{
                 break;
         }
 
-        if(!checkRecipe()){
-            //TODO
-            throw new Exception();
+        if(recipe.isIncomplete()){
+            throw new CouldNotParseException("Invalid recipe, mandatory fields are empty!");
         }
 
         return recipe;
@@ -69,17 +66,6 @@ public class WWParser extends AConcreteParser implements WWConstants{
     }
 
     /**
-     * Method to check all fields of the recipe.
-     *
-     * @return true if all mandatory fields are set, false if not.
-     */
-    private boolean checkRecipe(){
-        // Mandatory fields, which need to be set
-        return !recipe.isIncomplete();
-
-    }
-
-    /**
      * The parse method for the 2015 version of the recipes.
      *
      * @param htmlDoc The parsed recipe as a JSoup Document
@@ -91,20 +77,23 @@ public class WWParser extends AConcreteParser implements WWConstants{
         String name = this.searchName(elements, WWConstants.name2015);
 
         ArrayList<String> images = this.searchImage(elements, WWConstants.image2015);
-        byte[] image = downloadImage(images);
+        byte[] image = null;
+        if(images.size() == 1) {
+            image = lib.downloadImage(images.get(0));
+        }
 
-        int preparingTime = this.searchPreparingTime2015(elements, WWConstants.preparingTime2015);
+        int preparingTime = this.searchPreparingTime2015(elements);
 
         int servings = this.searchServings(elements);
 
-        String type = this.searchType2015(elements, WWConstants.type2015);
+        String type = this.searchType2015(elements);
         Course course = new Course();
         course.setName(type);
 
-        ArrayList<String> ingredientsListToConvert = this.searchIngredients2015(elements, WWConstants.ingredientsAndDescr2015);
-        ArrayList<String[]> ingredientsList = convertIngredientList(ingredientsListToConvert);
+        ArrayList<String> ingredientsListToConvert = this.searchIngredients2015(elements);
+        ArrayList<String[]> ingredientsList = lib.convertIngredientList(ingredientsListToConvert);
 
-        String description = this.searchDescription2015(elements, WWConstants.ingredientsAndDescr2015);
+        String description = this.searchDescription2015(elements);
 
         recipe.setTitle(name);
         recipe.setImage(image);
@@ -129,7 +118,10 @@ public class WWParser extends AConcreteParser implements WWConstants{
         String name = this.searchName(elements, WWConstants.name2016);
 
         ArrayList<String> images = this.searchImage(elements, WWConstants.image2016);
-        byte[] image = downloadImage(images);
+        byte[] image = null;
+        if(images.size() == 1) {
+            image = lib.downloadImage(images.get(0));
+        }
 
         int servings = this.searchServings(elements);
 
@@ -137,10 +129,10 @@ public class WWParser extends AConcreteParser implements WWConstants{
         Course course = new Course();
         course.setName(type);
 
-        ArrayList<String> ingredientsListToConvert = this.searchIngredients2016(elements, WWConstants.ingredients2016);
-        ArrayList<String[]> ingredientsList = convertIngredientList(ingredientsListToConvert);
+        ArrayList<String> ingredientsListToConvert = this.searchIngredients2016(elements);
+        ArrayList<String[]> ingredientsList = lib.convertIngredientList(ingredientsListToConvert);
 
-        String description = this.searchDescription2016(elements, WWConstants.tableTd);
+        String description = this.searchDescription2016(elements);
 
         recipe.setTitle(name);
         recipe.setImage(image);
@@ -164,7 +156,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
             double amount = 0;
             try{
                 amount = Double.parseDouble(ingredient[0]);
-                amount = round(amount);
+                amount = lib.round(amount);
                 // amount double, not integer!
                 //recipe.add(ingredient[2], amount, ingredient[1]);
             }
@@ -172,38 +164,6 @@ public class WWParser extends AConcreteParser implements WWConstants{
                 // TODO: exception handling? maybe ignore?
             }
         }
-    }
-
-    /**
-     * Method to download the image of an recipe, at the moment only possible if there is only one image.
-     *
-     * @param images ArrayList containing all images found.
-     * @return the downloaded image as Byte Array.
-     */
-    private byte[] downloadImage(ArrayList<String> images){
-        byte[] result = null;
-
-        if(images.size() == 1){
-            try {
-                URL url = new URL(images.get(0));
-                InputStream input = new BufferedInputStream(url.openStream());
-                ByteArrayOutputStream output = new ByteArrayOutputStream();
-                byte[] buf = new byte[1024];
-                int next = 0;
-                while ((next = input.read(buf)) != -1) {
-                    output.write(buf, 0, next);
-                }
-                output.close();
-                input.close();
-                result = output.toByteArray();
-            }
-            catch(Exception e){
-                // TODO: Exception handling
-                //e.printStackTrace();
-            }
-        }
-
-        return result;
     }
 
     /**
@@ -238,11 +198,10 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * Search for the type of meal.
      *
      * @param htmlDoc The parsed recipe as a JSoup Document
-     * @param searchString The key to search for
      * @return The type of meal
      */
-    private String searchType2015(Elements htmlDoc, String searchString){
-        Elements elements = htmlDoc.select(searchString);
+    private String searchType2015(Elements htmlDoc){
+        Elements elements = htmlDoc.select(WWConstants.type2015);
 
         return this.searchType(elements);
     }
@@ -283,12 +242,11 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * multiple paragraphs. So for every part needs to be checked if one or more paragraphs are used.
      *
      * @param htmlDoc The parsed recipe as a JSoup Document
-     * @param searchString The key to search for
      * @return The description of the recipe
      */
-    private String searchDescription2015(Elements htmlDoc, String searchString){
+    private String searchDescription2015(Elements htmlDoc){
         String result = "";
-        Elements htmlElements = htmlDoc.select(searchString);
+        Elements htmlElements = htmlDoc.select(WWConstants.ingredientsAndDescr2015);
 
         for (Element htmlElement: htmlElements) {
             Elements innerHtmlElements = htmlElement.select(WWConstants.listTag);
@@ -311,12 +269,11 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * multiple paragraphs. So for every part needs to be checked if one or more paragraphs are used.
      *
      * @param htmlDoc The parsed recipe as a JSoup Document
-     * @param searchString The key to search for
      * @return The description of the recipe
      */
-    private String searchDescription2016(Elements htmlDoc, String searchString){
+    private String searchDescription2016(Elements htmlDoc){
         String result = "";
-        Elements elements = htmlDoc.select(searchString);
+        Elements elements = htmlDoc.select(WWConstants.tableTd);
 
         for (Element element: elements){
             if (element.text().contains(WWConstants.preparingTag)) {
@@ -355,11 +312,10 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * Searching for ingredients entries in the 2015 version.
      *
      * @param htmlDoc
-     * @param searchString
      * @return
      */
-    private ArrayList<String> searchIngredients2015(Elements htmlDoc, String searchString){
-        Elements elements = htmlDoc.select(searchString);
+    private ArrayList<String> searchIngredients2015(Elements htmlDoc){
+        Elements elements = htmlDoc.select(WWConstants.ingredientsAndDescr2015);
         elements = elements.select(WWConstants.tableTd);
         ArrayList<String> result = new ArrayList<>();
 
@@ -368,7 +324,6 @@ public class WWParser extends AConcreteParser implements WWConstants{
                 String working = element.text().replaceAll(WWConstants.replaceSpaces, " ").trim();
 
                 // Remove some double spaces
-                working.replaceAll("( ){2}", " ");
                 while(working.contains("  ")){
                     working = working.replaceAll("( ){2}", " ");
                 }
@@ -384,12 +339,11 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * Searching for ingredients entries in the 2016 version.
      *
      * @param htmlDoc
-     * @param searchString
      * @return
      */
-    private ArrayList<String> searchIngredients2016(Elements htmlDoc, String searchString){
+    private ArrayList<String> searchIngredients2016(Elements htmlDoc){
         ArrayList<String> result = new ArrayList<>();
-        Elements elements = htmlDoc.select(searchString);
+        Elements elements = htmlDoc.select(WWConstants.ingredients2016);
 
         for (Element element: elements){
             if (element.text().contains(WWConstants.ingredientsTag)) {
@@ -401,7 +355,6 @@ public class WWParser extends AConcreteParser implements WWConstants{
                 workingString = workingString.replaceAll(WWConstants.version2016Linebreaks, "\n");
 
                 // Remove some double spaces
-                workingString.replaceAll("( ){2}", " ");
                 while(workingString.contains("  ")){
                     workingString = workingString.replaceAll("( ){2}", " ");
                 }
@@ -433,14 +386,14 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @param ingredientList ArrayList of Strings
      * @return Converted IngredientList, ArrayList of String Arrays
      */
-    private ArrayList<String[]> convertIngredientList(ArrayList<String> ingredientList){
+    /*private ArrayList<String[]> convertIngredientList(ArrayList<String> ingredientList){
         ArrayList<String[]> result = new ArrayList<>();
 
         for (String listEntry : ingredientList) {
             String[] filtering = listEntry.split(" ");
             String filteredString = "";
 
-            // Removing non numeral characters
+            // Removing extra numeral characters
             Pattern filterRegex = Pattern.compile(WWConstants.numberWithCharacters);
             Matcher filterMatcher = filterRegex.matcher(filtering[0]);
             Matcher filterMatcher2 = filterRegex.matcher(filtering[1]);
@@ -470,23 +423,13 @@ public class WWParser extends AConcreteParser implements WWConstants{
                     int index = regexMatcher.start();
                     String amountRaw = workingArray[0].substring(0,index);
 
-                    amount = replaceDecimalSeperators(amountRaw);
-
-                    /*int indexOfDecimalSeperator = amount.indexOf(".");
-                    if(indexOfDecimalSeperator >= 0 && indexOfDecimalSeperator + 1 + WWConstants.fractionalDigits < amount.length()){
-                        amount = amount.substring(0, indexOfDecimalSeperator + 1 + WWConstants.fractionalDigits);
-                    }*/
+                    amount = lib.replaceDecimalSeperators(amountRaw);
 
                     // The characters in the amount String are the unit.
                     unit = workingArray[0].substring(index);
                 }
                 else {
-                    amount = replaceDecimalSeperators(workingArray[0]);
-
-                    /*int index = amount.indexOf(".");
-                    if(index > 0 && index + 1 + WWConstants.fractionalDigits < amount.length()){
-                        amount = amount.substring(0, index + 1 + WWConstants.fractionalDigits);
-                    }*/
+                    amount = lib.replaceDecimalSeperators(workingArray[0]);
                 }
             }
 
@@ -554,70 +497,18 @@ public class WWParser extends AConcreteParser implements WWConstants{
         }
 
         return result;
-    }
-
-    /**
-     * Method to round the double values.
-     *
-     * @param amount
-     * @return
-     */
-    private double round(double amount){
-        double rounding = Math.pow(10, WWConstants.fractionalDigits);
-        double result = (double)Math.round(amount * rounding) / rounding;
-
-        return result;
-    }
-
-    /**
-     * Method to remove unnecessary decimal seperators and change comma to point.
-     *
-     * @param number The String which contains a number.
-     * @return Number with only one decimal point.
-     */
-    private String replaceDecimalSeperators(String number){
-        String result = "";
-        Pattern regexPattern = Pattern.compile(WWConstants.numberSeperator);
-        Matcher regexMatcher = regexPattern.matcher(number);
-
-        if(regexMatcher.find()){
-            String[] seperate = number.split(WWConstants.numberSeperator);
-            boolean firstSperator = true;
-
-            for (int counter = 0; counter < seperate.length; counter++){
-
-                if(!seperate[counter].isEmpty()){
-                    result = result + seperate[counter];
-                }
-
-                if(firstSperator){
-                    if(counter == 0 && seperate[counter].isEmpty()){
-                        result = result + "0";
-                    }
-                    result = result + ".";
-
-                    firstSperator = false;
-                }
-            }
-        }
-        else{
-            result = number;
-        }
-
-        return result;
-    }
+    }*/
 
     /**
      * Filtering the html-document for the preparing time of the meal.
      *
      * @param htmlDoc
-     * @param searchString
      * @return
      */
-    private int searchPreparingTime2015(Elements htmlDoc, String searchString){
+    private int searchPreparingTime2015(Elements htmlDoc){
         int result = 0;
         String working = "";
-        Elements elements = htmlDoc.select(searchString);
+        Elements elements = htmlDoc.select(WWConstants.preparingTime2015);
         // Description needs to be filtered
         boolean firstTime = true;
 
@@ -626,7 +517,6 @@ public class WWParser extends AConcreteParser implements WWConstants{
             String[] splits = element.text().replaceAll(WWConstants.replaceSpaces, " ").trim().split(" ");
 
             // Remove some double spaces
-            working.replaceAll("( ){2}", " ");
             while(working.contains("  ")){
                 working = working.replaceAll("( ){2}", " ");
             }
