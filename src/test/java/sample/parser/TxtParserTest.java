@@ -304,4 +304,14 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeType(Double.class);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("pg");
     }
+    @Test
+    public void testParseMethod38() {
+        Setup("TestGericht38.txt");
+        the(recipe.getText()).shouldBeEqual("Kochen Sie die Tomaten!");
+    }
+    @Test
+    public void testParseMethod39() {
+        Setup("TestGericht39.txt");
+        the(recipe.getText()).shouldBeEqual("Kochen Sie die Tomaten!");
+    }
 }

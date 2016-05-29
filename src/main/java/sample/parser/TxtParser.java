@@ -50,8 +50,15 @@ public class TxtParser extends AConcreteParser implements Constants {
             //         IngredientName, Amount, UnitName
             recipe.add(tempName, parseStringToDouble(tempAmount), tempUnit);
         }
+        // FInd PreperationText with tag...If there is now Tag use specific Method
+        String tempPreperation=findPreperationWithTag(textFileContent);
+        if (tempPreperation==null){
+            recipe.setText(findPreparationOfRecipe(textFileContent));
+        }
+        else{
+            recipe.setText(tempPreperation);
+        }
 
-        recipe.setText(findPreparationOfRecipe(textFileContent));
 
         // Try to extract additional recipedata
         Region region = new Region();
@@ -244,13 +251,30 @@ public class TxtParser extends AConcreteParser implements Constants {
         return preperation;
     }
 
+    private String findPreperationWithTag(ArrayList<String> textFileContent){
+        String tempStr = null;
+        int beginRow = findSignalword(textFileContent,"Zubereitung");
+        if (beginRow > 0){
+            int endRow = findNextSignalword(beginRow,textFileContent,"Zubereitung");
+            for (int i = beginRow;i<endRow;i++){
+                tempStr = tempStr+" "+textFileContent.get(i);
 
-    private String findDatafield(ArrayList<String> textDateiInhalt, String signalwort) {
+            }
+            tempStr=tempStr.replaceFirst("null","").trim();
+            tempStr=tempStr.replaceFirst("Zubereitung:","").trim();
+            System.out.println(tempStr);
+            return tempStr;
+        }
+        else
+            return tempStr;
+    }
+
+    private String findDatafield(ArrayList<String> textFileContent, String signalwort) {
         String datafield = null;
-        int zeileS = findSignalword(textDateiInhalt, signalwort);
+        int zeileS = findSignalword(textFileContent, signalwort);
 
         if (zeileS >= 0) {
-            datafield = textDateiInhalt.get(zeileS);
+            datafield = textFileContent.get(zeileS);
             datafield = datafield.replaceFirst(signalwort + ":", "");
             datafield = datafield.trim();
             datafield = cutString(datafield,fieldLength);
@@ -373,7 +397,6 @@ public class TxtParser extends AConcreteParser implements Constants {
             return tempStr;
         }
         return str;
-
     }
 }
 
