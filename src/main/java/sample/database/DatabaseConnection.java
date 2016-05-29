@@ -1,6 +1,6 @@
 package sample.database;
 
-import java.io.File;
+import sample.config.IConfig;
 
 /**
  * Created by czoeller on 26.03.16.
@@ -13,9 +13,9 @@ public class DatabaseConnection {
     public String PASSWORD;
 
     private DatabaseConnection() {
-        final String path = System.getProperty("user.dir") + File.separator + "database.db";
+        final DatabaseConfig databaseConfig = new DatabaseConfig( IConfig.getInstance() );
         this.CONNECTOR = "org.sqlite.JDBC";
-        this.PATH = "jdbc:sqlite://" + path;
+        this.PATH = "jdbc:sqlite://" + databaseConfig.getDatabasePath();
         this.USER = null;
         this.PASSWORD = null;
     }
