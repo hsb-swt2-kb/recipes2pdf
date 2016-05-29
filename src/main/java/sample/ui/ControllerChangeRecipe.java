@@ -14,57 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import java.io.File;
 
 public class ControllerChangeRecipe {
 
 
-    @FXML
-    private TextField textFieldName;
-
-    @FXML
-    private TextArea textAreaZubereitungstext;
-
-    @FXML
-    private TextField textFieldZubereitungszeit;
-
-    @FXML
-    private TextField textFieldErnaehrungsart;
-
-    @FXML
-    private TextField textFieldGerichtart;
-
-    @FXML
-    private TextField textFieldPortion;
-
-    @FXML
-    private TextField textFieldRegion;
-
-    @FXML
-    private TextField textFieldCategory;
-
-    @FXML
-    private TextField textFieldSource;
-
-    @FXML
-    private TextField textFieldSaison;
-
-    @FXML
-    private TextField textFieldDaytime;
-
-    @FXML
-    private Button fileChooserButton;
-
-    @FXML
-    private TextField textFieldPicture;
-
-        @FXML
-        private Button closeButton;
-
-    @FXML
-    private Button changeButton;
-
-    String name;
+    //Recipe selection from the ControllerManageCookBook
+    String name = ControllerManageCookBook.getInstance().getSelectedItem();
     String ernaehrungsart;
     String gerichtart;
     String portion;
@@ -75,12 +32,88 @@ public class ControllerChangeRecipe {
     String daytime;
     String zubereitungszeit;
     String zubereitungstext;
+    @FXML
+    private TextField textFieldName;
+    @FXML
+    private TextArea textAreaZubereitungstext;
+    @FXML
+    private TextField textFieldZubereitungszeit;
+    @FXML
+    private TextField textFieldErnaehrungsart;
+    @FXML
+    private TextField textFieldGerichtart;
+    @FXML
+    private TextField textFieldPortion;
+    @FXML
+    private TextField textFieldRegion;
+    @FXML
+    private TextField textFieldCategory;
+    @FXML
+    private TextField textFieldSource;
+    @FXML
+    private TextField textFieldSaison;
+    @FXML
+    private TextField textFieldDaytime;
+    @FXML
+    private Button fileChooserButton;
+    @FXML
+    private TextField textFieldPicture;
+    private String path;
+        @FXML
+        private Button closeButton;
+    @FXML
+    private Button changeButton;
 
     @FXML
     public void initialize() {
+        refreshData();
 
 
     }
+
+    protected void refreshData() {
+        loadInformation();
+        fillTextFields();
+    }
+
+    /**
+     * load recipe information
+     */
+
+    private void loadInformation() {
+        String ernaehrungsart = "";
+        String gerichtart = "";
+        String portion = "";
+        String region = "";
+        String category = "";
+        String source = "";
+        String saison = "";
+        String daytime = "";
+        String zubereitungszeit = "";
+        String zubereitungstext = "";
+
+    }
+
+    /**
+     * set loaded text to textfields
+     */
+
+    private void fillTextFields() {
+
+        textFieldName.setText(name);
+        textFieldErnaehrungsart.setText(ernaehrungsart);
+        textFieldGerichtart.setText(gerichtart);
+        textFieldPortion.setText(portion);
+        textFieldRegion.setText(region);
+        textFieldCategory.setText(category);
+        textFieldSource.setText(source);
+        textFieldSaison.setText(saison);
+        textFieldDaytime.setText(daytime);
+        textFieldZubereitungszeit.setText(zubereitungszeit);
+        textAreaZubereitungstext.setText(zubereitungstext);
+    }
+
+
 
     /**
      * The method ''closeChangeRecipe()'' closes the ChangeRecipe-Window after a interaction with the close-button.

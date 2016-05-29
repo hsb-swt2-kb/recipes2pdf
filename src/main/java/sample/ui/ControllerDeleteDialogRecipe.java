@@ -2,7 +2,7 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
- * The Class ''ControllerDeleteDialog'' manages the DeleteDialog-FXML.
+ * The Class ''ControllerDeleteDialogCookBook'' manages the DeleteDialog-FXML.
  * It displays the delete-dialog.
  */
 
@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class ControllerDeleteDialog {
+public class ControllerDeleteDialogRecipe {
 
     @FXML
     private Button closeButton;
@@ -20,14 +20,19 @@ public class ControllerDeleteDialog {
     @FXML
     private Button deleteButton;
 
+    private String selectedItem = ControllerManageCookBook.getInstance().getSelectedItem();
+
     @FXML
     void deleteElement(ActionEvent event) {
+        selectedItem = ControllerManageCookBook.getInstance().getSelectedItem();
+
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
     }
 
     /**
      * The method ''closeDeleteDialog()'' closes the delete-dialog after a interaction with the close-button.
+     *
      * @param event
      */
 
@@ -35,7 +40,6 @@ public class ControllerDeleteDialog {
     void closeDeleteDialog(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
 
 
     }

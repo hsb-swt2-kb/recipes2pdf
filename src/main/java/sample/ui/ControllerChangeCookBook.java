@@ -20,29 +20,56 @@ import java.io.File;
 public class ControllerChangeCookBook {
 
     File file;
-    String name;
     String foreword;
+    String path;
     @FXML
     private Button fileChooserButton;
         @FXML
         private Button closeButton;
-
     @FXML
     private TextField textFieldName;
-
     @FXML
     private TextArea textAreaVorwort;
-
     @FXML
     private TextField textFieldPicture;
 
     @FXML
     private Button changeButton;
 
+    //Cookbook selection from the ControllerManageCookBooks
+    private String name = ControllerManageCookBooks.getInstance().getSelectedItem();
+
     @FXML
     public void initialize() {
+        refreshData();
 
 
+    }
+
+    protected void refreshData() {
+        loadInformation();
+        fillTextFields();
+    }
+
+    /**
+     * load cookbook information
+     */
+
+    private void loadInformation() {
+
+        foreword = "";
+        path = "";
+    }
+
+    /**
+     * set loaded text to textfields
+     */
+
+    private void fillTextFields() {
+
+        textFieldName.setText(name);
+        textAreaVorwort.setText(foreword);
+        textFieldPicture.setText(path);
     }
 
     @FXML
@@ -83,7 +110,8 @@ public class ControllerChangeCookBook {
         FileHandler fileHandler = new FileHandler();
         this.file = fileHandler.importPicture();
         if(this.file != null) {
-            textFieldPicture.setText(file.getAbsolutePath());
+            path = file.getAbsolutePath();
+            textFieldPicture.setText(path);
         }
 
     }

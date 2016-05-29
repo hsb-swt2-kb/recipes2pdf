@@ -32,8 +32,12 @@ public class Resources {
         return "/sample/ui/AddCookBook.fxml";
     }
 
-    protected static String getDeleteFXML() {
-        return "/sample/ui/DeleteDialog.fxml";
+    protected static String getDeleteCookBookFXML() {
+        return "/sample/ui/DeleteDialogCookBook.fxml";
+    }
+
+    protected static String getDeleteRecipeFXML() {
+        return "/sample/ui/DeleteDialogRecipe.fxml";
     }
 
     protected static String getloadRecipeFXML() {

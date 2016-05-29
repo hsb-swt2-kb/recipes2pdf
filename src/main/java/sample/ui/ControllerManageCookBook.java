@@ -224,7 +224,7 @@ public class ControllerManageCookBook {
             this.selectedItem = recipeInCookBook;
                 System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
                 if (recipe != null || recipeInCookBook != null) {
-                    controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
+                    controllerDefault.newWindowNotResizable(Resources.getDeleteRecipeFXML(), Resources.getDeleteWindowText());
                 } else {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }

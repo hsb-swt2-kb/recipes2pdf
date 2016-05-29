@@ -77,7 +77,7 @@ public class ControllerManageCookBooks {
             String recipe = listViewCookBooks.getSelectionModel().getSelectedItem();
             this.selectedItem = recipe;
             if (recipe != null) {
-                controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
+                controllerDefault.newWindowNotResizable(Resources.getDeleteCookBookFXML(), Resources.getDeleteWindowText());
             } else {
                 controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
             }
