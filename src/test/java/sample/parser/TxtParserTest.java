@@ -166,5 +166,20 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
     }
+    @Test
+    public void testParseMethod19() {
+        Setup("TestGericht19.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Salz (grob)");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+    }
+    @Test
+    public void testParseMethod20() {
+        Setup("TestGericht20.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Thunfisch eingelegt in Olivenöl");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(3);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("Dosen");
+    }
+
 
 }
