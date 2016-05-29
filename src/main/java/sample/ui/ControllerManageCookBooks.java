@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class ControllerManageCookBooks {
 
 
-
+    private static ControllerManageCookBooks instance;
     ControllerDefault controllerDefault = new ControllerDefault();
     @FXML
     private Button closeButton;
@@ -35,8 +35,27 @@ public class ControllerManageCookBooks {
     private Button addButton;
     private ObservableList<String> cookbooks;
 
+    /**
+     * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBooks and ControllerChangeCookBook.
+     *
+     * @return controllerInstance
+     */
+
+    public static ControllerManageCookBooks getInstance() {
+
+        if (ControllerManageCookBooks.instance == null) {
+            synchronized (ControllerManageCookBooks.class) {
+                if (ControllerManageCookBooks.instance == null) {
+                    ControllerManageCookBooks.instance = new ControllerManageCookBooks();
+                }
+            }
+        }
+        return ControllerManageCookBooks.instance;
+    }
+
     @FXML
     private void initialize() {
+        instance = this;
         initializeListeners();
         /* TESTDATA */
         this.cookbooks = FXCollections.observableArrayList("Tobias Kochbuch", "Henriks Kochbuch", "Florians Kochbuch", "Danys Kochbuch", "Christians Kochbuch", "Markuss Kochbuch", "Kais Kochbuch");

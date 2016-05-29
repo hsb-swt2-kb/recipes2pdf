@@ -31,11 +31,11 @@ import java.util.List;
 public class ControllerManageCookBook {
 
 
+    private static ControllerManageCookBook instance;
     private ObservableList<String> recipeNames;
     private ObservableList<String> recipeNamesOfCookBook;
     private ObservableList<String> cookBookNames;
     private ControllerDefault controllerDefault = new ControllerDefault();
-
     @FXML
     private ListView<String> listViewRecipes;
     @FXML
@@ -59,8 +59,26 @@ public class ControllerManageCookBook {
     @FXML
     private ListView<String> listViewCookBook;
 
+    /**
+     * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBook and ControllerChangeRecipe.
+     *
+     * @return controllerInstance
+     */
+    public static ControllerManageCookBook getInstance() {
+
+        if (ControllerManageCookBook.instance == null) {
+            synchronized (ControllerManageCookBook.class) {
+                if (ControllerManageCookBook.instance == null) {
+                    ControllerManageCookBook.instance = new ControllerManageCookBook();
+                }
+            }
+        }
+        return ControllerManageCookBook.instance;
+    }
+
     @FXML
     private void initialize() {
+        instance = this;
         initializeListeners();
         this.recipeNames = FXCollections.observableArrayList();
         this.recipeNamesOfCookBook = FXCollections.observableArrayList();
