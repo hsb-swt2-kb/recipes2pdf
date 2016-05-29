@@ -74,29 +74,9 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @return true if all mandatory fields are set, false if not.
      */
     private boolean checkRecipe(){
-        boolean result = false;
-
-        //Checking Data will be deletet later
-        System.out.println("Name: " + recipe.getTitle());
-        System.out.println("Region: " + recipe.getRegion());
-        System.out.println("Gerichtsart: " + recipe.getCourse());
-        System.out.println("Kategorie: " + recipe.getCalories());
-        System.out.println("Arbeitszeit: " + recipe.getDuration());
-        System.out.println("Kcal: " + recipe.getCalories());
-        System.out.println("Portionen: " + recipe.getPortions());
-        for (int counter = 0; counter < recipe.getIngredients().size(); counter++){
-            System.out.println( "Name: " + recipe.getIngredients().get(counter).getMiddle() +
-                                "   |   " + recipe.getIngredients().get(counter).getRight() +
-                                "   |   " + recipe.getIngredients().get(counter).getLeft());
-        }
-        System.out.println("Zubereitung: " + recipe.getText());
-
         // Mandatory fields, which need to be set
-        if(!recipe.getTitle().isEmpty() && !recipe.getIngredients().isEmpty() && !recipe.getText().isEmpty()){
-            result = true;
-        }
+        return !recipe.isIncomplete();
 
-        return result;
     }
 
     /**
