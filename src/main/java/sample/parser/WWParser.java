@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
  */
 public class WWParser extends AConcreteParser implements WWConstants{
     private Recipe recipe = new Recipe();
-    private HTMLParserLib lib = new HTMLParserLib();
 
     /**
      * The parse method is used to parse the weight watchers HTML recipe.
@@ -73,7 +72,6 @@ public class WWParser extends AConcreteParser implements WWConstants{
      */
     private void parseVersion2015(Document htmlDoc){
         Elements elements = htmlDoc.getAllElements();
-
         String name = this.searchName(elements, WWConstants.name2015);
 
         ArrayList<String> images = this.searchImage(elements, WWConstants.image2015);
@@ -144,28 +142,6 @@ public class WWParser extends AConcreteParser implements WWConstants{
         recipe.setText(description);
     }
 
-    /**
-     * Method to put the IngredientsList into the recipe.
-     *
-     * @param ingredientsList ArrayList<String[]> containing all the ingredients split into amount, unit and ingredient.
-     */
-    private void setRecipeIngredientsList(ArrayList<String[]> ingredientsList){
-        for (String[] ingredient : ingredientsList) {
-            if(ingredient[0].isEmpty()){
-                ingredient[0] = "0";
-            }
-
-            double amount = 0;
-            try{
-                amount = Double.parseDouble(ingredient[0]);
-                amount = lib.round(amount);
-                recipe.add(ingredient[2], amount, ingredient[1]);
-            }
-            catch (Exception e){
-                // TODO: exception handling? maybe ignore?
-            }
-        }
-    }
 
     /**
      * The method which decides on the version using keywords.

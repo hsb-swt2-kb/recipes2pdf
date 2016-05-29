@@ -23,7 +23,6 @@ import java.util.regex.Pattern;
  */
 public class ChefkochParser extends AConcreteParser {
     private Recipe recipe = new Recipe();
-    private HTMLParserLib lib = new HTMLParserLib();
 
     //private ChefkochAPI chefkochAPI;
 
@@ -117,29 +116,6 @@ public class ChefkochParser extends AConcreteParser {
 
         ArrayList<String> attributeList = getAttributeList(workingList);
         fillAttributes(attributeList);
-    }
-
-    /**
-     * Method to put the IngredientsList into the recipe.
-     *
-     * @param ingredientsList ArrayList<String[]> containing all the ingredients split into amount, unit and ingredient.
-     */
-    private void setRecipeIngredientsList(ArrayList<String[]> ingredientsList){
-        for (String[] ingredient : ingredientsList) {
-            if(ingredient[0].isEmpty()){
-                ingredient[0] = "0";
-            }
-
-            double amount = 0;
-            try{
-                amount = Double.parseDouble(ingredient[0]);
-                amount = lib.round(amount);
-                recipe.add(ingredient[2], amount, ingredient[1]);
-            }
-            catch (Exception e){
-                // TODO: exception handling? maybe ignore?
-            }
-        }
     }
 
     /**
