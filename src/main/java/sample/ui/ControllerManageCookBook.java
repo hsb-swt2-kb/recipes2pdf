@@ -32,6 +32,7 @@ public class ControllerManageCookBook {
 
 
     private static ControllerManageCookBook instance;
+    protected String selectedItem;
     private ObservableList<String> recipeNames;
     private ObservableList<String> recipeNamesOfCookBook;
     private ObservableList<String> cookBookNames;
@@ -156,7 +157,6 @@ public class ControllerManageCookBook {
         listViewCookBook.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-                String selectedItem = dragEvent.getDragboard().getString();
                 boolean insite = listViewCookBook.getItems().contains(selectedItem);
                 if(insite==false) {
                     listViewCookBook.getItems().addAll(selectedItem);
@@ -221,6 +221,7 @@ public class ControllerManageCookBook {
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
             String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
                 String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+            this.selectedItem = recipeInCookBook;
                 System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
                 if (recipe != null || recipeInCookBook != null) {
                     controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
@@ -233,6 +234,7 @@ public class ControllerManageCookBook {
         changeRecipeButton.setOnAction((ActionEvent event) -> {
             String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
                 String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+            this.selectedItem = recipeInCookBook;
                 System.out.println("Would change " + recipe); //TODO: Consider choice of user to change
                 if (recipe != null || recipeInCookBook != null) {
                     controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
@@ -241,6 +243,10 @@ public class ControllerManageCookBook {
                 }
             });
 
+    }
+
+    protected String getSelectedItem() {
+        return this.selectedItem;
     }
 
     /**

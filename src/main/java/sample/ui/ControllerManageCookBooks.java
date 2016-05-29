@@ -20,6 +20,7 @@ public class ControllerManageCookBooks {
 
 
     private static ControllerManageCookBooks instance;
+    protected String selectedItem;
     ControllerDefault controllerDefault = new ControllerDefault();
     @FXML
     private Button closeButton;
@@ -53,6 +54,10 @@ public class ControllerManageCookBooks {
         return ControllerManageCookBooks.instance;
     }
 
+    protected String getSelectedItem() {
+        return this.selectedItem;
+    }
+
     @FXML
     private void initialize() {
         instance = this;
@@ -70,6 +75,7 @@ public class ControllerManageCookBooks {
     private void initializeListeners() {
         deleteButton.setOnAction((ActionEvent event) -> {
             String recipe = listViewCookBooks.getSelectionModel().getSelectedItem();
+            this.selectedItem = recipe;
             if (recipe != null) {
                 controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
             } else {
@@ -79,6 +85,7 @@ public class ControllerManageCookBooks {
 
         changeButton.setOnAction((ActionEvent event) -> {
             String recipe = listViewCookBooks.getSelectionModel().getSelectedItem();
+            this.selectedItem = recipe;
             if (recipe != null) {
                 controllerDefault.newWindow(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
             } else {
