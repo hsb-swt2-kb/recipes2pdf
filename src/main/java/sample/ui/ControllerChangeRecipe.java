@@ -2,6 +2,9 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerChangeRecipe'' manages the ChangeRecipe-FXML.
+ * It displays the recipe-data and provides methods for changing a recipe.
+ * The recipe contains at least a name, ingredients and the preparationtext.
  */
 
 
@@ -79,6 +82,11 @@ public class ControllerChangeRecipe {
 
     }
 
+    /**
+     * The method ''closeChangeRecipe()'' closes the ChangeRecipe-Window after a interaction with the close-button.
+     *
+     * @param event
+     */
 
         @FXML
         void closeChangeRecipe(ActionEvent event) {
@@ -109,8 +117,13 @@ public class ControllerChangeRecipe {
         }
 
 
-
     }
+
+    /**
+     * The method ''openFileChooser()'' opens the filechooser after a interaction with the browse-Button.
+     * If the user imports a picture, the path will display in the textField-picture.
+     * @param event
+     */
 
     @FXML
     void openFileChooser(ActionEvent event) {

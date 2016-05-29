@@ -2,6 +2,7 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''FileHandler'' provides methods for opening a filechooser.
  */
 
 
@@ -37,6 +38,7 @@ public class FileHandler {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
+        //The user only can choose the formats txt and html.
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.txt", "*.TXT","*.html", "*.HTML");
         fileChooser.setSelectedExtensionFilter(extFilter);
         List<File> files =
@@ -52,6 +54,7 @@ public class FileHandler {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
+        //The user only can choose the formats png and jpg.
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.PNG", "*.png","*.JPG","*.jpg");
         fileChooser.setSelectedExtensionFilter(extFilter);
         File file = fileChooser.showOpenDialog(stage);
@@ -60,7 +63,9 @@ public class FileHandler {
 
     }
 
-
+    /**
+     * These method exports a single file.
+     */
     File exportFile(){
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());

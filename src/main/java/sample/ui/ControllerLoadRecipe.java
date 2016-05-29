@@ -11,7 +11,18 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import org.controlsfx.control.PopOver;
+import sample.database.dao.RecipeDAO;
+import sample.exceptions.CouldNotParseException;
+import sample.model.Recipe;
+import sample.parser.Parser;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static sample.ui.UI.addRecipes;
 
 public class ControllerLoadRecipe {
 
@@ -95,7 +106,16 @@ public class ControllerLoadRecipe {
     @FXML
     void openFileChooser() {
         FileHandler fileHandler = new FileHandler();
-        //addRecipes(fileHandler.importFiles());
+        try {
+            addRecipes(fileHandler.importFiles());
+        }
+        catch (CouldNotParseException e){
+            // TODO: handle exception
+        }
+        catch(FileNotFoundException e){
+            // TODO: handle exception
+        }
+
     }
 
     @FXML
@@ -109,13 +129,11 @@ public class ControllerLoadRecipe {
             Stage stage = (Stage) loadButton.getScene().getWindow();
             stage.close();
             }
-        /**
-         *  If the stage can't close, beaucause its a PopOver, close the PopOver
-         */
+        //If the stage can't close, beaucause its a PopOver, close the PopOver
         catch (Exception e)
         {
-            //PopOver popOver = (PopOver) loadButton.getScene().getWindow();
-            //popOver.hide();
+            PopOver popOver = (PopOver) loadButton.getScene().getWindow();
+            popOver.hide();
         }
     }
 
@@ -137,7 +155,8 @@ public class ControllerLoadRecipe {
     }
 
     /**
-     * The method closes the Load-Recipe-Window by clicking the Close-Button
+     * The method closes the Load-Recipe-Window by interaction with the Close-Button.
+     *
      */
     @FXML
     void closeWindow(ActionEvent event) {

@@ -2,6 +2,9 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerChangeCookBook'' manages the ChangeCookBook-FXML.
+ * It displays the cookbook-data and provides methods for changing a cookbook.
+ * The cookbook contains at least a name and a sortlevel - a foreword and a picture are optional.
  */
 
 
@@ -59,12 +62,24 @@ public class ControllerChangeCookBook {
 
     }
 
+    /**
+     * The method ''closeChangeCookBook()'' closes the ChangeCookBook-Window after a interaction with the close-button.
+     *
+     * @param event
+     */
+
         @FXML
         void closeChangeCookBook(ActionEvent event) {
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
 
         }
+
+    /**
+     * The method ''openFileChooser()'' opens the filechooser after a interaction with the browse-Button.
+     * If the user imports a picture, the path will display in the textField-picture.
+     * @param event
+     */
 
     @FXML
     void openFileChooser(ActionEvent event) {

@@ -14,18 +14,23 @@ import java.util.ArrayList;
  */
 public class Parser implements IParser
 {
-
-    public Parser()
+    /**
+     * parse
+     *
+     * implementation of the parse method from IParser
+     *
+     * @param recipeFile
+     * @return
+     * @throws FileNotFoundException
+     * @throws CouldNotParseException
+     */
+    public static Recipe parse(File recipeFile) throws  FileNotFoundException,CouldNotParseException
     {
-    }
-
-    static public Recipe parse(File recipeFile) throws FileNotFoundException,CouldNotParseException
-    {
-        ArrayList<AConcreteParser> parsers= new ArrayList<>();
+        ArrayList<AConcreteParser> parsers = new ArrayList<>();
         // Parser instantiieren
         parsers.add(new TxtParser());
         //parsers.add(new CKParser ());
-        parsers.add(new WWParser ());
+        parsers.add(new WWParser());
 
         // Format raten
         if(recipeFile.exists())
@@ -54,19 +59,6 @@ public class Parser implements IParser
             }
             // Rezept prüfen
             // TODO: Rezept prüfen
-
-            // Defaultwert für leere Felder setzen
-            if(recipe.getCategory().getName() == null)
-                recipe.getCategory().setName("");
-            if(recipe.getCourse().getName() == null)
-                recipe.getCourse().setName("");
-            if(recipe.getSeason().getName() == null)
-                recipe.getSeason().setName("");
-            if(recipe.getRegion().getName() == null)
-                recipe.getRegion().setName("");
-            if(recipe.getNurture().getName() == null)
-                recipe.getNurture().setName("");
-
             if(!recipe.isIncomplete())
                 return recipe;
             else
@@ -77,7 +69,18 @@ public class Parser implements IParser
             throw new FileNotFoundException();
         }
     }
-    static ArrayList<String> readFile(String file) throws IOException {
+
+    /**
+     * readFile
+     *
+     * helpful function, because textparser can handle ArrayList<String>
+     * easier than the content as one complete String.
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static ArrayList<String> readFile(String file) throws IOException {
         String line;
         ArrayList<String> lines = new ArrayList<>();
 
