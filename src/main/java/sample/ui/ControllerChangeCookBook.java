@@ -34,6 +34,8 @@ public class ControllerChangeCookBook {
     @FXML
     private TextField textFieldPicture;
 
+    Cookbook cookbook;
+
     @FXML
     private Button changeButton;
 
@@ -57,7 +59,7 @@ public class ControllerChangeCookBook {
      */
 
     private void loadInformation() {
-        Cookbook cookbook = UI.searchCookBook(name);
+        cookbook = UI.searchCookBook(name);
         foreword = "";
         path = "";
     }
@@ -75,10 +77,9 @@ public class ControllerChangeCookBook {
 
     @FXML
     void changeCookBook(ActionEvent event) {
-        getName();
-        getForeWord();
         if(this.textFieldName.getText().trim().isEmpty() == false) {
-            System.out.println(name + foreword + "file.getName()");
+            cookbook.setTitle(getName());
+            UI.changeCookBook(cookbook);
             //Close Stage
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
@@ -124,6 +125,11 @@ public class ControllerChangeCookBook {
     private String getName(){
         name = textFieldName.getText();
         return  name;
+    }
+
+    private String getPath(){
+        path = textFieldPicture.getText();
+        return  path;
     }
 
     }

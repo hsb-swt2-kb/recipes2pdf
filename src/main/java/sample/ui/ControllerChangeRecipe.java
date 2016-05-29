@@ -34,6 +34,7 @@ public class ControllerChangeRecipe {
     String zubereitungszeit;
     String zubereitungstext;
     String ingredients;
+    Recipe recipe;
     @FXML
     private TextField textFieldName;
     @FXML
@@ -83,7 +84,7 @@ public class ControllerChangeRecipe {
      */
 
     private void loadInformation() {
-        Recipe recipe = UI.searchRecipe(name);
+        recipe = UI.searchRecipe(name);
         ernaehrungsart = recipe.getNurture().getName();
         gerichtart = "";
         portion = Double.toString(recipe.getPortions());
@@ -136,21 +137,19 @@ public class ControllerChangeRecipe {
 
     @FXML
     void changeRecipe(ActionEvent event) {
-        getName();
-        getErnaehrungsart();
-        getGerichtart();
-        getPortion();
-        getRegion();
-        getCategory();
-        getSource();
-        getSaison();
-        getDaytime();
-        getZubereitungstext();
-        getZubereitungszeit();
-
-        if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
-            System.out.println(name+ernaehrungsart+gerichtart+portion+region+category+source+saison+daytime+zubereitungstext+zubereitungszeit);
-
+              if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
+            recipe.setTitle(getName());
+               //   getErnaehrungsart();
+               //   getGerichtart();
+               //   getPortion();
+               //   getRegion();
+               //   getCategory();
+               //   getSource();
+               //   getSaison();
+               //   getDaytime();
+               //   getZubereitungszeit();
+            recipe.setText(getZubereitungstext());
+            UI.changeRecipe(recipe);
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
         }
