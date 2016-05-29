@@ -234,6 +234,13 @@ public class TxtParserTest {
         Setup("TestGericht27.txt");
         the(recipe.getIngredients().size()).shouldBeEqual(0);
     }
+    @Test
+    public void testParseMethod28() {
+        Setup("TestGericht28.txt");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Kartoffeln");
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(1.850);
+        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("kg");
+    }
 
 
 }

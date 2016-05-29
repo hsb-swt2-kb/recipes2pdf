@@ -4,6 +4,8 @@ import sample.model.*;
 
 import java.lang.reflect.Array;
 import java.time.Duration;
+import java.lang.Math;
+import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -265,7 +267,15 @@ public class TxtParser extends AConcreteParser implements Constants {
         double d = 0;
         try {
             str = str.replaceAll(",", ".");
+            int temp = str.indexOf(".");
+            int tempLength = str.length();
+            StringBuilder build = new StringBuilder(str);
+            for (int i=tempLength-1;i>temp+3;i--){
+                build.deleteCharAt(i);
+                str = build.toString();
+            }
             d = Double.parseDouble(str);
+
         } catch (NumberFormatException | NullPointerException e) {
             d = 0;
             return d;
