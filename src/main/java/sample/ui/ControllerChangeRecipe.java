@@ -101,7 +101,7 @@ public class ControllerChangeRecipe {
             zubereitungstext = recipe.getText();
         }
         catch (RecipeNotFoundException e){
-            System.out.println("Couldn't load recipe");
+            System.out.println("Couldn't load recipe.");
         }
     }
 
