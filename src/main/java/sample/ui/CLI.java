@@ -14,14 +14,13 @@ public class CLI extends UI {
 
     public void start(String[] args) {
         switch (args[0]) {
-            case "add":  break;
-            case "show":  break;
-            case "edit":  break;
+            case "add":     break;
+            case "show":    break;
+            case "edit":    break;
             case "remove":  break;
-            case "make":  break;
+            case "make":    break;
             case "define":  break;
-            default:
-                break;
+            default:        break;
         }
     }
 
