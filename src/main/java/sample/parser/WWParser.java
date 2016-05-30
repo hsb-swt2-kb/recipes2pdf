@@ -35,7 +35,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
             format = format + " " + entry;
         }
 
-        Document htmlDoc = Jsoup.parse(text.toString());
+        Document htmlDoc = Jsoup.parse(format.toString());
 
         int decision = this.decideVersion(htmlDoc);
 
