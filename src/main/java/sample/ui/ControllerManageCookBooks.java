@@ -67,12 +67,8 @@ public class ControllerManageCookBooks {
     private void initialize() {
         instance = this;
         initializeListeners();
-        this.cookbooks = FXCollections.observableArrayList();
-        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
-        for (Cookbook cookbook : cookbooksDB) {
-            this.cookbooks.add(cookbook.getTitle());
-        }
-        refreshListViews(this.cookbooks);
+        loadInfo();
+        refreshListViews();
     }
 
     /**
@@ -107,12 +103,24 @@ public class ControllerManageCookBooks {
      * The method ''refreshListView(ObservableList<String> cookbooks)'' refreshs the listView.
      */
 
-    private void refreshListViews(ObservableList<String> cookbooks) {
-        FXCollections.sort(cookbooks);
-        this.listViewCookBooks.setItems(cookbooks);
+    protected void refreshListViews() {
+        loadInfo();
+        FXCollections.sort(this.cookbooks);
+        this.listViewCookBooks.getItems().clear();
+        this.listViewCookBooks.setItems(this.cookbooks);
         ControllerManageCookBook controllerManageCookBook = new ControllerManageCookBook();
-        controllerManageCookBook.searchInListView(cookbooks, searchFieldCookBooks, listViewCookBooks);
+        controllerManageCookBook.searchInListView(this.cookbooks, searchFieldCookBooks, listViewCookBooks);
     }
+
+    void loadInfo(){
+        this.cookbooks = FXCollections.observableArrayList();
+        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
+        for (Cookbook cookbook : cookbooksDB) {
+            this.cookbooks.add(cookbook.getTitle());
+        }
+
+    }
+
 
     /**
      * The method ''addCookBook(ActionEvent event)'' opens the addCookBook-window.

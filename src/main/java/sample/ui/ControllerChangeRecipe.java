@@ -155,6 +155,7 @@ public class ControllerChangeRecipe {
                //   getZubereitungszeit();
             recipe.setText(getZubereitungstext());
             UI.changeRecipe(recipe);
+            ControllerManageCookBooks.getInstance().refreshListViews();
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
         }

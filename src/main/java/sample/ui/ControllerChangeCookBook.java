@@ -86,6 +86,8 @@ public class ControllerChangeCookBook {
             try {
                 cookbook.setTitle(getName());
                 UI.changeCookBook(cookbook);
+                ControllerManageCookBooks.getInstance().refreshListViews();
+                ControllerManageCookBook.getInstance().refresh();
             }catch (Exception e)
             {
                 System.out.println("Couldn't load cookbook");

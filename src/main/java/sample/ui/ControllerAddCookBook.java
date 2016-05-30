@@ -144,12 +144,15 @@ public class ControllerAddCookBook  {
     void generateCookBook(ActionEvent event) {
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
             UI.addCookBook(getName());
+            ControllerManageCookBook.getInstance().refresh();
+            ControllerManageCookBooks.getInstance().refreshListViews();
             //Close Stage
             Stage stage = (Stage) generateButton.getScene().getWindow();
             stage.close();
         }else{
             //Exception
         }
+
 
     }
 

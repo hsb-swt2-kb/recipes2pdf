@@ -176,6 +176,7 @@ public class ControllerLoadRecipe {
             openFileChooser();
             closeStage();
         }
+        ControllerManageCookBook.getInstance().refresh();
     }
 
     /**

@@ -84,44 +84,62 @@ public class ControllerManageCookBook {
         this.recipeNames = FXCollections.observableArrayList();
         this.recipeNamesOfCookBook = FXCollections.observableArrayList();
         this.cookBookNames = FXCollections.observableArrayList();
+loadInfo();
+
+        refresh();
+    }
+
+    void refresh(){
+        loadInfo();
+        refreshComboBox();
+        refreshListViews();
+    }
+
+    void loadInfo(){
+
+        this.cookBookNames = FXCollections.observableArrayList();
+        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
+        for (Cookbook cookbook : cookbooksDB) {
+            this.cookBookNames.add(cookbook.getTitle());
+        }
 
         List<Recipe> recipes =  UI.getAllRecipesFromDB();
         for (Recipe recipe : recipes){
-           recipeNames.add(recipe.getTitle());
+            recipeNames.add(recipe.getTitle());
         }
 
         List<Cookbook> cookbooks = UI.getAllCookbooksFromDB();
         for (Cookbook cookbook: cookbooks){
             cookBookNames.add(cookbook.getTitle());
             List<Recipe> iRecipes = UI.castIRecipeToRecipe(cookbook.getRecipes());
-           for(Recipe recipe : iRecipes){
-               recipeNamesOfCookBook.add(recipe.getTitle());
-           }
+            for(Recipe recipe : iRecipes){
+                recipeNamesOfCookBook.add(recipe.getTitle());
+            }
         }
-
-        refreshComboBox(cookBookNames);
-        refreshListViews(recipeNames, recipeNamesOfCookBook);
     }
 
     /**
      * The method ''refreshListView(ObservableList<String> recipes, ObservableList<String> cookbook)'' refreshs the listViews.
      */
 
-    private void refreshListViews(ObservableList<String> recipes, ObservableList<String> cookbook) {
-        FXCollections.sort(recipes);
-        FXCollections.sort(cookbook);
-        this.listViewRecipes.setItems(recipes);
-        this.listViewCookBook.setItems(cookbook);
-        searchInListView(recipes, searchFieldRecipes, listViewRecipes);
-        searchInListView(cookbook, searchFieldCookBooks, listViewCookBook);
+    private void refreshListViews() {
+        FXCollections.sort(recipeNames);
+        FXCollections.sort(recipeNamesOfCookBook);
+        this.listViewCookBook.getItems().clear();
+        this.listViewRecipes.getItems().clear();
+        this.listViewRecipes.setItems(recipeNames);
+        this.listViewCookBook.setItems(recipeNamesOfCookBook);
+        searchInListView(recipeNames, searchFieldRecipes, listViewRecipes);
+        searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
     }
 
     /**
      * The method ''refreshComboBox(ObservableList<String> cookbooks)'' refreshs the comboBox.
      */
 
-    private void refreshComboBox(ObservableList<String> cookbooks) {
-        comboBoxCookBooks.setItems(cookbooks);
+    private void refreshComboBox() {
+        this.comboBoxCookBooks.getItems().clear();
+        this.comboBoxCookBooks.setItems(this.cookBookNames);
     }
 
     /**

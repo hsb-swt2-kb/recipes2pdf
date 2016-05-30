@@ -31,6 +31,7 @@ public class ControllerDeleteDialogRecipe {
         try{
             recipe= UI.searchRecipe(selectedItem);
             UI.delRecipe(recipe);
+            ControllerManageCookBook.getInstance().refresh();
         }
         catch(RecipeNotFoundException e){
             System.out.println("Couldn't load recipe");
