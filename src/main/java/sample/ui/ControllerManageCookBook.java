@@ -181,8 +181,11 @@ loadInfo();
         //Buttonactions
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
             String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
-                String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-            this.selectedItem = recipeInCookBook;
+            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+
+
+
+
                 System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
                 if (recipe != null || recipeInCookBook != null) {
                     controllerDefault.newWindowNotResizable(Resources.getDeleteRecipeFXML(), Resources.getDeleteWindowText());
@@ -195,7 +198,7 @@ loadInfo();
         changeRecipeButton.setOnAction((ActionEvent event) -> {
             String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
                 String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
-            this.selectedItem = recipeInCookBook;
+
                 System.out.println("Would change " + recipe); //TODO: Consider choice of user to change
                 if (recipe != null || recipeInCookBook != null) {
                     controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
@@ -219,6 +222,7 @@ loadInfo();
                 ClipboardContent content = new ClipboardContent();
                 content.putString(listViewRecipes.getSelectionModel().getSelectedItem());
                 dragBoard.setContent(content);
+
             }
         });
 
@@ -252,6 +256,7 @@ loadInfo();
                 ClipboardContent content = new ClipboardContent();
                 content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
                 dragBoard.setContent(content);
+
             }
         });
 
@@ -292,13 +297,38 @@ loadInfo();
             @Override
             public void handle(MouseEvent click) {
 
+                if (click.getClickCount() >= 1) {
+                    selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
+
+                }
+
                 if (click.getClickCount() == 2) {
                     controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+                    selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
+
+                }
+            }
+        });
+
+        listViewRecipes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent click) {
+
+                if (click.getClickCount() >= 1) {
+                    selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
+
+                }
+
+                if (click.getClickCount() == 2) {
+                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+                    selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
 
                 }
             }
         });
     }
+
 
 
     /**
