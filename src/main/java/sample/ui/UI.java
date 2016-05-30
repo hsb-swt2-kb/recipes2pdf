@@ -197,21 +197,52 @@ public class UI {
 
     }
 
+    /**
+     * changeCookBook
+     *
+     * function to change the data of a Cookbook in the Database.
+     *
+     * @param cookbook
+     */
     static void changeCookBook(Cookbook cookbook){
         new CookbookDAO().update(cookbook);
     }
 
+    /**
+     * changeRecipe
+     *
+     * function to change the data of a Recipe in the DB.
+     *
+     * @param recipe
+     */
     static void changeRecipe(Recipe recipe){
         new RecipeDAO().update(recipe);
 
     }
 
+    /**
+     * delRecipe
+     *
+     * call RecipeDAO to remove the given Recipe from DB
+     *
+     * @param recipe
+     * @return
+     */
     static boolean delRecipe(Recipe recipe) {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new RecipeDAO().delete(recipe);
 
     }
 
+    /**
+     * searchCookBook
+     *
+     * search for a Cookbook with given title calling CookbookDAO.
+     *
+     * @param cookbookname
+     * @return
+     * @throws CookBookNotFoundException
+     */
     static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
         List<Cookbook> cookBooks = new ArrayList<>();
           cookBooks = new CookbookDAO().getAll();
@@ -221,6 +252,15 @@ public class UI {
         throw new CookBookNotFoundException();
     }
 
+    /**
+     * searchRecipe
+     *
+     * search for a Recipe with given Title calling RecipeDAO
+     *
+     * @param recipeName
+     * @return
+     * @throws RecipeNotFoundException
+     */
     static Recipe searchRecipe(String recipeName) throws  RecipeNotFoundException{
         Recipe recipeFromSearch = null;
         List<Recipe> recipes = new ArrayList<>();
