@@ -28,8 +28,7 @@ import java.util.Optional;
     @BelongsTo(foreignKeyName = "region_id", parent = RegionDBO.class),
     @BelongsTo(foreignKeyName = "daytime_id", parent = DaytimeDBO.class),
     @BelongsTo(foreignKeyName = "season_id", parent = SeasonDBO.class),
-    @BelongsTo(foreignKeyName = "nurture_id", parent = NurtureDBO.class),
-    @BelongsTo(foreignKeyName = "source_id", parent = SourceDBO.class)
+    @BelongsTo(foreignKeyName = "nurture_id", parent = NurtureDBO.class)
 })
 public class RecipeDBO extends Model implements IRecipe {
 
@@ -165,20 +164,15 @@ public class RecipeDBO extends Model implements IRecipe {
         return parent(NurtureDBO.class);
     }
 
-    @Override
-    public ISource getSource() {
-        return parent(SourceDBO.class);
-    }
-
-    @Override
-    public void setSource(ISource source) {
-        ((Model) source).add(this);
-    }
+   /* @Override
+    public void add(String ingredientName, int amount, String unitName) {
+        throw new IllegalStateException("Unimplemented");
+    }*/
 
     /**
      * {@inheritDoc}
      */
-    public void add(String ingredientName, double amount, String unitName) {
+    public void add(String ingredientName, int amount, String unitName) {
         final IngredientDAO ingredientDAO = new IngredientDAO();
         final UnitDAO unitDAO = new UnitDAO();
 
@@ -232,14 +226,14 @@ public class RecipeDBO extends Model implements IRecipe {
      * {@inheritDoc}
      */
     @Override
-    public List<Triple<IIngredient, Double, IUnit>> getIngredients() {
-        List<Triple<IIngredient, Double, IUnit>> ingredients = new ArrayList<>();
+    public List<Triple<IIngredient, Integer, IUnit>> getIngredients() {
+        List<Triple<IIngredient, Integer, IUnit>> ingredients = new ArrayList<>();
 
         final List<RecipeIngredientDBO> recipeIngredients = this.getAll(RecipeIngredientDBO.class);
 
         for (RecipeIngredientDBO recipeIngredient : recipeIngredients) {
             final IIngredient ingredient = recipeIngredient.parent(IngredientDBO.class);
-            final Double amount = recipeIngredient.getDouble("amount");
+            final Integer amount = recipeIngredient.getInteger("amount");
             final IUnit unit = recipeIngredient.parent(UnitDBO.class);
             ingredients.add(new ImmutableTriple<>(ingredient, amount, unit));
         }
@@ -254,7 +248,7 @@ public class RecipeDBO extends Model implements IRecipe {
      * @param recipeIngredient
      */
     @Override
-    public void add(Triple<IIngredient, Double, IUnit> recipeIngredient) {
+    public void add(Triple<IIngredient, Integer, IUnit> recipeIngredient) {
         this.add( recipeIngredient.getLeft().getName(), recipeIngredient.getMiddle(), recipeIngredient.getRight().getName() );
     }
 

@@ -53,18 +53,13 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
             recipe.setNurture( new NurtureDAO().toPOJO( nurtureDBO ) );
         }
 
-        final SourceDBO sourceDBO = (SourceDBO) recipeDBO.getSource();
-        if( null != sourceDBO ) {
-            recipe.setSource( new SourceDAO().toPOJO( sourceDBO ) );
-        }
-
-        final List<Triple<IIngredient, Double, IUnit>> ingredients = recipeDBO.getIngredients();
-        for ( Triple<IIngredient, Double, IUnit> triple : ingredients) {
+        final List<Triple<IIngredient, Integer, IUnit>> ingredients = recipeDBO.getIngredients();
+        for ( Triple<IIngredient, Integer, IUnit> triple : ingredients) {
             Ingredient ingredient = new IngredientDAO().toPOJO( (IngredientDBO) triple.getLeft() );
             Unit unit = new UnitDAO().toPOJO( (UnitDBO) triple.getRight() );
-            Double amout = triple.getMiddle();
+            Integer amout = triple.getMiddle();
 
-            Triple<IIngredient, Double, IUnit> row = new MutableTriple<>(ingredient, amout, unit);
+            Triple<IIngredient, Integer, IUnit> row = new MutableTriple<>(ingredient, amout, unit);
             recipe.add(row);
         }
 
@@ -125,15 +120,8 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
             recipeDBO.setNurture( nurtureDBO );
         }
 
-        final Source source = (Source) recipe.getSource();
-        if( null != source ) {
-            final SourceDBO sourceDBO = new SourceDAO().toDBO(source);
-            sourceDBO.saveIt();
-            recipeDBO.setSource( sourceDBO );
-        }
-
-        final List<Triple<IIngredient, Double, IUnit>> ingredients = recipe.getIngredients();
-        for ( Triple<IIngredient, Double, IUnit> triple : ingredients) {
+        final List<Triple<IIngredient, Integer, IUnit>> ingredients = recipe.getIngredients();
+        for ( Triple<IIngredient, Integer, IUnit> triple : ingredients) {
             recipeDBO.add(triple.getLeft().getName(), triple.getMiddle(), triple.getRight().getName());
         }
         return recipeDBO;

@@ -23,26 +23,23 @@ class Config implements IConfig {
         } catch (IOException e) {
 
             try {
-                properties.load(this.getClass().getResourceAsStream("default_config.cfg"));
-                File userdataDir = new File(PROGRAM_USERDATA_DIR);
-                if (!userdataDir.exists()) {
-                    userdataDir.mkdirs();
-                }
-                properties.store(new FileOutputStream(PROGRAM_USERDATA_DIR + File.separator + "config.cfg"), "Properties");
+                properties.load(this.getClass().getClassLoader().getResourceAsStream("sample/config/default_config.cfg"));
+                properties.store(new FileOutputStream(PROGRAM_USERDATA_DIR + File.separator + "config.txt"), "Properties");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    static Config getInstance() {
+    public static Config getInstance() {
         return config;
     }
 
     public String getProperty(String key) throws IllegalArgumentException {
-        if (key.equalsIgnoreCase("PROGRAM_USERDATA_DIR")) {
+        if (key.equalsIgnoreCase("PROGRAM_USERDATA_DIR")){
             return PROGRAM_USERDATA_DIR;
-        } else if (!properties.containsKey(key)) {
+        }
+        else if (!properties.containsKey(key)) {
             throw new IllegalArgumentException("Property " + key + "not found!");
         }
         return properties.getProperty(key);

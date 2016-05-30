@@ -105,14 +105,12 @@ CREATE TABLE recipe
   daytime_id INTEGER,
   season_id INTEGER,
   nurture_id INTEGER,
-  source_id INTEGER,
   FOREIGN KEY (category_id) REFERENCES category(id),
   FOREIGN KEY (course_id) REFERENCES course(id),
   FOREIGN KEY (region_id) REFERENCES region(id),
   FOREIGN KEY (daytime_id) REFERENCES daytime(id),
   FOREIGN KEY (season_id) REFERENCES season(id),
-  FOREIGN KEY (nurture_id) REFERENCES nurture(id),
-  FOREIGN KEY (source_id) REFERENCES source(id)
+  FOREIGN KEY (nurture_id) REFERENCES nurture(id)
 );
 CREATE UNIQUE INDEX recipes_recipe_id_uindex ON recipe (id);
 
@@ -140,7 +138,7 @@ CREATE TABLE recipe_ingredient
   recipe_id INTEGER,
   ingredient_id INTEGER,
   unit_id INTEGER,
-  amount REAL,
+  amount INTEGER,
   FOREIGN KEY (recipe_id) REFERENCES recipe(id),
   FOREIGN KEY (ingredient_id) REFERENCES ingredient(id),
   FOREIGN KEY (unit_id) REFERENCES unit(id),

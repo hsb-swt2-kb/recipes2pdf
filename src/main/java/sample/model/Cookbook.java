@@ -25,10 +25,6 @@ public class Cookbook implements ICookbook {
         this.id = id;
     }
 
-    public void setRecipes(List<IRecipe> recipes){
-        this.recipes = recipes;
-    }
-
     @Override
     public String getTitle() {
         return this.title;
@@ -42,10 +38,6 @@ public class Cookbook implements ICookbook {
     @Override
     public List<ISortlevel> getSortlevel() {
         return this.sortlevel;
-    }
-
-    public void setSortlevel(List<ISortlevel>  sortlevel){
-        this.sortlevel=sortlevel;
     }
 
     @Override
