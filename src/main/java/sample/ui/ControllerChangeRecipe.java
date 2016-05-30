@@ -100,7 +100,9 @@ public class ControllerChangeRecipe {
             zubereitungszeit = Integer.toString(recipe.getDuration());
             zubereitungstext = recipe.getText();
         }
-        catch (RecipeNotFoundException e){}
+        catch (RecipeNotFoundException e){
+            System.out.println("Couldn't load recipe");
+        }
     }
 
     /**

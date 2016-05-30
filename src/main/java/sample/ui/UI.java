@@ -247,9 +247,11 @@ public class UI {
         List<Cookbook> cookBooks = new ArrayList<>();
           cookBooks = new CookbookDAO().getAll();
         for(Cookbook cookbook:cookBooks)
+
             if(cookbook.getTitle() == cookbookname)
                 return cookbook;
         throw new CookBookNotFoundException();
+
     }
 
     /**

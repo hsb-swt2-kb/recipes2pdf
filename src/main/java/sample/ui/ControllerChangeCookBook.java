@@ -64,7 +64,10 @@ public class ControllerChangeCookBook {
             foreword = "";
             path = "";
         }
-        catch (CookBookNotFoundException e){}
+        catch (CookBookNotFoundException e){
+            System.out.println("Couldn't load cookbook");
+
+        }
     }
 
     /**
@@ -80,14 +83,19 @@ public class ControllerChangeCookBook {
     @FXML
     void changeCookBook(ActionEvent event) {
         if(this.textFieldName.getText().trim().isEmpty() == false) {
-            cookbook.setTitle(getName());
-            UI.changeCookBook(cookbook);
+            try {
+                cookbook.setTitle(getName());
+                UI.changeCookBook(cookbook);
+            }catch (Exception e)
+            {
+                System.out.println("Couldn't load cookbook");
+            }
+        }
+
             //Close Stage
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
-        }else{
-            //Exception
-        }
+
 
     }
 

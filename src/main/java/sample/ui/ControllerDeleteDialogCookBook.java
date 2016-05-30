@@ -32,7 +32,8 @@ public class ControllerDeleteDialogCookBook {
             cookbook = UI.searchCookBook(selectedItem);
             UI.delCookBook(cookbook);
         }
-        catch(CookBookNotFoundException e){}
+        catch(CookBookNotFoundException e){ System.out.println("Couldn't load cookbook");}
+
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
     }
