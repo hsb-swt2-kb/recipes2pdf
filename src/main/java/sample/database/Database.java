@@ -45,6 +45,7 @@ public class Database {
         // SQL statement to create tables
         InputStream is = getClass().getClassLoader().getResourceAsStream("sample/database/db.sql");
         String sql = IOUtils.toString(is, "UTF-8");
+        IOUtils.closeQuietly(is);
 
         // execute the statement string
         statement.executeUpdate(sql);

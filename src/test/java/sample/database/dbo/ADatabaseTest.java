@@ -18,12 +18,17 @@ import java.util.stream.Stream;
  */
 public class ADatabaseTest {
 
+    private static boolean setUpIsDone = false;
+
     @Before
     public void before() throws IOException, SQLException {
         Database database = new Database( DatabaseConnection.getSandboxDatabaseConnection() );
-        database.drop();
-        database.install();
-        populateSampleData();
+        if (!setUpIsDone) {
+            database.drop();
+            database.install();
+            populateSampleData();
+            setUpIsDone = true;
+        }
         Base.openTransaction();
     }
 

@@ -43,8 +43,9 @@ public class PdfBuilderConfig {
     public File getTemplateFile() {
         final InputStream in = this.getClass().getResourceAsStream("templates/cookbookTemplate.tex");
         File userTemplate = getUserTemplate();
+        String templateName = userTemplate.getName();
         try {
-            if (!userTemplate.exists()) {
+            if (!userTemplate.exists() && templateName.equals("cookbookTemplate.tex")) {
                 Files.copy(in, userTemplate.toPath());
             }
         } catch (IOException e) {
