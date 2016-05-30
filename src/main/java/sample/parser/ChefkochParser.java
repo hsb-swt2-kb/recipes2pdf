@@ -46,6 +46,11 @@ public class ChefkochParser extends AConcreteParser {
      */
     @Override
     public Recipe parse(final ArrayList<String> text) throws Exception {
+        String format = "";
+
+        for (String entry: text) {
+            format = format + " " + entry;
+        }
 
         Document htmlDoc = Jsoup.parse(text.toString());
         Element script = searchForDataScript(htmlDoc);
