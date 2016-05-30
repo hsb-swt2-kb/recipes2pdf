@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
  * Created by fpfennig on 18.05.2016.
  */
 public class WWParser extends AConcreteParser implements WWConstants{
-    private Recipe recipe = new Recipe();
 
     /**
      * The parse method is used to parse the weight watchers HTML recipe.
@@ -27,9 +26,17 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @return Recipe The populated Recipe
      * @throws Exception
      */
-    //@Override
+    @Override
     public Recipe parse(final ArrayList<String> text) throws Exception {
-        Document htmlDoc = Jsoup.parse(text.toString());
+        recipe = new Recipe();
+
+        String format = "";
+
+        for (String entry: text) {
+            format = format + " " + entry;
+        }
+
+        Document htmlDoc = Jsoup.parse(format.toString());
 
         int decision = this.decideVersion(htmlDoc);
 
@@ -59,7 +66,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @param text The recipe as text
      * @return true if accepts
      */
-    //@Override
+    @Override
     public boolean accepts(final ArrayList<String> text) {
         return text.toString().contains("weightwatchers");
     }

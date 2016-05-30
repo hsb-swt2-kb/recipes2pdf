@@ -28,14 +28,14 @@ class Config implements IConfig {
                 if (!userdataDir.exists()) {
                     userdataDir.mkdirs();
                 }
-                properties.store(new FileOutputStream(PROGRAM_USERDATA_DIR + File.separator + "config.txt"), "Properties");
+                properties.store(new FileOutputStream(PROGRAM_USERDATA_DIR + File.separator + "config.cfg"), "Properties");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    public static Config getInstance() {
+    static Config getInstance() {
         return config;
     }
 
