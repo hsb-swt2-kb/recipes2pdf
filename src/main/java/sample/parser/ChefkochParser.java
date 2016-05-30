@@ -52,7 +52,7 @@ public class ChefkochParser extends AConcreteParser {
             format = format + " " + entry;
         }
 
-        Document htmlDoc = Jsoup.parse(text.toString());
+        Document htmlDoc = Jsoup.parse(format.toString());
         Element script = searchForDataScript(htmlDoc);
         getDataFromScript(script);
 
