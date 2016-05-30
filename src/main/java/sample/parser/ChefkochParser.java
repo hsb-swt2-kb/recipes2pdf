@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
  * Chefkoch parser to parse recipes from chefkoch.de
  */
 public class ChefkochParser extends AConcreteParser {
-    private Recipe recipe = new Recipe();
 
     //private ChefkochAPI chefkochAPI;
 
@@ -46,6 +45,8 @@ public class ChefkochParser extends AConcreteParser {
      */
     @Override
     public Recipe parse(final ArrayList<String> text) throws Exception {
+        recipe = new Recipe();
+
         String format = "";
 
         for (String entry: text) {
