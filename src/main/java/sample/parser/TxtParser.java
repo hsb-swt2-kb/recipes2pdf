@@ -80,6 +80,10 @@ public class TxtParser extends AConcreteParser implements Constants {
         Nurture nurture = new Nurture();
         nurture.setName(findDatafield(textFileContent, "Ernährungsart"));
         recipe.setNurture(nurture);
+        //=============================
+        Daytime daytime = new Daytime();
+        daytime.setName(findDatafield(textFileContent, "Tageszeit"));
+        recipe.setDaytime(daytime);
 
         try {
             recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, "Arbeitszeit")));
