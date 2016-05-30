@@ -105,11 +105,13 @@ public class ControllerManageCookBooks {
 
     protected void refreshListViews() {
         loadInfo();
-        FXCollections.sort(this.cookbooks);
-        this.listViewCookBooks.getItems().clear();
-        this.listViewCookBooks.setItems(this.cookbooks);
-        ControllerManageCookBook controllerManageCookBook = new ControllerManageCookBook();
-        controllerManageCookBook.searchInListView(this.cookbooks, searchFieldCookBooks, listViewCookBooks);
+        if(this.listViewCookBooks != null) {
+            FXCollections.sort(this.cookbooks);
+            this.listViewCookBooks.getItems().clear();
+            this.listViewCookBooks.setItems(this.cookbooks);
+            ControllerManageCookBook controllerManageCookBook = new ControllerManageCookBook();
+            controllerManageCookBook.searchInListView(this.cookbooks, searchFieldCookBooks, listViewCookBooks);
+        }
     }
 
     void loadInfo(){

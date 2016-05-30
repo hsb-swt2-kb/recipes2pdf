@@ -125,12 +125,14 @@ loadInfo();
     private void refreshListViews() {
         FXCollections.sort(recipeNames);
         FXCollections.sort(recipeNamesOfCookBook);
-        this.listViewCookBook.getItems().clear();
-        this.listViewRecipes.getItems().clear();
-        this.listViewRecipes.setItems(recipeNames);
-        this.listViewCookBook.setItems(recipeNamesOfCookBook);
-        searchInListView(recipeNames, searchFieldRecipes, listViewRecipes);
-        searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
+        if(this.listViewCookBook != null && this.listViewRecipes != null) {
+            this.listViewCookBook.getItems().clear();
+            this.listViewRecipes.getItems().clear();
+            this.listViewRecipes.setItems(recipeNames);
+            this.listViewCookBook.setItems(recipeNamesOfCookBook);
+            searchInListView(recipeNames, searchFieldRecipes, listViewRecipes);
+            searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
+        }
     }
 
     /**
@@ -138,8 +140,10 @@ loadInfo();
      */
 
     private void refreshComboBox() {
-        this.comboBoxCookBooks.getItems().clear();
-        this.comboBoxCookBooks.setItems(this.cookBookNames);
+        if(this.comboBoxCookBooks != null) {
+            this.comboBoxCookBooks.getItems().clear();
+            this.comboBoxCookBooks.setItems(this.cookBookNames);
+        }
     }
 
     /**
