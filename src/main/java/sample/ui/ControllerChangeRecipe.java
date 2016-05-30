@@ -88,11 +88,11 @@ public class ControllerChangeRecipe {
         try{
             recipe = UI.searchRecipe(name);
             ernaehrungsart = recipe.getNurture().getName();
-            gerichtart = "";
+            gerichtart = recipe.getCourse().getName();
             portion = Double.toString(recipe.getPortions());
             region = recipe.getRegion().getName();
             category = recipe.getCategory().getName();
-            source = "";
+            source = recipe.getSource().getName();
             path = "";
             ingredients = "";
             saison = recipe.getSeason().getName();
@@ -144,6 +144,7 @@ public class ControllerChangeRecipe {
     void changeRecipe(ActionEvent event) {
               if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
             recipe.setTitle(getName());
+            recipe.setDuration(getZubereitungszeit());
                //   getErnaehrungsart();
                //   getGerichtart();
                //   getRegion();
@@ -152,7 +153,6 @@ public class ControllerChangeRecipe {
                //   getSource();
                //   getSaison();
                //   getDaytime();
-               //   getZubereitungszeit();
             recipe.setText(getZubereitungstext());
             UI.changeRecipe(recipe);
             ControllerManageCookBooks.getInstance().refreshListViews();
@@ -224,9 +224,13 @@ public class ControllerChangeRecipe {
         return  daytime;
     }
 
-    private String getZubereitungszeit(){
+    private int getZubereitungszeit(){
        zubereitungszeit = textFieldZubereitungszeit.getText();
-        return  zubereitungszeit;
+        int duration = 0;
+        try {
+            duration = Integer.parseInt(zubereitungszeit);
+        }catch (NumberFormatException e){}
+        return duration;
     }
     private String getZubereitungstext(){
         zubereitungstext = textAreaZubereitungstext.getText();
