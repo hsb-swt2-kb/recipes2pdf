@@ -248,7 +248,7 @@ public class UI {
           cookBooks = new CookbookDAO().getAll();
         for(Cookbook cookbook:cookBooks)
 
-            if(cookbook.getTitle() == cookbookname)
+            if(cookbook.getTitle().equals(cookbookname))
                 return cookbook;
         throw new CookBookNotFoundException();
 
@@ -268,7 +268,7 @@ public class UI {
         List<Recipe> recipes = new ArrayList<>();
         recipes = new RecipeDAO().getAll();
         for(Recipe recipe : recipes)
-            if(recipe.getTitle() == recipeName)
+            if(recipe.getTitle().equals(recipeName))
                 return recipe;
         throw new RecipeNotFoundException();
     }
