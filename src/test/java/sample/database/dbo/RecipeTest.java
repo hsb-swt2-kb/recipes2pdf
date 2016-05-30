@@ -1,11 +1,10 @@
 package sample.database.dbo;
 
+import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-import sample.model.*;
 import sample.database.dao.*;
+import sample.model.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,6 @@ import static org.javalite.test.jspec.JSpec.the;
 /**
  * Created by czoeller on 08.04.16.
  */
-@RunWith(MockitoJUnitRunner.class)
 public class RecipeTest extends ADatabaseTest {
 
     Recipe recipe;
@@ -152,6 +150,19 @@ public class RecipeTest extends ADatabaseTest {
     }
 
     @Test
+    public void testSource() {
+        SourceDAO sourceDAO = new SourceDAO();
+        Source source = new Source();
+        String sourceName = "chefkoch.de";
+        source.setName(sourceName);
+        sourceDAO.insert(source);
+        recipe.setSource(source);
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
+        the(byId.getSource().getName()).shouldBeEqual(sourceName);
+    }
+
+    @Test
     public void testGetIngredients() {
         recipe.add("Nudeln", 2, "kg");
         recipe.add("Nüsse", 3, "kleine Stück");
@@ -163,12 +174,31 @@ public class RecipeTest extends ADatabaseTest {
         the(ingredientNames).shouldNotContain("Schokolade");
     }
 
+    @Test
+    public void testDoubleIngredientAmount() {
+        recipe.add("Erdbeeren", 2.5, "kg");
+        recipe.add("Tomaten", 3.7, "kleine Stück");
+        recipeDAO.update(recipe);
+        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
+        final List<Double> amounts = getAmounts(byId);
+        the(amounts).shouldContain(2.5);
+        the(amounts).shouldContain(3.7);
+    }
+
     private List<String> getIngredientsNames(IRecipe recipe) {
         return recipe
             .getIngredients()
             .stream()
-            .map(iIngredientIntegerIUnitTriple -> iIngredientIntegerIUnitTriple.getLeft() )
-            .map(iIngredient -> iIngredient.getName())
+            .map(Triple::getLeft)
+            .map(IIngredient::getName)
+            .collect(Collectors.toList());
+    }
+
+    private List<Double> getAmounts(IRecipe recipe) {
+        return recipe
+            .getIngredients()
+            .stream()
+            .map(Triple::getMiddle)
             .collect(Collectors.toList());
     }
 
