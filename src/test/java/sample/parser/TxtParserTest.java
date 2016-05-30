@@ -190,7 +190,7 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
         the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(1).getMiddle()).shouldBeNull();
         the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
     }
     @Test
@@ -200,7 +200,7 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
         the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(1).getMiddle()).shouldBeNull();
         the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
     }
     @Test
@@ -412,8 +412,48 @@ public class TxtParserTest {
     }
     @Test
     public void testParseMethod59() {
-        Setup("TestGericht51.txt");
+        Setup("TestGericht59.txt");
         the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod60() {
+        Setup("TestGericht60.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod61() {
+        Setup("TestGericht61.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod62() {
+        Setup("TestGericht62.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod63() {
+        Setup("TestGericht63.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod64() {
+        Setup("TestGericht64.txt");
+        the(recipe.getDuration()).shouldBeEqual(120);
+    }
+    @Test
+    public void testParseMethod65() {
+        Setup("TestGericht65.txt");
+        the(recipe.getDuration()).shouldBeEqual(120);
+    }
+    @Test
+    public void testParseMethod66() {
+        Setup("TestGericht66.txt");
+        the(recipe.getDuration()).shouldBeEqual(120);
+    }
+    @Test
+    public void testParseMethod67() {
+        Setup("TestGericht67.txt");
+        the(recipe.getDuration()).shouldBeEqual(120);
     }
 
 
