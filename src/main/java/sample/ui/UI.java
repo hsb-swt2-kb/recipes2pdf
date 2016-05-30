@@ -4,7 +4,9 @@ import sample.database.Database;
 import sample.database.DatabaseConnection;
 import sample.database.dao.CookbookDAO;
 import sample.database.dao.RecipeDAO;
+import sample.exceptions.CookBookNotFoundException;
 import sample.exceptions.CouldNotParseException;
+import sample.exceptions.RecipeNotFoundException;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
@@ -196,10 +198,11 @@ public class UI {
     }
 
     static void changeCookBook(Cookbook cookbook){
-
+        new CookbookDAO().update(cookbook);
     }
 
     static void changeRecipe(Recipe recipe){
+        new RecipeDAO().update(recipe);
 
     }
 
@@ -209,15 +212,22 @@ public class UI {
 
     }
 
-    static Cookbook searchCookBook(String cookbookname) {
-        Cookbook cookbookFromSearch = null;
-        return cookbookFromSearch;
-
+    static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
+        List<Cookbook> cookBooks = new ArrayList<>();
+          cookBooks = new CookbookDAO().getAll();
+        for(Cookbook cookbook:cookBooks)
+            if(cookbook.getTitle() == cookbookname)
+                return cookbook;
+        throw new CookBookNotFoundException();
     }
 
-    static Recipe searchRecipe(String recipe) {
+    static Recipe searchRecipe(String recipeName) throws  RecipeNotFoundException{
         Recipe recipeFromSearch = null;
-        return recipeFromSearch;
-
+        List<Recipe> recipes = new ArrayList<>();
+        recipes = new RecipeDAO().getAll();
+        for(Recipe recipe : recipes)
+            if(recipe.getTitle() == recipeName)
+                return recipe;
+        throw new RecipeNotFoundException();
     }
 }
