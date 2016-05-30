@@ -146,9 +146,9 @@ public class ControllerChangeRecipe {
             recipe.setTitle(getName());
                //   getErnaehrungsart();
                //   getGerichtart();
-               //   getPortion();
                //   getRegion();
                //   getCategory();
+            recipe.setPortions(Integer.parseInt(getPortion()));
                //   getSource();
                //   getSaison();
                //   getDaytime();
