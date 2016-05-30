@@ -1,13 +1,12 @@
 package sample.database;
 
+import org.apache.commons.io.IOUtils;
 import org.javalite.activejdbc.Base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -44,7 +43,9 @@ public class Database {
         Statement statement = connection.createStatement();
 
         // SQL statement to create tables
-        final String sql = new String(Files.readAllBytes(Paths.get( new File(this.getClass().getClassLoader().getResource("sample/database/db.sql").getPath()).getAbsolutePath())));
+        InputStream is = getClass().getClassLoader().getResourceAsStream("sample/database/db.sql");
+        String sql = IOUtils.toString(is, "UTF-8");
+        IOUtils.closeQuietly(is);
 
         // execute the statement string
         statement.executeUpdate(sql);
