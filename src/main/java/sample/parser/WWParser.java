@@ -29,6 +29,12 @@ public class WWParser extends AConcreteParser implements WWConstants{
      */
     @Override
     public Recipe parse(final ArrayList<String> text) throws Exception {
+        String format = "";
+
+        for (String entry: text) {
+            format = format + " " + entry;
+        }
+
         Document htmlDoc = Jsoup.parse(text.toString());
 
         int decision = this.decideVersion(htmlDoc);
