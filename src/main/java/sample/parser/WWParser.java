@@ -27,7 +27,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @return Recipe The populated Recipe
      * @throws Exception
      */
-    //@Override
+    @Override
     public Recipe parse(final ArrayList<String> text) throws Exception {
         Document htmlDoc = Jsoup.parse(text.toString());
 
@@ -59,7 +59,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @param text The recipe as text
      * @return true if accepts
      */
-    //@Override
+    @Override
     public boolean accepts(final ArrayList<String> text) {
         return text.toString().contains("weightwatchers");
     }
