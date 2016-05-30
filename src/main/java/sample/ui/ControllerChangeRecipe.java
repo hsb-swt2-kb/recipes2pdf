@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.exceptions.RecipeNotFoundException;
 import sample.model.Recipe;
 
 import java.io.File;
@@ -62,8 +63,8 @@ public class ControllerChangeRecipe {
     @FXML
     private TextField textFieldPicture;
     private String path;
-        @FXML
-        private Button closeButton;
+    @FXML
+    private Button closeButton;
     @FXML
     private Button changeButton;
 
@@ -84,20 +85,22 @@ public class ControllerChangeRecipe {
      */
 
     private void loadInformation() {
-        recipe = UI.searchRecipe(name);
-        ernaehrungsart = recipe.getNurture().getName();
-        gerichtart = "";
-        portion = Double.toString(recipe.getPortions());
-        region = recipe.getRegion().getName();
-        category = recipe.getCategory().getName();
-        source = "";
-        path = "";
-        ingredients = "";
-        saison = recipe.getSeason().getName();
-        daytime = recipe.getDaytime().getName();
-        zubereitungszeit = Integer.toString(recipe.getDuration());
-        zubereitungstext = recipe.getText();
-
+        try{
+            recipe = UI.searchRecipe(name);
+            ernaehrungsart = recipe.getNurture().getName();
+            gerichtart = "";
+            portion = Double.toString(recipe.getPortions());
+            region = recipe.getRegion().getName();
+            category = recipe.getCategory().getName();
+            source = "";
+            path = "";
+            ingredients = "";
+            saison = recipe.getSeason().getName();
+            daytime = recipe.getDaytime().getName();
+            zubereitungszeit = Integer.toString(recipe.getDuration());
+            zubereitungstext = recipe.getText();
+        }
+        catch (RecipeNotFoundException e){}
     }
 
     /**

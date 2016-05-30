@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import sample.exceptions.RecipeNotFoundException;
 import sample.model.Recipe;
 
 public class ControllerDeleteDialogRecipe {
@@ -26,8 +27,12 @@ public class ControllerDeleteDialogRecipe {
     @FXML
     void deleteElement(ActionEvent event) {
         selectedItem = ControllerManageCookBook.getInstance().getSelectedItem();
-        Recipe recipe = UI.searchRecipe(selectedItem);
-        UI.delRecipe(recipe);
+        Recipe recipe;
+        try{
+            recipe= UI.searchRecipe(selectedItem);
+            UI.delRecipe(recipe);
+        }
+        catch(RecipeNotFoundException e){}
 
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();

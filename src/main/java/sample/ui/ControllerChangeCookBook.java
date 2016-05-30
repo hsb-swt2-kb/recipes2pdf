@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.exceptions.CookBookNotFoundException;
 import sample.model.Cookbook;
 
 import java.io.File;
@@ -57,17 +58,18 @@ public class ControllerChangeCookBook {
     /**
      * load cookbook information
      */
-
     private void loadInformation() {
-        cookbook = UI.searchCookBook(name);
-        foreword = "";
-        path = "";
+        try{
+            cookbook = UI.searchCookBook(name);
+            foreword = "";
+            path = "";
+        }
+        catch (CookBookNotFoundException e){}
     }
 
     /**
      * set loaded text to textfields
      */
-
     private void fillTextFields() {
 
         textFieldName.setText(name);
