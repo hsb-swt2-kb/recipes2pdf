@@ -179,11 +179,6 @@ public class RecipeTest extends ADatabaseTest {
     }
 
     @Test
-    public void testIsEmptyPositive(){
-        Recipe recipe = new Recipe();
-        the(recipe.isEmpty()).shouldBeTrue();
-    }
-    @Test
     public void testIsEmptyNegative(){
         Recipe recipe = new Recipe();
         recipe.setTitle("Titel");

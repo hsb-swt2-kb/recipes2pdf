@@ -36,10 +36,9 @@ public class ParserTest {
         try {
             Recipe recipe = Parser.parse(file);
         }
-        catch(CouldNotParseException e){
+        catch(Exception e){
             success=true;
         }
-        catch(FileNotFoundException e){}
         the(success).shouldBeTrue();
     }
 
@@ -50,9 +49,7 @@ public class ParserTest {
         try {
             Recipe recipe = Parser.parse(file);
         }
-        catch(CouldNotParseException e){
-        }
-        catch(FileNotFoundException e){
+        catch(Exception e){
             success=true;
         }
         the(success).shouldBeTrue();
