@@ -292,10 +292,10 @@ public class PdfBuilder implements IConcreteBuilder {
 
 
     /**
-     * This Method creates a Map
-     * @param recipes
-     * @param sortChain
-     * @return
+     * This Method creates a referencenumber and than  relates a recipe to its referencenumber via Hashmap. this is needed for the velocity template
+     * @param recipes List of IRecipes to generate a referencenumber for.
+     * @param sortChain Sorted list of Isortlevels where the fist Listogject is the primary sortattribute of the Recipes. the refnum will be primarySortLevel.secondarySortLeve.thirdSortLevel...
+     * @return Hashmap, that relates each Recipe to its referencenumber
      */
     private Map<IRecipe, String> generateRefNumList(List<IRecipe> recipes, List<ISortlevel> sortChain) {
         Map<IRecipe, String> refNumList = new HashMap<>();
@@ -313,6 +313,11 @@ public class PdfBuilder implements IConcreteBuilder {
         return refNumList;
     }
 
+    /**
+     * This Method creates a referencenumber and than  relates a recipe to its referencenumber via Hashmap. this is needed for the velocity template
+     * @param recipes List of IRecipes to generate a Properties Object for.
+     * @return Hashmap, that relates each Recipe its sortable Properties, The Properties are category,season,nuture,curse and region
+     */
     private Map<IRecipe,Properties> generateRecipePropertyList(List<IRecipe> recipes) { //TODO: Meybe get the List of Sortable Attributes out of database and work with reflections on recipe?
         Map<IRecipe,Properties> propList = new HashMap<>();
 
@@ -328,6 +333,11 @@ public class PdfBuilder implements IConcreteBuilder {
         return propList;
     }
 
+    /**
+     * This Method sais, which type of document this builder builds. In this case its "PDF"
+     * @param filetype filetype to check the building suitability
+     * @return if this buider is suitable to build the given filetype
+     */
     @Override
     public boolean builds(String filetype) {
         return filetype.equalsIgnoreCase("pdf");

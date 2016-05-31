@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by kai on 11.04.16.
+ * This Class uses the java.util.Properties to provide a global collection of configuration parameters.
  */
 class Config implements IConfig {
 
