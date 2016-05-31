@@ -11,6 +11,7 @@ import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 import sample.model.Recipe;
+import sample.parser.IParser;
 import sample.parser.Parser;
 
 import java.io.File;
@@ -63,7 +64,7 @@ public class UI {
     static boolean addRecipe (File file) throws Exception,FileNotFoundException,CouldNotParseException {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         boolean success=true;
-        Recipe recipe = Parser.parse(file);
+        Recipe recipe = (Recipe) Parser.parse(file);
         if (recipe.isIncomplete())
             success = false;
         else

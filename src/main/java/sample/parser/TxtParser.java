@@ -7,6 +7,7 @@ import java.time.Duration;
 import java.lang.Math;
 import java.lang.StringBuilder;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,7 +59,7 @@ public class TxtParser extends AConcreteParser implements Constants {
      *
      * NOTE: Higher Instances have to make sure, that a recipe is valid with minimal Options
      */
-    public Recipe parse(ArrayList<String> textFileContent) {
+    public Recipe parse(List<String> textFileContent) {
         Recipe recipe = new Recipe();
         ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
 
@@ -177,7 +178,7 @@ public class TxtParser extends AConcreteParser implements Constants {
      * @return boolean: If it is true, the parse() could extract a minimal Recipe. If it is a wrong format like html, it
      * will be false.
      */
-    public boolean accepts(ArrayList<String> fileContent) {
+    public boolean accepts(List<String> fileContent) {
       /* parse it to check it :) */
         return !this.parse(fileContent).isIncomplete();
     }
@@ -194,7 +195,7 @@ public class TxtParser extends AConcreteParser implements Constants {
     }
     //Extract the name of a recpipe. Must be in the first non empty row
     //of the textfile
-    private String extractRecipename(ArrayList<String> textfileContent) {
+    private String extractRecipename(List<String> textfileContent) {
         String name = "";
         String row = "";
 
@@ -223,7 +224,7 @@ public class TxtParser extends AConcreteParser implements Constants {
      * @param textfileContent
      * @return ArrayList with
    */
-    private ArrayList<String[]> extractIncredentsList(ArrayList<String> textfileContent) {
+    private ArrayList<String[]> extractIncredentsList(List<String> textfileContent) {
 
         String tempIncredent = null;
         boolean anzVorhanden;
@@ -280,7 +281,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         return ingredientList;
     }
 
-    private String findPreparationOfRecipe(ArrayList<String> fileContent) {
+    private String findPreparationOfRecipe(List<String> fileContent) {
         boolean lastIngredientFound = false;
         boolean nameFound = false;
         int beginRow = -1;
@@ -339,7 +340,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         return preperation;
     }
 
-    private String findPreperationWithTag(ArrayList<String> textFileContent){
+    private String findPreperationWithTag(List<String> textFileContent){
         String tempStr = null;
 
         int beginRow = findSignalword(textFileContent,"Zubereitung");
@@ -365,7 +366,7 @@ public class TxtParser extends AConcreteParser implements Constants {
             return tempStr;
     }
 
-    private String findDatafield(ArrayList<String> textFileContent, String signalwort) {
+    private String findDatafield(List<String> textFileContent, String signalwort) {
         String datafield = null;
         int zeileS = findSignalword(textFileContent, signalwort);
 
@@ -415,7 +416,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         return d;
     }
 
-    private int findSignalword(ArrayList<String> textDateiInhalt, String signalwort) {
+    private int findSignalword(List<String> textDateiInhalt, String signalwort) {
         for (int i = 0; i < textDateiInhalt.size(); i++) {
             if (textDateiInhalt.get(i).contains(signalwort + ":")) {
                 return i;
@@ -424,7 +425,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         return -1;
     }
 
-    private int findNextSignalword(int j, ArrayList<String> textDateiInhalt, String signalwort) {
+    private int findNextSignalword(int j, List<String> textDateiInhalt, String signalwort) {
         for (int i = j + 1; i < textDateiInhalt.size(); i++) {
             for (int k = 1; k < signalwoerter.length; k++) {
                 if ((textDateiInhalt.get(i).contains(signalwoerter[k] + ":")) && signalwoerter[k] + ":" != signalwort) {
