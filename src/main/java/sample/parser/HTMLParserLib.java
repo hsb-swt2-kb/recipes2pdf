@@ -95,8 +95,6 @@ public class HTMLParserLib {
      * @return Converted IngredientList, ArrayList of String Arrays
      */
     public ArrayList<String[]> convertIngredientList(ArrayList<String> ingredientList){
-        // TODO: FIX "prise Salz"
-        // Maybe fix for CKParser?
         ArrayList<String[]> result = new ArrayList<>();
 
         for (String listEntry : ingredientList) {
@@ -105,7 +103,7 @@ public class HTMLParserLib {
 
             if(filtering.length > 1) {
                 // Removing extra numeral characters
-                Pattern filterRegex = Pattern.compile(CKConstants.numberWithCharacters);
+                Pattern filterRegex = Pattern.compile(numberWithCharacters);
                 Matcher filterMatcher = filterRegex.matcher(filtering[0]);
                 Matcher filterMatcher2 = filterRegex.matcher(filtering[1]);
 
@@ -151,14 +149,27 @@ public class HTMLParserLib {
             // Looking for the unit if it was not in the amount AND if the array has more than 2 entries.
             // If this is not the case, the unit will be set as null, and the rest String will be the ingredient.
             if(unit.isEmpty() && workingArray.length > 2){
-                unit = workingArray[1];
+                unit = null;
 
-                for(int counter = 2; counter < workingArray.length; counter++){
-                    if(counter == 2){
-                        ingredient = ingredient + workingArray[counter];
+                if(workingArray[0].matches(numberWithCharacters)){
+                    unit = workingArray[1];
+
+                    for(int counter = 2; counter < workingArray.length; counter++){
+                        if(counter == 2){
+                            ingredient = ingredient + workingArray[counter];
+                        }
+                        else{
+                            ingredient = ingredient + " " + workingArray[counter];
+                        }
                     }
-                    else{
-                        ingredient = ingredient + " " + workingArray[counter];
+                }
+                else{
+                    for (int counter = 0; counter < workingArray.length; counter++) {
+                        if (counter == 0) {
+                            ingredient = ingredient + workingArray[counter];
+                        } else {
+                            ingredient = ingredient + " " + workingArray[counter];
+                        }
                     }
                 }
             }
@@ -175,10 +186,7 @@ public class HTMLParserLib {
             else{
                 unit = null;
 
-                if(workingArray.length == 1){
-                    ingredient = workingArray[0];
-                }
-                else {
+                if(workingArray[0].matches(numberWithCharacters)){
                     for (int counter = 1; counter < workingArray.length; counter++) {
                         if (counter == 1) {
                             ingredient = ingredient + workingArray[counter];
@@ -186,6 +194,16 @@ public class HTMLParserLib {
                             ingredient = ingredient + " " + workingArray[counter];
                         }
                     }
+                }
+                else{
+                    for (int counter = 0; counter < workingArray.length; counter++) {
+                        if (counter == 0) {
+                            ingredient = ingredient + workingArray[counter];
+                        } else {
+                            ingredient = ingredient + " " + workingArray[counter];
+                        }
+                    }
+
                 }
             }
 
