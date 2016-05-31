@@ -186,7 +186,10 @@ public class Recipe implements IRecipe {
     }
 
     public boolean isEmpty(){
-        if (this.title.isEmpty() && this.text.isEmpty() && this.ingredients.isEmpty())
+        if (this.title == null ||
+            this.text == null ||
+            this.ingredients == null ||
+            (this.title.isEmpty() && this.text.isEmpty() && this.ingredients.isEmpty()))
             return true;
         else
             return false;
