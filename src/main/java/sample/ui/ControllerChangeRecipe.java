@@ -14,57 +14,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.exceptions.RecipeNotFoundException;
+import sample.model.Recipe;
+
 import java.io.File;
 
 public class ControllerChangeRecipe {
 
 
-    @FXML
-    private TextField textFieldName;
-
-    @FXML
-    private TextArea textAreaZubereitungstext;
-
-    @FXML
-    private TextField textFieldZubereitungszeit;
-
-    @FXML
-    private TextField textFieldErnaehrungsart;
-
-    @FXML
-    private TextField textFieldGerichtart;
-
-    @FXML
-    private TextField textFieldPortion;
-
-    @FXML
-    private TextField textFieldRegion;
-
-    @FXML
-    private TextField textFieldCategory;
-
-    @FXML
-    private TextField textFieldSource;
-
-    @FXML
-    private TextField textFieldSaison;
-
-    @FXML
-    private TextField textFieldDaytime;
-
-    @FXML
-    private Button fileChooserButton;
-
-    @FXML
-    private TextField textFieldPicture;
-
-        @FXML
-        private Button closeButton;
-
-    @FXML
-    private Button changeButton;
-
-    String name;
+    //Recipe selection from the ControllerManageCookBook
+    String name = ControllerManageCookBook.getInstance().getSelectedItem();
     String ernaehrungsart;
     String gerichtart;
     String portion;
@@ -75,12 +34,98 @@ public class ControllerChangeRecipe {
     String daytime;
     String zubereitungszeit;
     String zubereitungstext;
+    String ingredients;
+    Recipe recipe;
+    @FXML
+    private TextField textFieldName;
+    @FXML
+    private TextArea textAreaZubereitungstext;
+    @FXML
+    private TextField textFieldZubereitungszeit;
+    @FXML
+    private TextField textFieldErnaehrungsart;
+    @FXML
+    private TextField textFieldGerichtart;
+    @FXML
+    private TextField textFieldPortion;
+    @FXML
+    private TextField textFieldRegion;
+    @FXML
+    private TextField textFieldCategory;
+    @FXML
+    private TextField textFieldSource;
+    @FXML
+    private TextField textFieldSaison;
+    @FXML
+    private TextField textFieldDaytime;
+    @FXML
+    private Button fileChooserButton;
+    @FXML
+    private TextField textFieldPicture;
+    private String path;
+    @FXML
+    private Button closeButton;
+    @FXML
+    private Button changeButton;
 
     @FXML
     public void initialize() {
+        refreshData();
 
 
     }
+
+    protected void refreshData() {
+        loadInformation();
+        fillTextFields();
+    }
+
+    /**
+     * load recipe information
+     */
+
+    private void loadInformation() {
+        try{
+            recipe = UI.searchRecipe(name);
+            ernaehrungsart = recipe.getNurture().getName();
+            gerichtart = recipe.getCourse().getName();
+            portion = Double.toString(recipe.getPortions());
+            region = recipe.getRegion().getName();
+            category = recipe.getCategory().getName();
+            source = recipe.getSource().getName();
+            path = "";
+            ingredients = "";
+            saison = recipe.getSeason().getName();
+            daytime = recipe.getDaytime().getName();
+            zubereitungszeit = Integer.toString(recipe.getDuration());
+            zubereitungstext = recipe.getText();
+        }
+        catch (RecipeNotFoundException e){
+            System.out.println("Couldn't load recipe.");
+        }
+    }
+
+    /**
+     * set loaded text to textfields
+     */
+
+    private void fillTextFields() {
+
+        textFieldName.setText(name);
+        textFieldErnaehrungsart.setText(ernaehrungsart);
+        textFieldGerichtart.setText(gerichtart);
+        textFieldPortion.setText(portion);
+        textFieldRegion.setText(region);
+        textFieldCategory.setText(category);
+        textFieldSource.setText(source);
+        textFieldSaison.setText(saison);
+        textFieldDaytime.setText(daytime);
+        textFieldPicture.setText(path);
+        textFieldZubereitungszeit.setText(zubereitungszeit);
+        textAreaZubereitungstext.setText(zubereitungstext);
+    }
+
+
 
     /**
      * The method ''closeChangeRecipe()'' closes the ChangeRecipe-Window after a interaction with the close-button.
@@ -97,21 +142,20 @@ public class ControllerChangeRecipe {
 
     @FXML
     void changeRecipe(ActionEvent event) {
-        getName();
-        getErnaehrungsart();
-        getGerichtart();
-        getPortion();
-        getRegion();
-        getCategory();
-        getSource();
-        getSaison();
-        getDaytime();
-        getZubereitungstext();
-        getZubereitungszeit();
-
-        if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
-            System.out.println(name+ernaehrungsart+gerichtart+portion+region+category+source+saison+daytime+zubereitungstext+zubereitungszeit);
-
+              if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
+            recipe.setTitle(getName());
+            recipe.setDuration(getZubereitungszeit());
+               //   getErnaehrungsart();
+               //   getGerichtart();
+               //   getRegion();
+               //   getCategory();
+            recipe.setPortions(Integer.parseInt(getPortion()));
+               //   getSource();
+               //   getSaison();
+               //   getDaytime();
+            recipe.setText(getZubereitungstext());
+            UI.changeRecipe(recipe);
+            ControllerManageCookBooks.getInstance().refreshListViews();
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
         }
@@ -180,9 +224,13 @@ public class ControllerChangeRecipe {
         return  daytime;
     }
 
-    private String getZubereitungszeit(){
+    private int getZubereitungszeit(){
        zubereitungszeit = textFieldZubereitungszeit.getText();
-        return  zubereitungszeit;
+        int duration = 0;
+        try {
+            duration = Integer.parseInt(zubereitungszeit);
+        }catch (NumberFormatException e){}
+        return duration;
     }
     private String getZubereitungstext(){
         zubereitungstext = textAreaZubereitungstext.getText();
