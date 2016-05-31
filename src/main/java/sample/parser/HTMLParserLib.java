@@ -230,6 +230,10 @@ public class HTMLParserLib {
                 ingredientArray[1] = unit.substring(0, maxFieldsize);
             }
             else{
+                if(unit == null){
+                    unit = "";
+                }
+
                 ingredientArray[1] = unit.trim();
             }
 
