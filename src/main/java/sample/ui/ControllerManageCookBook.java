@@ -1,7 +1,9 @@
 package sample.ui;
 
 /**
- * @author Tobias Stelter.
+ * @author Tobias Stelter
+ * The Class ''ControllerManageCookBook'' manages the ManageCookBook-FXML.
+ * It displays all recipes and provides methods for managing a cookbook (addRecipes,deleteRecipes,etc.).
  */
 
 
@@ -19,9 +21,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.PopOver;
-import sample.database.dao.RecipeDAO;
 import sample.model.Cookbook;
-import sample.model.IRecipe;
 import sample.model.Recipe;
 
 import java.io.IOException;
@@ -31,11 +31,12 @@ import java.util.List;
 public class ControllerManageCookBook {
 
 
+    private static ControllerManageCookBook instance;
+    protected String selectedItem;
     private ObservableList<String> recipeNames;
     private ObservableList<String> recipeNamesOfCookBook;
     private ObservableList<String> cookBookNames;
     private ControllerDefault controllerDefault = new ControllerDefault();
-
     @FXML
     private ListView<String> listViewRecipes;
     @FXML
@@ -59,111 +60,101 @@ public class ControllerManageCookBook {
     @FXML
     private ListView<String> listViewCookBook;
 
+    /**
+     * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBook and ControllerChangeRecipe.
+     *
+     * @return controllerInstance
+     */
+    public static ControllerManageCookBook getInstance() {
+
+        if (ControllerManageCookBook.instance == null) {
+            synchronized (ControllerManageCookBook.class) {
+                if (ControllerManageCookBook.instance == null) {
+                    ControllerManageCookBook.instance = new ControllerManageCookBook();
+                }
+            }
+        }
+        return ControllerManageCookBook.instance;
+    }
+
     @FXML
     private void initialize() {
+        instance = this;
         initializeListeners();
         this.recipeNames = FXCollections.observableArrayList();
         this.recipeNamesOfCookBook = FXCollections.observableArrayList();
         this.cookBookNames = FXCollections.observableArrayList();
+loadInfo();
+
+        refresh();
+    }
+
+    void refresh(){
+        loadInfo();
+        refreshComboBox();
+        refreshListViews();
+    }
+
+    void loadInfo(){
+
+        this.cookBookNames = FXCollections.observableArrayList();
+        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
+        for (Cookbook cookbook : cookbooksDB) {
+            this.cookBookNames.add(cookbook.getTitle());
+        }
 
         List<Recipe> recipes =  UI.getAllRecipesFromDB();
         for (Recipe recipe : recipes){
-           recipeNames.add(recipe.getTitle());
+            recipeNames.add(recipe.getTitle());
         }
 
         List<Cookbook> cookbooks = UI.getAllCookbooksFromDB();
         for (Cookbook cookbook: cookbooks){
             cookBookNames.add(cookbook.getTitle());
             List<Recipe> iRecipes = UI.castIRecipeToRecipe(cookbook.getRecipes());
-           for(Recipe recipe : iRecipes){
-               recipeNamesOfCookBook.add(recipe.getTitle());
-           }
+            for(Recipe recipe : iRecipes){
+                recipeNamesOfCookBook.add(recipe.getTitle());
+            }
         }
-
-        refreshComboBox(cookBookNames);
-        refreshListViews(recipeNames, recipeNamesOfCookBook);
     }
 
-    private void refreshListViews(ObservableList<String> recipes, ObservableList<String> cookbook) {
-        FXCollections.sort(recipes);
-        FXCollections.sort(cookbook);
-        this.listViewRecipes.setItems(recipes);
-        this.listViewCookBook.setItems(cookbook);
-        searchInListView(recipes, searchFieldRecipes, listViewRecipes);
-        searchInListView(cookbook, searchFieldCookBooks, listViewCookBook);
+    /**
+     * The method ''refreshListView(ObservableList<String> recipes, ObservableList<String> cookbook)'' refreshs the listViews.
+     */
+
+    private void refreshListViews() {
+        FXCollections.sort(recipeNames);
+        FXCollections.sort(recipeNamesOfCookBook);
+        if(this.listViewCookBook != null && this.listViewRecipes != null) {
+            this.listViewCookBook.getItems().clear();
+            this.listViewRecipes.getItems().clear();
+            this.listViewRecipes.setItems(recipeNames);
+            this.listViewCookBook.setItems(recipeNamesOfCookBook);
+            searchInListView(recipeNames, searchFieldRecipes, listViewRecipes);
+            searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
+        }
     }
 
-    private void refreshComboBox(ObservableList<String> cookbooks) {
-        comboBoxCookBooks.setItems(cookbooks);
+    /**
+     * The method ''refreshComboBox(ObservableList<String> cookbooks)'' refreshs the comboBox.
+     */
+
+    private void refreshComboBox() {
+        if(this.comboBoxCookBooks != null) {
+            this.comboBoxCookBooks.getItems().clear();
+            this.comboBoxCookBooks.setItems(this.cookBookNames);
+        }
     }
+
+    /**
+     * The method ''initializeListeners()'' initializes the listeners.
+     */
 
     private void initializeListeners() {
         setupMultipleSelection();
-
-        // drag from left to right
-        listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (listViewRecipes.getSelectionModel().getSelectedItem() == null) {
-                    return;
-                }
-
-                Dragboard dragBoard = listViewRecipes.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putString(listViewRecipes.getSelectionModel().getSelectedItem());
-                dragBoard.setContent(content);
-            }
-        });
-
-
-        listViewCookBook.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                dragEvent.acceptTransferModes(TransferMode.MOVE);
-            }
-        });
-
-        listViewCookBook.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                String selectedItem = dragEvent.getDragboard().getString();
-                boolean insite = listViewCookBook.getItems().contains(selectedItem);
-                if(insite==false) {
-                    listViewCookBook.getItems().addAll(selectedItem);
-                    listViewRecipes.setItems(recipeNames);
-                    dragEvent.setDropCompleted(true);
-                }
-            }
-        });
-
-        // drag from right to left
-        listViewCookBook.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Dragboard dragBoard = listViewCookBook.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
-                dragBoard.setContent(content);
-            }
-        });
-
-        listViewRecipes.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                dragEvent.acceptTransferModes(TransferMode.MOVE);
-            }
-        });
-
-        listViewRecipes.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent dragEvent) {
-                String selectedItem = dragEvent.getDragboard().getString();
-
-
-                recipeNamesOfCookBook.remove(selectedItem);
-                dragEvent.setDropCompleted(true);
-            }
-        });
+        doubleClick();
+        dragleft2right();
+        dragright2left();
 
         leftArrowButton.setOnAction((ActionEvent event) -> {
             String name =listViewCookBook.getSelectionModel().getSelectedItem();
@@ -187,13 +178,17 @@ public class ControllerManageCookBook {
         });
 
 
-
+        //Buttonactions
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
             String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
-                String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+
+
+
+
                 System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
                 if (recipe != null || recipeInCookBook != null) {
-                    controllerDefault.newWindowNotResizable(Resources.getDeleteFXML(), Resources.getDeleteWindowText());
+                    controllerDefault.newWindowNotResizable(Resources.getDeleteRecipeFXML(), Resources.getDeleteWindowText());
                 } else {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
@@ -203,6 +198,7 @@ public class ControllerManageCookBook {
         changeRecipeButton.setOnAction((ActionEvent event) -> {
             String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
                 String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+
                 System.out.println("Would change " + recipe); //TODO: Consider choice of user to change
                 if (recipe != null || recipeInCookBook != null) {
                     controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
@@ -213,12 +209,126 @@ public class ControllerManageCookBook {
 
     }
 
+    private void dragleft2right() {
+        // drag from the left listView to right the right listView
+        listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (listViewRecipes.getSelectionModel().getSelectedItem() == null) {
+                    return;
+                }
+
+                Dragboard dragBoard = listViewRecipes.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(listViewRecipes.getSelectionModel().getSelectedItem());
+                dragBoard.setContent(content);
+
+            }
+        });
+
+
+        listViewCookBook.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+
+        listViewCookBook.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                boolean insite = listViewCookBook.getItems().contains(selectedItem);
+                if (insite == false) {
+                    listViewCookBook.getItems().addAll(selectedItem);
+                    listViewRecipes.setItems(recipeNames);
+                    dragEvent.setDropCompleted(true);
+                }
+            }
+        });
+    }
+
+    private void dragright2left() {
+        // drag from the right listView to the left listView
+        listViewCookBook.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Dragboard dragBoard = listViewCookBook.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
+                dragBoard.setContent(content);
+
+            }
+        });
+
+        listViewRecipes.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+
+        listViewRecipes.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                String selectedItem = dragEvent.getDragboard().getString();
+
+
+                recipeNamesOfCookBook.remove(selectedItem);
+                dragEvent.setDropCompleted(true);
+            }
+        });
+
+    }
+
+    protected String getSelectedItem() {
+        return this.selectedItem;
+    }
+
     /**
      * Setup multiple selection for listviews.
      */
     private void setupMultipleSelection() {
         listViewRecipes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
+
+    private void doubleClick() {
+        listViewCookBook.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent click) {
+
+                if (click.getClickCount() >= 1) {
+                    selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
+
+                }
+
+                if (click.getClickCount() == 2) {
+                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+                    selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
+
+                }
+            }
+        });
+
+        listViewRecipes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent click) {
+
+                if (click.getClickCount() >= 1) {
+                    selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
+
+                }
+
+                if (click.getClickCount() == 2) {
+                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+                    selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
+
+                }
+            }
+        });
+    }
+
 
 
     /**
@@ -243,11 +353,21 @@ public class ControllerManageCookBook {
     }
 
 
+    /**
+     * The method ''export2pdf()'' opens the export-window after a interaction with the export-button.
+     *
+     * @param event
+     */
     @FXML
     void export2pdf(ActionEvent event) {
         controllerDefault.newWindow(Resources.getExportFXML(), Resources.getExportWindowText(), 290, 200, Resources.getDefaultIcon());
 
     }
+
+    /**
+     * The method ''addRecipe(ActionEvent event)'' opens the addRecipe-Popover after a interaction with the plus-button.
+     * @param event
+     */
 
     @FXML
     void addRecipe(ActionEvent event) {
@@ -260,6 +380,11 @@ public class ControllerManageCookBook {
         //controllerDefault.newWindow(Resources.getloadRecipeFXML(), Resources.getLoadWindowText(), 290, 160, Resources.getDefaultIcon());
     }
 
+    /**
+     * The method 'loadResource(String fxml)' loads the FXML-files.
+     * @param fxml path of the FXML-file
+     * @return root
+     */
     public Node loadResource(String fxml) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;

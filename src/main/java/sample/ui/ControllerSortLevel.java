@@ -8,17 +8,12 @@ package sample.ui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.event.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import java.io.InputStream;
 
 import static sample.ui.ControllerAddCookBook.getInstance;
 
@@ -83,13 +78,16 @@ public class ControllerSortLevel {
         });
     }
 
+    /**
+     * The method ''refreshComboBox(ObservableList<String> sortLevels)'' refreshs the comboBox.
+     */
+
     private void refreshComboBox(ObservableList<String> sortLevels) {
         comboBoxSortLevels.setItems(sortLevels);
     }
 
     /**
      * The method ''closeSortLevel()'' closes the SortLevel-Window after a interaction with the close-button.
-     *
      * @param event
      */
 
