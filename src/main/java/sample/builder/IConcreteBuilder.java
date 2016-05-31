@@ -1,6 +1,5 @@
 package sample.builder;
 
-import sample.builder.Exceptions.TemplateConverterException;
 import sample.builder.Exceptions.TexParserException;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
@@ -31,9 +30,8 @@ public interface IConcreteBuilder {
      * @return: File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Converter, when anything with the Filesystem went wrong while converting the template to an explicit .tex for the cookbook
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
-    File build(ICookbook cookbook) throws TexParserException, IOException, TemplateConverterException;
+    File build(ICookbook cookbook) throws IOException, TexParserException;
 
 
     /**
@@ -54,9 +52,8 @@ public interface IConcreteBuilder {
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
-    File build(IRecipe recipe, List<ISortlevel> sortLevels) throws TexParserException, IOException, TemplateConverterException;
+    File build(IRecipe recipe, List<ISortlevel> sortLevels) throws TexParserException, IOException;
 
 
 
@@ -78,9 +75,8 @@ public interface IConcreteBuilder {
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
-    File build(IRecipe recipe) throws TexParserException, IOException, TemplateConverterException;
+    File build(IRecipe recipe) throws TexParserException, IOException;
 
     boolean builds(String filetype);
 }

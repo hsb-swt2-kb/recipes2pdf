@@ -4,7 +4,7 @@ import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import sample.builder.Exceptions.TemplateConverterException;
+import org.apache.velocity.exception.ParseErrorException;
 import sample.builder.Exceptions.TexParserException;
 import sample.config.IConfig;
 import sample.model.Cookbook;
@@ -58,9 +58,8 @@ public class PdfBuilder implements IConcreteBuilder {
      * @param imageDir Directory, where the images for the recipes are saved. Each image is named with the title concatenated with the ID of the recipe it belongs to.
      * @param cookbook Coobook that is converted to a PDF File
      * @throws IOException Is thrown by the JLRConverter while converting.
-     * @throws TemplateConverterException Is thrown, if the template file has any velocity syntax mistakes or if any of the needed attributes is null.
      */
-    private void parseTexFile(File outputTexFile, File templateFile, File imageDir, ICookbook cookbook) throws IOException, TemplateConverterException {
+    private void parseTexFile(File outputTexFile, File templateFile, File imageDir, ICookbook cookbook) throws IOException,ParseErrorException {
         JLRConverter converter = new JLRConverter(templateFile.getParentFile());
         List <ISortlevel> sortAttributeChain = cookbook.getSortlevel();
         ((Cookbook)cookbook).setRecipes(RecipeListSorter.sort(cookbook.getRecipes(), sortAttributeChain));
@@ -69,9 +68,7 @@ public class PdfBuilder implements IConcreteBuilder {
         converter.replace("refNumList", generateRefNumList(cookbook.getRecipes(), sortAttributeChain));
         converter.replace("imgDir", toLatexStylePath(imageDir.getAbsolutePath()));
 
-        if (!converter.parse(templateFile, outputTexFile)) {
-            throw new TemplateConverterException("Convert template to " + outputTexFile + " failed! Error Message:\n" + converter.getErrorMessage()); //TODO: Display ErrorMessage in GUI?
-        }
+        converter.parse(templateFile, outputTexFile);
     }
 
     /**
@@ -188,10 +185,9 @@ public class PdfBuilder implements IConcreteBuilder {
      * @return: File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Converter, when anything with the Filesystem went wrong while converting the template to an explicit .tex for the cookbook
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
     @Override
-    public File build(ICookbook cookbook) throws IOException, TemplateConverterException, TexParserException {
+    public File build(ICookbook cookbook) throws IOException, TexParserException{
 
         Cookbook myCookbook = (Cookbook) cookbook;
 
@@ -225,10 +221,9 @@ public class PdfBuilder implements IConcreteBuilder {
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
     @Override
-    public File build(IRecipe recipe, List<ISortlevel> sortLevels) throws IOException, TemplateConverterException, TexParserException {
+    public File build(IRecipe recipe, List<ISortlevel> sortLevels) throws IOException, TexParserException {
         ICookbook myCookbook = new Cookbook();
         myCookbook.setTitle(recipe.getTitle());
         myCookbook.addRecipe(recipe);
@@ -266,9 +261,8 @@ public class PdfBuilder implements IConcreteBuilder {
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
-    public File build(IRecipe recipe) throws IOException, TemplateConverterException, TexParserException {
+    public File build(IRecipe recipe) throws IOException, TexParserException {
         ICookbook myCookbook = new Cookbook();
         myCookbook.setTitle(recipe.getTitle());
         myCookbook.addRecipe(recipe);

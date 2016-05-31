@@ -1,6 +1,5 @@
 package sample.builder;
 
-import sample.builder.Exceptions.TemplateConverterException;
 import sample.builder.Exceptions.TexParserException;
 import sample.config.IConfig;
 import sample.model.ICookbook;
@@ -46,9 +45,8 @@ public class Builder implements IBuilder {
      * @return: File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Converter, when anything with the Filesystem went wrong while converting the template to an explicit .tex for the cookbook
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
-    public File build(ICookbook cookbook) throws TexParserException, IOException, TemplateConverterException {
+    public File build(ICookbook cookbook) throws TexParserException, IOException {
         for (IConcreteBuilder builder : builders) {
             if (builder.builds(IConfig.getInstance().getProperty("OUTPUT_FILETYPE"))) {
                 return builder.build(cookbook);
@@ -75,10 +73,9 @@ public class Builder implements IBuilder {
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
     @Override
-    public File build(IRecipe recipe, List<ISortlevel> sortlevels) throws TexParserException, IOException, TemplateConverterException {
+    public File build(IRecipe recipe, List<ISortlevel> sortlevels) throws TexParserException, IOException {
         for (IConcreteBuilder builder : builders) {
             if (builder.builds(IConfig.getInstance().getProperty("OUTPUT_FILETYPE"))) {
                 return builder.build(recipe,sortlevels);
@@ -105,10 +102,9 @@ public class Builder implements IBuilder {
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
-     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
      */
     @Override
-    public File build(IRecipe recipe) throws TexParserException, IOException, TemplateConverterException {
+    public File build(IRecipe recipe) throws TexParserException, IOException {
         for (IConcreteBuilder builder : builders) {
             if (builder.builds(IConfig.getInstance().getProperty("OUTPUT_FILETYPE"))) {
                 return builder.build(recipe);
