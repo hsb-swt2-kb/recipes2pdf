@@ -152,11 +152,11 @@ public class ChefkochParserTest {
 
         the(recipe.getIngredients().get(12).getLeft().getName()).shouldBeEqual("Champignons1adsfasfaregfadgragafadgagadgfs012");
         the(recipe.getIngredients().get(12).getMiddle()).shouldBeEqual(300.0);
-        the(recipe.getIngredients().get(12).getRight().getName()).shouldBeEqual("g1asfdsagfdsgagfgfdagasgsgadsgsggsgfagdäkg01");
+        the(recipe.getIngredients().get(12).getRight().getName()).shouldBeEqual("g1asfdsagfdsgagfgfdagasgsgadsgsggsgfagdäkg012");
 
         the(recipe.getIngredients().get(13).getLeft().getName()).shouldBeEqual("Champignons1adsfasfaregfadgragafadgagadgfs012");
         the(recipe.getIngredients().get(13).getMiddle()).shouldBeEqual(300.0);
-        the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("g1asfdsagfdsgagfgfdagasgsgadsgsggsgfagdäkg01");
+        the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("g1asfdsagfdsgagfgfdagasgsgadsgsggsgfagdäkg012");
 
         the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Zucchini");
         the(recipe.getIngredients().get(14).getMiddle()).shouldBeEqual(3.0);
