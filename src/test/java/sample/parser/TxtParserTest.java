@@ -23,7 +23,7 @@ public class TxtParserTest {
 
     public void Setup(String datei) {
 
-        String relpath = ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/" + datei);
+        String relpath = ResourceLoader.loadFileContents(this.getClass(), datei);
 
         List<String> ac = Pattern.compile("\\n")
             .splitAsStream(relpath)
