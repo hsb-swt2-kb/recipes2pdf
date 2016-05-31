@@ -223,21 +223,21 @@ public class HTMLParserLib {
                 ingredientArray[0] = amount.substring(0, maxFieldsize);
             }
             else {
-                ingredientArray[0] = amount;
+                ingredientArray[0] = amount.trim();
             }
 
             if(unit != null && unit.length() > maxFieldsize){
                 ingredientArray[1] = unit.substring(0, maxFieldsize);
             }
             else{
-                ingredientArray[1] = unit;
+                ingredientArray[1] = unit.trim();
             }
 
             if(ingredient.length() > maxFieldsize){
                 ingredientArray[2] = ingredient.substring(0, maxFieldsize);
             }
             else{
-                ingredientArray[2] = ingredient;
+                ingredientArray[2] = ingredient.trim();
             }
 
             result.add(ingredientArray);
