@@ -209,7 +209,10 @@ public class ChefkochParser extends AConcreteParser {
 
             if(attributeList.get(counter).contains(CKConstants.image)){
                 String image = getAttributeValue(attributeList.get(counter));
-                recipe.setImage(lib.downloadImage(image));
+                byte[] img = lib.downloadImage(image);
+                if(img != null) {
+                    recipe.setImage(img);
+                }
             }
 
             if(attributeList.get(counter).contains(CKConstants.recipeIngredient)){
@@ -219,7 +222,10 @@ public class ChefkochParser extends AConcreteParser {
             }
 
             if(attributeList.get(counter).contains(CKConstants.name)){
-                recipe.setTitle(getAttributeValue(attributeList.get(counter)));
+                String title = getAttributeValue(attributeList.get(counter));
+                if(title != null) {
+                    recipe.setTitle(title);
+                }
             }
 
             if(attributeList.get(counter).contains(CKConstants.prepTime)){
@@ -227,7 +233,10 @@ public class ChefkochParser extends AConcreteParser {
             }
 
             if(attributeList.get(counter).contains(CKConstants.recipeInstructions)){
-                recipe.setText(getAttributeValue(attributeList.get(counter)));
+                String text = getAttributeValue(attributeList.get(counter));
+                if(text != null) {
+                    recipe.setText(text);
+                }
             }
 
             if(attributeList.get(counter).contains(CKConstants.recipeYield)){
