@@ -461,9 +461,19 @@ public class TxtParserTest {
         the(recipe.getDuration()).shouldBeEqual(120);
     }
     @Test
-    public void testParseMethod68() {
-        Setup("TestGericht68.txt");
-        the(recipe.getText()).shouldBeEqual("Kochen Sie die Tomaten!");
+    public void testParseMethod43a() {
+        Setup("TestGericht43a.txt");
+        the(recipe.getText().length()).shouldBeEqual(4241);
+    }
+    @Test
+    public void testParseMethod43b() {
+        Setup("TestGericht43b.txt");
+        the(recipe.getText().length()).shouldBeEqual(4242);
+    }
+    @Test
+    public void testParseMethod43c() {
+        Setup("TestGericht43c.txt");
+        the(recipe.getText().length()).shouldBeEqual(4242);
     }
 
 

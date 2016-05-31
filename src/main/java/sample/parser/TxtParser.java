@@ -28,8 +28,7 @@ import java.util.regex.Pattern;
 
 
 public class TxtParser extends AConcreteParser implements Constants {
-    private final int fieldLength = 45;
-    private final int preparationLength = 4545;
+
 
     public Recipe parse(ArrayList<String> textFileContent) {
         Recipe recipe = new Recipe();
@@ -52,10 +51,14 @@ public class TxtParser extends AConcreteParser implements Constants {
         }
         // FInd PreperationText with tag...If there is now Tag use specific Method
         String tempPreperation=findPreperationWithTag(textFileContent);
+
         if (tempPreperation==null){
             recipe.setText(findPreparationOfRecipe(textFileContent));
         }
         else{
+            if (tempPreperation.length()>preparationLength){
+                tempPreperation = cutString(tempPreperation,preparationLength);
+            }
             recipe.setText(tempPreperation);
         }
         // Try to extract additional recipedata
