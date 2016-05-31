@@ -520,6 +520,4 @@ public class TxtParserTest {
         Setup("TestGericht43c.txt");
         the(recipe.getText().length()).shouldBeEqual(4242);
     }
-
-
 }
