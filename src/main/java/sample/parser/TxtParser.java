@@ -141,11 +141,7 @@ public class TxtParser extends AConcreteParser implements Constants {
 
     public boolean accepts(ArrayList<String> fileContent) {
       /* parse it to check it :) */
-        Recipe recipe = this.parse(fileContent);
-        if (!(recipe.isEmpty() || recipe.isIncomplete()))
-            return true;
-        else
-            return false;
+        return !this.parse(fileContent).isIncomplete();
     }
 
     private int fixNumberFormat(String str){
