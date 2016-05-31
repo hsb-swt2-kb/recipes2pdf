@@ -166,14 +166,14 @@ public class TxtParserTest {
     public void testParseMethod18() {
         Setup("TestGericht18.txt");
         the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeNull();
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);;
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
     }
     @Test
     public void testParseMethod19() {
         Setup("TestGericht19.txt");
         the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Salz (grob)");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeNull();
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);;
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
     }
     @Test
@@ -190,7 +190,7 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
         the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(1).getMiddle()).shouldBeNull();
+        the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(0);
         the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
     }
     @Test
@@ -200,7 +200,7 @@ public class TxtParserTest {
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
         the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(1).getMiddle()).shouldBeNull();
+        the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(0);
         the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
     }
     @Test
@@ -349,13 +349,13 @@ public class TxtParserTest {
     @Test
     public void testParseMethod47() {
         Setup("TestGericht47.txt");
-        the(recipe.getPortions()).shouldBeNull();
+        the(recipe.getPortions()).shouldBeEqual(0);
         the(recipe.getPortions()).shouldBeType(Integer.class);
     }
     @Test
     public void testParseMethod48() {
         Setup("TestGericht48.txt");
-        the(recipe.getPortions()).shouldBeNull();
+        the(recipe.getPortions()).shouldBeEqual(0);
         the(recipe.getPortions()).shouldBeType(Integer.class);
     }
     @Test
