@@ -1,6 +1,5 @@
 package sample.ui;
 
-import org.junit.Before;
 import org.junit.Test;
 import sample.database.dao.CookbookDAO;
 import sample.database.dao.RecipeDAO;
@@ -18,7 +17,6 @@ import java.util.List;
 public class UITest {
     @Test
     public void addRecipePositive() throws Exception {
-        // working dir = src root dir
         File file = new File("src/test/resources/sample/Rezepte/Bolognese.txt");
         the(UI.addRecipe(file)).shouldBeTrue();
     }
@@ -69,21 +67,20 @@ public class UITest {
 
     @Test
     public void getAllRecipesFromDB() throws Exception {
+        the(UI.getAllRecipesFromDB()).shouldBeEqual(new RecipeDAO().getAll().size());
     }
 
     @Test
     public void getAllCookbooksFromDB() throws Exception {
-
+        the(UI.getAllCookbooksFromDB()).shouldBeEqual(new CookbookDAO().getAll().size());
     }
 
     @Test
     public void castIRecipeToRecipe() throws Exception {
-
     }
 
     @Test
     public void castICookBookToCookBook() throws Exception {
-
     }
 
     @Test
