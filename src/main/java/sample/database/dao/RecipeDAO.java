@@ -8,6 +8,8 @@ import sample.model.*;
 import java.util.List;
 
 /**
+ * Database Access Object for Recipe.
+ * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 28.04.16.
  */
 public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
@@ -24,44 +26,44 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
         recipe.setCalories(recipeDBO.getCalories());
 
         final CategoryDBO categoryDBO = (CategoryDBO) recipeDBO.getCategory();
-        if( null != categoryDBO ) {
-            recipe.setCategory( new CategoryDAO().toPOJO( categoryDBO ) );
+        if (null != categoryDBO) {
+            recipe.setCategory(new CategoryDAO().toPOJO(categoryDBO));
         }
 
         final CourseDBO courseDBO = (CourseDBO) recipeDBO.getCourse();
-        if( null != courseDBO ) {
-            recipe.setCourse( new CourseDAO().toPOJO( courseDBO ) );
+        if (null != courseDBO) {
+            recipe.setCourse(new CourseDAO().toPOJO(courseDBO));
         }
 
         final RegionDBO regionDBO = (RegionDBO) recipeDBO.getRegion();
-        if( null != regionDBO ) {
-            recipe.setRegion( new RegionDAO().toPOJO( regionDBO ) );
+        if (null != regionDBO) {
+            recipe.setRegion(new RegionDAO().toPOJO(regionDBO));
         }
 
         final DaytimeDBO daytimeDBO = (DaytimeDBO) recipeDBO.getDaytime();
-        if( null != daytimeDBO ) {
-            recipe.setDaytime( new DaytimeDAO().toPOJO( daytimeDBO ) );
+        if (null != daytimeDBO) {
+            recipe.setDaytime(new DaytimeDAO().toPOJO(daytimeDBO));
         }
 
         final SeasonDBO seasonDBO = (SeasonDBO) recipeDBO.getSeason();
-        if( null != seasonDBO ) {
-            recipe.setSeason( new SeasonDAO().toPOJO( seasonDBO ) );
+        if (null != seasonDBO) {
+            recipe.setSeason(new SeasonDAO().toPOJO(seasonDBO));
         }
 
         final NurtureDBO nurtureDBO = (NurtureDBO) recipeDBO.getNurture();
-        if( null != nurtureDBO ) {
-            recipe.setNurture( new NurtureDAO().toPOJO( nurtureDBO ) );
+        if (null != nurtureDBO) {
+            recipe.setNurture(new NurtureDAO().toPOJO(nurtureDBO));
         }
 
         final SourceDBO sourceDBO = (SourceDBO) recipeDBO.getSource();
-        if( null != sourceDBO ) {
-            recipe.setSource( new SourceDAO().toPOJO( sourceDBO ) );
+        if (null != sourceDBO) {
+            recipe.setSource(new SourceDAO().toPOJO(sourceDBO));
         }
 
         final List<Triple<IIngredient, Double, IUnit>> ingredients = recipeDBO.getIngredients();
-        for ( Triple<IIngredient, Double, IUnit> triple : ingredients) {
-            Ingredient ingredient = new IngredientDAO().toPOJO( (IngredientDBO) triple.getLeft() );
-            Unit unit = new UnitDAO().toPOJO( (UnitDBO) triple.getRight() );
+        for (Triple<IIngredient, Double, IUnit> triple : ingredients) {
+            Ingredient ingredient = new IngredientDAO().toPOJO((IngredientDBO) triple.getLeft());
+            Unit unit = new UnitDAO().toPOJO((UnitDBO) triple.getRight());
             Double amout = triple.getMiddle();
 
             Triple<IIngredient, Double, IUnit> row = new MutableTriple<>(ingredient, amout, unit);
@@ -91,49 +93,49 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
         }
 
         final Course course = (Course) recipe.getCourse();
-        if( null != course ) {
+        if (null != course) {
             final CourseDBO courseDBO = new CourseDAO().toDBO(course);
             courseDBO.saveIt();
-            recipeDBO.setCourse( courseDBO );
+            recipeDBO.setCourse(courseDBO);
         }
 
         final Region region = (Region) recipe.getRegion();
-        if( null != region ) {
+        if (null != region) {
             final RegionDBO regionDBO = new RegionDAO().toDBO(region);
             regionDBO.saveIt();
-            recipeDBO.setRegion( regionDBO );
+            recipeDBO.setRegion(regionDBO);
         }
 
         final Daytime daytime = (Daytime) recipe.getDaytime();
-        if( null != daytime ) {
+        if (null != daytime) {
             final DaytimeDBO daytimeDBO = new DaytimeDAO().toDBO(daytime);
             daytimeDBO.saveIt();
-            recipeDBO.setDaytime( daytimeDBO );
+            recipeDBO.setDaytime(daytimeDBO);
         }
 
         final Season season = (Season) recipe.getSeason();
-        if( null != season ) {
+        if (null != season) {
             final SeasonDBO seasonDBO = new SeasonDAO().toDBO(season);
             seasonDBO.saveIt();
-            recipeDBO.setSeason( seasonDBO );
+            recipeDBO.setSeason(seasonDBO);
         }
 
         final Nurture nurture = (Nurture) recipe.getNurture();
-        if( null != nurture ) {
+        if (null != nurture) {
             final NurtureDBO nurtureDBO = new NurtureDAO().toDBO(nurture);
             nurtureDBO.saveIt();
-            recipeDBO.setNurture( nurtureDBO );
+            recipeDBO.setNurture(nurtureDBO);
         }
 
         final Source source = (Source) recipe.getSource();
-        if( null != source ) {
+        if (null != source) {
             final SourceDBO sourceDBO = new SourceDAO().toDBO(source);
             sourceDBO.saveIt();
-            recipeDBO.setSource( sourceDBO );
+            recipeDBO.setSource(sourceDBO);
         }
 
         final List<Triple<IIngredient, Double, IUnit>> ingredients = recipe.getIngredients();
-        for ( Triple<IIngredient, Double, IUnit> triple : ingredients) {
+        for (Triple<IIngredient, Double, IUnit> triple : ingredients) {
             recipeDBO.add(triple.getLeft().getName(), triple.getMiddle(), triple.getRight().getName());
         }
         return recipeDBO;
