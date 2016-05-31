@@ -175,12 +175,16 @@ public class HTMLParserLib {
             else{
                 unit = null;
 
-                for(int counter = 1; counter < workingArray.length; counter++){
-                    if(counter == 1){
-                        ingredient = ingredient + workingArray[counter];
-                    }
-                    else{
-                        ingredient = ingredient + " " + workingArray[counter];
+                if(workingArray.length == 1){
+                    ingredient = workingArray[0];
+                }
+                else {
+                    for (int counter = 1; counter < workingArray.length; counter++) {
+                        if (counter == 1) {
+                            ingredient = ingredient + workingArray[counter];
+                        } else {
+                            ingredient = ingredient + " " + workingArray[counter];
+                        }
                     }
                 }
             }

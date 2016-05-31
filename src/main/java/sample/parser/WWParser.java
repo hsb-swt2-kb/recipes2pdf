@@ -100,15 +100,23 @@ public class WWParser extends AConcreteParser implements WWConstants{
 
         String description = this.searchDescription2015(elements);
 
-        recipe.setTitle(name);
-        recipe.setImage(image);
+        if(name != null) {
+            recipe.setTitle(name);
+        }
+        if(image != null) {
+            recipe.setImage(image);
+        }
         recipe.setDuration(preparingTime);
         if(servings > 0){
             recipe.setPortions(servings);
         }
-        recipe.setCourse(course);
+        if(type != null) {
+            recipe.setCourse(course);
+        }
         setRecipeIngredientsList(ingredientsList);
-        recipe.setText(description);
+        if(description != null) {
+            recipe.setText(description);
+        }
     }
 
     /**
@@ -139,14 +147,22 @@ public class WWParser extends AConcreteParser implements WWConstants{
 
         String description = this.searchDescription2016(elements);
 
-        recipe.setTitle(name);
-        recipe.setImage(image);
+        if(name != null) {
+            recipe.setTitle(name);
+        }
+        if(image != null) {
+            recipe.setImage(image);
+        }
         if(servings > 0){
             recipe.setPortions(servings);
         }
-        recipe.setCourse(course);
+        if(type != null) {
+            recipe.setCourse(course);
+        }
         setRecipeIngredientsList(ingredientsList);
-        recipe.setText(description);
+        if(description != null) {
+            recipe.setText(description);
+        }
     }
 
 

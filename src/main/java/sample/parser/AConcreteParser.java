@@ -39,18 +39,23 @@ abstract class AConcreteParser implements Constants,IConcreteParser {
      */
     protected void setRecipeIngredientsList(ArrayList<String[]> ingredientsList){
         for (String[] ingredient : ingredientsList) {
-            if(ingredient[0].isEmpty()){
-                ingredient[0] = "0";
-            }
+            if(ingredient[2] != null) {
+                if (ingredient[0].isEmpty()) {
+                    ingredient[0] = "0";
+                }
 
-            double amount;
-            try{
-                amount = Double.parseDouble(ingredient[0]);
-                amount = lib.round(amount);
-                recipe.add(ingredient[2], amount, ingredient[1]);
-            }
-            catch (Exception e){
-                // TODO: exception handling? maybe ignore?
+                if (ingredient[1] == null) {
+                    ingredient[1] = "";
+                }
+
+                double amount;
+                try {
+                    amount = Double.parseDouble(ingredient[0]);
+                    amount = lib.round(amount);
+                    recipe.add(ingredient[2], amount, ingredient[1]);
+                } catch (Exception e) {
+                    // TODO: exception handling? maybe ignore?
+                }
             }
         }
     }
