@@ -88,7 +88,7 @@ public class WWParserTest {
 
         the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Olivenöl");
         the(recipe.getIngredients().get(2).getMiddle()).shouldBeEqual(3);
-        the(recipe.getIngredients().get(2).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(2).getRight().getName()).shouldBeEqual("");
 
         the(recipe.getIngredients().get(3).getLeft().getName()).shouldBeEqual("Olivenöl");
         the(recipe.getIngredients().get(3).getMiddle()).shouldBeEqual(4.1);
@@ -110,29 +110,29 @@ public class WWParserTest {
         the(recipe.getIngredients().get(7).getMiddle()).shouldBeEqual(6.125);
         the(recipe.getIngredients().get(7).getRight().getName()).shouldBeEqual("TL");
 
-        the(recipe.getIngredients().get(8).getLeft().getName()).shouldBeEqual("Olivenöl6,qwertzuioppüqwereqrqwreqwrqwreewrqr");
+        the(recipe.getIngredients().get(8).getLeft().getName()).shouldBeEqual("Olivenöl6,qwertzuioppüqwereqrqwreqwrqwreewr");
         the(recipe.getIngredients().get(8).getMiddle()).shouldBeEqual(6.223);
         the(recipe.getIngredients().get(8).getRight().getName()).shouldBeEqual("TL123");
 
-        the(recipe.getIngredients().get(9).getLeft().getName()).shouldBeEqual("Olivenöl61qwertzuioppüqwereqrqwreqwrqwree0123");
+        the(recipe.getIngredients().get(9).getLeft().getName()).shouldBeEqual("Olivenöl61qwertzuioppüqwereqrqwreqwrqwree01");
         the(recipe.getIngredients().get(9).getMiddle()).shouldBeEqual(6.323);
-        the(recipe.getIngredients().get(9).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree0123");
+        the(recipe.getIngredients().get(9).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree012");
 
-        the(recipe.getIngredients().get(10).getLeft().getName()).shouldBeEqual("Olivenöl61qwertzuioppüqwereqrqwreqwrqwree0123");
+        the(recipe.getIngredients().get(10).getLeft().getName()).shouldBeEqual("Olivenöl61qwertzuioppüqwereqrqwreqwrqwree01");
         the(recipe.getIngredients().get(10).getMiddle()).shouldBeEqual(6.424);
-        the(recipe.getIngredients().get(10).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree0123");
+        the(recipe.getIngredients().get(10).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree012");
 
         the(recipe.getIngredients().get(11).getLeft().getName()).shouldBeEqual("Olivenöl");
-        the(recipe.getIngredients().get(11).getMiddle()).shouldBeNull();
-        the(recipe.getIngredients().get(11).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(11).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(11).getRight().getName()).shouldBeEqual("");
 
         the(recipe.getIngredients().get(12).getLeft().getName()).shouldBeEqual("ein bischen Olivenöl");
-        the(recipe.getIngredients().get(12).getMiddle()).shouldBeNull();
-        the(recipe.getIngredients().get(12).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(12).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(12).getRight().getName()).shouldBeEqual("");
 
-        the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Zucchini, in Stücken (ca. 2 cm)");
-        the(recipe.getIngredients().get(14).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(14).getRight().getName()).shouldBeEqual("Stück");
+        the(recipe.getIngredients().get(13).getLeft().getName()).shouldBeEqual("Zucchini, in Stücken (ca. 2 cm)");
+        the(recipe.getIngredients().get(13).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("Stück");
     }
 
     @Test
@@ -219,7 +219,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(6).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(6).getRight().getName()).shouldBeEqual("TL");
 
-        the(recipe.getIngredients().get(7).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (2 TL Instantpulver)");
+        the(recipe.getIngredients().get(7).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (2 TL Instantpulve");
         the(recipe.getIngredients().get(7).getMiddle()).shouldBeEqual(450);
         the(recipe.getIngredients().get(7).getRight().getName()).shouldBeEqual("ml");
 
@@ -247,7 +247,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(13).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("Prise(n)");
 
-        the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Schafskäse/Feta, 45 % Fett i. Tr., bevorzugt Manchego (spanischer Hartkäse)");
+        the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Schafskäse/Feta, 45 % Fett i. Tr., bevorzugt");
         the(recipe.getIngredients().get(14).getMiddle()).shouldBeEqual(90);
         the(recipe.getIngredients().get(14).getRight().getName()).shouldBeEqual("g");
     }
@@ -300,7 +300,6 @@ public class WWParserTest {
         parse(4);
         the(recipe.getTitle()).shouldBeEqual("Kerniges Roggenbrot mit Paprikafrischkäse");
         the(recipe.getPortions()).shouldBeEqual(1);
-        the(recipe.getDuration()).shouldBeNull();
         String text = "1/2 Paprika und Frühlingszwiebel sehr fein würfeln und mit Frischkäse mischen, mit Salz und Pfeffer abschmecken. Brot mit Paprikafrischkäse bestreichen und dazu die restliche Paprika servieren.";
         the(recipe.getText()).shouldBeEqual(text);
 
@@ -314,7 +313,7 @@ public class WWParserTest {
 
         the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Paprika");
         the(recipe.getIngredients().get(2).getMiddle()).shouldBeEqual(3);
-        the(recipe.getIngredients().get(2).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(2).getRight().getName()).shouldBeEqual("");
 
         the(recipe.getIngredients().get(3).getLeft().getName()).shouldBeEqual("Paprika");
         the(recipe.getIngredients().get(3).getMiddle()).shouldBeEqual(4.1);
@@ -349,16 +348,16 @@ public class WWParserTest {
         the(recipe.getIngredients().get(10).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree0123");
 
         the(recipe.getIngredients().get(11).getLeft().getName()).shouldBeEqual("Paprika");
-        the(recipe.getIngredients().get(11).getMiddle()).shouldBeNull();
-        the(recipe.getIngredients().get(11).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(11).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(11).getRight().getName()).shouldBeEqual("");
 
         the(recipe.getIngredients().get(12).getLeft().getName()).shouldBeEqual("ein bischen Paprika");
-        the(recipe.getIngredients().get(12).getMiddle()).shouldBeNull();
-        the(recipe.getIngredients().get(12).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(12).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(12).getRight().getName()).shouldBeEqual("");
 
-        the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Frischkäse, bis 1 % Fett absolut");
-        the(recipe.getIngredients().get(14).getMiddle()).shouldBeEqual(3);
-        the(recipe.getIngredients().get(14).getRight().getName()).shouldBeEqual("EL");
+        the(recipe.getIngredients().get(13).getLeft().getName()).shouldBeEqual("Frischkäse, bis 1 % Fett absolut");
+        the(recipe.getIngredients().get(13).getMiddle()).shouldBeEqual(3);
+        the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("EL");
     }
 
     @Test
@@ -366,7 +365,6 @@ public class WWParserTest {
         parse(5);
         the(recipe.getTitle()).shouldBeEqual("Zucchini-Nudel-Salat");
         the(recipe.getPortions()).shouldBeEqual(4);
-        the(recipe.getDuration()).shouldBeNull();
         String text = "1. Zucchini waschen und in Scheiben schneiden. Knoblauch pressen, mit Brühe, Essig, 1 Teelöffel Öl " +
             "und Oregano verrühren und mit Salz und Pfeffer würzen. Marinade mit Zucchinischeiben mischen und ca. 10 " +
             "Minuten ziehen lassen. Backofen auf 240° C (Gas: Stufe 5, Umluft: 220° C) vorheizen. " +
@@ -433,7 +431,6 @@ public class WWParserTest {
         parse(6);
         the(recipe.getTitle()).shouldBeEqual("Steak mit Gemüse");
         the(recipe.getPortions()).shouldBeEqual(1);
-        the(recipe.getDuration()).shouldBeNull();
         String text = "Kartoffeln schälen, in Spalten schneiden und in Salzwasser ca. 15 Minuten garen. " +
             "Backofen auf 120° C (Gas: Stufe 1, Umluft: 100° C) vorheizen. Schalotte schälen und in Spalten schneiden. " +
             "Karotten schälen und in Stifte schneiden. Lauchzwiebeln waschen und in Stücke schneiden. " +
@@ -449,15 +446,15 @@ public class WWParserTest {
 
         the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Schalotte");
         the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(1);
-        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeEqual("");
 
         the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Karotten");
         the(recipe.getIngredients().get(2).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeEqual("");
 
         the(recipe.getIngredients().get(3).getLeft().getName()).shouldBeEqual("Lauchzwiebeln");
         the(recipe.getIngredients().get(3).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
+        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeEqual("");
 
         the(recipe.getIngredients().get(4).getLeft().getName()).shouldBeEqual("Rindersteak (170 g)");
         the(recipe.getIngredients().get(4).getMiddle()).shouldBeEqual(1);
@@ -481,7 +478,6 @@ public class WWParserTest {
         parse(7);
         the(recipe.getTitle()).shouldBeEqual("Kerniges Roggenbrot mit Paprikafrischkäse");
         the(recipe.getPortions()).shouldBeEqual(1);
-        the(recipe.getDuration()).shouldBeNull();
         String text = "1/2 Paprika und Frühlingszwiebel sehr fein würfeln und mit Frischkäse mischen, mit Salz und " +
             "Pfeffer abschmecken. Brot mit Paprikafrischkäse bestreichen und dazu die restliche Paprika servieren.";
         the(recipe.getText()).shouldBeEqual(text);
