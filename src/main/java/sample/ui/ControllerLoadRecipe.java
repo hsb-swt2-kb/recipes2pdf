@@ -129,7 +129,7 @@ public class ControllerLoadRecipe {
         catch (CouldNotParseException e){
             // TODO: handle exception
         }
-        catch(FileNotFoundException e){
+        catch(Exception e){
             // TODO: handle exception
         }
 

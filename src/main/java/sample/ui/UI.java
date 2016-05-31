@@ -38,7 +38,7 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static boolean addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
+    static boolean addRecipes (List<File> files) throws Exception,FileNotFoundException,CouldNotParseException {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         boolean success=true;
         for(File file : files) {
@@ -60,7 +60,7 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static boolean addRecipe (File file) throws FileNotFoundException,CouldNotParseException {
+    static boolean addRecipe (File file) throws Exception,FileNotFoundException,CouldNotParseException {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         boolean success=true;
         Recipe recipe = Parser.parse(file);
