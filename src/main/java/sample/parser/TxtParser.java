@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 public class TxtParser extends AConcreteParser implements Constants {
     private final int fieldLength = 45;
-    private final int preparationLength =4545;
+    private final int preparationLength = 4545;
 
     public Recipe parse(ArrayList<String> textFileContent) {
         Recipe recipe = new Recipe();
@@ -86,9 +86,38 @@ public class TxtParser extends AConcreteParser implements Constants {
         recipe.setDaytime(daytime);
 
         try {
+            String temp = findDatafield(textFileContent, "Arbeitszeit");
             recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, "Arbeitszeit")));
         } catch (NumberFormatException | NullPointerException e) {
-            recipe.setDuration(0);
+            String [] str = extractAmountUnit(findDatafield(textFileContent, "Arbeitszeit"));
+            System.out.println(str[0]+"  "+str[1]);
+
+            if (str[0] == "0" || str[0] == null) {
+                recipe.setDuration(0);
+            }
+            else if (str[0] != null){
+
+                double d = parseStringToDouble(str[0]);
+                boolean std = false;
+
+                for (int i = 0; i < timeHourWords.length; i++)
+                {
+                    if(str[1].toLowerCase().contains(timeHourWords[i])){
+                        std = true;
+                        break;
+                    }
+                }
+                if (std == true){
+                    d = d*60;
+                }
+
+                int i = (int) Math.floor(d);
+                recipe.setDuration(i);
+                System.out.println(d);
+                System.out.println(i);
+
+            }
+
         }
         try {
             recipe.setCalories(Integer.parseInt(findDatafield(textFileContent, "Kalorien")));
@@ -410,6 +439,11 @@ public class TxtParser extends AConcreteParser implements Constants {
             return tempStr;
         }
         return str;
+    }
+    private int resolveToMinute(String str){
+
+
+        return 2;
     }
 }
 
