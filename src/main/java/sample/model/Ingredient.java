@@ -1,7 +1,5 @@
 package sample.model;
 
-import sample.model.IIngredient;
-
 /**
  * Created by czoeller on 28.04.16.
  */

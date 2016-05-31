@@ -1,7 +1,5 @@
 package sample.model;
 
-import sample.model.ICategory;
-
 /**
  * Created by czoeller on 30.04.2016.
  */
@@ -16,7 +14,6 @@ public class Category implements ICategory {
     public Long getID() {
         return this.id;
     }
-
 
     @Override
     public String getName() {
