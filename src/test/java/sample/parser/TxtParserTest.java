@@ -1,9 +1,7 @@
 package sample.parser;
 
+import org.javalite.test.jspec.TestException;
 import org.junit.Test;
-
-import static org.javalite.test.jspec.JSpec.the;
-
 import sample.model.Recipe;
 import sample.util.ResourceLoader;
 
@@ -11,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static org.javalite.test.jspec.JSpec.the;
 
 /**
  * Created by Henrik on 18.05.2016.
@@ -231,7 +231,7 @@ public class TxtParserTest {
         the(recipe.getIngredients().size()).shouldBeEqual(0);
     }
 
-    @Test
+    @Test(expected=TestException.class)
     public void testParseMethod27() {
         Setup("TestGericht27.txt");
         the(recipe.getIngredients().size()).shouldBeEqual(0);
