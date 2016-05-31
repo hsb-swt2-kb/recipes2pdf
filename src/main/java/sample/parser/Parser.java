@@ -28,6 +28,7 @@ public class Parser implements IParser
     public static Recipe parse(File recipeFile) throws  Exception,NullPointerException,IOException,FileNotFoundException,CouldNotParseException
     {
         List<AConcreteParser> parsers = new ArrayList<>();
+        parsers.add(new DummyParser());
         parsers.add(new TxtParser());
         parsers.add(new WWParser());
         //parsers.add(new CKParser ());
