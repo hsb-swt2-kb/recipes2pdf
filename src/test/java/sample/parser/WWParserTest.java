@@ -425,11 +425,13 @@ public class WWParserTest {
         the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(1).getRight().getName()).shouldBeEqual("Zehe(n)");
 
-        the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (1/2 TL Instantpulve");
+        String a = recipe.getIngredients().get(2).getLeft().getName();
+
+        the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (1/2 TL Instantpulve");
         the(recipe.getIngredients().get(2).getMiddle()).shouldBeEqual(125);
         the(recipe.getIngredients().get(2).getRight().getName()).shouldBeEqual("ml");
 
-        the(recipe.getIngredients().get(3).getLeft().getName()).shouldBeEqual("Balsamicoessig, hell");
+        the(recipe.getIngredients().get(3).getLeft().getName()).shouldBeEqual("Balsamicoessig, hell");
         the(recipe.getIngredients().get(3).getMiddle()).shouldBeEqual(2);
         the(recipe.getIngredients().get(3).getRight().getName()).shouldBeEqual("EL");
 
@@ -437,7 +439,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(4).getMiddle()).shouldBeEqual(2);
         the(recipe.getIngredients().get(4).getRight().getName()).shouldBeEqual("TL");
 
-        the(recipe.getIngredients().get(5).getLeft().getName()).shouldBeEqual("Oregano, getrocknet");
+        the(recipe.getIngredients().get(5).getLeft().getName()).shouldBeEqual("Oregano, getrocknet");
         the(recipe.getIngredients().get(5).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(5).getRight().getName()).shouldBeEqual("TL");
 
