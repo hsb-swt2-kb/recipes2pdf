@@ -30,6 +30,7 @@ public class Parser implements IParser
         List<AConcreteParser> parsers = new ArrayList<>();
         parsers.add(new DummyParser());
         parsers.add(new TxtParser());
+        parsers.add(new ChefkochParser ());
         parsers.add(new WWParser());
         //parsers.add(new CKParser ());
 

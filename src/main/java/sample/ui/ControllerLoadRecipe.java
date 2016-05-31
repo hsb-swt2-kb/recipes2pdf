@@ -123,8 +123,9 @@ public class ControllerLoadRecipe {
     @FXML
     void openFileChooser() {
         FileHandler fileHandler = new FileHandler();
+        boolean success;
         try {
-            addRecipes(fileHandler.importFiles());
+            success = addRecipes(fileHandler.importFiles());
         }
         catch (CouldNotParseException e){
             // TODO: handle exception
