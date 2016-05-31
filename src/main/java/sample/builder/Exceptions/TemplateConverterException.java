@@ -1,7 +1,7 @@
 package sample.builder.Exceptions;
 
 /**
- * Created by kai on 29.05.16.
+ * Exception for JLR Converter. Is Thrown, when converting the Template to a specific .tex file fails
  */
 public class TemplateConverterException extends Exception {
     public TemplateConverterException(String message){

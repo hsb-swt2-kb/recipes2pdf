@@ -29,7 +29,7 @@
         #set ($refNum = $refNumList.get($recipe))
         #set ($index = $refNum.indexOf('.'))
         #if($index < 0)
-            #set($index = 0)
+            #set($index = $refNum.length()) ##.length needs to be tested with only 1 sortlevel
         #end
 
         \chead{$refNum.substring(0,$index)}

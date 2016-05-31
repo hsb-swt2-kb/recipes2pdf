@@ -26,10 +26,40 @@ public class PdfBuilder implements IConcreteBuilder {
 
     private final PdfBuilderConfig config;
 
+    /**
+     * Constructor for a PdfBuilder. A PdfBuilder needs configurable information out of an IConfig file.
+     * @param config IConfig, that holds information needed for the building process. Default_config holds everything needed
+     */
     public PdfBuilder(IConfig config) {
         this.config = new PdfBuilderConfig(config);
     }
 
+    /**
+     * This method creates a specific .tex file for a cookbook by injecting the cookbook recipes into an apache velocity .tex template. The used library JLR
+     * can interpret velocity and injects the attributes of the cookbook and its containing recipes into the template-variables.
+     * <h1>Precondition:</h1>
+     * <ul>
+     *     <li>cookbook is not null</li>
+     *     <li>cookbooks has recipes</li>
+     *     <li>recipes contain following information:</li>
+     *     <ul>
+     *          <li>id</li>
+     *          <li>title</li>
+     *          <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
+     *          <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
+     *          <li>text</li>
+     *      </ul>
+     * </ul>
+     *
+     * <h1>Postcondition:</h1>
+     * .tex file for the cookbook is generated and is saved in the path that is given in outputTexFile
+     * @param outputTexFile .tex File that is beeing created.
+     * @param templateFile .tex template File that is used to crate the outputTexFile
+     * @param imageDir Directory, where the images for the recipes are saved. Each image is named with the title concatenated with the ID of the recipe it belongs to.
+     * @param cookbook Coobook that is converted to a PDF File
+     * @throws IOException Is thrown by the JLRConverter while converting.
+     * @throws TemplateConverterException Is thrown, if the template file has any velocity syntax mistakes or if any of the needed attributes is null.
+     */
     private void parseTexFile(File outputTexFile, File templateFile, File imageDir, ICookbook cookbook) throws IOException, TemplateConverterException {
         JLRConverter converter = new JLRConverter(templateFile.getParentFile());
         List <ISortlevel> sortAttributeChain = cookbook.getSortlevel();
@@ -44,26 +74,79 @@ public class PdfBuilder implements IConcreteBuilder {
         }
     }
 
+    /**
+     * Is needed to make a Path matching the Latex syntax for paths
+     * @param path Path, that is converted to latex style path
+     * @return path that can be used in a latex document without getting errors
+     */
     private String toLatexStylePath(String path) {
         return FilenameUtils.separatorsToUnix(path);
     }
 
-    private File createPDFFile(File outputTexFile, File outputPDFFile, File rootDir) throws IOException, TexParserException {
+    /**
+     * This Method is used to parse the specific .tex file, created by the converter into a PDF File. Therefore the The JLRGenerator implicitly uses
+     * pdflatex.
+     * <h1>Precondition:</h1>
+     * <ul>
+     *     <li>Pdflatex installed</li>
+     *     <li>inputTexfile existing and has correct latex syntax</li>
+     *     <li>rootdir is the parent directory of the parentdirectory of the outputPDFFile</li>
+     *     <li>rootdir is the parent directory of the parentdirectory of the inputtexFile</li>
+     * </ul>
+     *
+     * <h1>Postcondition:</h1>
+     * Pdf file is generated and is saved in the path that is given by outputPDFFile
+     * @param inputTexFile The texfile, that is used to generate the outputPDFFile
+     * @param outputPDFFile specifies where the pdfFile should be saved
+     * @param rootDir is needed for the JLRGenerator
+     * @return Fileobject that points to the generated PDFFile
+     * @throws IOException Is thrown by the JLRGenerator if any error occurs while generating the PDF File
+     * @throws TexParserException Is thrown when the .tex file has wrong latex syntax and cannot be interpreted by pdflatex
+     */
+    private File createPDFFile(File inputTexFile, File outputPDFFile, File rootDir) throws IOException, TexParserException {
 
         JLRGenerator generator = new JLRGenerator();
-        if (generator.generate(outputTexFile, outputTexFile.getParentFile(), rootDir)) {
+        if (generator.generate(inputTexFile, inputTexFile.getParentFile(), rootDir)) {
             return outputPDFFile;
         } else {
-            throw new TexParserException("Parse \"" + outputTexFile + "\" to \"" + outputPDFFile + "\" failed! Error Message:\n" + generator.getErrorMessage());
+            throw new TexParserException("Parse \"" + inputTexFile + "\" to \"" + outputPDFFile + "\" failed! Error Message:\n" + generator.getErrorMessage());
         }
     }
 
+    /**
+     * This Methos is needed to save all Recipe images to hdd. The saving is needed because the implicitly used latex compiler pdflatex needs the images
+     * to be saved on a filesystem.
+     * <h1>Precondition:</h1>
+     * <ul>
+     *     <li>Cookbook has recipes</li>
+     *     <li>All recipes have an image (recommended, when image==null than a default image is taken)</li>
+     * </ul>
+     *
+     * <h1>Postcondition:</h1>
+     * Image files have the names of the recipe concatenated whith their id and are saved on hdd at the path that is given by imgDir
+     * @param cookcook cookbook that holds all recipes with teir images
+     * @param imgDir directory where the images are saved
+     */
     private void createAllImages(ICookbook cookcook, File imgDir){
         for (IRecipe recipe : cookcook.getRecipes()) {
             createImage(recipe, imgDir);
         }
     }
 
+    /**
+     * This Methos is needed to save a single Recipe images to hdd. The saving is needed because the implicitly used latex compiler pdflatex needs the images
+     * to be saved on a filesystem.
+     * <h1>Precondition:</h1>
+     * <ul>
+     *     <li>Recipe is not null</li>
+     *     <li>Recipe has an image (recommended, when image==null than a default image is taken)</li>
+     * </ul>
+     *
+     * <h1>Postcondition:</h1>
+     * Image file has the name of the recipe concatenated whith its id and is saved on hdd at the path that is given by imgDir
+     * @param recipe recipe that holds the image
+     * @param imgDir Directory to save the image.
+     */
     private void createImage(IRecipe recipe, File imgDir){
         try {
             byte[] img = (recipe.getImage() == null) ? defaultImagetoByteArray() : recipe.getImage();
@@ -76,11 +159,38 @@ public class PdfBuilder implements IConcreteBuilder {
         }
     }
 
+    /**
+     * Creates a bytearrey of the defaultimage that is saved in the ressources
+     * @return bytearray of the ressoure sample/builder/images/default_image.jpg
+     * @throws IOException is thrown when the ressouce does not exist
+     */
     private byte[] defaultImagetoByteArray() throws IOException {
         return IOUtils.toByteArray(this.getClass().getResourceAsStream("images/default_image.jpg"));
     }
 
 
+    /**
+     * This Method builds one documnet containing Document out of the given cookbook.
+     * <h1>Precondition:</h1>
+     *     Cookbook is not Null and has Recipes and ISortlevels(optional but recommendet)<br>
+     * Recipes in the cookbook have to have all attributes, that are needed for the document building process.<br>
+     * The needed attributes in recipes are:<br>
+     * <ul>
+     *     <li>id</li>
+     *     <li>title</li>
+     *     <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
+     *     <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
+     *     <li>text</li>
+     * </ul>
+     * <h1>Postcondition:</h1>
+     * Document is saved on Harddrive at the configurated path relativ to  userhomedir/.recipes2pdf, that is given in the config
+     * @param cookbook Cookbook, that is converted into a Document
+     * @return: File object, that points to the generated Document
+     * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
+     * @throws IOException Is thrown by the JLR Converter, when anything with the Filesystem went wrong while converting the template to an explicit .tex for the cookbook
+     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
+     */
+    @Override
     public File build(ICookbook cookbook) throws IOException, TemplateConverterException, TexParserException {
 
         Cookbook myCookbook = (Cookbook) cookbook;
@@ -96,6 +206,27 @@ public class PdfBuilder implements IConcreteBuilder {
 
         return createPDFFile(outputTexFile, outputPdfFile, rootDir);
     }
+
+    /**
+     * This Method generates a single Recipe Document that has a header showing the primary sort level and footer showing the referendnumber)
+     * <h1>Precondition:</h1>
+     * Recipe is not Null and has following Attributes filled with values: <br>
+     * <ul>
+     *     <li>id</li>
+     *     <li>title</li>
+     *     <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
+     *     <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
+     *     <li>text</li>
+     * </ul>     *
+     * <h1>Postcondition:</h1>
+     * Document is saved on Harddrive at the configurated path relativ to  userhomedir/.recipes2pdf, that is given in the config
+     * @param recipe The recipe, that sould be converted into a Document
+     * @param sortLevels A sorted List of ISortLevel. The recipe will get a Referencenumber according to the order of this List.
+     * @return File object, that points to the generated Document
+     * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
+     * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
+     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
+     */
     @Override
     public File build(IRecipe recipe, List<ISortlevel> sortLevels) throws IOException, TemplateConverterException, TexParserException {
         ICookbook myCookbook = new Cookbook();
@@ -117,6 +248,26 @@ public class PdfBuilder implements IConcreteBuilder {
 
     }
 
+    /**
+     * This Method generates a single Recipe Document that has no header (normally showing the primary sort level) and no footer (normally showing the reference number)
+     * <h1>Precondition:</h1>
+     * Recipe is not Null and has following Attributes filled with values: <br>
+     * <ul>
+     *     <li>id</li>
+     *     <li>title</li>
+     *     <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
+     *     <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
+     *     <li>text</li>
+     * </ul>
+     *
+     * <h1>Postcondition:</h1>
+     * Document is saved on Harddrive at the configurated path relativ to  userhomedir/.recipes2pdf, that is given in the config
+     * @param recipe The recipe, that sould be converted into a Document
+     * @return File object, that points to the generated Document
+     * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
+     * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
+     * @throws TemplateConverterException Is thrown, when the template has mistakes. Should not occur as long as the template is not changed.
+     */
     public File build(IRecipe recipe) throws IOException, TemplateConverterException, TexParserException {
         ICookbook myCookbook = new Cookbook();
         myCookbook.setTitle(recipe.getTitle());
@@ -140,6 +291,12 @@ public class PdfBuilder implements IConcreteBuilder {
     }
 
 
+    /**
+     * This Method creates a Map
+     * @param recipes
+     * @param sortChain
+     * @return
+     */
     private Map<IRecipe, String> generateRefNumList(List<IRecipe> recipes, List<ISortlevel> sortChain) {
         Map<IRecipe, String> refNumList = new HashMap<>();
         Map<IRecipe, Properties> propList = generateRecipePropertyList(recipes);
