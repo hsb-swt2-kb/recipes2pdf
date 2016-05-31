@@ -166,14 +166,14 @@ public class TxtParserTest {
     public void testParseMethod18() {
         Setup("TestGericht18.txt");
         the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);;
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
     }
     @Test
     public void testParseMethod19() {
         Setup("TestGericht19.txt");
         the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Salz (grob)");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);
+        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);;
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
     }
     @Test
@@ -314,5 +314,150 @@ public class TxtParserTest {
         Setup("TestGericht39.txt");
         the(recipe.getText()).shouldBeEqual("Kochen Sie die Tomaten!");
     }
+    @Test
+    public void testParseMethod40() {
+        Setup("TestGericht40.txt");
+        the(recipe.getText()).shouldBeEqual("");
+    }
+    @Test
+    public void testParseMethod41() {
+        Setup("TestGericht41.txt");
+        the(recipe.getText()).shouldBeEqual("Kochen Sie die Tomaten!");
+    }
+    @Test
+    public void testParseMethod42() {
+        Setup("TestGericht42.txt");
+        the(recipe.getText()).shouldBeEqual("Kochen Sie die Tomaten!");
+    }
+    @Test
+    public void testParseMethod43() {
+        Setup("TestGericht43.txt");
+        the(recipe.getText()).shouldBeEqual("Kochen Sie die Tomaten!");
+    }
+    @Test
+    public void testParseMethod45() {
+        Setup("TestGericht45.txt");
+        the(recipe.getPortions()).shouldBeEqual(4);
+        the(recipe.getPortions()).shouldBeType(Integer.class);
+    }
+    @Test
+    public void testParseMethod46() {
+        Setup("TestGericht46.txt");
+        the(recipe.getPortions()).shouldBeEqual(4);
+        the(recipe.getPortions()).shouldBeType(Integer.class);
+    }
+    @Test
+    public void testParseMethod47() {
+        Setup("TestGericht47.txt");
+        the(recipe.getPortions()).shouldBeEqual(0);
+        the(recipe.getPortions()).shouldBeType(Integer.class);
+    }
+    @Test
+    public void testParseMethod48() {
+        Setup("TestGericht48.txt");
+        the(recipe.getPortions()).shouldBeEqual(0);
+        the(recipe.getPortions()).shouldBeType(Integer.class);
+    }
+    @Test
+    public void testParseMethod49() {
+        Setup("TestGericht49.txt");
+        the(recipe.getPortions()).shouldBeEqual(4);
+        the(recipe.getPortions()).shouldBeType(Integer.class);
+    }
+    @Test
+    public void testParseMethod50() {
+        Setup("TestGericht50.txt");
+        the(recipe.getPortions()).shouldBeEqual(4);
+        the(recipe.getPortions()).shouldBeType(Integer.class);
+    }
+    @Test
+    public void testParseMethod51() {
+        Setup("TestGericht51.txt");
+        the(recipe.getCategory().getName()).shouldBeEqual("Hauptgericht");
+    }
+    @Test
+    public void testParseMethod52() {
+        Setup("TestGericht51.txt");
+        the(recipe.getCourse().getName()).shouldBeEqual("Reis");
+    }
+    @Test
+    public void testParseMethod53() {
+        Setup("TestGericht51.txt");
+        the(recipe.getRegion().getName()).shouldBeEqual("Japan");
+    }
+    @Test
+    public void testParseMethod54() {
+        Setup("TestGericht51.txt");
+        the(recipe.getDaytime().getName()).shouldBeEqual("Mittag");
+    }
+    @Test
+    public void testParseMethod55() {
+        Setup("TestGericht51.txt");
+        the(recipe.getSeason().getName()).shouldBeEqual("Sommer");
+    }
+    @Test
+    public void testParseMethod56() {
+        Setup("TestGericht51.txt");
+        the(recipe.getNurture().getName()).shouldBeEqual("Vegan");
+    }
+    @Test
+    public void testParseMethod57() {
+        Setup("TestGericht51.txt");
+        the(recipe.getCalories()).shouldBeEqual(300);
+    }
+    @Test
+    public void testParseMethod58() {
+        Setup("TestGericht51.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod59() {
+        Setup("TestGericht59.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod60() {
+        Setup("TestGericht60.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod61() {
+        Setup("TestGericht61.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod62() {
+        Setup("TestGericht62.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod63() {
+        Setup("TestGericht63.txt");
+        the(recipe.getDuration()).shouldBeEqual(40);
+    }
+    @Test
+    public void testParseMethod64() {
+        Setup("TestGericht64.txt");
+        the(recipe.getDuration()).shouldBeEqual(120);
+    }
+    @Test
+    public void testParseMethod65() {
+        Setup("TestGericht65.txt");
+        the(recipe.getDuration()).shouldBeEqual(120);
+    }
+    @Test
+    public void testParseMethod66() {
+        Setup("TestGericht66.txt");
+        the(recipe.getDuration()).shouldBeEqual(120);
+    }
+    @Test
+    public void testParseMethod67() {
+        Setup("TestGericht67.txt");
+        the(recipe.getDuration()).shouldBeEqual(120);
+    }
+
+
+
+
 
 }

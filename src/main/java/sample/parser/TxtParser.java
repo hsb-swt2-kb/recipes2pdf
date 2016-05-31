@@ -80,6 +80,10 @@ public class TxtParser extends AConcreteParser implements Constants {
         Nurture nurture = new Nurture();
         nurture.setName(findDatafield(textFileContent, "Ernährungsart"));
         recipe.setNurture(nurture);
+        //=============================
+        Daytime daytime = new Daytime();
+        daytime.setName(findDatafield(textFileContent, "Tageszeit"));
+        recipe.setDaytime(daytime);
 
         try {
             recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, "Arbeitszeit")));
@@ -269,10 +273,8 @@ public class TxtParser extends AConcreteParser implements Constants {
                     break;
                 }
             }
-            System.out.println(tempStr);
             tempStr=tempStr.replaceFirst("null","").trim();
             tempStr=tempStr.replaceFirst("Zubereitung:","").trim();
-            System.out.println(tempStr);
             return tempStr;
         }
         else
@@ -396,6 +398,7 @@ public class TxtParser extends AConcreteParser implements Constants {
     }
 
     private String cutString(String str, int maxLength){
+        if (str == null) {return null;}
         if (str != null && str.length()>maxLength) {
             int tempLength = str.length();
             String tempStr = str;
