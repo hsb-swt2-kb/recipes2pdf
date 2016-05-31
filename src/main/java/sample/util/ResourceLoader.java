@@ -15,14 +15,14 @@ public class ResourceLoader {
      * Loads resource within resource package
      *
      * @param clazz               The class to use loader from.
-     * @param packageAbsolutePath The path to the resource relative to passed clazz or absolute to package root.
+     * @param path                The path to the resource relative to passed clazz or absolute to package root.
      *                            Example: {resource.*}
      *                            Example: /sample/{package}/{resource.*}
      * @return The string content of the Resource.
      */
-    public static <T> String loadFileContents(Class<T> clazz, String packageAbsolutePath) {
+    public static <T> String loadFileContents(Class<T> clazz, String path) {
         String content = "";
-        final InputStream is = clazz.getResourceAsStream(packageAbsolutePath);
+        final InputStream is = clazz.getResourceAsStream(path);
         try {
             content = IOUtils.toString(is, "UTF-8");
         } catch (IOException e) {

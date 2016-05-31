@@ -45,10 +45,10 @@ public class ChefkochParserTest {
 
         this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "CK_test_zutaten.html"));
         this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "CK_test_1.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/CK_test_2.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/CK_test_3.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/CK_test_4.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/CK_test_5.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "CK_test_2.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "CK_test_3.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "CK_test_4.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "CK_test_5.html"));
     }
 
     @Test
