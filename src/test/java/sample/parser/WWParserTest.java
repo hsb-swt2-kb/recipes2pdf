@@ -110,7 +110,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(7).getMiddle()).shouldBeEqual(6.125);
         the(recipe.getIngredients().get(7).getRight().getName()).shouldBeEqual("TL");
 
-        the(recipe.getIngredients().get(8).getLeft().getName()).shouldBeEqual("Olivenöl6,qwertzuioppüqwereqrqwreqwrqwreewr");
+        the(recipe.getIngredients().get(8).getLeft().getName()).shouldBeEqual("Olivenöl6,qwertzuioppüqwereqrqwreqwrqwreewrqr");
         the(recipe.getIngredients().get(8).getMiddle()).shouldBeEqual(6.223);
         the(recipe.getIngredients().get(8).getRight().getName()).shouldBeEqual("TL123");
 
@@ -385,7 +385,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(1).getRight().getName()).shouldBeEqual("Zehe(n)");
 
-        the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (1/2 TL Instantpulver)");
+        the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (1/2 TL Instantpulve");
         the(recipe.getIngredients().get(2).getMiddle()).shouldBeEqual(125);
         the(recipe.getIngredients().get(2).getRight().getName()).shouldBeEqual("ml");
 
