@@ -25,7 +25,7 @@ public class ParserTest {
     public void testParsePositive() throws Exception {
         File file = new File("src/test/resources/sample/Rezepte/Bolognese.txt");
         Recipe recipe = Parser.parse(file);
-        the(recipe.getTitle()).shouldBe("Bolognese");
+        the(recipe.getTitle().equals("Bolognese")).shouldBeTrue();
         the(recipe.getIngredients().size()).shouldBe("15");
     }
 
