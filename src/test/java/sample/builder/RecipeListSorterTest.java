@@ -15,6 +15,13 @@ import static org.junit.Assert.*;
  */
 public class RecipeListSorterTest {
 
+
+
+    /**
+     * Asserts, if the sorting of Recipes does work correctly
+     * Precondition: recipeListToSort is unsorted
+     * Postcondition: recipeListToSort is the same as the manually sortedRecipeList.
+     */
     @Test
     public void testSort(){
 

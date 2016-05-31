@@ -10,7 +10,8 @@ import java.nio.file.Files;
 import static org.apache.commons.io.IOUtils.toByteArray;
 
 /**
- * Created by kai on 11.04.16.
+ * This class is an abstractionlayer between Iconfig and PDFBuilder. It converts the Strings of the IConfig
+ * Properties into suitable objects that are needed for the PdfBuilder
  */
 public class PdfBuilderConfig {
 

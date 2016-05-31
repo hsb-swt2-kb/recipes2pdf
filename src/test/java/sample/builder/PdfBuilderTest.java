@@ -4,7 +4,7 @@ package sample.builder;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.NullInputStream;
+import org.apache.velocity.exception.ParseErrorException;
 import org.junit.Test;
 import sample.builder.Exceptions.TexParserException;
 import sample.config.IConfig;
@@ -165,6 +165,11 @@ public class PdfBuilderTest {
         assertThat(texFile, containsString("Rezepttext 4"));
     }
 
+    /**
+     * Test, if a single Recipe is build correctly
+     *
+     * @throws Exception
+     */
     @Test
     public void testRecipePdfBuilder() throws Exception {
         IConfig config = IConfig.getInstance();
@@ -188,13 +193,16 @@ public class PdfBuilderTest {
 
     }
 
-    @Test(expected = TexParserException.class)
+    /**
+     * Test, if a single Recipe throws a ParseErrorException if the templatefile has incorrect latex syntax
+     */
+    @Test(expected = ParseErrorException.class)
     public void testThrowConverterEsception() throws Exception {
         IConfig config = IConfig.getInstance();
         config.setProperty("TEMPLATE_FILE_NAME", "testTexFile.tex");
-        InputStream templateStream = new NullInputStream(30);
-        File templateFile = new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + "templates" + File.separator + "testTexFile.tex");
-        TexParserException ex = null;
+        InputStream templateStream = this.getClass().getResourceAsStream("wrongTestTemplateFile");
+        File templateFile = new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("TEMPLATE_FOLDER_NAME") + File.separator + config.getProperty("TEMPLATE_FILE_NAME"));
+        ParseErrorException ex = null;
 
         try {
             FileUtils.copyInputStreamToFile(templateStream, templateFile);
@@ -202,16 +210,24 @@ public class PdfBuilderTest {
             ICookbook cookbook = new Cookbook();
             cookbook.addRecipe(generateRecipe("Testrezept", "Testrezepttext", 1L, "Hauptspeise", "Deutschland", "Sommer", "Mehl", 400, "g"));
             builder.build(cookbook);
-        } catch (TexParserException e) {
+        } catch (ParseErrorException e) {
             ex = e;
+
         } finally {
             config.setProperty("TEMPLATE_FILE_NAME", "cookbookTemplate.tex");
             IOUtils.closeQuietly(templateStream);
-            throw ex;
+            if (ex != null) {
+                throw ex;
+            }
         }
 
     }
 
+    /**
+     * Test, if a single Recipe throws a TexParserException if some attributes are null.
+     *
+     * @throws Exception
+     */
     @Test(expected = TexParserException.class)
     public void testThrowParserEsception() throws Exception {
         IConfig config = IConfig.getInstance();
@@ -221,6 +237,10 @@ public class PdfBuilderTest {
         builder.build(cookbook);
     }
 
+    /**
+     * Tests if the footer and header are empty if no sortlevels are given
+     * @throws Exception
+     */
     @Test
     public void testRicipeNoSortlevel() throws Exception {
         IConfig config = IConfig.getInstance();
@@ -243,6 +263,10 @@ public class PdfBuilderTest {
         assertThat(texFile, containsString("Rezepttext 1"));
     }
 
+    /**
+     * tests if the builder returns true for diffrent cases of 'pdf'
+     * @throws Exception
+     */
     @Test
     public void testBuildsMethod() throws Exception {
         IConfig config = IConfig.getInstance();

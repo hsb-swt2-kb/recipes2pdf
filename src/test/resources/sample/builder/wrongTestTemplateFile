@@ -9,15 +9,6 @@
 \pagestyle{fancy}
 \fancyhf{}
 
-%Kopfzeile links bzw. innen
-%\fancyhead[L]{Kai Nortmann \& Christian Zöller}
-%Kopfzeile rechts bzw. außen
-%\fancyhead[R]{\today}
-%Linie oben
-%Fußzeile mittig
-%\fancyfoot[c]{Labor 1 RS-232-Schnittstelle}
-%Fußzeile gerade rechts
-
 \renewcommand{\footrulewidth}{0.5pt} %Linie unten
 \begin{document}
 
@@ -30,7 +21,7 @@
         #set ($index = $refNum.indexOf('.'))
         #if($index < 0)
             #set($index = $refNum.length()) ##.length needs to be tested with only 1 sortlevel
-        #end
+        ## end this is wrong
 
         \chead{$refNum.substring(0,$index)}
         \section*{$recipe.getTitle()}
