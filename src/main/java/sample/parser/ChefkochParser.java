@@ -137,7 +137,7 @@ public class ChefkochParser extends AConcreteParser {
         ArrayList<String> result = new ArrayList<>();
 
         // Remove unnecessary parts
-        String[] working = text.split("\\[,");
+        String[] working = text.split("\\[");
         String work = working[1].trim();
         working = work.split("\\]");
         work = working[0].trim();
