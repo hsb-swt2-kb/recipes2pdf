@@ -28,8 +28,7 @@ import java.util.regex.Pattern;
 
 
 public class TxtParser extends AConcreteParser implements Constants {
-    private final int fieldLength = 45;
-    private final int preparationLength =4545;
+
 
     public Recipe parse(ArrayList<String> textFileContent) {
         Recipe recipe = new Recipe();
@@ -52,14 +51,16 @@ public class TxtParser extends AConcreteParser implements Constants {
         }
         // FInd PreperationText with tag...If there is now Tag use specific Method
         String tempPreperation=findPreperationWithTag(textFileContent);
+
         if (tempPreperation==null){
             recipe.setText(findPreparationOfRecipe(textFileContent));
         }
         else{
+            if (tempPreperation.length()>preparationLength){
+                tempPreperation = cutString(tempPreperation,preparationLength);
+            }
             recipe.setText(tempPreperation);
         }
-
-
         // Try to extract additional recipedata
         Region region = new Region();
         region.setName(findDatafield(textFileContent, "Region"));
@@ -86,23 +87,57 @@ public class TxtParser extends AConcreteParser implements Constants {
         recipe.setDaytime(daytime);
 
         try {
+            String temp = findDatafield(textFileContent, "Arbeitszeit");
             recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, "Arbeitszeit")));
         } catch (NumberFormatException | NullPointerException e) {
-            recipe.setDuration(0);
+            String [] str = extractAmountUnit(findDatafield(textFileContent, "Arbeitszeit"));
+
+            if (str[0] == "0" || str[0] == null) {
+                recipe.setDuration(0);
+            }
+            else if (str[0] != null){
+
+                double d = parseStringToDouble(str[0]);
+                boolean std = false;
+
+                for (String timeHourWord : timeHourWords) {
+                    if (str[1].toLowerCase().contains(timeHourWord)) {
+                        std = true;
+                        break;
+                    }
+                }
+                if (std == true){
+                    d = d*60;
+                }
+                int i = (int) Math.floor(d);
+                recipe.setDuration(i);
+            }
         }
         try {
             recipe.setCalories(Integer.parseInt(findDatafield(textFileContent, "Kalorien")));
-        } catch (NumberFormatException | NullPointerException e) {
-            recipe.setCalories(0);
-        }
-        try {
-            recipe.setPortions(Integer.parseInt(findDatafield(textFileContent, "Portionen")));
-        } catch (NumberFormatException | NullPointerException e) {
-            recipe.setPortions(0);
         }
 
+        catch (NumberFormatException e) {
+            String cal = findDatafield(textFileContent, "Kalorien");
+            recipe.setCalories(fixNumberFormat(cal));
+        }
+        catch (Exception e){
+            recipe.setCalories(0);
+        }
+
+        try {
+            recipe.setPortions(Integer.parseInt(findDatafield(textFileContent, "Portionen")));
+        }
+        catch (NumberFormatException e){
+            String port = findDatafield(textFileContent, "Portionen");
+            recipe.setPortions(fixNumberFormat(port));
+        }
+        catch (Exception e) {
+            recipe.setPortions(0);
+        }
         return recipe;
     }
+
 
     public boolean accepts(ArrayList<String> fileContent) {
       /* parse it to check it :) */
@@ -113,6 +148,12 @@ public class TxtParser extends AConcreteParser implements Constants {
             return false;
     }
 
+    private int fixNumberFormat(String str){
+        String string[] = extractAmountUnit(str);
+        double d = parseStringToDouble(string[0]);
+        int i = (int) Math.floor(d);
+        return i;
+    }
     //Extract the name of a recpipe. Must be in the first non empty row
     //of the textfile
     private String extractRecipename(ArrayList<String> textfileContent) {
@@ -410,6 +451,11 @@ public class TxtParser extends AConcreteParser implements Constants {
             return tempStr;
         }
         return str;
+    }
+    private int resolveToMinute(String str){
+
+
+        return 2;
     }
 }
 
