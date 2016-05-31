@@ -4,6 +4,8 @@ import sample.database.dbo.RegionDBO;
 import sample.model.Region;
 
 /**
+ * Database Access Object for Region.
+ * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 03.05.16.
  */
 public class RegionDAO extends ADAO<Region, RegionDBO> {

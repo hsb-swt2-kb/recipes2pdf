@@ -4,6 +4,8 @@ import sample.database.dbo.IngredientDBO;
 import sample.model.Ingredient;
 
 /**
+ * Database Access Object for Ingredient.
+ * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 02.05.2016.
  */
 public class IngredientDAO extends ADAO<Ingredient, IngredientDBO> {

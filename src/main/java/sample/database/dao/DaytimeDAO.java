@@ -4,6 +4,8 @@ import sample.database.dbo.DaytimeDBO;
 import sample.model.Daytime;
 
 /**
+ * Database Access Object for Daytime.
+ * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 02.05.2016.
  */
 public class DaytimeDAO extends ADAO<Daytime, DaytimeDBO> {

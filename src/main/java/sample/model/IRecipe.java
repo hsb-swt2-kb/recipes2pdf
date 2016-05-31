@@ -71,17 +71,17 @@ public interface IRecipe extends IIdentifiable {
     void add(String ingredientName, double amount, String unitName);
 
     /**
-     * Retrieve List of Triples with details <IIngredient, Double, IUnit>.
-     *
-     * @return the list of triples
-     */
-    List<Triple<IIngredient, Double, IUnit>> getIngredients();
-
-    /**
      * Insert recipe ingredient directly.
      * In most cases you should use <code>add(String ingredientName, int amount, String unitName)</code>
      * @see #add(String, double, String)
      * @param recipeIngredient
      */
     void add(Triple<IIngredient, Double, IUnit> recipeIngredient);
+
+    /**
+     * Retrieve List of Triples with details <IIngredient, Double, IUnit>.
+     *
+     * @return the list of triples
+     */
+    List<Triple<IIngredient, Double, IUnit>> getIngredients();
 }

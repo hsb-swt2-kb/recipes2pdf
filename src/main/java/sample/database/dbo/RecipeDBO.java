@@ -33,11 +33,11 @@ import java.util.Optional;
 })
 public class RecipeDBO extends Model implements IRecipe {
 
-    final Logger LOG = LoggerFactory.getLogger(RecipeDBO.class);
-
     static {
         validatePresenceOf("title");
     }
+
+    final Logger LOG = LoggerFactory.getLogger(RecipeDBO.class);
 
     @Override
     public Long getID() {
@@ -49,17 +49,12 @@ public class RecipeDBO extends Model implements IRecipe {
         setId(id);
     }
 
-    public void setTitle(String title) {
-        setString("title", title);
-    }
-
     public String getTitle() {
         return getString("title");
     }
 
-    @Override
-    public void setText(String text) {
-        setString("text", text);
+    public void setTitle(String title) {
+        setString("title", title);
     }
 
     @Override
@@ -68,8 +63,8 @@ public class RecipeDBO extends Model implements IRecipe {
     }
 
     @Override
-    public void setPortions(int portions) {
-        setInteger("portions", portions);
+    public void setText(String text) {
+        setString("text", text);
     }
 
     @Override
@@ -78,8 +73,8 @@ public class RecipeDBO extends Model implements IRecipe {
     }
 
     @Override
-    public void setDuration(int duration) {
-        setInteger("duration", duration);
+    public void setPortions(int portions) {
+        setInteger("portions", portions);
     }
 
     @Override
@@ -87,17 +82,17 @@ public class RecipeDBO extends Model implements IRecipe {
         return getInteger("duration");
     }
 
-    public void setImage(byte[] image) {
-        set("image", image);
+    @Override
+    public void setDuration(int duration) {
+        setInteger("duration", duration);
     }
 
     public byte[] getImage() {
         return getBytes("image");
     }
 
-    @Override
-    public void setCalories(int calories) {
-        setInteger("calories", calories);
+    public void setImage(byte[] image) {
+        set("image", image);
     }
 
     @Override
@@ -106,8 +101,8 @@ public class RecipeDBO extends Model implements IRecipe {
     }
 
     @Override
-    public void setCategory(ICategory category) {
-        ((Model) category).add(this);
+    public void setCalories(int calories) {
+        setInteger("calories", calories);
     }
 
     @Override
@@ -116,8 +111,8 @@ public class RecipeDBO extends Model implements IRecipe {
     }
 
     @Override
-    public void setCourse(ICourse course) {
-        ((Model) course).add(this);
+    public void setCategory(ICategory category) {
+        ((Model) category).add(this);
     }
 
     @Override
@@ -126,8 +121,8 @@ public class RecipeDBO extends Model implements IRecipe {
     }
 
     @Override
-    public void setRegion(IRegion region) {
-        ((Model) region).add(this);
+    public void setCourse(ICourse course) {
+        ((Model) course).add(this);
     }
 
     @Override
@@ -136,8 +131,8 @@ public class RecipeDBO extends Model implements IRecipe {
     }
 
     @Override
-    public void setDaytime(IDaytime daytime) {
-        ((Model) daytime).add(this);
+    public void setRegion(IRegion region) {
+        ((Model) region).add(this);
     }
 
     @Override
@@ -146,8 +141,8 @@ public class RecipeDBO extends Model implements IRecipe {
     }
 
     @Override
-    public void setSeason(ISeason season) {
-        ((Model) season).add(this);
+    public void setDaytime(IDaytime daytime) {
+        ((Model) daytime).add(this);
     }
 
     @Override
@@ -156,13 +151,18 @@ public class RecipeDBO extends Model implements IRecipe {
     }
 
     @Override
-    public void setNurture(INurture nurture) {
-        ((Model) nurture).add(this);
+    public void setSeason(ISeason season) {
+        ((Model) season).add(this);
     }
 
     @Override
     public INurture getNurture() {
         return parent(NurtureDBO.class);
+    }
+
+    @Override
+    public void setNurture(INurture nurture) {
+        ((Model) nurture).add(this);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class RecipeDBO extends Model implements IRecipe {
         }
 
         final boolean alreadyPersisted = 0 < RecipeIngredientDBO.count("recipe_id = ? AND ingredient_id = ?", this.getID(), ingredientDBO.getID());
-        if( !alreadyPersisted ) {
+        if (!alreadyPersisted) {
             this.add(recipeIngredient);
             LOG.info("Added new recipe ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "]");
         } else {
@@ -253,7 +253,7 @@ public class RecipeDBO extends Model implements IRecipe {
      */
     @Override
     public void add(Triple<IIngredient, Double, IUnit> recipeIngredient) {
-        this.add( recipeIngredient.getLeft().getName(), recipeIngredient.getMiddle(), recipeIngredient.getRight().getName() );
+        this.add(recipeIngredient.getLeft().getName(), recipeIngredient.getMiddle(), recipeIngredient.getRight().getName());
     }
 
 }

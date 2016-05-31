@@ -9,37 +9,21 @@
 \pagestyle{fancy}
 \fancyhf{}
 
-%Kopfzeile links bzw. innen
-%\fancyhead[L]{Kai Nortmann \& Christian Zöller}
-%Kopfzeile rechts bzw. außen
-%\fancyhead[R]{\today}
-%Linie oben
-%Fußzeile mittig
-%\fancyfoot[c]{Labor 1 RS-232-Schnittstelle}
-%Fußzeile gerade rechts
-
 \renewcommand{\footrulewidth}{0.5pt} %Linie unten
-
 \begin{document}
 
 
     #foreach( $recipe in $cookbook.getRecipes() )
-        \fancyhead[C]{$recipe.getCategory().getName()} %Kopfzeile mittig
-        \fancyfoot[ol]{Rezept $referenceNumber} %Fußzeile ungerade links
-        \fancyfoot[er]{Rezept $referenceNumber} %Fußzeile gerade links
 
-<<<<<<< HEAD
-=======
         \fancyhf{}
 
         #set ($refNum = $refNumList.get($recipe))
         #set ($index = $refNum.indexOf('.'))
         #if($index < 0)
             #set($index = $refNum.length()) ##.length needs to be tested with only 1 sortlevel
-        #end
+        ## end this is wrong
 
         \chead{$refNum.substring(0,$index)}
->>>>>>> master
         \section*{$recipe.getTitle()}
 	    \begin{minipage}[t]{0.4\textwidth}
 	        \subsection*{Zutaten}
@@ -52,18 +36,20 @@
 	    \hfill
         \begin{minipage}[t]{0.4\textwidth}
             \vspace{-2ex}
-            \includegraphics[width=\linewidth]{${imgDir}/tmpRecipeImage.jpg}
+            \includegraphics[width=\linewidth]{"${imgDir}/${recipe.getTitle()}${recipe.getID()}"}
         \end{minipage}
         \subsection*{Zubereitung}
         $recipe.getText()\\
 
         \checkoddpage
         \ifoddpage
+            \lfoot{$refNum}
         	\newpage{}
        	    \thispagestyle{empty}
      	    \mbox{}
      	    \newpage
        	\else
+       	    \rfoot{$refNum}
        		\newpage{}
         \fi
     #end
