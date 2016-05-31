@@ -37,7 +37,8 @@ public class CookbookTest extends ADatabaseTest {
         cookbook.addSortlevel(sortlevel2);
         cookbookDAO.update(cookbook);
         Optional<Cookbook> byId = new CookbookDAO().findById(cookbook.getID());
-        final List<String> sortlevelNames = extractSortlevelNames(cookbook);
+        byId.orElseThrow(IllegalStateException::new);
+        final List<String> sortlevelNames = extractSortlevelNames(byId.get());
 
         the(sortlevelNames).shouldContain(sortlevel1_name);
         the(sortlevelNames).shouldContain(sortlevel2_name);
@@ -60,7 +61,8 @@ public class CookbookTest extends ADatabaseTest {
         cookbook.addSortlevel(sortlevel2);
         cookbookDAO.update(cookbook);
         Optional<Cookbook> byId = new CookbookDAO().findById(cookbook.getID());
-        final List<String> sortlevelNames = extractSortlevelNames(cookbook);
+        byId.orElseThrow(IllegalStateException::new);
+        final List<String> sortlevelNames = extractSortlevelNames(byId.get());
 
         the(sortlevelNames).shouldContain(sortlevel1_name);
         the(sortlevelNames).shouldContain(sortlevel2_name);
@@ -79,7 +81,8 @@ public class CookbookTest extends ADatabaseTest {
         cookbook.addSortlevel(sortlevel1);
         cookbookDAO.update(cookbook);
         Optional<Cookbook> byId = new CookbookDAO().findById(cookbook.getID());
-        final List<String> sortlevelNames = extractSortlevelNames(cookbook);
+        byId.orElseThrow(IllegalStateException::new);
+        final List<String> sortlevelNames = extractSortlevelNames(byId.get());
 
         the( sortlevelNames ).shouldContain(sortlevel_name);
     }

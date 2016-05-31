@@ -4,6 +4,8 @@ import sample.database.dbo.UnitDBO;
 import sample.model.Unit;
 
 /**
+ * Database Access Object for Unit.
+ * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 02.05.2016.
  */
 public class UnitDAO extends ADAO<Unit, UnitDBO> {
