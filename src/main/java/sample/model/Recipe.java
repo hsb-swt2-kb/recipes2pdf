@@ -168,12 +168,7 @@ public class Recipe implements IRecipe {
     }
 
     /**
-     * Add ingredient with amount and unit.
-     * This is a convenience method that creates missing entities on the fly.
-     *
-     * @param ingredientName the name of ingredient
-     * @param amount         amount of ingredient
-     * @param unitName       name of the unit
+     * {@inheritDoc}
      */
     public void add(String ingredientName, double amount, String unitName) {
         IIngredient ingredient = new Ingredient();
@@ -200,19 +195,14 @@ public class Recipe implements IRecipe {
     }
 
     /**
-     * Retrieve Map of Ingredients with details amount and unit per ingredient.
-     *
-     * @return map
+     * {@inheritDoc}
      */
     public List<Triple<IIngredient, Double, IUnit>> getIngredients() {
         return this.ingredients;
     }
 
     /**
-     * Insert recipe ingredient directly.
-     * In most cases you should use <code>add(String ingredientName, int amount, String unitName)</code>
-     *
-     * @param recipeIngredient
+     * {@inheritDoc}
      */
     @Override
     public void add(Triple<IIngredient, Double, IUnit> recipeIngredient) {
