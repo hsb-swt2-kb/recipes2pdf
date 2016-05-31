@@ -91,7 +91,7 @@ public class ChefkochParserTest {
         the(recipe.getTitle()).shouldBeEqual("Zucchini-Pilz-Lasagne mit Feta-Topping");
         the(recipe.getPortions()).shouldBeEqual(4);
         the(recipe.getDuration()).shouldBeEqual(45);
-        String text = "Zunächst heize man den Backofen auf ca. 175 °C vor.\n\nDann werden die zwei Grundsoßen zubereitet.\n\n" +
+        /*String text = "Zunächst heize man den Backofen auf ca. 175 °C vor.\n\nDann werden die zwei Grundsoßen zubereitet.\n\n" +
             "Für die erste nehme man klein geschnittene Zwiebeln und in Scheiben geschnittene Zucchini, Salz, Pfeffer, " +
             "Olivenöl und brate diese Zutaten in der Pfanne an, bis die Zucchini eine leichte Bräune zeigen. Man lösche " +
             "mit den gestückelten Tomaten ab, gebe etwas Gemüsebrühe dazu und gebe die Soße dann in eine Schüssel.\n\nIn der " +
@@ -99,7 +99,16 @@ public class ChefkochParserTest {
             "Salz anbraten, bis wiederum die Pilze eine leichte Bräune zeigen. Dann füge man das Tessiner Gewürz oder andere " +
             "Gewürze hinzu. Mit der Mandelsahne oder Sojasahne wird abgelöscht.\n\nIn die Auflaufform gebe man zuerst von der " +
             "roten Soße etwas hinein, dann die Lasagneplatten, dann die helle Soße usw., bis alles verbraucht ist. Klein " +
-            "gekrümelter Feta kommt obenauf.\n\n25 min. bei etwa 175 °C im Backofen backen, bis der Feta etwas braun ist.";
+            "gekrümelter Feta kommt obenauf.\n\n25 min. bei etwa 175 °C im Backofen backen, bis der Feta etwas braun ist.";*/
+        String text = "Zunächst heize man den Backofen auf ca. 175 °C vor. Dann werden die zwei Grundsoßen zubereitet. " +
+            "Für die erste nehme man klein geschnittene Zwiebeln und in Scheiben geschnittene Zucchini, Salz, Pfeffer, " +
+            "Olivenöl und brate diese Zutaten in der Pfanne an, bis die Zucchini eine leichte Bräune zeigen. Man lösche " +
+            "mit den gestückelten Tomaten ab, gebe etwas Gemüsebrühe dazu und gebe die Soße dann in eine Schüssel. In der " +
+            "Pfanne kann nun die zweite Soße bereitet werden. Dazu klein geschnittene Zwiebel, Pilzscheiben, Olivenöl und " +
+            "Salz anbraten, bis wiederum die Pilze eine leichte Bräune zeigen. Dann füge man das Tessiner Gewürz oder andere " +
+            "Gewürze hinzu. Mit der Mandelsahne oder Sojasahne wird abgelöscht. In die Auflaufform gebe man zuerst von der " +
+            "roten Soße etwas hinein, dann die Lasagneplatten, dann die helle Soße usw., bis alles verbraucht ist. Klein " +
+            "gekrümelter Feta kommt obenauf. 25 min. bei etwa 175 °C im Backofen backen, bis der Feta etwas braun ist.";
         //the(recipe.getText()).shouldBeEqual(text);
 
         the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Lasagneplatte(n)");
@@ -201,7 +210,7 @@ public class ChefkochParserTest {
         the(recipe.getTitle()).shouldBeEqual("Zucchini - Lasagne");
         the(recipe.getPortions()).shouldBeEqual(4);
         the(recipe.getDuration()).shouldBeEqual(40);
-        String text = "Zucchini waschen und längs in fingerdicke Scheiben schneiden. In einer Pfanne in Olivenöl von beiden " +
+        /*String text = "Zucchini waschen und längs in fingerdicke Scheiben schneiden. In einer Pfanne in Olivenöl von beiden " +
             "Seiten anbraten, auf Küchenpapier abtropfen lassen. Oder die Scheiben mit Olivenöl bestreichen, ein wenig salzen " +
             "und auf der obersten Schiene mit der Grillfunktion im Backofen bräunen. Das dauert allerdings länger.\n\n" +
             "Die Zwiebel in Würfel schneiden und in der Pfanne in wenig Olivenöl glasig dünsten. Knoblauchzehe dazu pressen und " +
@@ -213,7 +222,20 @@ public class ChefkochParserTest {
             "andere Auflaufform  mit Zucchinischeiben auslegen. Darauf ein paar Löffel Tomatenhacksoße verteilen, darauf eine " +
             "Schicht Frischkäsesoße, und darauf wieder Zucchinischeiben. Weiter so schichten, bis alle Zutaten verbraucht sind. " +
             "Die oberste Schicht soll Tomatenhacksoße sein. Diese mit dem restlichen Käse bestreuen und im auf 200°C vorgeheizten " +
-            "Ofen ca. 30 min goldbraun backen.\n\nDazu passt ein kleiner frischer Salat.";
+            "Ofen ca. 30 min goldbraun backen.\n\nDazu passt ein kleiner frischer Salat.";*/
+        String text = "Zucchini waschen und längs in fingerdicke Scheiben schneiden. In einer Pfanne in Olivenöl von beiden " +
+            "Seiten anbraten, auf Küchenpapier abtropfen lassen. Oder die Scheiben mit Olivenöl bestreichen, ein wenig salzen " +
+            "und auf der obersten Schiene mit der Grillfunktion im Backofen bräunen. Das dauert allerdings länger." +
+            "Die Zwiebel in Würfel schneiden und in der Pfanne in wenig Olivenöl glasig dünsten. Knoblauchzehe dazu pressen und " +
+            "etwas mitdünsten. Das Hackfleisch hinzugeben und krümelig anbraten. Wenn das Fleisch Farbe bekommen hat, mit Salz, " +
+            "Pfeffer und Paprikapulver würzen, 1 EL Tomatenmark hinzugeben, unterrühren und eine Minute anschwitzen. Tomaten " +
+            "hinzugeben und mit Oregano, Thymian, Salz, Pfeffer, Paprika würzen. 10 min auf kleiner Flamme köcheln lassen, zum " +
+            "Schluss die gehackte Petersilie hinzugeben.Frischkäse mit der Milch verrühren,  wahlweise auch Sauerrahm " +
+            "unterrühren. Mit Salz, Pfeffer und etwas Muskat würzen, ca. 50 g Streukäse unterrühren.Eine Lasagneform oder eine " +
+            "andere Auflaufform  mit Zucchinischeiben auslegen. Darauf ein paar Löffel Tomatenhacksoße verteilen, darauf eine " +
+            "Schicht Frischkäsesoße, und darauf wieder Zucchinischeiben. Weiter so schichten, bis alle Zutaten verbraucht sind. " +
+            "Die oberste Schicht soll Tomatenhacksoße sein. Diese mit dem restlichen Käse bestreuen und im auf 200°C vorgeheizten " +
+            "Ofen ca. 30 min goldbraun backen.Dazu passt ein kleiner frischer Salat.";
         //the(recipe.getText()).shouldBeEqual(text);
 
         the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucchini , große, dicke");
