@@ -40,10 +40,9 @@ public class UI {
      */
     static boolean addRecipes (List<File> files) throws FileNotFoundException,CouldNotParseException {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        ArrayList<Recipe> recipeList = new ArrayList<>();
         boolean success=true;
-        for(int i=0;i<files.size();i++) {
-            if(!addRecipe(files.get(i)))
+        for(File file : files) {
+            if(!addRecipe(file))
                 success=false;
         }
         return success;
@@ -64,8 +63,7 @@ public class UI {
     static boolean addRecipe (File file) throws FileNotFoundException,CouldNotParseException {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         boolean success=true;
-        Recipe recipe = new Recipe();
-        recipe = Parser.parse(file);
+        Recipe recipe = Parser.parse(file);
         if (recipe.isIncomplete())
             success = false;
         else
@@ -123,7 +121,7 @@ public class UI {
      * @param iRecipes iRecipes to cast to Recipe
      * @return List<Recipe> List of the converted Recipes
      */
-    static public List<Recipe> castIRecipeToRecipe(List<IRecipe> iRecipes){
+    static List<Recipe> castIRecipeToRecipe(List<IRecipe> iRecipes){
         List<Recipe> recipes = new ArrayList<>();
         for(IRecipe iRecipe : iRecipes){
             recipes.add((Recipe) iRecipe);
@@ -160,8 +158,8 @@ public class UI {
     static boolean delRecipes (ArrayList<Recipe> recipes){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         boolean success = true;
-        for(int i=0;i<recipes.size();i++)
-            if(!new RecipeDAO().delete(recipes.get(i)))
+        for(Recipe recipe : recipes)
+            if(!new RecipeDAO().delete(recipe))
                 success=false;
         return success;
     }
@@ -179,6 +177,19 @@ public class UI {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle(title);
+        return new CookbookDAO().insert(cookbook);
+    }
+    /**
+     *
+     * createCookBook
+     *
+     * inserts a cookbook to the database and returns the title if success, otherwise null
+     *
+     * @param cookbook cookbook to add to DB
+     * @return boolean success of the insertion
+     */
+    static boolean addCookBook(Cookbook cookbook){
+        Database database = new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().insert(cookbook);
     }
 
@@ -202,10 +213,10 @@ public class UI {
      *
      * function to change the data of a Cookbook in the Database.
      *
-     * @param cookbook
+     * @param cookbook cookbook which data have to be changed
      */
-    static void changeCookBook(Cookbook cookbook){
-        new CookbookDAO().update(cookbook);
+    static boolean changeCookBook(Cookbook cookbook){
+        return new CookbookDAO().update(cookbook);
     }
 
     /**
@@ -213,11 +224,10 @@ public class UI {
      *
      * function to change the data of a Recipe in the DB.
      *
-     * @param recipe
+     * @param recipe the recipe which data has to be changed
      */
-    static void changeRecipe(Recipe recipe){
-        new RecipeDAO().update(recipe);
-
+    static boolean changeRecipe(Recipe recipe){
+        return new RecipeDAO().update(recipe);
     }
 
     /**
@@ -225,8 +235,8 @@ public class UI {
      *
      * call RecipeDAO to remove the given Recipe from DB
      *
-     * @param recipe
-     * @return
+     * @param recipe the recipe that have to be deleted
+     * @return boolean success
      */
     static boolean delRecipe(Recipe recipe) {
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
@@ -239,8 +249,8 @@ public class UI {
      *
      * search for a Cookbook with given title calling CookbookDAO.
      *
-     * @param cookbookname
-     * @return
+     * @param cookbookname the name of the cookbook to search
+     * @return cookbook the cookbook that have been found in the database with the cookbookname
      * @throws CookBookNotFoundException
      */
     static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
@@ -259,8 +269,8 @@ public class UI {
      *
      * search for a Recipe with given Title calling RecipeDAO
      *
-     * @param recipeName
-     * @return
+     * @param recipeName the name of the recipe to search
+     * @return recipe the recipe that have been found in the database with the recipeName
      * @throws RecipeNotFoundException
      */
     static Recipe searchRecipe(String recipeName) throws  RecipeNotFoundException{
