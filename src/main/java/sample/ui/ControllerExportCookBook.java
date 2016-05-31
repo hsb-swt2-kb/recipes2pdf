@@ -2,6 +2,8 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerExport'' manages the ExportCookBook-FXML.
+ * It provides methods for a pdf-export of a cookbook in the choosen format.
  */
 
 
@@ -17,17 +19,13 @@ import java.io.File;
 
 public class ControllerExportCookBook {
 
+    File file;
     @FXML
     private Button browseButton;
-
     @FXML
     private TextField textFieldPath;
-
     @FXML
     private Button saveButton;
-
-    File file;
-
     @FXML
     private ComboBox<String> comboBoxFormat;
 
@@ -45,6 +43,10 @@ public class ControllerExportCookBook {
         refreshComboBox(format);
 
     }
+
+    /**
+     * The method ''initializeListeners()'' initializes the listeners.
+     */
 
     private void initializeListeners() {
         comboBoxFormat
@@ -88,12 +90,21 @@ public class ControllerExportCookBook {
         comboBoxFormat.setItems(format);
     }
 
+    /**
+     * The method ''closeCWindow(ActionEvent event)'' closes the export-window after a interaction with the close-button.
+     *
+     * @param event
+     */
+
     @FXML
     void closeWindow(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
     }
+
+    /**
+     * The method ''closeCWindow()'' closes the export-window.
+     */
 
     @FXML
     void closeWindow() {
@@ -103,6 +114,9 @@ public class ControllerExportCookBook {
 
     }
 
+    /**
+     * The method '' browse(ActionEvent event)'' opens the filechooser and set the choosen path to the path-textField.
+     */
     @FXML
     void browse(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();

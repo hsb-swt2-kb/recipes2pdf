@@ -14,57 +14,95 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.exceptions.CookBookNotFoundException;
+import sample.model.Cookbook;
+
 import java.io.File;
 
 public class ControllerChangeCookBook {
 
+    File file;
+    String foreword;
+    String path;
     @FXML
     private Button fileChooserButton;
-
-
-    File file;
-    String name;
-    String foreword;
-
         @FXML
         private Button closeButton;
-
     @FXML
     private TextField textFieldName;
-
     @FXML
     private TextArea textAreaVorwort;
-
     @FXML
     private TextField textFieldPicture;
+
+    Cookbook cookbook;
 
     @FXML
     private Button changeButton;
 
+    //Cookbook selection from the ControllerManageCookBooks
+    private String name = ControllerManageCookBooks.getInstance().getSelectedItem();
+
     @FXML
     public void initialize() {
+        refreshData();
 
 
     }
 
+    protected void refreshData() {
+        loadInformation();
+        fillTextFields();
+    }
+
+    /**
+     * load cookbook information
+     */
+    private void loadInformation() {
+        try{
+            cookbook = UI.searchCookBook(name);
+            foreword = "";
+            path = "";
+        }
+        catch (CookBookNotFoundException e){
+            System.out.println("Couldn't load cookbook");
+
+        }
+    }
+
+    /**
+     * set loaded text to textfields
+     */
+    private void fillTextFields() {
+
+        textFieldName.setText(name);
+        textAreaVorwort.setText(foreword);
+        textFieldPicture.setText(path);
+    }
+
     @FXML
     void changeCookBook(ActionEvent event) {
-        getName();
-        getForeWord();
         if(this.textFieldName.getText().trim().isEmpty() == false) {
-            System.out.println(name + foreword + "file.getName()");
+            try {
+                cookbook.setTitle(getName());
+                UI.changeCookBook(cookbook);
+                ControllerManageCookBooks.getInstance().refreshListViews();
+                ControllerManageCookBook.getInstance().refresh();
+            }catch (Exception e)
+            {
+                System.out.println("Couldn't load cookbook");
+            }
+        }
+
             //Close Stage
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
-        }else{
-            //Exception
-        }
+
 
     }
 
     /**
      * The method ''closeChangeCookBook()'' closes the ChangeCookBook-Window after a interaction with the close-button.
-     *
      * @param event
      */
 
@@ -86,7 +124,8 @@ public class ControllerChangeCookBook {
         FileHandler fileHandler = new FileHandler();
         this.file = fileHandler.importPicture();
         if(this.file != null) {
-            textFieldPicture.setText(file.getAbsolutePath());
+            path = file.getAbsolutePath();
+            textFieldPicture.setText(path);
         }
 
     }
@@ -98,6 +137,11 @@ public class ControllerChangeCookBook {
     private String getName(){
         name = textFieldName.getText();
         return  name;
+    }
+
+    private String getPath(){
+        path = textFieldPicture.getText();
+        return  path;
     }
 
     }

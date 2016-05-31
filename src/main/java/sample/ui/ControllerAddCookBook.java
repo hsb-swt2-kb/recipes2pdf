@@ -1,16 +1,15 @@
 package sample.ui;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import sample.model.Cookbook;
 
 import java.io.File;
 
@@ -24,6 +23,26 @@ import java.io.File;
 public class ControllerAddCookBook  {
 
     private static ControllerAddCookBook instance;
+    File file;
+    String name;
+    String foreword;
+    @FXML
+    private Button closeButton;
+    @FXML
+    private Button buttonSortLevel;
+    @FXML
+    private ListView<String> listViewSortLevel;
+    @FXML
+    private TextField textFieldPicture;
+    @FXML
+    private TextField textFieldName;
+    @FXML
+    private Button browseButton;
+    @FXML
+    private TextArea textAreaVorwort;
+    private ObservableList<String> sortLevelsOfTheCookbook;
+    @FXML
+    private Button generateButton;
 
     /**
      * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerAddCookBook and ControllerSortLevel.
@@ -42,37 +61,6 @@ public class ControllerAddCookBook  {
         }
         return ControllerAddCookBook.instance;
     }
-
-    @FXML
-    private Button closeButton;
-
-    @FXML
-    private Button buttonSortLevel;
-
-    @FXML
-    private ListView<String> listViewSortLevel;
-
-    @FXML
-    private TextField textFieldPicture;
-
-    @FXML
-    private TextField textFieldName;
-
-    @FXML
-    private Button browseButton;
-
-    @FXML
-    private TextArea textAreaVorwort;
-
-    private ObservableList<String> sortLevelsOfTheCookbook;
-
-    @FXML
-    private Button generateButton;
-
-    File file;
-    String name;
-    String foreword;
-
 
     /**
      * The ControllerAddCookBook initializes the ControllerInstance and the SortLevel-list.
@@ -154,16 +142,17 @@ public class ControllerAddCookBook  {
      */
     @FXML
     void generateCookBook(ActionEvent event) {
-        getName();
-        getForeWord();
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
-            System.out.println(name + foreword + "file.getName()" + this.sortLevelsOfTheCookbook);
+            UI.addCookBook(getName());
+            ControllerManageCookBook.getInstance().refresh();
+            ControllerManageCookBooks.getInstance().refreshListViews();
             //Close Stage
             Stage stage = (Stage) generateButton.getScene().getWindow();
             stage.close();
         }else{
             //Exception
         }
+
 
     }
 

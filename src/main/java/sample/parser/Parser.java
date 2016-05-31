@@ -5,6 +5,7 @@ import sample.model.Recipe;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /* Class Parser
  *
@@ -24,50 +25,33 @@ public class Parser implements IParser
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    public static Recipe parse(File recipeFile) throws  FileNotFoundException,CouldNotParseException
+    public static Recipe parse(File recipeFile) throws  Exception,NullPointerException,IOException,FileNotFoundException,CouldNotParseException
     {
-        ArrayList<AConcreteParser> parsers = new ArrayList<>();
-        // Parser instantiieren
+        List<AConcreteParser> parsers = new ArrayList<>();
+        parsers.add(new DummyParser());
         parsers.add(new TxtParser());
         parsers.add(new ChefkochParser ());
         parsers.add(new WWParser());
+        //parsers.add(new CKParser ());
 
-        // Format raten
         if(recipeFile.exists())
         {
-            ArrayList<String> fileContent = new ArrayList<>();
+            ArrayList<String> fileContent = readFile(recipeFile.toString());
             Recipe            recipe      = new Recipe();
 
-            try {
-                fileContent = readFile(recipeFile.toString());
-            }
-            catch(IOException e){
-                // TODO: IOException behandeln
-            }
+            // Parser aufrufen
+            for(AConcreteParser parser:parsers)
+                if(parser.accepts(fileContent))
+                    recipe = parser.parse(fileContent);
 
-            // Parser fragen
-            for(int i=0;i<parsers.size();i++)
-            {
-                if(parsers.get(i).accepts(fileContent)){
-                    try{
-                        recipe = parsers.get(i).parse(fileContent);
-                    }
-                    catch(Exception e){
-                        // TODO: Exception behandeln
-                    }
-                }
-            }
             // Rezept prüfen
-            // TODO: Rezept prüfen
             if(!recipe.isIncomplete())
                 return recipe;
             else
                 throw new CouldNotParseException();
         }
         else
-        {
             throw new FileNotFoundException();
-        }
     }
 
     /**

@@ -2,6 +2,8 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerDefault'' manages the Default-FXML.
+ * It contains the tabs and an anchorPane, which can exchange dynamically through other FXML-files.
  */
 
 
@@ -78,7 +80,7 @@ public class ControllerDefault {
     }
 
     /**
-     * Opens a new not resizable window.
+     * The method opens a new not resizable window.
      * @param fxml defenies the path of the FXML-File.
      * @param windowTitel defenies the window titel
      */
@@ -125,6 +127,11 @@ public class ControllerDefault {
         stage.show();
     }
 
+    /**
+     * The method ''addCookBook()'' opens the addCookBook-window.
+     *
+     * @param event
+     */
     @FXML
     void addCookBook(ActionEvent event) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
@@ -141,16 +148,31 @@ public class ControllerDefault {
         newWindowNotResizable(Resources.getloadRecipeFXML(), Resources.getLoadWindowText());
     }
 
+    /**
+     * The method ''openHelp()'' opens the help-window.
+     * @param event
+     */
+
     @FXML
     void openHelp(ActionEvent event) {
         newWindow(Resources.getHelpFXML(), Resources.getHelpWindowText(), 250, 200, Resources.getHelpIcon());
 
     }
 
+    /**
+     * The method ''openAbout()'' opens the about-window.
+     * @param event
+     */
+
     @FXML
     void openAbout(ActionEvent event) {
         newWindow(Resources.getAboutFXML(), Resources.getAboutWindowText(), 300, 220, Resources.getInfoIcon());
     }
+
+    /**
+     * The method ''openManageCookBooks()'' opens the  manage-cookbook-window.
+     * @param event
+     */
 
     @FXML
     void openManageCookBooks(ActionEvent event) {

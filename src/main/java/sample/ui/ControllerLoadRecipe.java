@@ -2,6 +2,8 @@ package sample.ui;
 
 /**
  * @author Tobias Stelter
+ * The Class ''ControllerCLoadRecipe'' manages the LoadRecipe-FXML and the LoadRecipePopOver-FXML.
+ * It provides methods for adding new recipes.
  */
 
 import javafx.event.ActionEvent;
@@ -12,15 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
-import sample.database.dao.RecipeDAO;
 import sample.exceptions.CouldNotParseException;
-import sample.model.Recipe;
-import sample.parser.Parser;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static sample.ui.UI.addRecipes;
 
@@ -72,15 +68,28 @@ public class ControllerLoadRecipe {
         boolean radioButtonLinkBoolean = false;
     }
 
+    /**
+     * The method ''setHyperLinkEditable()'' sets the  hyperLinkTextField editable.
+     */
+
     void setHyperLinkEditable() {
         hyperLinkTextField.setEditable(true);
         hyperLinkTextField.setDisable(false);
     }
+
+    /**
+     * The method ''setHyperLinkNotEditable()'' deactivate the hyperLinkTextField.
+     */
+
     void setHyperLinkNotEditable() {
         hyperLinkTextField.setEditable(false);
         hyperLinkTextField.clear();
         hyperLinkTextField.setDisable(true);
     }
+
+    /**
+     * The method ''changeRadioButtonFolder(ActionEvent event)'' sets the options for the folder-selection.
+     */
 
     @FXML
     void changeRadioButtonFolder(ActionEvent event) {
@@ -89,6 +98,10 @@ public class ControllerLoadRecipe {
         radioButtonFolderBoolean = true;
     }
 
+    /**
+     * The method ''changeRadioButtonFile(ActionEvent event)'' sets the options for the file-selection.
+     */
+
     @FXML
     void changeRadioButtonFile(ActionEvent event) {
         controllRadioButtons();
@@ -96,6 +109,10 @@ public class ControllerLoadRecipe {
         radioButtonFileBoolean = true;
     }
 
+
+    /**
+     * The method ''changeHyperLinkEditability(ActionEvent event)'' sets the options for the hyperlink-selection.
+     */
     @FXML
     void changeHyperLinkEditability(ActionEvent event) {
         controllRadioButtons();
@@ -113,11 +130,15 @@ public class ControllerLoadRecipe {
         catch (CouldNotParseException e){
             // TODO: handle exception
         }
-        catch(FileNotFoundException e){
+        catch(Exception e){
             // TODO: handle exception
         }
 
     }
+
+    /**
+     * The method ''openFolder()'' opens a filechooser for selecting a folder.
+     */
 
     @FXML
     void openFolder() {
@@ -125,6 +146,9 @@ public class ControllerLoadRecipe {
         fileHandler.importFolder();
     }
 
+    /**
+     * Thes method ''closeStage'' closes the loadRecipe-window or the loadRecipe-popOver.
+     */
     void closeStage(){
         try {
             Stage stage = (Stage) loadButton.getScene().getWindow();
@@ -153,6 +177,7 @@ public class ControllerLoadRecipe {
             openFileChooser();
             closeStage();
         }
+        ControllerManageCookBook.getInstance().refresh();
     }
 
     /**

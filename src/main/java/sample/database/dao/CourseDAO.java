@@ -4,6 +4,8 @@ import sample.database.dbo.CourseDBO;
 import sample.model.Course;
 
 /**
+ * Database Access Object for Course.
+ * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 03.05.16.
  */
 public class CourseDAO extends ADAO<Course, CourseDBO> {
