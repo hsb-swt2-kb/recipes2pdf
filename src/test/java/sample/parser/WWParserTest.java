@@ -271,7 +271,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(13).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("Prise(n)");
 
-        the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Schafskäse/Feta, 45 % Fett i. Tr., bevorzugt");
+        the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Schafskäse/Feta, 45 % Fett i. Tr., bevorzugt ");
         the(recipe.getIngredients().get(14).getMiddle()).shouldBeEqual(90);
         the(recipe.getIngredients().get(14).getRight().getName()).shouldBeEqual("g");
     }
