@@ -15,10 +15,6 @@ import static org.javalite.test.jspec.JSpec.the;
 
 /**
  * Created by czoeller on 08.04.16.
- * These tests are actually using the database.
- * Each test is executed in an own transaction that is rolled back after the test.
- * @see ADatabaseTest
- * Precondition: These tests require the sandbox database that contains sample data for tests.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeTest extends ADatabaseTest {
@@ -34,9 +30,6 @@ public class RecipeTest extends ADatabaseTest {
         this.recipe = nudeln.orElseThrow(IllegalStateException::new);
     }
 
-    /**
-     * Postcondition: The title of the recipe is changed.
-     */
     @Test
     public void testTitle() {
         String title = "The title of the recipe.";
@@ -46,9 +39,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getTitle()).shouldBeEqual(title);
     }
 
-    /**
-     * Postcondition: The text of the recipe is changed.
-     */
     @Test
     public void testText() {
         String text = "Description of the recipe. The steps etc.";
@@ -58,9 +48,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getText()).shouldBeEqual(text);
     }
 
-    /**
-     * Postcondition: The portions of the recipe are changed.
-     */
     @Test
     public void testPortions() {
         int portions = 3;
@@ -70,9 +57,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getPortions()).shouldBeEqual(portions);
     }
 
-    /**
-     * Postcondition: The duration of the recipe is changed.
-     */
     @Test
     public void testDuration() {
         int duration = 3;
@@ -82,9 +66,8 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getDuration()).shouldBeEqual(duration);
     }
 
-    /**
-     * Postcondition: The calories of the recipe are changed.
-     */
+    //TODO: @Test public void testImage() {}
+
     @Test
     public void testCalories() {
         int setCalories = 300;
@@ -94,9 +77,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getCalories()).shouldBeEqual(setCalories);
     }
 
-    /**
-     * Postcondition: The category of the recipe is changed.
-     */
     @Test
     public void testCategory() {
         Category category = new Category();
@@ -108,9 +88,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getCategory().getName()).shouldBeEqual(categoryName);
     }
 
-    /**
-     * Postcondition: The course of the recipe is changed.
-     */
    @Test
     public void testCourse() {
         CourseDAO courseDAO = new CourseDAO();
@@ -124,9 +101,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getCourse().getName()).shouldBeEqual(courseName);
     }
 
-    /**
-     * Postcondition: The region of the recipe is changed.
-     */
     @Test
     public void testRegion() {
         Region region = new Region();
@@ -138,9 +112,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getRegion().getName()).shouldBeEqual(regionName);
     }
 
-    /**
-     * Postcondition: The daytime of the recipe is changed.
-     */
     @Test
     public void testDaytime() {
         final DaytimeDAO daytimeDAO = new DaytimeDAO();
@@ -154,9 +125,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getDaytime().getName()).shouldBeEqual(daytimeName);
     }
 
-    /**
-     * Postcondition: The season of the recipe is changed.
-     */
     @Test
     public void testSeason() {
         final SeasonDAO seasonDAO = new SeasonDAO();
@@ -170,9 +138,6 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getSeason().getName()).shouldBeEqual(seasonName);
     }
 
-    /**
-     * Postcondition: The nurture of the recipe is changed.
-     */
     @Test
     public void testNurture() {
         NurtureDAO nurtureDAO = new NurtureDAO();
@@ -186,32 +151,10 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getNurture().getName()).shouldBeEqual(nurtureName);
     }
 
-    /**
-     * Postcondition: The source of the recipe is changed.
-     */
     @Test
-<<<<<<< HEAD
-=======
-    public void testSource() {
-        SourceDAO sourceDAO = new SourceDAO();
-        Source source = new Source();
-        String sourceName = "chefkoch.de";
-        source.setName(sourceName);
-        sourceDAO.insert(source);
-        recipe.setSource(source);
-        recipeDAO.update(recipe);
-        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
-        the(byId.getSource().getName()).shouldBeEqual(sourceName);
-    }
-
-    /**
-     * Postcondition: the database content is unchanged.
-     */
-    @Test
->>>>>>> master
     public void testGetIngredients() {
-        recipe.add("Nudeln", 2d, "kg");
-        recipe.add("Nüsse", 3d, "kleine Stück");
+        recipe.add("Nudeln", 2, "kg");
+        recipe.add("Nüsse", 3, "kleine Stück");
         recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         final List<String> ingredientNames = getIngredientsNames(byId);
@@ -220,42 +163,6 @@ public class RecipeTest extends ADatabaseTest {
         the(ingredientNames).shouldNotContain("Schokolade");
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * Postcondition: the database content is unchanged.
-     */
-    @Test
-    public void testDoubleIngredientAmount() {
-        recipe.add("Erdbeeren", 2.5, "kg");
-        recipe.add("Tomaten", 3.7, "kleine Stück");
-        recipeDAO.update(recipe);
-        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
-        final List<Double> amounts = getAmounts(byId);
-        the(amounts).shouldContain(2.5);
-        the(amounts).shouldContain(3.7);
-    }
-
-    /**
-     * Postcondition: the database content is unchanged.
-     */
-    @Test
-    public void testNullDoubleIngredientAmount() {
-        recipe.add("Salz", 2.5, "g");
-        recipe.add("Tomaten", 3.7, "kleine Stück");
-        recipeDAO.update(recipe);
-        final Recipe byId = recipeDAO.findById(recipe.getID()).get();
-        final List<Double> amounts = getAmounts(byId);
-        the(amounts).shouldContain(2.5);
-        the(amounts).shouldContain(3.7);
-    }
-
-    /**
-     * Get ingredient names from recipe.
-     * @param recipe The recipe to collect from.
-     * @return the list of ingredient names
-     */
->>>>>>> master
     private List<String> getIngredientsNames(IRecipe recipe) {
         return recipe
             .getIngredients()
@@ -265,7 +172,6 @@ public class RecipeTest extends ADatabaseTest {
             .collect(Collectors.toList());
     }
 
-<<<<<<< HEAD
     @Test
     public void testIsEmptyPositive(){
         Recipe recipe = new Recipe();
@@ -285,19 +191,6 @@ public class RecipeTest extends ADatabaseTest {
         recipe.add("Nudeln", 2, "kg");
         recipe.add("Nüsse", 3, "kleine Stück");
         the(recipe.isEmpty()).shouldBeFalse();
-=======
-    /**
-     * Get ingredient amounts from recipe.
-     * @param recipe The recipe to collect from.
-     * @return the list of amounts
-     */
-    private List<Double> getAmounts(IRecipe recipe) {
-        return recipe
-            .getIngredients()
-            .stream()
-            .map(Triple::getMiddle)
-            .collect(Collectors.toList());
->>>>>>> master
     }
 
     @Test

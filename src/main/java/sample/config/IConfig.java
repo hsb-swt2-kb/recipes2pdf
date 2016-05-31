@@ -1,7 +1,7 @@
 package sample.config;
 
 /**
- * Interface for global configuration.
+ * Created by kai on 11.04.16.
  */
 public interface IConfig {
 

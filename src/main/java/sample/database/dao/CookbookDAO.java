@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Database Access Object for Cookbook.
- * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 02.05.2016.
  */
 public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
@@ -22,16 +20,16 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
         cookbook.setTitle(cookbookDBO.getTitle());
 
         List<ISortlevel> sortlevels = cookbookDBO.getSortlevel();
-        if (null != sortlevels) {
-            for (ISortlevel sortlevel : sortlevels) {
-                cookbook.addSortlevel(new SortlevelDAO().toPOJO((SortlevelDBO) sortlevel));
+        if(null != sortlevels) {
+            for(ISortlevel sortlevel : sortlevels) {
+                cookbook.addSortlevel( new SortlevelDAO().toPOJO((SortlevelDBO) sortlevel) );
             }
         }
 
         List<IRecipe> recipes = cookbookDBO.getRecipes();
-        if (null != recipes) {
-            for (IRecipe recipe : recipes) {
-                cookbook.addRecipe(new RecipeDAO().toPOJO((RecipeDBO) recipe));
+        if(null != recipes) {
+            for(IRecipe recipe : recipes) {
+                cookbook.addRecipe( new RecipeDAO().toPOJO((RecipeDBO) recipe) );
             }
         }
 
@@ -48,33 +46,30 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
         cookbookDBO.saveIt();
 
         List<ISortlevel> sortlevels = pojo.getSortlevel();
-        if (null != sortlevels) {
-            for (ISortlevel sortlevel : sortlevels) {
+        if(null != sortlevels) {
+            for(ISortlevel sortlevel : sortlevels) {
                 final Optional<Sortlevel> byName = new SortlevelDAO().findFirst("name = ?", sortlevel.getName());
-                if (byName.isPresent()) {
+                if( byName.isPresent() ) {
                     // If already persisted but not associated yet then associate existing dbo to cookbook
                     cookbookDBO.addSortlevel(new SortlevelDAO().toDBO(byName.get()));
-                    LOG.debug("Associated already persisted Sortlevel = [" + byName.get() + "] to cookbook = [" + cookbookDBO + "].");
-                } else if (!byName.isPresent()) {
+                } else if( !byName.isPresent() ) {
                     // If not persisted yet then persist and associate to cookbook
                     final Sortlevel notInsertedSortlevel = (Sortlevel) sortlevel;
                     new SortlevelDAO().insert(notInsertedSortlevel);
                     SortlevelDBO sortlevelDBO = new SortlevelDAO().toDBO((Sortlevel) sortlevel);
                     cookbookDBO.addSortlevel(sortlevelDBO);
-                    LOG.debug("Persisted new Sortlevel = [" + sortlevelDBO + "] and associated to cookbook = [" + cookbookDBO + "].");
-                } else if (cookbookDBO.get(SortlevelDBO.class, "name = ?", sortlevel.getName()).isEmpty()) {
+                } else if( cookbookDBO.get(SortlevelDBO.class, "name = ?", sortlevel.getName() ).isEmpty() ) {
                     // If already persisted but not associated yet then associate new dbo to cookbook
                     cookbookDBO.addSortlevel(new SortlevelDAO().toDBO((Sortlevel) sortlevel));
-                    LOG.debug("Associated already persisted Sortlevel = [" + byName.get() + "] to cookbook = [" + cookbookDBO + "].");
                 }
             }
         }
 
         List<IRecipe> recipes = pojo.getRecipes();
-        if (null != recipes) {
-            for (IRecipe recipe : recipes) {
-                if (!new RecipeDAO().findById(recipe.getID()).isPresent()) {
-                    cookbookDBO.addRecipe(new RecipeDAO().toDBO((Recipe) recipe));
+        if(null != recipes) {
+            for(IRecipe recipe : recipes) {
+                if( !new RecipeDAO().findById( recipe.getID() ).isPresent() ) {
+                    cookbookDBO.addRecipe( new RecipeDAO().toDBO( (Recipe) recipe) );
                 }
             }
         }

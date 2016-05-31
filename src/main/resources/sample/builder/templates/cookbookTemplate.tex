@@ -28,18 +28,6 @@
         \fancyfoot[ol]{Rezept $referenceNumber} %Fußzeile ungerade links
         \fancyfoot[er]{Rezept $referenceNumber} %Fußzeile gerade links
 
-<<<<<<< HEAD
-=======
-        \fancyhf{}
-
-        #set ($refNum = $refNumList.get($recipe))
-        #set ($index = $refNum.indexOf('.'))
-        #if($index < 0)
-            #set($index = $refNum.length()) ##.length needs to be tested with only 1 sortlevel
-        #end
-
-        \chead{$refNum.substring(0,$index)}
->>>>>>> master
         \section*{$recipe.getTitle()}
 	    \begin{minipage}[t]{0.4\textwidth}
 	        \subsection*{Zutaten}

@@ -10,7 +10,6 @@ import sample.model.IIdentifiable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,12 +17,9 @@ import java.util.stream.Collectors;
 
 /**
  * DAO Template to generify database actions.
- * This class uses reflection to allow flexibility to access various DBO.
- * Since the activejdbc database library does instrumentation to add methods to the DBO (changes on bytecode after
- * compilation) there is no typesafe/non-reflection-using way to access these methods.
  * Created by czoeller on 28.04.16.
  *
- * @param <POJO> A Plain Old Java Object that is mapped from and to the database.
+ * @param <POJO> A Plain Old Java Object that is mapped from the database.
  * @param <DBO>  A Database Object that is used to communicate with the database.
  */
 abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIdentifiable> {
@@ -34,7 +30,6 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
      * The generic type parameter of the DBO determined via reflection.
      */
     private Class<DBO> dboType;
-
     /**
      * An instance of the type parameter.
      */
@@ -43,6 +38,7 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
     @SuppressWarnings("unchecked")
     ADAO() {
         dboType = (Class<DBO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        LOG.debug("Used type parameter for DBO: " + dboType.getName());
         try {
             dbo = dboType.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
@@ -55,25 +51,19 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
      *
      * @return List of all records.
      */
-    @SuppressWarnings("unchecked")
     public List<POJO> getAll() {
-        List<POJO> allPOJO = new ArrayList<>();
-        LazyList<DBO> allDBO = null;
+        List<POJO> list = new ArrayList<>();
+        LazyList<DBO> all = null;
         try {
-            allDBO = (LazyList<DBO>) MethodUtils.invokeMethod(dbo, "findAll");
+            all = (LazyList<DBO>) MethodUtils.invokeMethod(dbo, "findAll");
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            LOG.debug("Failed to invoke getAll for dboType = [" + dboType.getName() + "]", e);
+            LOG.error("Failed to get all records.", e);
         }
-        if (null != allDBO) {
-            // Map allDBO DBO to POJO
-            allPOJO.addAll(allDBO.stream()
-                .map(this::toPOJO)
-                .collect(Collectors.toList())
-            );
-        } else {
+        if (all != null) {
             LOG.debug("Empty result for getAll.");
+            list.addAll(all.stream().map(this::toPOJO).collect(Collectors.toList()));
         }
-        return allPOJO;
+        return list;
     }
 
     /**
@@ -82,13 +72,12 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
      * @param id The id of the record.
      * @return Optional<T> the optional record.
      */
-    @SuppressWarnings("unchecked")
     public Optional<POJO> findById(Long id) {
         DBO byId = null;
         try {
             byId = (DBO) MethodUtils.invokeMethod(dbo, "findById", id);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            LOG.debug("Failed to invoke findById for dboType = [" + dboType.getName() + "]", e);
+            LOG.error("Failed find record by id.", e);
         }
         if (null == byId) {
             LOG.debug("Empty result for findById with id = [" + id + "].");
@@ -106,17 +95,17 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
      * @param params   list of parameters corresponding to the place holders in the subquery.
      * @return instance of <code>List</code> containing results.
      */
-    @SuppressWarnings("unchecked")
     public Optional<POJO> findFirst(String subQuery, Object... params) {
+
         DBO first = null;
         try {
             first = (DBO) MethodUtils.invokeMethod(dbo, "findFirst", subQuery, params);
         } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            LOG.debug("Failed to invoke findFirst for dboType = [" + dboType.getName() + "]", e);
+            e.printStackTrace();
         }
 
         if (null == first) {
-            LOG.debug("Empty result for findFirst with subQuery = [" + subQuery + "], params = [" + Arrays.toString(params) + "].");
+            LOG.debug("Empty result for findFirst with subQuery = [" + subQuery + "], params = [" + params + "].");
             return Optional.empty();
         }
         return Optional.of(toPOJO(first));
@@ -132,12 +121,10 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
      */
     public boolean insert(POJO pojo) {
         if (null != pojo.getID()) {
-            LOG.debug("Insert called with pojo that has an id! pojo = [" + pojo + "]");
             throw new IllegalStateException("A new DBO has no id!");
         }
         final DBO dbo = toDBO(pojo);
         boolean status = dbo.saveIt();
-        LOG.debug("Inserted new pojo = [" + pojo + "] with return status = [" + status + "]");
         pojo.setID(dbo.getID());
         return status;
     }
@@ -154,9 +141,7 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
             throw new IllegalStateException("You must provide an id for update!");
         }
         final DBO dbo = toDBO(pojo);
-        LOG.debug("Mapped POJO = [" + pojo + "] to DBO = [" + dbo + "]");
         boolean status = dbo.saveIt();
-        LOG.debug("DBO after update = [" + dbo + "]");
         return status;
     }
 
@@ -172,12 +157,11 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
         }
         final DBO dbo = toDBO(pojo);
         boolean status = dbo.delete();
-        LOG.debug("Deleted entry DBO = [" + dbo + "]");
         return status;
     }
 
     /**
-     * Maps DBO to POJO.
+     * Maps DBO to POJO
      *
      * @param dbo database object
      * @return the resulting pojo.
@@ -185,7 +169,7 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
     abstract POJO toPOJO(DBO dbo);
 
     /**
-     * Maps POJO to DBO.
+     * Maps POJO to DBO
      *
      * @param pojo plain old java object.
      * @return the resulting DBO.

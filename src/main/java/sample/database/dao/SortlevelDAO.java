@@ -4,8 +4,6 @@ import sample.database.dbo.SortlevelDBO;
 import sample.model.Sortlevel;
 
 /**
- * Database Access Object for Sortlevel.
- * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 02.05.2016.
  */
 public class SortlevelDAO extends ADAO<Sortlevel, SortlevelDBO> {

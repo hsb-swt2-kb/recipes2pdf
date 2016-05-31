@@ -4,8 +4,6 @@ import sample.database.dbo.SourceDBO;
 import sample.model.Source;
 
 /**
- * Database Access Object for Source.
- * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 02.05.2016.
  */
 public class SourceDAO extends ADAO<Source, SourceDBO> {

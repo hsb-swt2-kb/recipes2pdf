@@ -5,8 +5,6 @@ import sample.database.dbo.CategoryDBO;
 import sample.model.Category;
 
 /**
- * Database Access Object for Category.
- * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 30.04.2016.
  */
 public class CategoryDAO extends ADAO<Category, CategoryDBO> {

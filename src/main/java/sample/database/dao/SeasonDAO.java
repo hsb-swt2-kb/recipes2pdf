@@ -4,8 +4,6 @@ import sample.database.dbo.SeasonDBO;
 import sample.model.Season;
 
 /**
- * Database Access Object for Season.
- * Does Mapping from POJO to DBO and vice versa.
  * Created by czoeller on 02.05.2016.
  */
 public class SeasonDAO extends ADAO<Season, SeasonDBO> {

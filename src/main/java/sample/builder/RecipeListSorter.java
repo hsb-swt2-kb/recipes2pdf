@@ -15,8 +15,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * This Class is for Sorting a recipelist according to a List of ISortlevels, where the first list element is the
- * primary sortlevel, the second listelement is the secondary sortlevel and so on
+ * Created by kai on 25.05.16.
  */
 public class RecipeListSorter {
 
