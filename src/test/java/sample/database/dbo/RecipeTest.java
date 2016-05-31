@@ -202,4 +202,37 @@ public class RecipeTest extends ADatabaseTest {
             .collect(Collectors.toList());
     }
 
+    @Test
+    public void testIsEmptyPositive(){
+        Recipe recipe = new Recipe();
+        the(recipe.isEmpty()).shouldBeTrue();
+    }
+
+    @Test
+    public void testIsEmptyNegative(){
+        Recipe recipe = new Recipe();
+        recipe.setTitle("Titel");
+        recipe.setText("Zubereitungstext");
+        recipe.add("Nudeln", 2, "kg");
+        recipe.add("Nüsse", 3, "kleine Stück");
+        the(recipe.isEmpty()).shouldBeFalse();
+    }
+
+    @Test
+    public void testIsIncompletePositive(){
+        Recipe recipe = new Recipe();
+        recipe.setTitle("Titel");
+        recipe.setText("Zubereitungstext");
+        the(recipe.isIncomplete()).shouldBeTrue();
+    }
+
+    @Test
+    public void testIsIncompleteNegative(){
+        Recipe recipe = new Recipe();
+        recipe.setTitle("Titel");
+        recipe.setText("Zubereitungstext");
+        recipe.add("Nudeln", 2, "kg");
+        recipe.add("Nüsse", 3, "kleine Stück");
+        the(recipe.isIncomplete()).shouldBeFalse();
+    }
 }
