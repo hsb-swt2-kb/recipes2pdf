@@ -1,10 +1,9 @@
 package sample.util;
 
-import java.io.File;
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 
 /**
  * Utils
@@ -16,24 +15,20 @@ public class ResourceLoader {
      * Loads resource within resource package
      *
      * @param clazz               The class to use loader from.
-     * @param packageAbsolutePath The path to the resource absolute to package root. Example: /{package}/{resource.*}
+     * @param path                The path to the resource relative to passed clazz or absolute to package root.
+     *                            Example: {resource.*}
+     *                            Example: /sample/{package}/{resource.*}
      * @return The string content of the Resource.
      */
-    public static String loadFileContents(Class clazz, String packageAbsolutePath) {
+    public static <T> String loadFileContents(Class<T> clazz, String path) {
         String content = "";
-        if (!packageAbsolutePath.startsWith("/")) {
-            throw new IllegalArgumentException("Argument must have leading slash followed by package. /{package}/{resource.*}");
-        }
-        final String resourcePath = clazz.getResource(packageAbsolutePath).getFile();
-        final File file = new File(resourcePath);
-        if (!file.exists()) {
-            throw new IllegalArgumentException("Could not find resource. Please check the path " + packageAbsolutePath);
-        }
-        final Path path = Paths.get(file.getAbsolutePath());
+        final InputStream is = clazz.getResourceAsStream(path);
         try {
-            content = new String(Files.readAllBytes(path));
+            content = IOUtils.toString(is, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(is);
         }
         return content;
     }
