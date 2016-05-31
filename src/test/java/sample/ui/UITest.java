@@ -3,6 +3,7 @@ package sample.ui;
 import org.junit.Test;
 import sample.database.dao.CookbookDAO;
 import sample.database.dao.RecipeDAO;
+import sample.database.dbo.ADatabaseTest;
 import sample.model.Cookbook;
 import sample.model.Recipe;
 
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * implemented by on 24.05.16 by markus
  */
-public class UITest {
+public class UITest extends ADatabaseTest{
     @Test
     public void addRecipePositive() throws Exception {
         File file = new File("src/test/resources/sample/Rezepte/Bolognese.txt");

@@ -1,33 +1,29 @@
+Name: Vegetarische Lasagne
 
- Nudeln mit Tomatensoße und Reisdipp
-
-- 20g Hafer
-- 1,5545Kilo Bier
-- 2.53Kilo Bier
-- 3,5 Kilo Bier
-- 4.5 Kilo Bier
+- 3,5 Kilo Tofu
 - 1 EL Olivenöl
-- 2 Beutel Reis
-
 - 5 Tomaten
-- 1 Prise Zuggga,rohr,braun
-- 3 Prise(n) Zuggaaaaaaa
+- 3 Prise(n) Zucker
 - Salz (grob)
-
-- 2 Beutel Reis mit irgentwas und ganz Viel Text dazu!d#
+- 2 Beutel
 
 Kategorie: Hauptgericht
-Zubereitung: 
+
 Werfen sie die Nudeln in den Topf
 
-und warten Sie bis Zubereitung fertig ist!
-    
-       
-    
+Region: Deutschland
+
+Saison: Sommer
+
+Tageszeit: Mittag
+
+Gerichtsart: Reis
+
 Portionen: 4
 
-Kcal: 300,4
-   
+Kalorien: 300
 
-Arbeitszeit: 25 Minuten
+Ernährungsart: Vegan
+
+Arbeitszeit: 40
 

@@ -3,14 +3,15 @@ package sample.parser;
 import org.junit.Before;
 import org.junit.Test;
 import sample.exceptions.CouldNotParseException;
+import sample.model.IRecipe;
 import sample.model.Recipe;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.javalite.test.jspec.JSpec.the;
-import static org.junit.Assert.*;
 
 /**
  * implemented by on 31.05.16 by markus
@@ -22,45 +23,29 @@ public class ParserTest {
     }
 
     @Test
-    public void testParsePositive() throws Exception {
+    public void testParsePositive() throws IOException, CouldNotParseException {
         File file = new File("src/test/resources/sample/Rezepte/Bolognese.txt");
-        Recipe recipe = Parser.parse(file);
-        the(recipe.getTitle().equals("Bolognese")).shouldBeTrue();
-        the(recipe.getIngredients().size()).shouldBe("15");
+        IRecipe recipe = Parser.parse(file);
+        the(recipe.getTitle()).shouldBeEqual("Bolognese");
+        the(recipe.getIngredients().size()).shouldBeEqual(15);
     }
 
-    @Test
-    public void testParseCouldNotParse() {
-        boolean success=false;
+    @Test(expected = CouldNotParseException.class)
+    public void testParseCouldNotParse() throws IOException, CouldNotParseException {
         File file = new File("src/test/resources/sample/Rezepte/FalscheBolognese.txt");
-        try {
-            Recipe recipe = Parser.parse(file);
-        }
-        catch(Exception e){
-            success=true;
-        }
-        the(success).shouldBeTrue();
+        Parser.parse(file);
+    }
+
+    @Test(expected = FileNotFoundException.class)
+    public void testParseFileNotFound()throws IOException, CouldNotParseException {
+        File file = new File("src/test/resources/sample/Rezepte/fehlendeDatei.txt");
+        Parser.parse(file);
     }
 
     @Test
-    public void testParseFileNotFound() {
-        boolean success=false;
-        File file = new File("src/test/resources/sample/Rezepte/fehlendeDatei.txt");
-        try {
-            Recipe recipe = Parser.parse(file);
-        }
-        catch(Exception e){
-            success=true;
-        }
-        the(success).shouldBeTrue();
-    }
-
-    @Test
-    public void readFile() throws Exception {
-        boolean success=false;
-        File file = new File("src/test/resources/sample/Rezepte/fehlendeDatei.txt");
+    public void readFile() throws IOException, CouldNotParseException {
         ArrayList<String> lines = Parser.readFile("src/test/resources/sample/Rezepte/textdatei.txt");
-        the(lines.get(0)).shouldBeEqual("asdf");
-        the(lines.get(1)).shouldBeEqual("blubb fubar");
+        the(lines).shouldContain("asdf");
+        the(lines).shouldContain("blubb fubar");
     }
 }

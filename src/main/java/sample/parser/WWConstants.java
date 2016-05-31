@@ -5,16 +5,20 @@ package sample.parser;
  */
 public interface WWConstants {
     // Constants
+    public static final int    fractionalDigits        = 3;
+    public static final int    maxFieldsize            = 45;
+
     public static final String noon                    = "Mittag";
     public static final String evening                 = "Abend";
     public static final String meal                    = "essen";
 
     public static final String[] keywords              = {  "Frühstück", "Fruehstueck", "Beilage", noon, evening,
-                                                            "frühstück", "fruehstueck", "beilage", "mittag",
-                                                            "abend" };
+        "frühstück", "fruehstueck", "beilage", "mittag",
+        "abend" };
 
-    public static final String replaceSpaces           = "(\\h)|(\\t)";
-    public static final String numberWithCharacters    = "^(\\d)+([.,]\\d)*(\\w)*";
+    public static final String version2016Linebreaks   = "<br>";
+    public static final String replaceSpaces           = "(&nbsp;)|( )|(\\t)|(\\h)";
+    public static final String numberWithCharacters    = "^(\\d)+([.,]\\d)*([äüöÄÖÜ\\w])*";
     public static final String charactersWithoutNumbers = "([^.,\\d])+";
     public static final String notANumber              = "([^\\d])+";
     public static final String onlyNumber              = "(\\d)+";
