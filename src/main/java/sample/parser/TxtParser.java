@@ -27,19 +27,46 @@ import java.util.regex.Pattern;
 */
 
 
+
+
 public class TxtParser extends AConcreteParser implements Constants {
-
-
+    /**
+     * @param textFileContent via ArrayList of String, where one Element = one Line from Textfile
+     * This parse()-Methode fill a Recipe-Object
+     * STEP1: Extract Name: (it has to be in the first non-empty Line)
+     * STEP2: Extract IncredientList: (One  Incredient per Line)
+     *
+     *                        Incredient-Element Example: - 500 g Salt
+     *                        [Amount][" "][Unit] Name
+     *                        Amount and Unit are optional. Amount is 0.0 (double) per default
+     *                                                      Unit is null per default
+     * STEP3: Extract Recipe-Preperation with findPreperationWithTag. If it do not work because it is null
+     *      try it with findPreparationOfRecipe()
+     *
+     * STEP4: Extract additional Recipe-data with String Format like Region, Course, Nurture,
+     *                        Category, Daytime and Season of the Recipe. The Specifc Data of all optional Fields
+     *                        have to be tagged like "Season:" that are stored in the Interface Constants.java
+     *                        Non tagged Data will be ignored except it is the Preperation
+     *
+     * STEP5: Extract additional Recipe-data with Int-Format
+     *                        If there are no such data there will be a NullPointerException that set the specific data
+     *                        to 0 (Integer)
+     *                        If there is a NumberFormateException we try to fix it by extracting number with
+     *                        extractAmountUnit().
+     *
+     * @return recipe
+     *
+     * NOTE: Higher Instances have to make sure, that a recipe is valid with minimal Options
+     */
     public Recipe parse(ArrayList<String> textFileContent) {
         Recipe recipe = new Recipe();
         ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
 
-        //Try to extract minimal recipdata
-        //TODO Try to find name-tag
         //Try to find Name without Tag
+        //================STEP1==================
         recipe.setTitle(extractRecipename(textFileContent));
 
-        //recipe.setNurture()
+       //=================STEP2==================
         // Set IngredientList from RecipeObject from temporaryList
         tempIncredientList = extractIncredentsList(textFileContent);
         for (int i = 0; i < tempIncredientList.size(); i++) {
@@ -50,6 +77,7 @@ public class TxtParser extends AConcreteParser implements Constants {
             recipe.add(tempName, parseStringToDouble(tempAmount), tempUnit);
         }
         // FInd PreperationText with tag...If there is now Tag use specific Method
+        // ===================STEP3===================================
         String tempPreperation=findPreperationWithTag(textFileContent);
 
         if (tempPreperation==null){
@@ -62,6 +90,7 @@ public class TxtParser extends AConcreteParser implements Constants {
             recipe.setText(tempPreperation);
         }
         // Try to extract additional recipedata
+        //===================STEP4===================================
         Region region = new Region();
         region.setName(findDatafield(textFileContent, "Region"));
         recipe.setRegion(region);
@@ -86,10 +115,11 @@ public class TxtParser extends AConcreteParser implements Constants {
         daytime.setName(findDatafield(textFileContent, "Tageszeit"));
         recipe.setDaytime(daytime);
 
+        //===================STEP5=============================
         try {
             String temp = findDatafield(textFileContent, "Arbeitszeit");
             recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, "Arbeitszeit")));
-        } catch (NumberFormatException | NullPointerException e) {
+        } catch (NumberFormatException e) {
             String [] str = extractAmountUnit(findDatafield(textFileContent, "Arbeitszeit"));
 
             if (str[0] == "0" || str[0] == null) {
@@ -106,13 +136,16 @@ public class TxtParser extends AConcreteParser implements Constants {
                         break;
                     }
                 }
+                // Konvert hour to Minute
                 if (std == true){
                     d = d*60;
                 }
+                // Cast double to int
                 int i = (int) Math.floor(d);
                 recipe.setDuration(i);
             }
         }
+        catch (NullPointerException e){ recipe.setDuration(0);}
         try {
             recipe.setCalories(Integer.parseInt(findDatafield(textFileContent, "Kalorien")));
         }
@@ -139,6 +172,11 @@ public class TxtParser extends AConcreteParser implements Constants {
     }
 
 
+    /**
+     * @param fileContent
+     * @return boolean: If it is true, the parse() could extract a minimal Recipe. If it is a wrong format like html, it
+     * will be false.
+     */
     public boolean accepts(ArrayList<String> fileContent) {
       /* parse it to check it :) */
         Recipe recipe = this.parse(fileContent);
@@ -148,7 +186,11 @@ public class TxtParser extends AConcreteParser implements Constants {
             return false;
     }
 
-    private int fixNumberFormat(String str){
+  /** A Method to fix a NumberFormatException in parse()
+   * @param str
+   * @return
+   */
+  private int fixNumberFormat(String str){
         String string[] = extractAmountUnit(str);
         double d = parseStringToDouble(string[0]);
         int i = (int) Math.floor(d);
@@ -169,17 +211,22 @@ public class TxtParser extends AConcreteParser implements Constants {
                 break;
             }
         }
+        //If the Name-Tag is in String it will be replaced
         name = row.replaceAll("name:", "").trim();
         name = row.replaceAll("Name:", "").trim();
         name = cutString(name,fieldLength);
         return name;
     }
 
-    //ExtractIncrededentslist from FIlecontent in two steps
-    //Stepp 1: Find the Incedents tagged by "-"
-    //Stepp 2: Extract Amount, Unit and Name of each Incredent by using
-    //regular expression
-
+    /**
+     * ExtractIncrededentslist from Filecontent in two steps
+     * Stepp 1: Find the Incedents tagged by "-"
+     * Stepp 2: Extract Amount, Unit and Name of each Incredient by using
+     * regular expression
+     *
+     * @param textfileContent
+     * @return ArrayList with
+   */
     private ArrayList<String[]> extractIncredentsList(ArrayList<String> textfileContent) {
 
         String tempIncredent = null;
@@ -281,7 +328,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         //Find last row of preperation
         int endRow = findNextSignalword(beginRow, fileContent, "Zubereitung");
 
-//extract preperation from file - if begin < 0 zero there is now preperation
+        //extract preperation from file - if begin < 0 zero there is now preperation
         if (beginRow > 0) {
             for (int i = beginRow; i < endRow; i++) {
                 if (preperation == null) {
@@ -352,7 +399,6 @@ public class TxtParser extends AConcreteParser implements Constants {
     private double parseStringToDouble(String str) {
 
         double d = 0;
-
         try {
             str = str.replaceAll(",", ".");
             int temp = str.lastIndexOf(".");
@@ -393,7 +439,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         return textDateiInhalt.size() - 1;
     }
 
-    /*Checks a String (From Step 1 in extractIncredentsList()) if it contains
+    /* Checks a String (From Step 1 in extractIncredentsList()) if it contains
     * a (double-)number. It can be zero, one or more Numbers follows by
     * a dot and followe by zero, one or more numbers */
     private String[] extractAmountUnit(String s) {
