@@ -406,6 +406,11 @@ public class TxtParserTest {
         the(recipe.getCalories()).shouldBeEqual(300);
     }
     @Test
+    public void testParseMethod57a() {
+        Setup("TestGericht57a.txt");
+        the(recipe.getCalories()).shouldBeEqual(300);
+    }
+    @Test
     public void testParseMethod58() {
         Setup("TestGericht51.txt");
         the(recipe.getDuration()).shouldBeEqual(40);
@@ -454,6 +459,11 @@ public class TxtParserTest {
     public void testParseMethod67() {
         Setup("TestGericht67.txt");
         the(recipe.getDuration()).shouldBeEqual(120);
+    }
+    @Test
+    public void testParseMethod68() {
+        Setup("TestGericht68.txt");
+        the(recipe.getText()).shouldBeEqual("Kochen Sie die Tomaten!");
     }
 
 

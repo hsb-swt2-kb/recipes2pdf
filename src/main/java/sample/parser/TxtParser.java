@@ -58,8 +58,6 @@ public class TxtParser extends AConcreteParser implements Constants {
         else{
             recipe.setText(tempPreperation);
         }
-
-
         // Try to extract additional recipedata
         Region region = new Region();
         region.setName(findDatafield(textFileContent, "Region"));
@@ -90,7 +88,6 @@ public class TxtParser extends AConcreteParser implements Constants {
             recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, "Arbeitszeit")));
         } catch (NumberFormatException | NullPointerException e) {
             String [] str = extractAmountUnit(findDatafield(textFileContent, "Arbeitszeit"));
-            System.out.println(str[0]+"  "+str[1]);
 
             if (str[0] == "0" || str[0] == null) {
                 recipe.setDuration(0);
@@ -100,9 +97,8 @@ public class TxtParser extends AConcreteParser implements Constants {
                 double d = parseStringToDouble(str[0]);
                 boolean std = false;
 
-                for (int i = 0; i < timeHourWords.length; i++)
-                {
-                    if(str[1].toLowerCase().contains(timeHourWords[i])){
+                for (String timeHourWord : timeHourWords) {
+                    if (str[1].toLowerCase().contains(timeHourWord)) {
                         std = true;
                         break;
                     }
@@ -110,28 +106,35 @@ public class TxtParser extends AConcreteParser implements Constants {
                 if (std == true){
                     d = d*60;
                 }
-
                 int i = (int) Math.floor(d);
                 recipe.setDuration(i);
-                System.out.println(d);
-                System.out.println(i);
-
             }
-
         }
         try {
             recipe.setCalories(Integer.parseInt(findDatafield(textFileContent, "Kalorien")));
-        } catch (NumberFormatException | NullPointerException e) {
-            recipe.setCalories(0);
-        }
-        try {
-            recipe.setPortions(Integer.parseInt(findDatafield(textFileContent, "Portionen")));
-        } catch (NumberFormatException | NullPointerException e) {
-            recipe.setPortions(0);
         }
 
+        catch (NumberFormatException e) {
+            String cal = findDatafield(textFileContent, "Kalorien");
+            recipe.setCalories(fixNumberFormat(cal));
+        }
+        catch (Exception e){
+            recipe.setCalories(0);
+        }
+
+        try {
+            recipe.setPortions(Integer.parseInt(findDatafield(textFileContent, "Portionen")));
+        }
+        catch (NumberFormatException e){
+            String port = findDatafield(textFileContent, "Portionen");
+            recipe.setPortions(fixNumberFormat(port));
+        }
+        catch (Exception e) {
+            recipe.setPortions(0);
+        }
         return recipe;
     }
+
 
     public boolean accepts(ArrayList<String> fileContent) {
       /* parse it to check it :) */
@@ -142,6 +145,12 @@ public class TxtParser extends AConcreteParser implements Constants {
             return false;
     }
 
+    private int fixNumberFormat(String str){
+        String string[] = extractAmountUnit(str);
+        double d = parseStringToDouble(string[0]);
+        int i = (int) Math.floor(d);
+        return i;
+    }
     //Extract the name of a recpipe. Must be in the first non empty row
     //of the textfile
     private String extractRecipename(ArrayList<String> textfileContent) {
