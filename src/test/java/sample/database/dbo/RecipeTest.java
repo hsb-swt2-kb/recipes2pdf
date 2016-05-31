@@ -183,8 +183,9 @@ public class RecipeTest extends ADatabaseTest {
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         the(byId.getNurture().getName()).shouldBeEqual(nurtureName);
     }
+
     /**
-     * Postcondition: the database content is unchanged.
+     * Postcondition: The source of the recipe is changed.
      */
     @Test
     public void testSource() {
@@ -199,6 +200,9 @@ public class RecipeTest extends ADatabaseTest {
         the(byId.getSource().getName()).shouldBeEqual(sourceName);
     }
 
+    /**
+     * Postcondition: the database content is unchanged.
+     */
     @Test
     public void testGetIngredients() {
         recipe.add("Nudeln", 2d, "kg");
@@ -211,6 +215,9 @@ public class RecipeTest extends ADatabaseTest {
         the(ingredientNames).shouldNotContain("Schokolade");
     }
 
+    /**
+     * Postcondition: the database content is unchanged.
+     */
     @Test
     public void testDoubleIngredientAmount() {
         recipe.add("Erdbeeren", 2.5, "kg");
@@ -222,17 +229,25 @@ public class RecipeTest extends ADatabaseTest {
         the(amounts).shouldContain(3.7);
     }
 
+    /**
+     * Postcondition: the database content is unchanged.
+     */
     @Test
     public void testNullDoubleIngredientAmount() {
-        recipe.add("Salz", null, null);
+        recipe.add("Salz", 2.5, "g");
         recipe.add("Tomaten", 3.7, "kleine Stück");
         recipeDAO.update(recipe);
         final Recipe byId = recipeDAO.findById(recipe.getID()).get();
         final List<Double> amounts = getAmounts(byId);
-        the(amounts).shouldContain(null);
+        the(amounts).shouldContain(2.5);
         the(amounts).shouldContain(3.7);
     }
 
+    /**
+     * Get ingredient names from recipe.
+     * @param recipe The recipe to collect from.
+     * @return the list of ingredient names
+     */
     private List<String> getIngredientsNames(IRecipe recipe) {
         return recipe
             .getIngredients()
@@ -242,6 +257,11 @@ public class RecipeTest extends ADatabaseTest {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Get ingredient amounts from recipe.
+     * @param recipe The recipe to collect from.
+     * @return the list of amounts
+     */
     private List<Double> getAmounts(IRecipe recipe) {
         return recipe
             .getIngredients()
