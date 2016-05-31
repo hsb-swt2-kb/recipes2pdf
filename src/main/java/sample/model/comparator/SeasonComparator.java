@@ -1,7 +1,6 @@
 package sample.model.comparator;
 
 import sample.model.IRecipe;
-import sample.model.Recipe;
 
 import java.util.Comparator;
 

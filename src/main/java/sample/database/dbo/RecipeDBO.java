@@ -247,11 +247,9 @@ public class RecipeDBO extends Model implements IRecipe {
         return ingredients;
     }
 
+
     /**
-     * Insert recipe ingredient directly.
-     * In most cases you should use <code>add(String ingredientName, int amount, String unitName)</code>
-     *
-     * @param recipeIngredient
+     * {@inheritDoc}
      */
     @Override
     public void add(Triple<IIngredient, Double, IUnit> recipeIngredient) {

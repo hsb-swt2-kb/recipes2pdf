@@ -1,7 +1,5 @@
 package sample.model;
 
-import sample.model.IDaytime;
-
 /**
  * Created by czoeller on 02.05.2016.
  */
