@@ -114,13 +114,13 @@ public class WWParserTest {
         the(recipe.getIngredients().get(8).getMiddle()).shouldBeEqual(6.223);
         the(recipe.getIngredients().get(8).getRight().getName()).shouldBeEqual("TL123");
 
-        the(recipe.getIngredients().get(9).getLeft().getName()).shouldBeEqual("Olivenöl61qwertzuioppüqwereqrqwreqwrqwree01");
+        the(recipe.getIngredients().get(9).getLeft().getName()).shouldBeEqual("Olivenöl61qwertzuioppüqwereqrqwreqwrqwree0123");
         the(recipe.getIngredients().get(9).getMiddle()).shouldBeEqual(6.323);
-        the(recipe.getIngredients().get(9).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree012");
+        the(recipe.getIngredients().get(9).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree0123");
 
-        the(recipe.getIngredients().get(10).getLeft().getName()).shouldBeEqual("Olivenöl61qwertzuioppüqwereqrqwreqwrqwree01");
+        the(recipe.getIngredients().get(10).getLeft().getName()).shouldBeEqual("Olivenöl61qwertzuioppüqwereqrqwreqwrqwree0123");
         the(recipe.getIngredients().get(10).getMiddle()).shouldBeEqual(6.424);
-        the(recipe.getIngredients().get(10).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree012");
+        the(recipe.getIngredients().get(10).getRight().getName()).shouldBeEqual("TL0123456789ertzuioppüqwereqrqwreqwrqwree0123");
 
         the(recipe.getIngredients().get(11).getLeft().getName()).shouldBeEqual("Olivenöl");
         the(recipe.getIngredients().get(11).getMiddle()).shouldBeEqual(0);
@@ -219,7 +219,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(6).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(6).getRight().getName()).shouldBeEqual("TL");
 
-        the(recipe.getIngredients().get(7).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (2 TL Instantpulve");
+        the(recipe.getIngredients().get(7).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (2 TL Instantpulver)");
         the(recipe.getIngredients().get(7).getMiddle()).shouldBeEqual(450);
         the(recipe.getIngredients().get(7).getRight().getName()).shouldBeEqual("ml");
 
@@ -355,9 +355,25 @@ public class WWParserTest {
         the(recipe.getIngredients().get(12).getMiddle()).shouldBeEqual(0);
         the(recipe.getIngredients().get(12).getRight().getName()).shouldBeEqual("");
 
-        the(recipe.getIngredients().get(13).getLeft().getName()).shouldBeEqual("Frischkäse, bis 1 % Fett absolut");
-        the(recipe.getIngredients().get(13).getMiddle()).shouldBeEqual(3);
-        the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("EL");
+        the(recipe.getIngredients().get(13).getLeft().getName()).shouldBeEqual("Frühlingszwiebeln/Lauchzwiebeln");
+        the(recipe.getIngredients().get(13).getMiddle()).shouldBeEqual(1);
+        the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("Stück");
+
+        the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Frischkäse, bis 1 % Fett absolut");
+        the(recipe.getIngredients().get(14).getMiddle()).shouldBeEqual(3);
+        the(recipe.getIngredients().get(14).getRight().getName()).shouldBeEqual("EL");
+
+        the(recipe.getIngredients().get(15).getLeft().getName()).shouldBeEqual("Jodsalz");
+        the(recipe.getIngredients().get(15).getMiddle()).shouldBeEqual(1);
+        the(recipe.getIngredients().get(15).getRight().getName()).shouldBeEqual("Prise(n)");
+
+        the(recipe.getIngredients().get(16).getLeft().getName()).shouldBeEqual("Pfeffer");
+        the(recipe.getIngredients().get(16).getMiddle()).shouldBeEqual(1);
+        the(recipe.getIngredients().get(16).getRight().getName()).shouldBeEqual("Prise(n)");
+
+        the(recipe.getIngredients().get(17).getLeft().getName()).shouldBeEqual("Roggenvollkornbrot");
+        the(recipe.getIngredients().get(17).getMiddle()).shouldBeEqual(1);
+        the(recipe.getIngredients().get(17).getRight().getName()).shouldBeEqual("Scheibe(n)");
     }
 
     @Test
@@ -385,7 +401,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(1).getRight().getName()).shouldBeEqual("Zehe(n)");
 
-        the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (1/2 TL Instantpulve");
+        the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (1/2 TL Instantpulver)");
         the(recipe.getIngredients().get(2).getMiddle()).shouldBeEqual(125);
         the(recipe.getIngredients().get(2).getRight().getName()).shouldBeEqual("ml");
 
