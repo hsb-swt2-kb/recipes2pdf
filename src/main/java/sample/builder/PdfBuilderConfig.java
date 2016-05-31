@@ -1,11 +1,13 @@
-package sample.builder.pdfBuilder;
+package sample.builder;
 
 import sample.config.IConfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Properties;
+
+import static org.apache.commons.io.IOUtils.toByteArray;
 
 /**
  * Created by kai on 11.04.16.
@@ -14,8 +16,7 @@ public class PdfBuilderConfig {
 
     IConfig baseConfig;
 
-    public PdfBuilderConfig(IConfig config)
-    {
+    public PdfBuilderConfig(IConfig config) {
         this.baseConfig = config;
     }
 
@@ -27,12 +28,8 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("IMAGE_FOLDER_NAME")));
     }
 
-    public File getImage() throws IOException {
-        return new File(getImageDir() + File.separator + "tmpRecipeImage.jpg");
-    }
-
-    public File getDefaultImage() {
-       return new File(this.getClass().getClassLoader().getResource("sample/builder/images/default_image.jpg").getPath());
+    public byte[] getDefaultImage() throws IOException {
+        return toByteArray(this.getClass().getResourceAsStream("images/default_image.jpg"));
     }
 
     public File getTempDir() {
@@ -43,13 +40,13 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("TEMPLATE_FOLDER_NAME")));
     }
 
-    public File getTemplateFile() throws IOException {
-        File defaultTemplate = new File(this.getClass().getClassLoader().getResource("sample/builder/templates/cookbookTemplate.tex").getPath());
+    public File getTemplateFile() {
+        final InputStream in = this.getClass().getResourceAsStream("templates/cookbookTemplate.tex");
         File userTemplate = getUserTemplate();
+        String templateName = userTemplate.getName();
         try {
-            if (!userTemplate.exists()) {
-                Files.copy(defaultTemplate.toPath(), userTemplate.toPath());
-
+            if (!userTemplate.exists() && templateName.equals("cookbookTemplate.tex")) {
+                Files.copy(in, userTemplate.toPath());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +54,7 @@ public class PdfBuilderConfig {
         return userTemplate;
     }
 
-    public File getUserTemplate() throws IOException {
+    private File getUserTemplate() {
         return new File(getTemplateDir() + File.separator + baseConfig.getProperty("TEMPLATE_FILE_NAME"));
     }
 
@@ -65,11 +62,11 @@ public class PdfBuilderConfig {
         return checkDir(new File(getParserRootDir() + File.separator + baseConfig.getProperty("OUTPUT_FOLDER_NAME")));
     }
 
-    public File getOutputTexFile(String cookbookName) throws IOException {
+    public File getOutputTexFile(String cookbookName) {
         return new File(getOutputDir() + File.separator + cookbookName + ".tex");
     }
 
-    public File getOutputPdfFile(String cookbookName) throws IOException {
+    public File getOutputPdfFile(String cookbookName) {
         return new File(getOutputDir() + File.separator + cookbookName + ".pdf");
     }
 
