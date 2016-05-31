@@ -23,6 +23,11 @@ public class RecipeDAOTest extends ADatabaseTest {
         this.recipeDAO = new RecipeDAO();
     }
 
+    /**
+     * Test insert of simple recipe.
+     * Precondition: -
+     * Postcondition: there is a new recipe inserted to the database.
+     */
     @Test
     public void insertTest() {
         final Recipe recipe = new Recipe();
@@ -33,6 +38,11 @@ public class RecipeDAOTest extends ADatabaseTest {
         the(sizeAfter).shouldBeEqual(sizeBefore+1);
     }
 
+    /**
+     * Test insert of recipe with complex objects as attributes.
+     * Precondition: -
+     * Postcondition: there is a new recipe inserted to the database.
+     */
     @Test
     public void insertAggregateTest() {
         final Recipe recipe = new Recipe();
@@ -51,6 +61,11 @@ public class RecipeDAOTest extends ADatabaseTest {
         the(first.get().getCategory().getName()).shouldBeEqual(categoryTitle);
     }
 
+    /**
+     * Tests insert of recipe with complex objects as attributes that are also not persisted to the database yet.
+     * Precondition: -
+     * Postcondition: there is a new recipe inserted to the database.
+     */
     @Test
     public void insertImplicitAggregateTest() {
         final Recipe recipe = new Recipe();
