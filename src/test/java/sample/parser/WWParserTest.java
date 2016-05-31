@@ -130,9 +130,33 @@ public class WWParserTest {
         the(recipe.getIngredients().get(12).getMiddle()).shouldBeEqual(0);
         the(recipe.getIngredients().get(12).getRight().getName()).shouldBeEqual("");
 
-        the(recipe.getIngredients().get(13).getLeft().getName()).shouldBeEqual("Zucchini, in Stücken (ca. 2 cm)");
+        the(recipe.getIngredients().get(13).getLeft().getName()).shouldBeEqual("Olivenöl");
         the(recipe.getIngredients().get(13).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("Stück");
+        the(recipe.getIngredients().get(13).getRight().getName()).shouldBeEqual("TL");
+
+        the(recipe.getIngredients().get(14).getLeft().getName()).shouldBeEqual("Zucchini, in Stücken (ca. 2 cm)");
+        the(recipe.getIngredients().get(14).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(14).getRight().getName()).shouldBeEqual("Stück");
+
+        the(recipe.getIngredients().get(15).getLeft().getName()).shouldBeEqual("Oregano, bevorzugt frisch");
+        the(recipe.getIngredients().get(15).getMiddle()).shouldBeEqual(1);
+        the(recipe.getIngredients().get(15).getRight().getName()).shouldBeEqual("TL");
+
+        the(recipe.getIngredients().get(16).getLeft().getName()).shouldBeEqual("(gehackt) Petersilie");
+        the(recipe.getIngredients().get(16).getMiddle()).shouldBeEqual(2);
+        the(recipe.getIngredients().get(16).getRight().getName()).shouldBeEqual("EL");
+
+        the(recipe.getIngredients().get(17).getLeft().getName()).shouldBeEqual("Jodsalz");
+        the(recipe.getIngredients().get(17).getMiddle()).shouldBeEqual(1);
+        the(recipe.getIngredients().get(17).getRight().getName()).shouldBeEqual("Prise(n)");
+
+        the(recipe.getIngredients().get(18).getLeft().getName()).shouldBeEqual("Pfeffer, frisch gemahlen");
+        the(recipe.getIngredients().get(18).getMiddle()).shouldBeEqual(1);
+        the(recipe.getIngredients().get(18).getRight().getName()).shouldBeEqual("Prise(n)");
+
+        the(recipe.getIngredients().get(19).getLeft().getName()).shouldBeEqual("Schafskäse/Feta light");
+        the(recipe.getIngredients().get(19).getMiddle()).shouldBeEqual(100);
+        the(recipe.getIngredients().get(19).getRight().getName()).shouldBeEqual("g");
     }
 
     @Test
@@ -401,7 +425,7 @@ public class WWParserTest {
         the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(1);
         the(recipe.getIngredients().get(1).getRight().getName()).shouldBeEqual("Zehe(n)");
 
-        the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (1/2 TL Instantpulver)");
+        the(recipe.getIngredients().get(2).getLeft().getName()).shouldBeEqual("Gemüsebrühe, zubereitet, (1/2 TL Instantpulve");
         the(recipe.getIngredients().get(2).getMiddle()).shouldBeEqual(125);
         the(recipe.getIngredients().get(2).getRight().getName()).shouldBeEqual("ml");
 
