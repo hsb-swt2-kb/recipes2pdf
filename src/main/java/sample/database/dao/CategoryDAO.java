@@ -25,16 +25,16 @@ public class CategoryDAO extends ADAO<Category, CategoryDBO> {
     CategoryDBO toDBO(Category pojo) {
         CategoryDBO categoryDBO = new CategoryDBO();
         Optional<Category> category = findFirst("name=?", pojo.getName());
+
+        // if category not present in DB then insert it.
         if(!category.isPresent()){
             categoryDBO.setName(pojo.getName());
             categoryDBO.saveIt();
         }
-
-        if (findById(pojo.getID()).isPresent()) {
-            categoryDBO.setID(pojo.getID());
+        else {  // else read data from existing category entry in DB
+            categoryDBO.setID(category.get().getID());
+            categoryDBO.setName(category.get().getName());
         }
-
-        categoryDBO.setName(pojo.getName());
         return categoryDBO;
     }
 }

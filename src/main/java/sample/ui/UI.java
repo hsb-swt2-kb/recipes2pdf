@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class UI
@@ -264,13 +265,11 @@ public class UI {
      * @throws RecipeNotFoundException
      */
     static Recipe searchRecipe(String recipeName) throws RecipeNotFoundException {
-        Recipe recipeFromSearch = null;
-        List<Recipe> recipes = new ArrayList<>();
-        recipes = new RecipeDAO().getAll();
-        for (Recipe recipe : recipes)
-            if (recipe.getTitle().equals(recipeName))
-                return recipe;
-        throw new RecipeNotFoundException();
+        Optional<Recipe> recipe = new RecipeDAO().findFirst("title=?", recipeName);
+
+        if(!recipe.isPresent())
+            throw new RecipeNotFoundException();
+        return recipe.get();
     }
 
     public static void exportCookbook(String cookbookName, String paperFormats) {

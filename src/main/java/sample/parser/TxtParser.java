@@ -171,7 +171,6 @@ public class TxtParser extends AConcreteParser implements Constants {
         }
         ISource source = new Source();
         source.setName("Eigene");
-        daytime.setName(findDatafield(textFileContent, "Quelle"));
         recipe.setSource(source);
 
         return recipe;
