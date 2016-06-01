@@ -1,6 +1,5 @@
 package sample.database.dbo;
 
-import org.javalite.activejdbc.DBException;
 import org.junit.Test;
 import sample.database.dao.SortlevelDAO;
 import sample.model.Sortlevel;
@@ -10,8 +9,8 @@ import sample.model.Sortlevel;
  */
 public class SortlevelDAOTest extends ADatabaseTest {
 
-    @Test(expected=DBException.class)
-    public void testSortlevelDuplicateThrowsException() {
+    @Test
+    public void testSortlevelDuplicateThrowsNoException() {
         final SortlevelDAO sortlevelDAO = new SortlevelDAO();
 
         Sortlevel sortlevel1 = new Sortlevel();
