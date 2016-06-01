@@ -25,14 +25,14 @@ public class WWParserTest {
         this.wwParser   = new WWParser();
         this.recipe     = new Recipe();
 
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/WW_2015_test_zutaten.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/WW_2015_test_1.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/WW_2015_test_2.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/WW_2015_test_3.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/WW_2016_test_zutaten.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/WW_2016_test_1.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/WW_2016_test_2.html"));
-        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "/sample/parser/WW_2016_test_3.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "WW_2015_test_zutaten.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "WW_2015_test_1.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "WW_2015_test_2.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "WW_2015_test_3.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "WW_2016_test_zutaten.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "WW_2016_test_1.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "WW_2016_test_2.html"));
+        this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "WW_2016_test_3.html"));
     }
 
     @Test
