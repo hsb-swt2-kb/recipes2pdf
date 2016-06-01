@@ -11,7 +11,6 @@ import sample.model.Cookbook;
 import sample.model.ICookbook;
 import sample.model.IRecipe;
 import sample.model.Recipe;
-import sample.parser.IParser;
 import sample.parser.Parser;
 
 import java.io.File;
@@ -39,14 +38,11 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static boolean addRecipes (List<File> files) throws Exception,FileNotFoundException,CouldNotParseException {
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        boolean success=true;
+    static void addRecipes (List<File> files) throws Exception,FileNotFoundException,CouldNotParseException {
+        new Database(DatabaseConnection.getDatabaseConnection());
         for(File file : files) {
-            if(!addRecipe(file))
-                success=false;
+            addRecipe(file);
         }
-        return success;
     }
 
     /**
@@ -61,16 +57,12 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static boolean addRecipe (File file) throws Exception,FileNotFoundException,CouldNotParseException {
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        boolean success=true;
+    static void addRecipe (File file) throws Exception,FileNotFoundException,CouldNotParseException {
+        new Database(DatabaseConnection.getDatabaseConnection());
         Recipe recipe = (Recipe) Parser.parse(file);
-        if (recipe.isIncomplete())
-            success = false;
-        else
-        if(!new RecipeDAO().insert(recipe))
-            success=false;
-        return success;
+        if (!recipe.isIncomplete()) {
+            new RecipeDAO().insert(recipe);
+        }
     }
 
     /**
@@ -83,7 +75,7 @@ public class UI {
      * @return boolean success of the update
      */
     static boolean updateRecipe(Recipe recipe){
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        new Database(DatabaseConnection.getDatabaseConnection());
         return new RecipeDAO().update(recipe);
     }
 
@@ -96,7 +88,7 @@ public class UI {
      * @return List<Recipe> List of all Recipes present in DB
      */
     static List<Recipe> getAllRecipesFromDB(){
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        new Database(DatabaseConnection.getDatabaseConnection());
         return new RecipeDAO().getAll();
     }
 
@@ -109,7 +101,7 @@ public class UI {
      * @return List<Recipe> List of all Cookbooks present in DB
      */
     static List<Cookbook> getAllCookbooksFromDB(){
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().getAll();
     }
 
@@ -157,7 +149,7 @@ public class UI {
      * @return boolean successs of the deletion
      */
     static boolean delRecipes (ArrayList<Recipe> recipes){
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        new Database(DatabaseConnection.getDatabaseConnection());
         boolean success = true;
         for(Recipe recipe : recipes)
             if(!new RecipeDAO().delete(recipe))
@@ -174,11 +166,11 @@ public class UI {
      * @param title cookbooks to add to DB
      * @return boolean success of the insertion
      */
-    static boolean addCookBook(String title){
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+    static void addCookBook(String title){
+        new Database(DatabaseConnection.getDatabaseConnection());
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle(title);
-        return new CookbookDAO().insert(cookbook);
+        new CookbookDAO().insert(cookbook);
     }
     /**
      *
@@ -189,10 +181,9 @@ public class UI {
      * @param cookbook cookbook to add to DB
      * @return boolean success of the insertion
      */
-    static boolean addCookBook(Cookbook cookbook){
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        boolean success = new CookbookDAO().insert(cookbook);
-        return success;
+    static void addCookBook(Cookbook cookbook){
+        new Database(DatabaseConnection.getDatabaseConnection());
+        new CookbookDAO().insert(cookbook);
     }
 
     /**
@@ -205,7 +196,7 @@ public class UI {
      * @return boolean success of the deletion
      */
     static boolean delCookBook(Cookbook cookbook){
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().delete(cookbook);
 
     }
@@ -241,7 +232,7 @@ public class UI {
      * @return boolean success
      */
     static boolean delRecipe(Recipe recipe) {
-        Database database = new Database(DatabaseConnection.getDatabaseConnection());
+        new Database(DatabaseConnection.getDatabaseConnection());
         return new RecipeDAO().delete(recipe);
 
     }
