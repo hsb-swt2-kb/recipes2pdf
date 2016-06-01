@@ -1,18 +1,5 @@
 package sample.ui;
 
-import org.junit.Test;
-import sample.database.dao.CookbookDAO;
-import sample.database.dao.RecipeDAO;
-import sample.database.dbo.ADatabaseTest;
-import sample.model.Cookbook;
-import sample.model.Recipe;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.javalite.test.jspec.JSpec.the;
-
 /**
  * implemented by on 24.05.16 by markus
  * These tests are failing because they don't use the Testdatabase.
@@ -23,7 +10,7 @@ import static org.javalite.test.jspec.JSpec.the;
  * (Fix would be: Use ADatabaseTest & change static methods of UI to public methods.
  * A constructor for UI would be passed a Database or DatabaseConnection)
  */
-public class UITest extends ADatabaseTest{
+public class UITest {
 /*    @Test
     public void addRecipePositive() throws Exception {
         File file = new File("src/test/resources/sample/Rezepte/Bolognese.txt");
