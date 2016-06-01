@@ -5,7 +5,9 @@ import sample.database.dao.CookbookDAO;
 import sample.database.dao.RecipeDAO;
 import sample.database.dbo.ADatabaseTest;
 import sample.model.Cookbook;
+import sample.model.ISortlevel;
 import sample.model.Recipe;
+import sample.model.Sortlevel;
 
 import static org.javalite.test.jspec.JSpec.the;
 import java.io.File;
@@ -68,12 +70,16 @@ public class UITest extends ADatabaseTest{
 
     @Test
     public void getAllRecipesFromDB() throws Exception {
-        the(UI.getAllRecipesFromDB()).shouldBeEqual(new RecipeDAO().getAll().size());
+        int s1 = UI.getAllRecipesFromDB().size();
+        int s2 = new RecipeDAO().getAll().size();
+        the(s1).shouldBeEqual(s2);
     }
 
     @Test
     public void getAllCookbooksFromDB() throws Exception {
-        the(UI.getAllCookbooksFromDB()).shouldBeEqual(new CookbookDAO().getAll().size());
+        int s1 = UI.getAllCookbooksFromDB().size();
+        int s2 = new CookbookDAO().getAll().size();
+        the(s1).shouldBeEqual(s2);
     }
 
     @Test
@@ -88,6 +94,11 @@ public class UITest extends ADatabaseTest{
     public void addCookBook() throws Exception {
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle("asdf");
+        ISortlevel sortlevel = new Sortlevel();
+        sortlevel.setName("TestSortLevel");
+        List<ISortlevel> sortlevels = new ArrayList<>();
+        sortlevels.add(sortlevel);
+        cookbook.setSortlevel(sortlevels);
         the(UI.addCookBook(cookbook)).shouldBeTrue();
     }
 
@@ -122,12 +133,14 @@ public class UITest extends ADatabaseTest{
 
     @Test
     public void searchCookBook() throws Exception {
+        this.addCookBook();
         Cookbook cookbook = new CookbookDAO().getAll().get(0);
         the(UI.searchCookBook(cookbook.getTitle())).shouldBeTrue();
     }
 
     @Test
     public void searchRecipe() throws Exception {
+        this.addRecipePositive();
         Recipe recipe = new RecipeDAO().getAll().get(0);
         the(UI.searchRecipe(recipe.getTitle()).getTitle().equals(recipe.getTitle())).shouldBeTrue();
     }

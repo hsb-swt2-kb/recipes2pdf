@@ -28,7 +28,6 @@ public class Parser implements IParser {
      */
     public static IRecipe parse(File recipeFile) throws CouldNotParseException, FileNotFoundException {
         List<AConcreteParser> parsers = new ArrayList<>();
-        parsers.add(new DummyParser());
         parsers.add(new TxtParser());
         parsers.add(new ChefkochParser());
         parsers.add(new WWParser());

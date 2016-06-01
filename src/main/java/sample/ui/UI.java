@@ -191,7 +191,8 @@ public class UI {
      */
     static boolean addCookBook(Cookbook cookbook){
         Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        return new CookbookDAO().insert(cookbook);
+        boolean success = new CookbookDAO().insert(cookbook);
+        return success;
     }
 
     /**
