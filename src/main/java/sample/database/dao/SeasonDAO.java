@@ -3,6 +3,8 @@ package sample.database.dao;
 import sample.database.dbo.SeasonDBO;
 import sample.model.Season;
 
+import java.util.Optional;
+
 /**
  * Database Access Object for Season.
  * Does Mapping from POJO to DBO and vice versa.
@@ -21,11 +23,17 @@ public class SeasonDAO extends ADAO<Season, SeasonDBO> {
     @Override
     SeasonDBO toDBO(Season pojo) {
         SeasonDBO seasonDBO = new SeasonDBO();
-        if (findById(pojo.getID()).isPresent()) {
-            seasonDBO.setID(pojo.getID());
-        }
+        Optional<Season> season = findFirst("name=?", pojo.getName());
 
-        seasonDBO.setName(pojo.getName());
+        // if season not present in DB then insert it.
+        if(!season.isPresent()){
+            seasonDBO.setName(pojo.getName());
+            seasonDBO.saveIt();
+        }
+        else {  // else read data from existing season entry in DB
+            seasonDBO.setID(season.get().getID());
+            seasonDBO.setName(season.get().getName());
+        }
         return seasonDBO;
     }
 }

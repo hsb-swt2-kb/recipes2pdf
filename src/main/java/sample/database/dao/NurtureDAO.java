@@ -3,6 +3,8 @@ package sample.database.dao;
 import sample.database.dbo.NurtureDBO;
 import sample.model.Nurture;
 
+import java.util.Optional;
+
 /**
  * Database Access Object for Nurture.
  * Does Mapping from POJO to DBO and vice versa.
@@ -21,11 +23,17 @@ public class NurtureDAO extends ADAO<Nurture, NurtureDBO> {
     @Override
     NurtureDBO toDBO(Nurture pojo) {
         NurtureDBO nurtureDBO = new NurtureDBO();
-        if (findById(pojo.getID()).isPresent()) {
-            nurtureDBO.setID(pojo.getID());
-        }
+        Optional<Nurture> nurture = findFirst("name=?", pojo.getName());
 
-        nurtureDBO.setName(pojo.getName());
+        // if nurture not present in DB then insert it.
+        if(!nurture.isPresent()){
+            nurtureDBO.setName(pojo.getName());
+            nurtureDBO.saveIt();
+        }
+        else {  // else read data from existing nurture entry in DB
+            nurtureDBO.setID(nurture.get().getID());
+            nurtureDBO.setName(nurture.get().getName());
+        }
         return nurtureDBO;
     }
 }

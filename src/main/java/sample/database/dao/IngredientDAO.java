@@ -3,6 +3,8 @@ package sample.database.dao;
 import sample.database.dbo.IngredientDBO;
 import sample.model.Ingredient;
 
+import java.util.Optional;
+
 /**
  * Database Access Object for Ingredient.
  * Does Mapping from POJO to DBO and vice versa.
@@ -21,11 +23,17 @@ public class IngredientDAO extends ADAO<Ingredient, IngredientDBO> {
     @Override
     public IngredientDBO toDBO(Ingredient pojo) {
         IngredientDBO ingredientDBO = new IngredientDBO();
-        if (findById(pojo.getID()).isPresent()) {
-            ingredientDBO.setID(pojo.getID());
-        }
+        Optional<Ingredient> ingredient = findFirst("name=?", pojo.getName());
 
-        ingredientDBO.setName(pojo.getName());
+        // if ingredient not present in DB then insert it.
+        if(!ingredient.isPresent()){
+            ingredientDBO.setName(pojo.getName());
+            ingredientDBO.saveIt();
+        }
+        else {  // else read data from existing ingredient entry in DB
+            ingredientDBO.setID(ingredient.get().getID());
+            ingredientDBO.setName(ingredient.get().getName());
+        }
         return ingredientDBO;
     }
 }
