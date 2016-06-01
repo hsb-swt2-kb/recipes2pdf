@@ -1,6 +1,8 @@
 package sample.parser;
 
+import org.apache.commons.io.FileUtils;
 import sample.exceptions.CouldNotParseException;
+import sample.model.IRecipe;
 import sample.model.Recipe;
 
 import java.io.*;
@@ -13,11 +15,10 @@ import java.util.List;
  *
  * @author Markus
  */
-public class Parser implements IParser
-{
+public class Parser implements IParser {
     /**
      * parse
-     *
+     * <p>
      * implementation of the parse method from IParser
      *
      * @param recipeFile
@@ -25,38 +26,39 @@ public class Parser implements IParser
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    public static Recipe parse(File recipeFile) throws  Exception,NullPointerException,IOException,FileNotFoundException,CouldNotParseException
-    {
+    public static IRecipe parse(File recipeFile) throws CouldNotParseException, FileNotFoundException {
         List<AConcreteParser> parsers = new ArrayList<>();
         parsers.add(new DummyParser());
         parsers.add(new TxtParser());
-        parsers.add(new ChefkochParser ());
+        parsers.add(new ChefkochParser());
         parsers.add(new WWParser());
         //parsers.add(new CKParser ());
 
-        if(recipeFile.exists())
-        {
-            ArrayList<String> fileContent = readFile(recipeFile.toString());
-            Recipe            recipe      = new Recipe();
 
-            // Parser aufrufen
-            for(AConcreteParser parser:parsers)
-                if(parser.accepts(fileContent))
-                    recipe = parser.parse(fileContent);
-
-            // Rezept prüfen
-            if(!recipe.isIncomplete())
-                return recipe;
-            else
-                throw new CouldNotParseException();
+        List<String> fileContent = null;
+        try {
+            fileContent = FileUtils.readLines(recipeFile);
+        } catch (IOException e) {
+            throw new FileNotFoundException(e.getMessage());
         }
+
+        Recipe recipe = new Recipe();
+
+        // Parser aufrufen
+        for (AConcreteParser parser : parsers)
+            if (parser.accepts(fileContent))
+                recipe = parser.parse(fileContent);
+
+        // Rezept prüfen
+        if (!recipe.isIncomplete())
+            return recipe;
         else
-            throw new FileNotFoundException();
+            throw new CouldNotParseException();
     }
 
     /**
      * readFile
-     *
+     * <p>
      * helpful function, because textparser can handle ArrayList<String>
      * easier than the content as one complete String.
      *

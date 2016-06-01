@@ -1,6 +1,7 @@
 package sample.parser;
 
 import sample.exceptions.CouldNotParseException;
+import sample.model.IRecipe;
 import sample.model.Recipe;
 
 import java.io.File;

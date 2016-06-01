@@ -1,15 +1,17 @@
 package sample.parser;
 
+import sample.exceptions.CouldNotParseException;
 import sample.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * implemented by on 31.05.16 by markus
  */
 public class DummyParser extends AConcreteParser {
     @Override
-    public Recipe parse(ArrayList<String> text) throws Exception {
+    public Recipe parse(List<String> text) throws CouldNotParseException {
         Recipe recipe = new Recipe();
         recipe.setTitle("Testrezept");
         recipe.setText("Testzubereitungstext");
@@ -43,7 +45,7 @@ public class DummyParser extends AConcreteParser {
     }
 
     @Override
-    public boolean accepts(ArrayList<String> text) {
+    public boolean accepts(List<String> text) {
         return true;
     }
 }

@@ -10,6 +10,7 @@ import sample.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +28,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @throws Exception
      */
     @Override
-    public Recipe parse(final ArrayList<String> text) throws Exception {
+    public Recipe parse(final List<String> text) throws CouldNotParseException {
         recipe = new Recipe();
 
         String format = "";
@@ -67,7 +68,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
      * @return true if accepts
      */
     @Override
-    public boolean accepts(final ArrayList<String> text) {
+    public boolean accepts(final List<String> text) {
         return text.toString().contains("weightwatchers");
     }
 

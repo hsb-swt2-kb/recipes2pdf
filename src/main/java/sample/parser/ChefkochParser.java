@@ -10,6 +10,7 @@ import sample.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -44,7 +45,7 @@ public class ChefkochParser extends AConcreteParser {
      * @throws Exception
      */
     @Override
-    public Recipe parse(final ArrayList<String> text) throws Exception {
+    public Recipe parse(final List<String> text) throws CouldNotParseException {
         recipe = new Recipe();
 
         String format = "";
@@ -344,7 +345,7 @@ public class ChefkochParser extends AConcreteParser {
      * @return true if accepts
      */
     @Override
-    public boolean accepts(final ArrayList<String> text) {
+    public boolean accepts(final List<String> text) {
         return text.toString().contains("chefkoch");
     }
 
