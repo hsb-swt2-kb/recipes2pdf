@@ -88,7 +88,7 @@ public class RecipeDAO extends ADAO<Recipe, RecipeDBO> {
         final Category category = (Category) recipe.getCategory();
         if (category != null) {
             final CategoryDBO categoryDBO = new CategoryDAO().toDBO(category);
-            categoryDBO.saveIt();
+            //categoryDBO.saveIt();
             recipeDBO.setCategory(categoryDBO);
         }
 

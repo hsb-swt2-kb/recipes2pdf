@@ -3,6 +3,8 @@ package sample.database.dao;
 import sample.database.dbo.CourseDBO;
 import sample.model.Course;
 
+import java.util.Optional;
+
 /**
  * Database Access Object for Course.
  * Does Mapping from POJO to DBO and vice versa.
@@ -21,11 +23,17 @@ public class CourseDAO extends ADAO<Course, CourseDBO> {
     @Override
     CourseDBO toDBO(Course pojo) {
         CourseDBO courseDBO = new CourseDBO();
-        if (findById(pojo.getID()).isPresent()) {
-            courseDBO.setID(pojo.getID());
-        }
+        Optional<Course> course = findFirst("name=?", pojo.getName());
 
-        courseDBO.setName(pojo.getName());
+        // if course not present in DB then insert it.
+        if(!course.isPresent()){
+            courseDBO.setName(pojo.getName());
+            courseDBO.saveIt();
+        }
+        else {  // else read data from existing course entry in DB
+            courseDBO.setID(course.get().getID());
+            courseDBO.setName(course.get().getName());
+        }
         return courseDBO;
     }
 }

@@ -8,7 +8,6 @@ import sample.model.ISortlevel;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,13 +15,13 @@ import java.util.List;
  * document building process to the IConcreteBuilder.
  */
 public class Builder implements IBuilder {
-    private ArrayList<IConcreteBuilder> builders;
+    private List<IConcreteBuilder> builders;
 
     /**
      * Constructor for the Builder.
      * @param builders A List of IConcreteBuilder that can be searched through, to find a suitable Builder to delegeate the building process
      */
-    public Builder(ArrayList<IConcreteBuilder> builders) {
+    public Builder(List<IConcreteBuilder> builders) {
         this.builders = builders;
     }
 

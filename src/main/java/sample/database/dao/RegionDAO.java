@@ -3,6 +3,8 @@ package sample.database.dao;
 import sample.database.dbo.RegionDBO;
 import sample.model.Region;
 
+import java.util.Optional;
+
 /**
  * Database Access Object for Region.
  * Does Mapping from POJO to DBO and vice versa.
@@ -21,11 +23,17 @@ public class RegionDAO extends ADAO<Region, RegionDBO> {
     @Override
     RegionDBO toDBO(Region pojo) {
         RegionDBO regionDBO = new RegionDBO();
-        if (findById(pojo.getID()).isPresent()) {
-            regionDBO.setID(pojo.getID());
-        }
+        Optional<Region> region = findFirst("name=?", pojo.getName());
 
-        regionDBO.setName(pojo.getName());
+        // if region not present in DB then insert it.
+        if(!region.isPresent()){
+            regionDBO.setName(pojo.getName());
+            regionDBO.saveIt();
+        }
+        else {  // else read data from existing region entry in DB
+            regionDBO.setID(region.get().getID());
+            regionDBO.setName(region.get().getName());
+        }
         return regionDBO;
     }
 }

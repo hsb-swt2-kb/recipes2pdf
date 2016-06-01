@@ -3,6 +3,8 @@ package sample.database.dao;
 import sample.database.dbo.SourceDBO;
 import sample.model.Source;
 
+import java.util.Optional;
+
 /**
  * Database Access Object for Source.
  * Does Mapping from POJO to DBO and vice versa.
@@ -21,11 +23,17 @@ public class SourceDAO extends ADAO<Source, SourceDBO> {
     @Override
     SourceDBO toDBO(Source pojo) {
         SourceDBO sourceDBO = new SourceDBO();
-        if (findById(pojo.getID()).isPresent()) {
-            sourceDBO.setID(pojo.getID());
-        }
+        Optional<Source> source = findFirst("name=?", pojo.getName());
 
-        sourceDBO.setName(pojo.getName());
+        // if source not present in DB then insert it.
+        if(!source.isPresent()){
+            sourceDBO.setName(pojo.getName());
+            sourceDBO.saveIt();
+        }
+        else {  // else read data from existing source entry in DB
+            sourceDBO.setID(source.get().getID());
+            sourceDBO.setName(source.get().getName());
+        }
         return sourceDBO;
     }
 }

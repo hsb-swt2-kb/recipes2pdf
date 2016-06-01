@@ -3,6 +3,8 @@ package sample.database.dao;
 import sample.database.dbo.SortlevelDBO;
 import sample.model.Sortlevel;
 
+import java.util.Optional;
+
 /**
  * Database Access Object for Sortlevel.
  * Does Mapping from POJO to DBO and vice versa.
@@ -21,11 +23,17 @@ public class SortlevelDAO extends ADAO<Sortlevel, SortlevelDBO> {
     @Override
     SortlevelDBO toDBO(Sortlevel pojo) {
         SortlevelDBO sortlevelDBO = new SortlevelDBO();
-        if (findById(pojo.getID()).isPresent()) {
-            sortlevelDBO.setID(pojo.getID());
-        }
+        Optional<Sortlevel> sortlevel = findFirst("name=?", pojo.getName());
 
-        sortlevelDBO.setName(pojo.getName());
+        // if sortlevel not present in DB then insert it.
+        if(!sortlevel.isPresent()){
+            sortlevelDBO.setName(pojo.getName());
+            sortlevelDBO.saveIt();
+        }
+        else {  // else read data from existing sortlevel entry in DB
+            sortlevelDBO.setID(sortlevel.get().getID());
+            sortlevelDBO.setName(sortlevel.get().getName());
+        }
         return sortlevelDBO;
     }
 }

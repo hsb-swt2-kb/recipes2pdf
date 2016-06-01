@@ -169,6 +169,10 @@ public class TxtParser extends AConcreteParser implements Constants {
         catch (Exception e) {
             recipe.setPortions(0);
         }
+        ISource source = new Source();
+        source.setName("Eigene");
+        recipe.setSource(source);
+
         return recipe;
     }
 

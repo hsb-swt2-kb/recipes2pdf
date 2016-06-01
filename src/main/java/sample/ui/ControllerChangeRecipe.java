@@ -70,9 +70,19 @@ public class ControllerChangeRecipe {
 
     @FXML
     public void initialize() {
+        String ernaehrungsart = "";
+        String gerichtart = "";
+        String portion = "";
+        String region= "";
+        String category= "";
+        String source= "";
+        String saison= "";
+        String daytime= "";
+        String zubereitungszeit= "";
+        String zubereitungstext= "";
+        String ingredients= "";
+        Recipe recipe;
         refreshData();
-
-
     }
 
     protected void refreshData() {

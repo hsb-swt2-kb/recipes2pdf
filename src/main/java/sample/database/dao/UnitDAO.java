@@ -3,6 +3,8 @@ package sample.database.dao;
 import sample.database.dbo.UnitDBO;
 import sample.model.Unit;
 
+import java.util.Optional;
+
 /**
  * Database Access Object for Unit.
  * Does Mapping from POJO to DBO and vice versa.
@@ -20,11 +22,17 @@ public class UnitDAO extends ADAO<Unit, UnitDBO> {
     @Override
     public UnitDBO toDBO(Unit pojo) {
         UnitDBO unitDBO = new UnitDBO();
-        if (findById(pojo.getID()).isPresent()) {
-            unitDBO.setID(pojo.getID());
-        }
+        Optional<Unit> unit = findFirst("name=?", pojo.getName());
 
-        unitDBO.setName(pojo.getName());
+        // if unit not present in DB then insert it.
+        if(!unit.isPresent()){
+            unitDBO.setName(pojo.getName());
+            unitDBO.saveIt();
+        }
+        else {  // else read data from existing unit entry in DB
+            unitDBO.setID(unit.get().getID());
+            unitDBO.setName(unit.get().getName());
+        }
         return unitDBO;
     }
 }
