@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
 import sample.exceptions.CouldNotParseException;
 
-import java.io.FileNotFoundException;
-
 import static sample.ui.UI.addRecipes;
 
 public class ControllerLoadRecipe {
@@ -125,7 +123,7 @@ public class ControllerLoadRecipe {
         FileHandler fileHandler = new FileHandler();
         boolean success;
         try {
-            success = addRecipes(fileHandler.importFiles());
+           addRecipes(fileHandler.importFiles());
         }
         catch (CouldNotParseException e){
             // TODO: handle exception

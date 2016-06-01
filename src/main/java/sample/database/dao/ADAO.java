@@ -116,7 +116,7 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
         }
 
         if (null == first) {
-            LOG.debug("Empty result for findFirst with subQuery = [" + subQuery + "], params = [" + Arrays.toString(params) + "].");
+            LOG.debug("Empty result for findFirst with subQuery = [" + subQuery + "], params = " + Arrays.toString(params) + ".");
             return Optional.empty();
         }
         return Optional.of(toPOJO(first));
@@ -128,18 +128,16 @@ abstract public class ADAO<POJO extends IIdentifiable, DBO extends Model & IIden
      * ID has to be null.
      *
      * @param pojo POJO to insert ("id" attribute is modified by this method with insert id from db. )
-     * @return true if the model was saved, false if you set an ID value for the model, but such ID does not exist in DB.
      */
-    public boolean insert(POJO pojo) {
+    public void insert(POJO pojo) {
         if (null != pojo.getID()) {
             LOG.debug("Insert called with pojo that has an id! pojo = [" + pojo + "]");
             throw new IllegalStateException("A new DBO has no id!");
         }
         final DBO dbo = toDBO(pojo);
-        boolean status = dbo.saveIt();
-        LOG.debug("Inserted new pojo = [" + pojo + "] with return status = [" + status + "]");
+        dbo.saveIt();
+        LOG.debug("Inserted new pojo = [" + pojo + "]");
         pojo.setID(dbo.getID());
-        return status;
     }
 
     /**
