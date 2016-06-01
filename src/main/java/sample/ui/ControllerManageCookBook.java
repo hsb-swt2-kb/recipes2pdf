@@ -25,7 +25,10 @@ import sample.model.Cookbook;
 import sample.model.Recipe;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import static sample.ui.UI.getAllRecipesFromDB;
 
 
 public class ControllerManageCookBook {
@@ -98,20 +101,20 @@ loadInfo();
 
     void loadInfo(){
 
+        cookBookNames.clear();
         this.cookBookNames = FXCollections.observableArrayList();
         List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
         for (Cookbook cookbook : cookbooksDB) {
             this.cookBookNames.add(cookbook.getTitle());
         }
 
-        List<Recipe> recipes =  UI.getAllRecipesFromDB();
+        recipeNames.clear();
+        List<Recipe> recipes =  getAllRecipesFromDB();
         for (Recipe recipe : recipes){
             recipeNames.add(recipe.getTitle());
         }
 
-        List<Cookbook> cookbooks = UI.getAllCookbooksFromDB();
-        for (Cookbook cookbook: cookbooks){
-            cookBookNames.add(cookbook.getTitle());
+        for (Cookbook cookbook: cookbooksDB){
             List<Recipe> iRecipes = UI.castIRecipeToRecipe(cookbook.getRecipes());
             for(Recipe recipe : iRecipes){
                 recipeNamesOfCookBook.add(recipe.getTitle());
@@ -127,8 +130,6 @@ loadInfo();
         FXCollections.sort(recipeNames);
         FXCollections.sort(recipeNamesOfCookBook);
         if(this.listViewCookBook != null && this.listViewRecipes != null) {
-            this.listViewCookBook.getItems().clear();
-            this.listViewRecipes.getItems().clear();
             this.listViewRecipes.setItems(recipeNames);
             this.listViewCookBook.setItems(recipeNamesOfCookBook);
             searchInListView(recipeNames, searchFieldRecipes, listViewRecipes);

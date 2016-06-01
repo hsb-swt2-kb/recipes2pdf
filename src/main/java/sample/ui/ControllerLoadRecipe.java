@@ -126,10 +126,10 @@ public class ControllerLoadRecipe {
            addRecipes(fileHandler.importFiles());
         }
         catch (CouldNotParseException e){
-            // TODO: handle exception
+            e.printStackTrace();
         }
         catch(Exception e){
-            // TODO: handle exception
+            e.printStackTrace();
         }
 
     }
@@ -167,15 +167,13 @@ public class ControllerLoadRecipe {
     void selectOptionsForLoading(ActionEvent event) {
         if ((radioButtonLinkBoolean == true) && (this.hyperLinkTextField.getText().trim().isEmpty() == false)) {
             System.out.println("(this.hyperLinkTextField.getText()");
-            closeStage();
         } else if (radioButtonFolderBoolean == true) {
             openFolder();
-            closeStage();
         } else if (radioButtonFileBoolean == true) {
             openFileChooser();
-            closeStage();
         }
         ControllerManageCookBook.getInstance().refresh();
+        closeStage();
     }
 
     /**

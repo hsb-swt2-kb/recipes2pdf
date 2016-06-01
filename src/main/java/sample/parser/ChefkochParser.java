@@ -6,7 +6,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import sample.exceptions.CouldNotParseException;
+import sample.model.ISource;
 import sample.model.Recipe;
+import sample.model.Source;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -267,6 +269,10 @@ public class ChefkochParser extends AConcreteParser {
                 // TODO: Exception handling
             }
         }
+
+        ISource source = new Source();
+        source.setName("Chefkoch");
+        recipe.setSource(source);
 
         recipe.setDuration(preparingTime);
     }
