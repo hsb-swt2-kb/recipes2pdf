@@ -1,9 +1,9 @@
 package sample.parser;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.tuple.Triple;
 import sample.exceptions.CouldNotParseException;
-import sample.model.IRecipe;
-import sample.model.Recipe;
+import sample.model.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -49,10 +49,25 @@ public class Parser implements IParser {
                 recipe = parser.parse(fileContent);
 
         // Rezept prüfen
-        if (!recipe.isIncomplete())
+        if (!recipe.isIncomplete()) {
+            //leere Werte behandeln
+            if (recipe.getNurture() .getName() == null) recipe.getNurture() .setName("");
+            if (recipe.getRegion()  .getName() == null) recipe.getRegion()  .setName("");
+            if (recipe.getCourse()  .getName() == null) recipe.getCourse()  .setName("");
+            if (recipe.getCategory().getName() == null) recipe.getCategory().setName("");
+            if (recipe.getDaytime() .getName() == null) recipe.getDaytime() .setName("");
+            if (recipe.getSeason()  .getName() == null) recipe.getSeason()  .setName("");
+            if (recipe.getSource()  .getName() == null) recipe.getSource()  .setName("");
+            List<Triple<IIngredient,Double,IUnit>> ingredients = recipe.getIngredients();
+            for(Triple<IIngredient,Double,IUnit> ingredient:ingredients){
+                if(ingredient.getRight().getName()==null) ingredient.getRight().setName("");
+            }
+
             return recipe;
+        }
         else
             throw new CouldNotParseException();
+        // null -> "" bzw 0
     }
 
     /**
