@@ -174,7 +174,7 @@ public class TxtParserTest {
     @Test
     public void testParseMethod20() {
         Setup("TestGericht20.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Thunfisch eingelegt in Olivenöl");
+        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Thunfisch eingelegt in Olivenoel");
         the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(3);
         the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("Dosen");
     }
