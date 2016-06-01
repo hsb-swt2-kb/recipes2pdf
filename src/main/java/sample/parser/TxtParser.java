@@ -352,7 +352,7 @@ public class TxtParser extends AConcreteParser implements Constants {
             int endRow = findNextSignalword(beginRow,textFileContent,"Zubereitung");
             for (int i = beginRow;i<=endRow;i++){
 
-                tempStr = tempStr+" "+textFileContent.get(i);
+                tempStr = tempStr+textFileContent.get(i);
                 try{
                     if (checkRowForSignalwords(textFileContent.get(i+1)) == true){
                         break;
@@ -498,11 +498,6 @@ public class TxtParser extends AConcreteParser implements Constants {
             return tempStr;
         }
         return str;
-    }
-    private int resolveToMinute(String str){
-
-
-        return 2;
     }
 }
 

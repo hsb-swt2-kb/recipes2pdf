@@ -70,7 +70,7 @@ public class WWParserTest {
     }
 
     @Test
-    public void test0Recipe2015() {
+    public void testRecipe2015IngredientVariantFakeRecipe() {
         parse(0);
         the(recipe.getTitle()).shouldBeEqual("Gegrillte Zucchini mit Feta");
         the(recipe.getPortions()).shouldBeEqual(4);
@@ -160,7 +160,7 @@ public class WWParserTest {
     }
 
     @Test
-    public void test1Recipe2015() {
+    public void testRecipe2015Example1() {
         parse(1);
         the(recipe.getTitle()).shouldBeEqual("Gegrillte Zucchini mit Feta");
         the(recipe.getPortions()).shouldBeEqual(4);
@@ -198,7 +198,7 @@ public class WWParserTest {
     }
 
     @Test
-    public void test2Recipe2015() {
+    public void testRecipe2015Example2() {
         parse(2);
         the(recipe.getTitle()).shouldBeEqual("Paellaauflauf");
         the(recipe.getPortions()).shouldBeEqual(4);
@@ -277,7 +277,7 @@ public class WWParserTest {
     }
 
     @Test
-    public void test3Recipe2015() {
+    public void testRecipe2015Example3() {
         parse(3);
         the(recipe.getTitle()).shouldBeEqual("Salamibrötchen");
         the(recipe.getPortions()).shouldBeEqual(1);
@@ -320,7 +320,7 @@ public class WWParserTest {
     }
 
     @Test
-    public void test0Recipe2016() {
+    public void testRecipe2016IngredientVariantFakeRecipe() {
         parse(4);
         the(recipe.getTitle()).shouldBeEqual("Kerniges Roggenbrot mit Paprikafrischkäse");
         the(recipe.getPortions()).shouldBeEqual(1);
@@ -401,7 +401,7 @@ public class WWParserTest {
     }
 
     @Test
-    public void test1Recipe2016() {
+    public void testRecipe2016Example1() {
         parse(5);
         the(recipe.getTitle()).shouldBeEqual("Zucchini-Nudel-Salat");
         the(recipe.getPortions()).shouldBeEqual(4);
@@ -469,7 +469,7 @@ public class WWParserTest {
     }
 
     @Test
-    public void test2Recipe2016() {
+    public void testRecipe2016Example2() {
         parse(6);
         the(recipe.getTitle()).shouldBeEqual("Steak mit Gemüse");
         the(recipe.getPortions()).shouldBeEqual(1);
@@ -516,7 +516,7 @@ public class WWParserTest {
     }
 
     @Test
-    public void test3Recipe2016() {
+    public void testRecipe2016Example3() {
         parse(7);
         the(recipe.getTitle()).shouldBeEqual("Kerniges Roggenbrot mit Paprikafrischkäse");
         the(recipe.getPortions()).shouldBeEqual(1);

@@ -86,7 +86,7 @@ public class ChefkochParserTest {
     }
 
     @Test
-    public void testRecipeZutaten() {
+    public void testRecipeIngredientVariantFakeRecipe() {
         parse(0);
         the(recipe.getTitle()).shouldBeEqual("Zucchini-Pilz-Lasagne mit Feta-Topping");
         the(recipe.getPortions()).shouldBeEqual(4);
@@ -205,7 +205,7 @@ public class ChefkochParserTest {
     }
 
     @Test
-    public void testRecipe1() {
+    public void testRecipeExample1() {
         parse(1);
         the(recipe.getTitle()).shouldBeEqual("Zucchini - Lasagne");
         the(recipe.getPortions()).shouldBeEqual(4);
