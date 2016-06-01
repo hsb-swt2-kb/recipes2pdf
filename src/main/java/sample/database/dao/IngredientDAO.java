@@ -13,7 +13,7 @@ import java.util.Optional;
 public class IngredientDAO extends ADAO<Ingredient, IngredientDBO> {
 
     @Override
-    Ingredient toPOJO(IngredientDBO ingredientDBO) {
+    public Ingredient toPOJO(IngredientDBO ingredientDBO) {
         final Ingredient ingredient = new Ingredient();
         ingredient.setID(ingredientDBO.getID());
         ingredient.setName(ingredientDBO.getName());

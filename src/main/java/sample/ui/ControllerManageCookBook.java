@@ -21,11 +21,13 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.PopOver;
+import sample.exceptions.CookBookNotFoundException;
+import sample.exceptions.RecipeNotFoundException;
 import sample.model.Cookbook;
+import sample.model.ICookbook;
 import sample.model.Recipe;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static sample.ui.UI.getAllRecipesFromDB;
@@ -162,6 +164,15 @@ loadInfo();
             String name =listViewCookBook.getSelectionModel().getSelectedItem();
                 if (name != null) {
                     recipeNamesOfCookBook.remove(name);
+                    try {
+                        ICookbook cookbook = UI.searchCookBook(comboBoxCookBooks.getValue());
+                        cookbook.removeRecipe(UI.searchRecipe(selectedItem));
+                        UI.changeCookBook((Cookbook) cookbook);
+                    } catch (CookBookNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (RecipeNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
@@ -172,11 +183,21 @@ loadInfo();
             String name =listViewRecipes.getSelectionModel().getSelectedItem();
             boolean insite = listViewCookBook.getItems().contains(name);
                 if (name != null && insite==false) {
-                    listViewCookBook.getItems().addAll(name);
+                    ICookbook cookbook = null;
+                    try {
+                        cookbook = UI.searchCookBook(comboBoxCookBooks.getValue());
+                        cookbook.addRecipe(UI.searchRecipe(selectedItem));
+                        UI.changeCookBook((Cookbook) cookbook);
+                    } catch (CookBookNotFoundException e) {
+                        controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());;
+                    } catch (RecipeNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 } else if(name==null) {
                     controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
                 }
             listViewRecipes.getSelectionModel().clearSelection();
+            refreshListViews();
         });
 
 
@@ -302,6 +323,7 @@ loadInfo();
                 if (click.getClickCount() >= 1) {
                     selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
 
+
                 }
 
                 if (click.getClickCount() == 2) {
@@ -362,7 +384,6 @@ loadInfo();
      */
     @FXML
     void export2pdf(ActionEvent event) {
-        this.selectedCookBook = comboBoxCookBooks.getValue();
         controllerDefault.newWindow(Resources.getExportFXML(), Resources.getExportWindowText(), 290, 200, Resources.getDefaultIcon());
 
     }
@@ -401,7 +422,7 @@ loadInfo();
     }
 
     protected String getSelectedCookBook(){
-        return this.selectedCookBook;
+        return this.comboBoxCookBooks.getValue();
     }
 
 }

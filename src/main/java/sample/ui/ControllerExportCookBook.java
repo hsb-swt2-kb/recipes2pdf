@@ -132,7 +132,7 @@ public class ControllerExportCookBook {
     @FXML
     void saveCookBook(ActionEvent event){
 
-        UI.exportCookbook(selectedCookBook,"A4");
+        UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBook(),"A4");
 
 
     }
