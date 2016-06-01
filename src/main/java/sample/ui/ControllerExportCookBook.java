@@ -17,11 +17,13 @@ import javafx.util.Callback;
 
 import java.io.File;
 
+
 public class ControllerExportCookBook {
 
     File file;
     @FXML
     private Button browseButton;
+    private String selectedCookBook;
     @FXML
     private TextField textFieldPath;
     @FXML
@@ -38,6 +40,7 @@ public class ControllerExportCookBook {
 
     @FXML
     private void initialize() {
+        this.selectedCookBook = ControllerManageCookBook.getInstance().getSelectedCookBook();
         initializeListeners();
         format = FXCollections.observableArrayList("A4", "A5");
         refreshComboBox(format);
@@ -128,14 +131,9 @@ public class ControllerExportCookBook {
 
     @FXML
     void saveCookBook(ActionEvent event){
-        if ((this.comboBoxFormat.getValue() == "A4") && (this.file != null)){
-            ///
-            closeWindow();
-        }
-        if ((this.comboBoxFormat.getValue() == "A5") && (this.file != null)){
-            //
-            closeWindow();
-        }else{}
+
+        UI.exportCookbook(selectedCookBook,"A4");
+
 
     }
 }

@@ -33,6 +33,7 @@ public class ControllerManageCookBook {
 
     private static ControllerManageCookBook instance;
     protected String selectedItem;
+    protected String selectedCookBook;
     private ObservableList<String> recipeNames;
     private ObservableList<String> recipeNamesOfCookBook;
     private ObservableList<String> cookBookNames;
@@ -360,6 +361,7 @@ loadInfo();
      */
     @FXML
     void export2pdf(ActionEvent event) {
+        this.selectedCookBook = comboBoxCookBooks.getValue();
         controllerDefault.newWindow(Resources.getExportFXML(), Resources.getExportWindowText(), 290, 200, Resources.getDefaultIcon());
 
     }
@@ -395,6 +397,10 @@ loadInfo();
             System.out.println("Path is wrong");
         }
         return root;
+    }
+
+    protected String getSelectedCookBook(){
+        return this.selectedCookBook;
     }
 
 }
