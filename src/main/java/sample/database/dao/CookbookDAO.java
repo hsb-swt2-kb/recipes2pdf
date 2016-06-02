@@ -84,28 +84,26 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
                     final RecipeDBO recipeDBO = new RecipeDAO().toDBO((Recipe) recipe);
                     if( cookbookDBO.get(RecipeDBO.class, "recipe.id = ?", recipe.getID()).isEmpty()) {
                         cookbookDBO.add(recipeDBO);
-                    } else {
-                        // Remove recipe
-                        final List<Long> listOfAssociatedIDsInPojo = pojo.getRecipes()
-                            .stream()
-                            .map(IIdentifiable::getID)
-                            .collect(Collectors.toList());
-
-                        List<RecipeDBO>listOfAssociatedIDsInPojoAndDBO = cookbookDBO.getAll(RecipeDBO.class)
-                            .stream()
-                            .filter(iRecipeDBO -> listOfAssociatedIDsInPojo.contains(recipeDBO.getID()))
-                            .collect(Collectors.toList());
-
-                        boolean associated = listOfAssociatedIDsInPojoAndDBO.contains(recipeDBO.getID());
-
-                        if( !associated ) {
-                            cookbookDBO.remove(recipeDBO);
-                        }
                     }
                 }
             }
+            removeUnusedAssociations(pojo, cookbookDBO);
         }
 
         return cookbookDBO;
+    }
+
+    private void removeUnusedAssociations(Cookbook pojo, CookbookDBO cookbookDBO) {
+        final List<Long> listOfAssociatedIDsInPojo = pojo.getRecipes()
+            .stream()
+            .map(IIdentifiable::getID)
+            .collect(Collectors.toList());
+
+        List<RecipeDBO>listOfUnAssociatedIDsInPojoAndDBO = cookbookDBO.getAll(RecipeDBO.class)
+            .stream()
+            .filter(iRecipeDBO -> !listOfAssociatedIDsInPojo.contains(iRecipeDBO.getID()))
+            .collect(Collectors.toList());
+
+        listOfUnAssociatedIDsInPojoAndDBO.stream().forEach(cookbookDBO::remove);
     }
 }
