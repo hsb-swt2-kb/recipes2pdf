@@ -141,7 +141,12 @@ public class ControllerLoadRecipe {
     @FXML
     void openFolder() {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.importFolder();
+        boolean success;
+        try {
+            UI.addRecipesFromFolder(fileHandler.importFolder());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

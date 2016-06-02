@@ -317,4 +317,8 @@ public class UI {
         Cookbook cookbook = UI.searchCookBook(cookbookname);
         return cookbook.getRecipes();
     }
+
+    public static void addRecipesFromFolder(File[] files) {
+        new Database(DatabaseConnection.getDatabaseConnection());
+    }
 }
