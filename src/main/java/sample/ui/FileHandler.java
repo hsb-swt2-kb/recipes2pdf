@@ -19,14 +19,15 @@ public class FileHandler {
     /**
      * These method imports the data of a single folder.
      */
-    File[] importFolder() {
+    File importFolder() {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final DirectoryChooser chooser = new DirectoryChooser();
         //File defaultDirectory = new File("c:/dev/javafx");
         //chooser.setInitialDirectory(defaultDirectory);
         File selectedDirectory = chooser.showDialog(stage);
-        return selectedDirectory.listFiles();
+
+        return selectedDirectory;
     }
 
 

@@ -318,7 +318,7 @@ public class UI {
         return cookbook.getRecipes();
     }
 
-    public static void addRecipesFromFolder(File[] files) {
+    public static void addRecipesFromFolder(File folder) {
         new Database(DatabaseConnection.getDatabaseConnection());
     }
 }
