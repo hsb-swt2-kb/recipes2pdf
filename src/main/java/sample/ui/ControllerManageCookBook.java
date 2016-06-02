@@ -372,7 +372,7 @@ loadInfo();
             @Override
             public void handle(MouseEvent click) {
                 boolean recipeListViewEmpty = listViewRecipes.getItems().isEmpty();
-                if (!recipeListViewEmpty)
+                if (!recipeListViewEmpty) {
                 if (click.getClickCount() >= 1) {
                     selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
 
@@ -383,6 +383,7 @@ loadInfo();
                     selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
 
                 }
+            }
             }
         });
     }
