@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -82,8 +83,13 @@ public class ControllerManageCookBooks {
      */
 
     private void initializeListeners() {
+        setupMultipleSelection();
         doubleClick();
+        buttonActions();
 
+    }
+
+    private void buttonActions() {
         deleteButton.setOnAction((ActionEvent event) -> {
             String cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
             this.selectedItem = cookbook;
@@ -157,6 +163,13 @@ public class ControllerManageCookBooks {
                 }
             }
         });
+    }
+
+    /**
+     * Setup multiple selection for listviews.
+     */
+    private void setupMultipleSelection() {
+        listViewCookBooks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     /**
