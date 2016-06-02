@@ -7,6 +7,7 @@ import sample.model.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Database Access Object for Cookbook.
@@ -73,8 +74,34 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
         List<IRecipe> recipes = pojo.getRecipes();
         if (null != recipes) {
             for (IRecipe recipe : recipes) {
-                if (!new RecipeDAO().findById(recipe.getID()).isPresent()) {
-                    cookbookDBO.addRecipe(new RecipeDAO().toDBO((Recipe) recipe));
+                final Optional<Recipe> recipeOpt = new RecipeDAO().findById(recipe.getID());
+                if (!recipeOpt.isPresent()) {
+                    final RecipeDBO recipeDBO = new RecipeDAO().toDBO((Recipe) recipe);
+                    recipeDBO.saveIt();
+                    cookbookDBO.addRecipe(recipeDBO);
+                } else if (recipeOpt.isPresent()) {
+                    // Add recipe
+                    final RecipeDBO recipeDBO = new RecipeDAO().toDBO((Recipe) recipe);
+                    if( cookbookDBO.get(RecipeDBO.class, "recipe.id = ?", recipe.getID()).isEmpty()) {
+                        cookbookDBO.add(recipeDBO);
+                    } else {
+                        // Remove recipe
+                        final List<Long> listOfAssociatedIDsInPojo = pojo.getRecipes()
+                            .stream()
+                            .map(IIdentifiable::getID)
+                            .collect(Collectors.toList());
+
+                        List<RecipeDBO>listOfAssociatedIDsInPojoAndDBO = cookbookDBO.getAll(RecipeDBO.class)
+                            .stream()
+                            .filter(iRecipeDBO -> listOfAssociatedIDsInPojo.contains(recipeDBO.getID()))
+                            .collect(Collectors.toList());
+
+                        boolean associated = listOfAssociatedIDsInPojoAndDBO.contains(recipeDBO.getID());
+
+                        if( !associated ) {
+                            cookbookDBO.remove(recipeDBO);
+                        }
+                    }
                 }
             }
         }

@@ -23,7 +23,6 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Class UI
@@ -285,11 +284,7 @@ public class UI {
      * @throws CookBookNotFoundException
      */
     static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
-        List<Cookbook> cookBooks = new ArrayList<>();
-        Optional<Cookbook> cookbook = new CookbookDAO().findFirst("name=?",cookbookname);
-        if(cookbook.isPresent())
-            return cookbook.get();
-        throw new CookBookNotFoundException("kein Kochbuch diesen Namens in der Datenbank vorhanden.");
+        return new CookbookDAO().findFirst("title=?", cookbookname).orElseThrow(CookBookNotFoundException::new);
     }
 
     /**
@@ -302,11 +297,7 @@ public class UI {
      * @throws RecipeNotFoundException
      */
     static Recipe searchRecipe(String recipeName) throws RecipeNotFoundException {
-        Optional<Recipe> recipe = new RecipeDAO().findFirst("title=?", recipeName);
-
-        if(!recipe.isPresent())
-            throw new RecipeNotFoundException();
-        return recipe.get();
+        return new RecipeDAO().findFirst("title=?", recipeName).orElseThrow(RecipeNotFoundException::new);
     }
 
     static void exportCookbook(String cookbookName, String paperFormats) throws CookBookNotFoundException,IOException,TexParserException{
