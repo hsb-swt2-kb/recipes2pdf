@@ -189,14 +189,19 @@ public class ControllerLoadRecipe {
     }
 
     private boolean hyperLinkCheck() {
+        String checfkoch = "chefkoch";
+        String weightwatchers = "weightwatchers";
+        String url = this.hyperLinkTextField.getText();
 
         boolean hyperlink = false;
         UrlValidator urlValidator = new UrlValidator();
         //valid URL
-        if (urlValidator.isValid(this.hyperLinkTextField.getText())) {
+        if (!urlValidator.isValid(url)) {
+            manageHyperlinkError("Download fehlgeschlagen!", "Geben Sie bitte einen Hyperlink ein!");
+        } else if ((!(url.toLowerCase().contains(checfkoch.toLowerCase()))) && (!(url.toLowerCase().contains(weightwatchers.toLowerCase())))) {
+            manageHyperlinkError("Falsche Quelle!", "Geben Sie bitte einen WW- o. CK-Link ein!");
+        } else if (urlValidator.isValid(url)) {
             hyperlink = true;
-        } else {
-            manageHyperlinkError("Download fehlgeschlagen!", "Geben Sie einen Link von CK oder WW ein.");
         }
         return hyperlink;
     }
