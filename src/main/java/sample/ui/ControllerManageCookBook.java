@@ -98,7 +98,7 @@ loadInfo();
     void refresh(){
         loadInfo();
         refreshComboBox();
-        refreshListViews();
+        refreshListViewsAllRecipes();
     }
 
     void loadInfo(){
@@ -115,27 +115,32 @@ loadInfo();
         for (Recipe recipe : recipes){
             recipeNames.add(recipe.getTitle());
         }
+    }
 
-        for (Cookbook cookbook: cookbooksDB){
-            List<Recipe> iRecipes = UI.castIRecipeToRecipe(cookbook.getRecipes());
-            for(Recipe recipe : iRecipes){
+    void refreshListViewRecipeNamesOfCookBook() {
+        this.selectedCookBook = comboBoxCookBooks.getValue();
+        if (comboBoxCookBooks.getValue() != null) {
+            recipeNamesOfCookBook.clear();
+            List<Recipe> iRecipes = UI.getRecipesOfCookbook(this.selectedCookBook);
+            for (Recipe recipe : iRecipes) {
                 recipeNamesOfCookBook.add(recipe.getTitle());
             }
+            FXCollections.sort(recipeNamesOfCookBook);
+            this.listViewCookBook.getItems().clear();
+            this.listViewCookBook.getItems().addAll((recipeNamesOfCookBook));
+            searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
         }
     }
 
     /**
-     * The method ''refreshListView(ObservableList<String> recipes, ObservableList<String> cookbook)'' refreshs the listViews.
+     * The method ''refreshListViewsAllRecipes'' refreshs the listViews.
      */
 
-    private void refreshListViews() {
+    private void refreshListViewsAllRecipes() {
         FXCollections.sort(recipeNames);
-        FXCollections.sort(recipeNamesOfCookBook);
-        if(this.listViewCookBook != null && this.listViewRecipes != null) {
+        if (this.listViewRecipes != null) {
             this.listViewRecipes.setItems(recipeNames);
-            this.listViewCookBook.setItems(recipeNamesOfCookBook);
             searchInListView(recipeNames, searchFieldRecipes, listViewRecipes);
-            searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
         }
     }
 
@@ -159,78 +164,98 @@ loadInfo();
         doubleClick();
         dragleft2right();
         dragright2left();
+        buttonActions();
+        comboBoxActions();
 
+    }
+
+    private void comboBoxActions() {
+        comboBoxCookBooks.setOnAction((ActionEvent event) -> {
+            refreshListViewRecipeNamesOfCookBook();
+        });
+    }
+
+    void left2right() {
+        String name = listViewRecipes.getSelectionModel().getSelectedItem();
+        boolean insite = listViewCookBook.getItems().contains(name);
+        if (name != null && insite == false) {
+            ICookbook cookbook = null;
+            try {
+                cookbook = UI.searchCookBook(comboBoxCookBooks.getValue());
+                cookbook.addRecipe(UI.searchRecipe(selectedItem));
+                UI.changeCookBook((Cookbook) cookbook);
+            } catch (CookBookNotFoundException e) {
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+            } catch (RecipeNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else if (name == null) {
+            controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+        }
+        listViewRecipes.getSelectionModel().clearSelection();
+        refreshListViewsAllRecipes();
+        refreshListViewRecipeNamesOfCookBook();
+    }
+
+    void right2left() {
+        String name = listViewCookBook.getSelectionModel().getSelectedItem();
+        if (name != null) {
+            recipeNamesOfCookBook.remove(name);
+            try {
+                ICookbook cookbook = UI.searchCookBook(comboBoxCookBooks.getValue());
+                cookbook.removeRecipe(UI.searchRecipe(selectedItem));
+                UI.changeCookBook((Cookbook) cookbook);
+            } catch (CookBookNotFoundException e) {
+                e.printStackTrace();
+            } catch (RecipeNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+        }
+        listViewCookBook.getSelectionModel().clearSelection();
+        refreshListViewRecipeNamesOfCookBook();
+    }
+
+    private void buttonActions() {
         leftArrowButton.setOnAction((ActionEvent event) -> {
-            String name =listViewCookBook.getSelectionModel().getSelectedItem();
-                if (name != null) {
-                    recipeNamesOfCookBook.remove(name);
-                    try {
-                        ICookbook cookbook = UI.searchCookBook(comboBoxCookBooks.getValue());
-                        cookbook.removeRecipe(UI.searchRecipe(selectedItem));
-                        UI.changeCookBook((Cookbook) cookbook);
-                    } catch (CookBookNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (RecipeNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-                }
-            listViewCookBook.getSelectionModel().clearSelection();
+            right2left();
         });
 
         rightArrowButton.setOnAction((ActionEvent event) -> {
-            String name =listViewRecipes.getSelectionModel().getSelectedItem();
-            boolean insite = listViewCookBook.getItems().contains(name);
-                if (name != null && insite==false) {
-                    ICookbook cookbook = null;
-                    try {
-                        cookbook = UI.searchCookBook(comboBoxCookBooks.getValue());
-                        cookbook.addRecipe(UI.searchRecipe(selectedItem));
-                        UI.changeCookBook((Cookbook) cookbook);
-                    } catch (CookBookNotFoundException e) {
-                        controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());;
-                    } catch (RecipeNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                } else if(name==null) {
-                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-                }
-            listViewRecipes.getSelectionModel().clearSelection();
-            refreshListViews();
+            left2right();
         });
 
 
         //Buttonactions
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
-            String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
+            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
             String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
 
 
-
-
-                System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
-                if (recipe != null || recipeInCookBook != null) {
-                    controllerDefault.newWindowNotResizable(Resources.getDeleteRecipeFXML(), Resources.getDeleteWindowText());
-                } else {
-                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-                }
-            });
+            System.out.println("Would delete " + recipe); //TODO: Consider choice of user to really delete
+            if (recipe != null || recipeInCookBook != null) {
+                controllerDefault.newWindowNotResizable(Resources.getDeleteRecipeFXML(), Resources.getDeleteWindowText());
+            } else {
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+            }
+        });
 
 
         changeRecipeButton.setOnAction((ActionEvent event) -> {
-            String recipe =listViewRecipes.getSelectionModel().getSelectedItem();
-                String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
+            String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
+            String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
 
-                System.out.println("Would change " + recipe); //TODO: Consider choice of user to change
-                if (recipe != null || recipeInCookBook != null) {
-                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
-                } else {
-                    controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
-                }
-            });
+            System.out.println("Would change " + recipe); //TODO: Consider choice of user to change
+            if (recipe != null || recipeInCookBook != null) {
+                controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+            } else {
+                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+            }
+        });
 
     }
+
 
     private void dragleft2right() {
         // drag from the left listView to right the right listView
@@ -260,12 +285,7 @@ loadInfo();
         listViewCookBook.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-                boolean insite = listViewCookBook.getItems().contains(selectedItem);
-                if (insite == false) {
-                    listViewCookBook.getItems().addAll(selectedItem);
-                    listViewRecipes.setItems(recipeNames);
-                    dragEvent.setDropCompleted(true);
-                }
+                left2right();
             }
         });
     }
@@ -293,11 +313,7 @@ loadInfo();
         listViewRecipes.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-                String selectedItem = dragEvent.getDragboard().getString();
-
-
-                recipeNamesOfCookBook.remove(selectedItem);
-                dragEvent.setDropCompleted(true);
+                right2left();
             }
         });
 

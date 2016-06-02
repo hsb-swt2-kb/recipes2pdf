@@ -45,7 +45,7 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static void addRecipes(List<File> files) throws Exception, FileNotFoundException, CouldNotParseException {
+    static void addRecipes(List<File> files) throws Exception {
         new Database(DatabaseConnection.getDatabaseConnection());
         for (File file : files) {
             addRecipe(file);
@@ -63,7 +63,7 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static void addRecipe(File file) throws Exception, FileNotFoundException, CouldNotParseException {
+    static void addRecipe(File file) throws Exception {
         new Database(DatabaseConnection.getDatabaseConnection());
         Recipe recipe = (Recipe) Parser.parse(file);
         if (!recipe.isIncomplete()) {
@@ -292,5 +292,17 @@ public class UI {
             e.printStackTrace();
         }
 
+    }
+
+    public static List<Recipe> getRecipesOfCookbook(String cookbookname) {
+        new Database(DatabaseConnection.getDatabaseConnection());
+        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
+
+        /**
+         *  IMPLEMENTATION NOTWENDIG
+         */
+        List<Recipe> iRecipes = getAllRecipesFromDB(); // <---TEST
+
+        return iRecipes;
     }
 }
