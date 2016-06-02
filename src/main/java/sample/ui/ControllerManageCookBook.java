@@ -127,14 +127,15 @@ loadInfo();
                 for (IRecipe iRecipeDB : iRecipes) {
                     recipeNamesOfCookBook.add(iRecipeDB.getTitle());
                 }
+                FXCollections.sort(recipeNamesOfCookBook);
+                this.listViewCookBook.getItems().clear();
+                this.listViewCookBook.getItems().addAll((recipeNamesOfCookBook));
+                searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
             } catch (CookBookNotFoundException e) {
                 System.out.println("The Cookbook has no recipes");
             }
 
-            FXCollections.sort(recipeNamesOfCookBook);
-            this.listViewCookBook.getItems().clear();
-            this.listViewCookBook.getItems().addAll((recipeNamesOfCookBook));
-            searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
+
         }
     }
 
