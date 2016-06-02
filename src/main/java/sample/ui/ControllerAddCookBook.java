@@ -9,7 +9,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.model.Cookbook;
 
 import java.io.File;
 
@@ -150,7 +149,8 @@ public class ControllerAddCookBook  {
             Stage stage = (Stage) generateButton.getScene().getWindow();
             stage.close();
         }else{
-            //Exception
+            ControllerDefault controllerDefault = new ControllerDefault();
+            controllerDefault.newWindowNotResizable(Resources.getNotEnoughArgumentsFXML(), Resources.getErrorWindowText());
         }
 
 

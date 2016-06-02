@@ -24,6 +24,7 @@ public class ControllerChangeCookBook {
     File file;
     String foreword;
     String path;
+    Cookbook cookbook;
     @FXML
     private Button fileChooserButton;
         @FXML
@@ -34,9 +35,6 @@ public class ControllerChangeCookBook {
     private TextArea textAreaVorwort;
     @FXML
     private TextField textFieldPicture;
-
-    Cookbook cookbook;
-
     @FXML
     private Button changeButton;
 
@@ -92,6 +90,9 @@ public class ControllerChangeCookBook {
             {
                 System.out.println("Couldn't load cookbook");
             }
+        } else {
+            ControllerDefault controllerDefault = new ControllerDefault();
+            controllerDefault.newWindowNotResizable(Resources.getNotEnoughArgumentsFXML(), Resources.getErrorWindowText());
         }
 
             //Close Stage

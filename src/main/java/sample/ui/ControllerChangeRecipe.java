@@ -168,7 +168,10 @@ public class ControllerChangeRecipe {
             ControllerManageCookBooks.getInstance().refreshListViews();
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
-        }
+              } else {
+                  ControllerDefault controllerDefault = new ControllerDefault();
+                  controllerDefault.newWindowNotResizable(Resources.getNotEnoughArgumentsFXML(), Resources.getErrorWindowText());
+              }
 
 
     }

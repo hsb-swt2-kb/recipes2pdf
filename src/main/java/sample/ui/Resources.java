@@ -36,6 +36,10 @@ public class Resources {
         return "/sample/ui/AddCookBook.fxml";
     }
 
+    protected static String getNotEnoughArgumentsFXML() {
+        return "/sample/ui/NotEnoughArguments.fxml";
+    }
+
     protected static String getDeleteCookBookFXML() {
         return "/sample/ui/DeleteDialogCookBook.fxml";
     }
