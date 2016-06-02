@@ -134,6 +134,12 @@ public class ControllerAddCookBook  {
         this.listViewSortLevel.getItems().addAll(this.sortLevelsOfTheCookbook);
     }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     /**
      * The method ''generateCookBook()'' finally generates the cookbook,
      * when at least the name and the sortlevel setted.
@@ -149,8 +155,7 @@ public class ControllerAddCookBook  {
             Stage stage = (Stage) generateButton.getScene().getWindow();
             stage.close();
         }else{
-            ControllerDefault controllerDefault = new ControllerDefault();
-            controllerDefault.newWindowNotResizable(Resources.getNotEnoughArgumentsFXML(), Resources.getErrorWindowText());
+            manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
         }
 
 

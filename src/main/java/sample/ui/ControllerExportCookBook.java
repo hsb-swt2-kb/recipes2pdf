@@ -14,8 +14,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import sample.builder.Exceptions.TexParserException;
+import sample.exceptions.CookBookNotFoundException;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public class ControllerExportCookBook {
@@ -129,11 +132,28 @@ public class ControllerExportCookBook {
         }
     }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     @FXML
-    void saveCookBook(ActionEvent event){
+    void saveCookBook(ActionEvent event) {
 
-        UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBook(),"A4");
+        try {
+            UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBook(), "A4");
+        } catch (CookBookNotFoundException e) {
+            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
 
+        } catch (IOException e) {
+            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
+        } catch (TexParserException e) {
+            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
+
+        }
 
     }
+
+
 }

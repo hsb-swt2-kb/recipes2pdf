@@ -12,6 +12,10 @@ public class Resources {
         return "/sample/ui/Default.fxml";
     }
 
+    protected static String getErrorFXML() {
+        return "/sample/ui/Error.fxml";
+    }
+
     protected static String getMangeCookBookFXML() {
         return "/sample/ui/ManageCookBook.fxml";
     }
@@ -24,20 +28,8 @@ public class Resources {
         return "/sample/ui/ChangeCookBook.fxml";
     }
 
-    protected static String getNoRecipeSelectedFXML() {
-        return "/sample/ui/NoRecipeSelectedDialog.fxml";
-    }
-
-    protected static String getNoCookBookSelectedFXML() {
-        return "/sample/ui/NoCookBookSelectedDialog.fxml";
-    }
-
     protected static String getAddCookBookFXML() {
         return "/sample/ui/AddCookBook.fxml";
-    }
-
-    protected static String getNotEnoughArgumentsFXML() {
-        return "/sample/ui/NotEnoughArguments.fxml";
     }
 
     protected static String getDeleteCookBookFXML() {

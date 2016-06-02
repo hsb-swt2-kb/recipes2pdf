@@ -150,6 +150,12 @@ public class ControllerChangeRecipe {
 
         }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     @FXML
     void changeRecipe(ActionEvent event) {
               if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
@@ -169,8 +175,7 @@ public class ControllerChangeRecipe {
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
               } else {
-                  ControllerDefault controllerDefault = new ControllerDefault();
-                  controllerDefault.newWindowNotResizable(Resources.getNotEnoughArgumentsFXML(), Resources.getErrorWindowText());
+                  manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
               }
 
 

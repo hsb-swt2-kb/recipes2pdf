@@ -25,6 +25,7 @@ import sample.exceptions.CookBookNotFoundException;
 import sample.exceptions.RecipeNotFoundException;
 import sample.model.Cookbook;
 import sample.model.ICookbook;
+import sample.model.IRecipe;
 import sample.model.Recipe;
 
 import java.io.IOException;
@@ -121,10 +122,15 @@ loadInfo();
         this.selectedCookBook = comboBoxCookBooks.getValue();
         if (comboBoxCookBooks.getValue() != null) {
             recipeNamesOfCookBook.clear();
-            List<Recipe> iRecipes = UI.getRecipesOfCookbook(this.selectedCookBook);
-            for (Recipe recipe : iRecipes) {
-                recipeNamesOfCookBook.add(recipe.getTitle());
+            try {
+                List<IRecipe> iRecipes = UI.getRecipesOfCookbook(this.selectedCookBook);
+                for (IRecipe iRecipeDB : iRecipes) {
+                    recipeNamesOfCookBook.add(iRecipeDB.getTitle());
+                }
+            } catch (CookBookNotFoundException e) {
+                System.out.println("The Cookbook has no recipes");
             }
+
             FXCollections.sort(recipeNamesOfCookBook);
             this.listViewCookBook.getItems().clear();
             this.listViewCookBook.getItems().addAll((recipeNamesOfCookBook));
@@ -185,16 +191,22 @@ loadInfo();
                 cookbook.addRecipe(UI.searchRecipe(selectedItem));
                 UI.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
-                controllerDefault.newWindowNotResizable(Resources.getNoCookBookSelectedFXML(), Resources.getErrorWindowText());
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
             } catch (RecipeNotFoundException e) {
                 e.printStackTrace();
             }
         } else if (name == null) {
-            controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
+            manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
         }
         listViewRecipes.getSelectionModel().clearSelection();
         refreshListViewsAllRecipes();
         refreshListViewRecipeNamesOfCookBook();
+    }
+
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
     }
 
     void right2left() {
@@ -206,13 +218,13 @@ loadInfo();
                 cookbook.removeRecipe(UI.searchRecipe(selectedItem));
                 UI.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
-                controllerDefault.newWindowNotResizable(Resources.getNoCookBookSelectedFXML(), Resources.getErrorWindowText());
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
                 e.printStackTrace();
             } catch (RecipeNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
-            controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
+            manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
         }
         listViewCookBook.getSelectionModel().clearSelection();
         refreshListViewRecipeNamesOfCookBook();
@@ -238,7 +250,7 @@ loadInfo();
             if (recipe != null || recipeInCookBook != null) {
                 controllerDefault.newWindowNotResizable(Resources.getDeleteRecipeFXML(), Resources.getDeleteWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
             }
         });
 
@@ -251,7 +263,7 @@ loadInfo();
             if (recipe != null || recipeInCookBook != null) {
                 controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
             }
         });
 

@@ -71,6 +71,12 @@ public class ControllerManageCookBooks {
         refreshListViews();
     }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     /**
      * The method ''initializeListeners()'' initializes the listeners.
      */
@@ -84,7 +90,7 @@ public class ControllerManageCookBooks {
             if (cookbook != null) {
                 controllerDefault.newWindowNotResizable(Resources.getDeleteCookBookFXML(), Resources.getDeleteWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoCookBookSelectedFXML(), Resources.getErrorWindowText());
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
             }
         });
 
@@ -94,7 +100,7 @@ public class ControllerManageCookBooks {
             if (cookbook != null) {
                 controllerDefault.newWindow(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoCookBookSelectedFXML(), Resources.getErrorWindowText());
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
             }
         });
     }

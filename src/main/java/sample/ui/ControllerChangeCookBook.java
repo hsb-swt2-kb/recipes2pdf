@@ -78,6 +78,12 @@ public class ControllerChangeCookBook {
         textFieldPicture.setText(path);
     }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     @FXML
     void changeCookBook(ActionEvent event) {
         if(this.textFieldName.getText().trim().isEmpty() == false) {
@@ -91,8 +97,7 @@ public class ControllerChangeCookBook {
                 System.out.println("Couldn't load cookbook");
             }
         } else {
-            ControllerDefault controllerDefault = new ControllerDefault();
-            controllerDefault.newWindowNotResizable(Resources.getNotEnoughArgumentsFXML(), Resources.getErrorWindowText());
+            manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
         }
 
             //Close Stage
