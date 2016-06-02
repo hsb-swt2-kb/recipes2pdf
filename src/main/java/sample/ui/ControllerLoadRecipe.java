@@ -13,6 +13,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import org.apache.commons.validator.UrlValidator;
 import org.controlsfx.control.PopOver;
 import sample.exceptions.CouldNotParseException;
 
@@ -171,7 +172,7 @@ public class ControllerLoadRecipe {
     @FXML
     void selectOptionsForLoading(ActionEvent event) {
         if ((radioButtonLinkBoolean == true) && (this.hyperLinkTextField.getText().trim().isEmpty() == false)) {
-            System.out.println("(this.hyperLinkTextField.getText()");
+            openHyperlink();
         } else if (radioButtonFolderBoolean == true) {
             openFolder();
         } else if (radioButtonFileBoolean == true) {
@@ -179,6 +180,27 @@ public class ControllerLoadRecipe {
         }
         ControllerManageCookBook.getInstance().refresh();
         closeStage();
+    }
+
+    private boolean hyperLinkCheck() {
+
+        UrlValidator urlValidator = new UrlValidator();
+        //valid URL
+        if (urlValidator.isValid(this.hyperLinkTextField.getText())) {
+            System.out.println("url is valid");
+        } else {
+            System.out.println("url is invalid");
+        }
+
+        boolean hyperlink = true;
+        return hyperlink;
+    }
+
+    void openHyperlink() {
+        boolean hyperlink = hyperLinkCheck();
+        if (hyperlink == true) {
+            UI.addRecipeFromHyperlink(this.hyperLinkTextField.getText());
+        }
     }
 
     /**

@@ -321,4 +321,8 @@ public class UI {
     public static void addRecipesFromFolder(File folder) {
         new Database(DatabaseConnection.getDatabaseConnection());
     }
+
+    public static void addRecipeFromHyperlink(String hyperLink) {
+        new Database(DatabaseConnection.getDatabaseConnection());
+    }
 }
