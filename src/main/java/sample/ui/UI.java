@@ -148,7 +148,7 @@ public class UI {
      * @param recipes recipes to delete in DB
      * @return boolean successs of the deletion
      */
-    static boolean delRecipes(ArrayList<Recipe> recipes) {
+    static boolean delRecipesFromDatabase(ArrayList<Recipe> recipes) {
         new Database(DatabaseConnection.getDatabaseConnection());
         boolean success = true;
         for (Recipe recipe : recipes)
@@ -190,13 +190,30 @@ public class UI {
      * <p>
      * uses CookBookDAO to delete a Cookbook (only, not the Recipes of it) from the DB
      *
+     * @param cookbookName name of the cookbook to delete from DB
+     * @return boolean success of the deletion
+     */
+    static boolean delCookBook(String cookbookName) {
+        new Database(DatabaseConnection.getDatabaseConnection());
+        if(new CookbookDAO().findFirst("name=?", cookbookName).isPresent())
+        {
+            Cookbook cookbookToDelete = new CookbookDAO().findFirst("name=?",cookbookName).get();
+            return new CookbookDAO().delete(cookbookToDelete);
+        }
+        return false;
+    }
+
+    /**
+     * delCookBook
+     * <p>
+     * uses CookBookDAO to delete a Cookbook (only, not the Recipes of it) from the DB
+     *
      * @param cookbook cookbook to delete from DB
      * @return boolean success of the deletion
      */
     static boolean delCookBook(Cookbook cookbook) {
         new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().delete(cookbook);
-
     }
 
     /**
@@ -272,37 +289,32 @@ public class UI {
         return recipe.get();
     }
 
-    public static void exportCookbook(String cookbookName, String paperFormats) {
-
+    static void exportCookbook(String cookbookName, String paperFormats) throws CookBookNotFoundException,IOException,TexParserException{
         try {
-
             ICookbook cookbook = searchCookBook(cookbookName);
-
             List<IConcreteBuilder> builderList = new ArrayList<>();
-            IConcreteBuilder pdfBuilder = new PdfBuilder(IConfig.getInstance());
-            builderList.add(pdfBuilder);
+            builderList.add(new PdfBuilder(IConfig.getInstance()));
             IBuilder builder = new Builder(builderList);
             builder.build(cookbook);
-
-        } catch (TexParserException e) {
-            System.out.println("Konnte nicht in pdf geparsed werden");
-        } catch (IOException e) {
-            System.out.println("IO-Fehler beim parsen");
-        } catch (CookBookNotFoundException e) {
-            e.printStackTrace();
         }
+        catch (CookBookNotFoundException e) { throw e; }
+        catch (IOException e) { throw e; }
+        catch (TexParserException e) { throw e; }
 
     }
 
-    public static List<Recipe> getRecipesOfCookbook(String cookbookname) {
+    /**
+     * getRecipesOfCookbook
+     *
+     * to get the Recipes that are associated with this cookbook
+     *
+     * @param cookbookname name of the cookbook of you want the recipes from
+     * @return List<Recipe> list of the recipes of the cookbook
+     * @throws CookBookNotFoundException
+     */
+    static List<IRecipe> getRecipesOfCookbook(String cookbookname) throws CookBookNotFoundException {
         new Database(DatabaseConnection.getDatabaseConnection());
-        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
-
-        /**
-         *  IMPLEMENTATION NOTWENDIG
-         */
-        List<Recipe> iRecipes = getAllRecipesFromDB(); // <---TEST
-
-        return iRecipes;
+        Cookbook cookbook = UI.searchCookBook(cookbookname);
+        return cookbook.getRecipes();
     }
 }
