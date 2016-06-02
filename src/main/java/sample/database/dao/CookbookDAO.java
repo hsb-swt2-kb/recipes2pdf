@@ -48,6 +48,14 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
         cookbookDBO.setTitle(pojo.getTitle());
         cookbookDBO.saveIt();
 
+        addAssociations(pojo, cookbookDBO);
+        removeUnusedAssociations(pojo, cookbookDBO);
+
+        return cookbookDBO;
+    }
+
+    private void addAssociations(Cookbook pojo, CookbookDBO cookbookDBO) {
+
         List<ISortlevel> sortlevels = pojo.getSortlevel();
         if (null != sortlevels) {
             for (ISortlevel sortlevel : sortlevels) {
@@ -87,10 +95,7 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
                     }
                 }
             }
-            removeUnusedAssociations(pojo, cookbookDBO);
         }
-
-        return cookbookDBO;
     }
 
     private void removeUnusedAssociations(Cookbook pojo, CookbookDBO cookbookDBO) {
