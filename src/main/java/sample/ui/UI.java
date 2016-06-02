@@ -275,7 +275,7 @@ public class UI {
     /**
      * searchRecipe
      * <p>
-     * search for a Recipe with given Title calling RecipeDAO
+     * search for a Recipe with given Title calling RecipeDAO.
      *
      * @param recipeName the name of the recipe to search
      * @return recipe the recipe that have been found in the database with the recipeName
