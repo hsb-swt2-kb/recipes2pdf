@@ -185,12 +185,12 @@ loadInfo();
                 cookbook.addRecipe(UI.searchRecipe(selectedItem));
                 UI.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                controllerDefault.newWindowNotResizable(Resources.getNoCookBookSelectedFXML(), Resources.getErrorWindowText());
             } catch (RecipeNotFoundException e) {
                 e.printStackTrace();
             }
         } else if (name == null) {
-            controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+            controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
         }
         listViewRecipes.getSelectionModel().clearSelection();
         refreshListViewsAllRecipes();
@@ -206,12 +206,13 @@ loadInfo();
                 cookbook.removeRecipe(UI.searchRecipe(selectedItem));
                 UI.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
+                controllerDefault.newWindowNotResizable(Resources.getNoCookBookSelectedFXML(), Resources.getErrorWindowText());
                 e.printStackTrace();
             } catch (RecipeNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
-            controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+            controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
         }
         listViewCookBook.getSelectionModel().clearSelection();
         refreshListViewRecipeNamesOfCookBook();
@@ -237,7 +238,7 @@ loadInfo();
             if (recipe != null || recipeInCookBook != null) {
                 controllerDefault.newWindowNotResizable(Resources.getDeleteRecipeFXML(), Resources.getDeleteWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
             }
         });
 
@@ -250,7 +251,7 @@ loadInfo();
             if (recipe != null || recipeInCookBook != null) {
                 controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
             }
         });
 

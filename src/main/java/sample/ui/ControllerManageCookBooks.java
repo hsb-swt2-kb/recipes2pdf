@@ -84,7 +84,7 @@ public class ControllerManageCookBooks {
             if (cookbook != null) {
                 controllerDefault.newWindowNotResizable(Resources.getDeleteCookBookFXML(), Resources.getDeleteWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
             }
         });
 
@@ -94,7 +94,7 @@ public class ControllerManageCookBooks {
             if (cookbook != null) {
                 controllerDefault.newWindow(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                controllerDefault.newWindowNotResizable(Resources.getNoRecipeSelectedFXML(), Resources.getErrorWindowText());
             }
         });
     }

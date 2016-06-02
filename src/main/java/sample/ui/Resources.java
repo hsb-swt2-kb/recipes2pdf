@@ -24,8 +24,12 @@ public class Resources {
         return "/sample/ui/ChangeCookBook.fxml";
     }
 
-    protected static String getNoElementsSelectedFXML() {
-        return "/sample/ui/NoElementSelectedDialog.fxml";
+    protected static String getNoRecipeSelectedFXML() {
+        return "/sample/ui/NoRecipeSelectedDialog.fxml";
+    }
+
+    protected static String getNoCookBookSelectedFXML() {
+        return "/sample/ui/NoCookBookSelectedDialog.fxml";
     }
 
     protected static String getAddCookBookFXML() {

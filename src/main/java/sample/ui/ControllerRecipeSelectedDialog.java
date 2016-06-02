@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 
 /**
  * @author Tobias Stelter
- * The Class ''ControllerNoElementSelectedDialog'' manages the NoElementSelectedDialog-FXML.
+ * The Class ''ControllerRecipeSelectedDialog'' manages the NoElementSelectedDialog-FXML.
  * It displays the NoElementSelectedDialog-dialog.
  */
 
-public class ControllerNoElementSelectedDialog {
+public class ControllerRecipeSelectedDialog {
     @FXML
     private Button closeButton;
 
