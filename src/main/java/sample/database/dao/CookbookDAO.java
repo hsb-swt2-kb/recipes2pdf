@@ -99,14 +99,38 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
     }
 
     private void removeUnusedAssociations(Cookbook pojo, CookbookDBO cookbookDBO) {
-        final List<Long> listOfAssociatedIDsInPojo = pojo.getRecipes()
+
+        /*
+         * A list of the ids of the associated recipes.
+         * */
+        final List<Long> listOfAssociatedRecipeIDsInPojo = pojo.getRecipes()
             .stream()
+            .filter(recipe -> recipe.getID() != null)
             .map(IIdentifiable::getID)
             .collect(Collectors.toList());
 
+         /*
+         * There might be pojos in this cookbook that are associated but not persisted yet.
+         * Therefore their id is null, but other attributes are set. The name is used as identification for there pojos
+         * */
+        final List<String> listOfAssociatedRecipeNamessInPojoButNotPersistedYet = pojo.getRecipes()
+            .stream()
+            .filter(recipe -> recipe.getID() == null)
+            .map(IRecipe::getTitle)
+            .collect(Collectors.toList());
+
+        /*
+         * Fill a list with dbo that need to be unassociated.
+         * This is the case if: there is a association in the database
+         * but the passed pojo doesn't has this association any more.
+         * But as there are recipe pojos that are not persisted yet but part of the cookbook
+         * pojo they must be not in the list of spared recipe names we have to skip them.
+         * */
         List<RecipeDBO>listOfUnAssociatedIDsInPojoAndDBO = cookbookDBO.getAll(RecipeDBO.class)
             .stream()
-            .filter(iRecipeDBO -> !listOfAssociatedIDsInPojo.contains(iRecipeDBO.getID()))
+            .filter(iRecipeDBO ->
+                !listOfAssociatedRecipeIDsInPojo.contains(iRecipeDBO.getID())
+                && !listOfAssociatedRecipeNamessInPojoButNotPersistedYet.contains(iRecipeDBO.getTitle()))
             .collect(Collectors.toList());
 
         listOfUnAssociatedIDsInPojoAndDBO.stream().forEach(cookbookDBO::remove);
