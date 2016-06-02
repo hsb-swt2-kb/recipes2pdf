@@ -294,15 +294,9 @@ public class UI {
 
     }
 
-    public static List<Recipe> getRecipesOfCookbook(String cookbookname) {
+    public static List<IRecipe> getRecipesOfCookbook(String cookbookname) throws CookBookNotFoundException {
         new Database(DatabaseConnection.getDatabaseConnection());
-        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
-
-        /**
-         *  IMPLEMENTATION NOTWENDIG
-         */
-        List<Recipe> iRecipes = getAllRecipesFromDB(); // <---TEST
-
-        return iRecipes;
+        Cookbook cookbook = UI.searchCookBook(cookbookname);
+        return cookbook.getRecipes();
     }
 }
