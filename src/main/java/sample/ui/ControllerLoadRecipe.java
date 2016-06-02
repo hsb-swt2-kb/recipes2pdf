@@ -182,17 +182,22 @@ public class ControllerLoadRecipe {
         closeStage();
     }
 
+    private void manageHyperlinkError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     private boolean hyperLinkCheck() {
 
+        boolean hyperlink = false;
         UrlValidator urlValidator = new UrlValidator();
         //valid URL
         if (urlValidator.isValid(this.hyperLinkTextField.getText())) {
-            System.out.println("url is valid");
+            hyperlink = true;
         } else {
-            System.out.println("url is invalid");
+            manageHyperlinkError("Download fehlgeschlagen!", "Geben Sie einen Link von CK oder WW ein.");
         }
-
-        boolean hyperlink = true;
         return hyperlink;
     }
 
