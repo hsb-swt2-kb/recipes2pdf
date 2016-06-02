@@ -19,9 +19,8 @@ import sample.model.IRecipe;
 import sample.model.Recipe;
 import sample.parser.Parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +33,26 @@ import java.util.Optional;
  * Created by markus
  */
 public class UI {
+
+    public static void addRecipeFromURL(final String URL) throws IOException {
+        String line = "";
+        List<String> all = new ArrayList<>();
+        URL myUrl;
+        BufferedReader in = null;
+        try {
+            myUrl = new URL(URL);
+            in = new BufferedReader(new InputStreamReader(myUrl.openStream()));
+
+            while ((line = in.readLine()) != null) {
+                all.add(line);
+            }
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+        }
+        addRecipe(all);
+    }
 
     /**
      * addRecipes
@@ -69,6 +88,10 @@ public class UI {
         if (!recipe.isIncomplete()) {
             new RecipeDAO().insert(recipe);
         }
+    }
+
+    static void addRecipe(List<String> lines){
+
     }
 
     /**
@@ -263,13 +286,10 @@ public class UI {
      */
     static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
         List<Cookbook> cookBooks = new ArrayList<>();
-        cookBooks = new CookbookDAO().getAll();
-        for (Cookbook cookbook : cookBooks)
-
-            if (cookbook.getTitle().equals(cookbookname))
-                return cookbook;
-        throw new CookBookNotFoundException();
-
+        Optional<Cookbook> cookbook = new CookbookDAO().findFirst("name=?",cookbookname);
+        if(cookbook.isPresent())
+            return cookbook.get();
+        throw new CookBookNotFoundException("kein Kochbuch diesen Namens in der Datenbank vorhanden.");
     }
 
     /**

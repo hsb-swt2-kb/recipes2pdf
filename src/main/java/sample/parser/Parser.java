@@ -16,6 +16,7 @@ import java.util.List;
  * @author Markus
  */
 public class Parser implements IParser {
+
     /**
      * parse
      * <p>
@@ -27,17 +28,23 @@ public class Parser implements IParser {
      * @throws CouldNotParseException
      */
     public static IRecipe parse(File recipeFile) throws CouldNotParseException, FileNotFoundException {
+        // read file content
+        List<String> fileContent;
+        try { fileContent = FileUtils.readLines(recipeFile); }
+        catch (IOException e) { throw new FileNotFoundException(e.getMessage()); }
+
+        return Parser.parse(fileContent);
+    }
+
+
+    public static IRecipe parse (List<String> fileContent) throws CouldNotParseException,FileNotFoundException {
+
         // add concrete parsers
         List<AConcreteParser> parsers = new ArrayList<>();
         parsers.add(new TxtParser());
         parsers.add(new ChefkochParser());
         parsers.add(new WWParser());
 
-
-        // read file content
-        List<String> fileContent;
-        try { fileContent = FileUtils.readLines(recipeFile); }
-        catch (IOException e) { throw new FileNotFoundException(e.getMessage()); }
 
         Recipe recipe = new Recipe();
 
