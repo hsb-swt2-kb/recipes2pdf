@@ -127,14 +127,13 @@ loadInfo();
                 for (IRecipe iRecipeDB : iRecipes) {
                     recipeNamesOfCookBook.add(iRecipeDB.getTitle());
                 }
-                FXCollections.sort(recipeNamesOfCookBook);
-                this.listViewCookBook.getItems().clear();
-                this.listViewCookBook.getItems().addAll((recipeNamesOfCookBook));
-                searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
             } catch (CookBookNotFoundException e) {
                 System.out.println("The Cookbook has no recipes");
             }
-
+            FXCollections.sort(recipeNamesOfCookBook);
+            this.listViewCookBook.getItems().clear();
+            this.listViewCookBook.getItems().addAll((recipeNamesOfCookBook));
+            searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
 
         }
     }
@@ -183,20 +182,22 @@ loadInfo();
     }
 
     void left2right() {
-        String name = listViewRecipes.getSelectionModel().getSelectedItem();
-        boolean insite = listViewCookBook.getItems().contains(name);
-        if (name != null && insite == false) {
+        this.selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
+        boolean insite = listViewCookBook.getItems().contains(this.selectedItem);
+        if (this.selectedItem != null && insite == false) {
             ICookbook cookbook = null;
             try {
-                cookbook = UI.searchCookBook(comboBoxCookBooks.getValue());
+                cookbook = UI.searchCookBook(this.selectedCookBook);
                 cookbook.addRecipe(UI.searchRecipe(selectedItem));
                 UI.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
-                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
+                e.printStackTrace();
             } catch (RecipeNotFoundException e) {
                 e.printStackTrace();
             }
-        } else if (name == null) {
+        } else if (this.selectedCookBook == null) {
+            manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
+        } else if (this.selectedItem == null) {
             manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
         }
         listViewRecipes.getSelectionModel().clearSelection();
@@ -211,20 +212,22 @@ loadInfo();
     }
 
     void right2left() {
-        String name = listViewCookBook.getSelectionModel().getSelectedItem();
-        if (name != null) {
-            recipeNamesOfCookBook.remove(name);
+        this.selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
+        if (this.selectedItem != null) {
+            recipeNamesOfCookBook.remove(this.selectedItem);
             try {
-                ICookbook cookbook = UI.searchCookBook(comboBoxCookBooks.getValue());
+                ICookbook cookbook = UI.searchCookBook(this.selectedCookBook);
                 cookbook.removeRecipe(UI.searchRecipe(selectedItem));
                 UI.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
-                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
+                //
                 e.printStackTrace();
             } catch (RecipeNotFoundException e) {
                 e.printStackTrace();
             }
-        } else {
+        } else if (this.selectedCookBook == null) {
+            manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
+        } else if (this.selectedItem == null) {
             manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
         }
         listViewCookBook.getSelectionModel().clearSelection();
