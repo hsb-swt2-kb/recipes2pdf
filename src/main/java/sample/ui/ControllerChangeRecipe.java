@@ -23,7 +23,7 @@ public class ControllerChangeRecipe {
 
 
     //Recipe selection from the ControllerManageCookBook
-    String name = ControllerManageCookBook.getInstance().getSelectedItem();
+    String name = ControllerManageCookBook.getInstance().getSelectedRecipes().get(0);
     String ernaehrungsart;
     String gerichtart;
     String portion;

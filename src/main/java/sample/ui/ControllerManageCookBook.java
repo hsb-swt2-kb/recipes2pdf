@@ -39,8 +39,8 @@ public class ControllerManageCookBook {
 
 
     private static ControllerManageCookBook instance;
-    protected String selectedItem;
-    protected String selectedCookBook;
+    protected ObservableList<String> selectedRecipes;
+    protected ObservableList<String> selectedCookBooks;
     private ObservableList<String> recipeNames;
     private ObservableList<String> recipeNamesOfCookBook;
     private ObservableList<String> cookBookNames;
@@ -92,6 +92,8 @@ public class ControllerManageCookBook {
         this.recipeNames = FXCollections.observableArrayList();
         this.recipeNamesOfCookBook = FXCollections.observableArrayList();
         this.cookBookNames = FXCollections.observableArrayList();
+        this.selectedCookBooks = FXCollections.observableArrayList();
+        this.selectedRecipes = FXCollections.observableArrayList();
         loadInfo();
         Platform.runLater(() -> {comboBoxCookBooks.setItems(this.cookBookNames); comboBoxCookBooks.getSelectionModel().selectFirst();});
         refresh();
@@ -121,11 +123,13 @@ public class ControllerManageCookBook {
     }
 
     void refreshListViewRecipeNamesOfCookBook() {
-        this.selectedCookBook = comboBoxCookBooks.getValue();
+        if(!this.selectedCookBooks.isEmpty())
+            this.selectedCookBooks.clear();
+        this.selectedCookBooks.add(comboBoxCookBooks.getValue());
         if (comboBoxCookBooks.getValue() != null) {
             recipeNamesOfCookBook.clear();
             try {
-                List<IRecipe> iRecipes = UI.getRecipesOfCookbook(this.selectedCookBook);
+                List<IRecipe> iRecipes = UI.getRecipesOfCookbook(this.selectedCookBooks.get(0));
                 for (IRecipe iRecipeDB : iRecipes) {
                     recipeNamesOfCookBook.add(iRecipeDB.getTitle());
                 }
@@ -149,6 +153,7 @@ public class ControllerManageCookBook {
         if (this.listViewRecipes != null) {
             this.listViewRecipes.setItems(recipeNames);
             searchInListView(recipeNames, searchFieldRecipes, listViewRecipes);
+            listViewRecipes.getSelectionModel().getSelectedItems();
         }
     }
 
@@ -186,22 +191,23 @@ public class ControllerManageCookBook {
     }
 
     void left2right() {
-        this.selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
-        boolean insite = listViewCookBook.getItems().contains(this.selectedItem);
-        if (this.selectedItem != null && insite == false) {
+        this.selectedRecipes = listViewRecipes.getSelectionModel().getSelectedItems();
+        boolean insite = listViewCookBook.getItems().contains(this.selectedRecipes);
+        if (this.selectedRecipes != null && insite == false) {
             ICookbook cookbook = null;
             try {
-                cookbook = UI.searchCookBook(this.selectedCookBook);
-                cookbook.addRecipe(UI.searchRecipe(selectedItem));
+                cookbook = UI.searchCookBook(this.selectedCookBooks.get(0));
+                for(String recipeName:selectedRecipes)
+                cookbook.addRecipe(UI.searchRecipe(recipeName));
                 UI.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
                 e.printStackTrace();
             } catch (RecipeNotFoundException e) {
                 e.printStackTrace();
             }
-        } else if (this.selectedCookBook == null) {
+        } else if (this.selectedCookBooks == null) {
             manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
-        } else if (this.selectedItem == null) {
+        } else if (this.selectedRecipes == null) {
             manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
         }
         listViewRecipes.getSelectionModel().clearSelection();
@@ -216,12 +222,13 @@ public class ControllerManageCookBook {
     }
 
     void right2left() {
-        this.selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
-        if (this.selectedItem != null) {
-            recipeNamesOfCookBook.remove(this.selectedItem);
+        this.selectedRecipes = listViewCookBook.getSelectionModel().getSelectedItems();
+        if (this.selectedRecipes != null) {
+            recipeNamesOfCookBook.remove(this.selectedRecipes);
             try {
-                ICookbook cookbook = UI.searchCookBook(this.selectedCookBook);
-                cookbook.removeRecipe(UI.searchRecipe(selectedItem));
+                ICookbook cookbook = UI.searchCookBook(this.selectedCookBooks.get(0));
+                for(String recipe:selectedRecipes)
+                cookbook.removeRecipe(UI.searchRecipe(recipe));
                 UI.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
                 //
@@ -229,9 +236,9 @@ public class ControllerManageCookBook {
             } catch (RecipeNotFoundException e) {
                 e.printStackTrace();
             }
-        } else if (this.selectedCookBook == null) {
+        } else if (this.selectedCookBooks == null) {
             manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
-        } else if (this.selectedItem == null) {
+        } else if (this.selectedRecipes == null) {
             manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
         }
         listViewCookBook.getSelectionModel().clearSelection();
@@ -334,8 +341,8 @@ public class ControllerManageCookBook {
 
     }
 
-    protected String getSelectedItem() {
-        return this.selectedItem;
+    protected ObservableList<String> getSelectedRecipes() {
+        return this.selectedRecipes;
     }
 
     /**
@@ -352,11 +359,9 @@ public class ControllerManageCookBook {
             public void handle(MouseEvent click) {
                 boolean cookBookListviewEmpty = listViewCookBook.getItems().isEmpty();
                 if (click.getClickCount() >= 1) {
-                    selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
-
-
+                    selectedRecipes = listViewCookBook.getSelectionModel().getSelectedItems();
                 }
-                if ((!cookBookListviewEmpty) && (selectedItem != null)) {
+                if ((!cookBookListviewEmpty) && (selectedRecipes != null)) {
                     if (click.getClickCount() == 2) {
                         controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
 
@@ -371,14 +376,14 @@ public class ControllerManageCookBook {
             public void handle(MouseEvent click) {
                 boolean recipeListViewEmpty = listViewRecipes.getItems().isEmpty();
                 if (click.getClickCount() >= 1) {
-                    selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
+                    selectedRecipes = listViewRecipes.getSelectionModel().getSelectedItems();
 
                 }
                 if (!recipeListViewEmpty) {
 
-                    if (click.getClickCount() == 2 && (selectedItem != null)) {
+                    if (click.getClickCount() == 2 && (selectedRecipes != null)) {
                         controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
-                        selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
+                        selectedRecipes = listViewRecipes.getSelectionModel().getSelectedItems();
 
                 }
             }
@@ -454,7 +459,7 @@ public class ControllerManageCookBook {
         return root;
     }
 
-    protected String getSelectedCookBook(){
+    protected String getSelectedCookBooks(){
         return this.comboBoxCookBooks.getValue();
     }
 
