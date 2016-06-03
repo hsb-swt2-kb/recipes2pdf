@@ -1,7 +1,14 @@
 package sample.parser;
 
+import sample.exceptions.CouldNotParseException;
 import sample.model.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.Duration;
 import java.lang.Math;
@@ -31,6 +38,18 @@ import java.util.regex.Pattern;
 
 
 public class TxtParser extends AConcreteParser implements Constants {
+
+    public byte[] extractBytes (String ImageName) throws IOException {
+        // open image
+        File imgPath = new File(ImageName);
+        BufferedImage bufferedImage = ImageIO.read(imgPath);
+
+        // get DataBufferBytes from Raster
+        WritableRaster raster = bufferedImage .getRaster();
+        DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
+
+        return ( data.getData() );
+    }
     /**
      * @param textFileContent via ArrayList of String, where one Element = one Line from Textfile
      * This parse()-Methode fill a Recipe-Object
@@ -59,7 +78,7 @@ public class TxtParser extends AConcreteParser implements Constants {
      *
      * NOTE: Higher Instances have to make sure, that a recipe is valid with minimal Options
      */
-    public Recipe parse(List<String> textFileContent) {
+    public Recipe parse(List<String> textFileContent) throws CouldNotParseException{
         Recipe recipe = new Recipe();
         ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
 
@@ -116,6 +135,15 @@ public class TxtParser extends AConcreteParser implements Constants {
         daytime.setName(findDatafield(textFileContent, "Tageszeit"));
         recipe.setDaytime(daytime);
 
+        String pictureFileName = recipe.getTitle();
+        pictureFileName.concat(".png");
+        if(recipe.getTitle() != null && new File(pictureFileName).exists()) {
+            try {
+                recipe.setImage(extractBytes(pictureFileName));
+            } catch (Exception e) {
+                // Bild ist optional
+            }
+        }
         //===================STEP5=============================
         try {
             String temp = findDatafield(textFileContent, "Arbeitszeit");
@@ -180,7 +208,12 @@ public class TxtParser extends AConcreteParser implements Constants {
      */
     public boolean accepts(List<String> fileContent) {
       /* parse it to check it :) */
-        return !this.parse(fileContent).isIncomplete();
+        try {
+            return !this.parse(fileContent).isIncomplete();
+        }
+        catch(CouldNotParseException e){
+            return false;
+        }
     }
 
   /** A Method to fix a NumberFormatException in parse()
@@ -193,17 +226,18 @@ public class TxtParser extends AConcreteParser implements Constants {
         int i = (int) Math.floor(d);
         return i;
     }
+
     //Extract the name of a recpipe. Must be in the first non empty row
     //of the textfile
     private String extractRecipename(List<String> textfileContent) {
-        String name = "";
-        String row = "";
+        String name, row="";
 
-        for (int i = 0; i < textfileContent.size(); i++) {
-            row = textfileContent.get(i).trim();
+        for (String line : textfileContent) {
+            row = line.trim();
             if (row.length() == 0) {
                 continue;
-            } else {
+            }
+            else {
                 name = row;
                 break;
             }
