@@ -21,6 +21,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class UI
@@ -308,7 +309,11 @@ public class UI {
      * @throws CookBookNotFoundException
      */
     static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
-        return new CookbookDAO().findFirst("title=?", cookbookname).orElseThrow(CookBookNotFoundException::new);
+        Optional<Cookbook> cookbook = new CookbookDAO().findFirst("title=?",cookbookname);
+        if(cookbook.isPresent())
+            return cookbook.get();
+        throw new CookBookNotFoundException();
+        //return new CookbookDAO().findFirst("title=?", cookbookname).orElseThrow(CookBookNotFoundException::new);
     }
 
     /**

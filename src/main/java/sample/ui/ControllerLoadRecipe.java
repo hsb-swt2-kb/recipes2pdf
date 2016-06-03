@@ -146,6 +146,7 @@ public class ControllerLoadRecipe {
         try {
             UI.addRecipesFromFolder(fileHandler.importFolder());
         } catch (Exception e) {
+            // TODO: Meldung anzeigen
             e.printStackTrace();
         }
     }

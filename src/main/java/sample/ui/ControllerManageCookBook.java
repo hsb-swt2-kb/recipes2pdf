@@ -95,6 +95,9 @@ public class ControllerManageCookBook {
         loadInfo();
         Platform.runLater(() -> {comboBoxCookBooks.setItems(this.cookBookNames); comboBoxCookBooks.getSelectionModel().selectFirst();});
         refresh();
+        if(!this.comboBoxCookBooks.getItems().isEmpty())
+            selectedCookBook = this.comboBoxCookBooks.getItems().get(0);
+        //selectedCookBook = this.comboBoxCookBooks.getValue();
     }
 
     void refresh(){
@@ -283,7 +286,6 @@ public class ControllerManageCookBook {
                 ClipboardContent content = new ClipboardContent();
                 content.putString(listViewRecipes.getSelectionModel().getSelectedItem());
                 dragBoard.setContent(content);
-
             }
         });
 
