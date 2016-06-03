@@ -7,7 +7,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.Duration;
@@ -50,6 +52,17 @@ public class TxtParser extends AConcreteParser implements Constants {
 
         return ( data.getData() );
     }
+
+    public  Recipe parse(File file) throws CouldNotParseException{
+        List<String> fileContent;
+        try {
+            fileContent = readFile(file.getName());
+        }
+        catch(IOException e){throw new CouldNotParseException("Datei nicht vorhanden.");}
+
+        return parse(fileContent);
+    }
+
     /**
      * @param textFileContent via ArrayList of String, where one Element = one Line from Textfile
      * This parse()-Methode fill a Recipe-Object

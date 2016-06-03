@@ -32,6 +32,28 @@ abstract class AConcreteParser implements Constants,IConcreteParser {
 
     return fileContent;
   }
+
+    /**
+     * readFile
+     * <p>
+     * helpful function, because textparser can handle ArrayList<String>
+     * easier than the content as one complete String.
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static ArrayList<String> readFile(String file) throws IOException {
+        String line;
+        ArrayList<String> lines = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            return lines;
+        }
+    }
     /**
      * Method to put the IngredientsList into the recipe.
      *
