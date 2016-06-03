@@ -51,6 +51,8 @@ public class Parser implements IParser {
 
         // Rezept prüfen
         if (!recipe.isIncomplete())
+            // Inhalte korrigieren
+            //recipe.setText(java.text.Normalizer.normalize(recipe.getText(), java.text.Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+",""));
             return recipe;
         else
             throw new CouldNotParseException();
