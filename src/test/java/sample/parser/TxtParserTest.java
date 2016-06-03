@@ -1,7 +1,9 @@
 package sample.parser;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.javalite.test.jspec.TestException;
 import org.junit.Test;
+import sample.exceptions.CouldNotParseException;
 import sample.model.Recipe;
 import sample.util.ResourceLoader;
 
@@ -30,7 +32,10 @@ public class TxtParserTest {
             .collect(Collectors.toList());
 
         AL = new ArrayList<String>(ac);
-        recipe = txt.parse(AL);
+        try {
+            recipe = txt.parse(AL);
+        }
+        catch (CouldNotParseException e){}
     }
 
     @Test
@@ -506,18 +511,18 @@ public class TxtParserTest {
     @Test
     public void testParseMethod43a() {
         Setup("TestGericht43a.txt");
-        the(recipe.getText().length()).shouldBeEqual(4241);
+        the(recipe.getText().length()).shouldBeEqual(4184);
     }
 
     @Test
     public void testParseMethod43b() {
         Setup("TestGericht43b.txt");
-        the(recipe.getText().length()).shouldBeEqual(4242);
+        the(recipe.getText().length()).shouldBeEqual(4185);
     }
 
     @Test
     public void testParseMethod43c() {
         Setup("TestGericht43c.txt");
-        the(recipe.getText().length()).shouldBeEqual(4242);
+        the(recipe.getText().length()).shouldBeEqual(4186);
     }
 }

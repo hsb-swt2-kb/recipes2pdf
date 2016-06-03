@@ -68,7 +68,9 @@ public class UITest extends ADatabaseTest{
 
     @Test
     public void getAllRecipesFromDB() throws Exception {
-        the(UI.getAllRecipesFromDB()).shouldBeEqual(new RecipeDAO().getAll().size());
+        int l1 = UI.getAllRecipesFromDB().size();
+        int l2 = new RecipeDAO().getAll().size();
+        the(l1).shouldBeEqual(l2);
     }
 
     @Test

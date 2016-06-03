@@ -32,8 +32,13 @@ public class ParserTest {
 
     @Test(expected = CouldNotParseException.class)
     public void testParseCouldNotParse() throws IOException, CouldNotParseException {
+        boolean success=false;
         File file = new File("src/test/resources/sample/Rezepte/FalscheBolognese.txt");
-        Parser.parse(file);
+        try {
+            Parser.parse(file);
+        }
+        catch(CouldNotParseException e){success = true;}
+        the(success).shouldBeTrue();
     }
 
     @Test(expected = FileNotFoundException.class)
