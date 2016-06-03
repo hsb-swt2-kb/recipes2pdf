@@ -153,11 +153,12 @@ public class ControllerManageCookBooks {
 
             @Override
             public void handle(MouseEvent click) {
-                if (!listViewCookBooks.getItems().isEmpty()) {
-                String cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
-                selectedItem = cookbook;
+                if (click.getClickCount() >= 1) {
+                    selectedItem = listViewCookBooks.getSelectionModel().getSelectedItem();
+                }
+                if ((!listViewCookBooks.getItems().isEmpty()) && (selectedItem != null)) {
 
-                if (click.getClickCount() == 2) {
+                    if (click.getClickCount() == 2) {
                     controllerDefault.newWindowNotResizable(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText());
 
                 }

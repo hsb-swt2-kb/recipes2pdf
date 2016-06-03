@@ -353,17 +353,14 @@ loadInfo();
             @Override
             public void handle(MouseEvent click) {
                 boolean cookBookListviewEmpty = listViewCookBook.getItems().isEmpty();
-
-                if ((!cookBookListviewEmpty)) {
                 if (click.getClickCount() >= 1) {
                     selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
 
 
                 }
-
-                if (click.getClickCount() == 2) {
-                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
-                    selectedItem = listViewCookBook.getSelectionModel().getSelectedItem();
+                if ((!cookBookListviewEmpty) && (selectedItem != null)) {
+                    if (click.getClickCount() == 2) {
+                        controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
 
                 }
                 }
@@ -375,15 +372,15 @@ loadInfo();
             @Override
             public void handle(MouseEvent click) {
                 boolean recipeListViewEmpty = listViewRecipes.getItems().isEmpty();
-                if (!recipeListViewEmpty) {
                 if (click.getClickCount() >= 1) {
                     selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
 
                 }
+                if (!recipeListViewEmpty) {
 
-                if (click.getClickCount() == 2) {
-                    controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
-                    selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
+                    if (click.getClickCount() == 2 && (selectedItem != null)) {
+                        controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
+                        selectedItem = listViewRecipes.getSelectionModel().getSelectedItem();
 
                 }
             }
