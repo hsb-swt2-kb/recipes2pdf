@@ -25,7 +25,7 @@ public class TxtParserTest {
 
         String relpath = ResourceLoader.loadFileContents(this.getClass(), datei);
 
-        List<String> ac = Pattern.compile("\\n")
+        List<String> ac = Pattern.compile("[\n\r]+")
             .splitAsStream(relpath)
             .collect(Collectors.toList());
 
@@ -501,23 +501,5 @@ public class TxtParserTest {
     public void testParseMethod67() {
         Setup("TestGericht67.txt");
         the(recipe.getDuration()).shouldBeEqual(120);
-    }
-
-    @Test
-    public void testParseMethod43a() {
-        Setup("TestGericht43a.txt");
-        the(recipe.getText().length()).shouldBeEqual(4241);
-    }
-
-    @Test
-    public void testParseMethod43b() {
-        Setup("TestGericht43b.txt");
-        the(recipe.getText().length()).shouldBeEqual(4242);
-    }
-
-    @Test
-    public void testParseMethod43c() {
-        Setup("TestGericht43c.txt");
-        the(recipe.getText().length()).shouldBeEqual(4242);
     }
 }
