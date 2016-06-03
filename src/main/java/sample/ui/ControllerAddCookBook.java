@@ -100,6 +100,10 @@ public class ControllerAddCookBook  {
 
     }
 
+    private File getFile() {
+        return file;
+    }
+
     private String getForeWord(){
         foreword = textAreaVorwort.getText();
         return foreword;
@@ -148,7 +152,7 @@ public class ControllerAddCookBook  {
     @FXML
     void generateCookBook(ActionEvent event) {
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
-            UI.addCookBook(getName());
+            UI.addCookBook(getName(), sortLevelsOfTheCookbook, getForeWord(), getFile());
             ControllerManageCookBook.getInstance().refresh();
             ControllerManageCookBooks.getInstance().refreshListViews();
             //Close Stage

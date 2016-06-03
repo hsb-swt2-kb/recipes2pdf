@@ -1,5 +1,6 @@
 package sample.ui;
 
+import javafx.collections.ObservableList;
 import sample.builder.Builder;
 import sample.builder.Exceptions.TexParserException;
 import sample.builder.IBuilder;
@@ -184,10 +185,12 @@ public class UI {
      * <p>
      * inserts a cookbook to the database and returns the title if success, otherwise null
      *
-     * @param title cookbooks to add to DB
-     * @return boolean success of the insertion
+     *
+     * @param sortLevelsOfTheCookbook
+     *@param foreWord of the cookbook
+     * @param title cookbooks to add to DB  @return boolean success of the insertion
      */
-    static void addCookBook(String title) {
+    static void addCookBook(String title, ObservableList<String> sortLevelsOfTheCookbook, String foreWord, File picture) {
         new Database(DatabaseConnection.getDatabaseConnection());
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle(title);
