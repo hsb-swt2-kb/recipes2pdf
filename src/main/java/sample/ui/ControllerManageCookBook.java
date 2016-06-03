@@ -244,7 +244,7 @@ loadInfo();
         });
 
 
-        //Buttonactions
+        //Buttonactions:
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
             String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
             String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
