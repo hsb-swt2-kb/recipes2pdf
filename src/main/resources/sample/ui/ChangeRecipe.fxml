@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<AnchorPane prefHeight="546.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerChangeRecipe">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="546.0" prefWidth="415.0"
+            xmlns="http://javafx.com/javafx/8.0.65" fx:controller="sample.ui.ControllerChangeRecipe">
    <children>
        <Text layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rezept ändern">
            <font>
@@ -34,7 +30,9 @@
             <Font size="21.0" />
          </font>
       </Text>
-      <TextArea fx:id="textAreaZubereitungstext" layoutX="200.0" layoutY="408.0" prefHeight="69.0" prefWidth="201.0" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="408.0" />
+       <TextArea fx:id="textAreaZubereitungstext" layoutX="200.0" layoutY="408.0" prefHeight="69.0" prefWidth="201.0"
+                 wrapText="true" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="200.0"
+                 AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="408.0"/>
       <Label layoutX="10.0" layoutY="521.0" text="* Pflichtfelder" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="10.0" />
       <Text layoutX="17.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zubereitungszeit:">
          <font>
