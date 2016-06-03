@@ -31,7 +31,24 @@ import java.util.List;
  */
 public class UI {
 
-    public static void addRecipeFromURL(final String URL) throws IOException {
+    static void addRecipesFromFolder(final File folder) throws Exception {
+        for (final File file : folder.listFiles()) {
+            if (!file.isDirectory()) {
+                try{
+                    UI.addRecipe(file);
+                }
+                catch(Exception e){throw e;}
+            }
+            else {
+                try{
+                    UI.addRecipesFromFolder(file);
+                }
+                catch(Exception e){throw e;}
+            }
+        }
+    }
+
+    public static void addRecipeFromHyperlink(final String URL) throws IOException {
         String line = "";
         List<String> all = new ArrayList<>();
         URL myUrl;
@@ -334,13 +351,5 @@ public class UI {
         new Database(DatabaseConnection.getDatabaseConnection());
         Cookbook cookbook = UI.searchCookBook(cookbookname);
         return cookbook.getRecipes();
-    }
-
-    public static void addRecipesFromFolder(File folder) {
-        new Database(DatabaseConnection.getDatabaseConnection());
-    }
-
-    public static void addRecipeFromHyperlink(String hyperLink) {
-        new Database(DatabaseConnection.getDatabaseConnection());
     }
 }

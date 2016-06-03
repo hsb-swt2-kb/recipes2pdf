@@ -209,7 +209,12 @@ public class ControllerLoadRecipe {
     void openHyperlink() {
         boolean hyperlink = hyperLinkCheck();
         if (hyperlink == true) {
-            UI.addRecipeFromHyperlink(this.hyperLinkTextField.getText());
+            try {
+                UI.addRecipeFromHyperlink(this.hyperLinkTextField.getText());
+            }
+            catch(Exception e){
+                // TODO: Meldung ausgeben.
+            }
         }
     }
 
