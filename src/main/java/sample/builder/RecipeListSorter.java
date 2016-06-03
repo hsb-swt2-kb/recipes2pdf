@@ -23,12 +23,12 @@ public class RecipeListSorter {
         Comparator comparator = null;
 
         for (int i=0; i<sortLevelList.size();i++) {
-
-            if (sortLevelList.get(i).getName().equalsIgnoreCase("category")) {
+            final String sortlevelName = sortLevelList.get(i).getName();
+            if (sortlevelName.equalsIgnoreCase("category") || sortlevelName.equalsIgnoreCase("Kategorie")) {
                 comparator = new CategoryComparator();
-            } else if (sortLevelList.get(i).getName().equalsIgnoreCase("region")) {
+            } else if (sortlevelName.equalsIgnoreCase("region") || sortlevelName.equalsIgnoreCase("Region")) {
                 comparator = new RegionComparator();
-            } else if (sortLevelList.get(i).getName().equalsIgnoreCase("season")) {
+            } else if (sortlevelName.equalsIgnoreCase("season") || sortlevelName.equalsIgnoreCase("Saison")) {
                 comparator = new SeasonComparator();
             } else {
                 throw new IllegalArgumentException("Illegal Sortlevel \"" + sortLevelList.get(i) + "\"");
