@@ -95,15 +95,13 @@ public class ControllerManageCookBook {
         loadInfo();
         Platform.runLater(() -> {comboBoxCookBooks.setItems(this.cookBookNames); comboBoxCookBooks.getSelectionModel().selectFirst();});
         refresh();
-        if(!this.comboBoxCookBooks.getItems().isEmpty())
-            selectedCookBook = this.comboBoxCookBooks.getItems().get(0);
-        //selectedCookBook = this.comboBoxCookBooks.getValue();
     }
 
     void refresh(){
         loadInfo();
         refreshComboBox();
         refreshListViewsAllRecipes();
+        refreshListViewRecipeNamesOfCookBook();
     }
 
     void loadInfo(){
@@ -162,6 +160,8 @@ public class ControllerManageCookBook {
         if(this.comboBoxCookBooks != null) {
             this.comboBoxCookBooks.getItems().clear();
             this.comboBoxCookBooks.setItems(this.cookBookNames);
+            if(!this.comboBoxCookBooks.getItems().isEmpty())
+                this.comboBoxCookBooks.setValue(this.comboBoxCookBooks.getItems().get(0));
         }
     }
 
