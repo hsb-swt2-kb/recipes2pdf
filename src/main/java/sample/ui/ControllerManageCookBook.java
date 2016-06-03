@@ -279,7 +279,7 @@ loadInfo();
         listViewRecipes.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (listViewRecipes.getSelectionModel().getSelectedItem() == null) {
+                if (listViewRecipes.getSelectionModel().getSelectedItem() == null || comboBoxCookBooks.getValue() == null) {
                     return;
                 }
 
