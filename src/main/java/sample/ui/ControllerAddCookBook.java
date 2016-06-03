@@ -151,7 +151,7 @@ public class ControllerAddCookBook  {
     @FXML
     void generateCookBook(ActionEvent event) {
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
-            Platform.runLater(() -> UI.addCookBook(getName(), sortLevelsOfTheCookbook, getForeWord(), getFile()));
+            UI.addCookBook(getName(), sortLevelsOfTheCookbook, getForeWord(), getFile());
             ControllerManageCookBook.getInstance().refresh();
             ControllerManageCookBooks.getInstance().refreshListViews();
             //Close Stage
