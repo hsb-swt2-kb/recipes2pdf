@@ -78,7 +78,7 @@ public class TxtParser extends AConcreteParser implements Constants {
      *
      * NOTE: Higher Instances have to make sure, that a recipe is valid with minimal Options
      */
-    public Recipe parse(List<String> textFileContent) throws CouldNotParseException{
+    public Recipe parse(List<String> textFileContent) throws CouldNotParseException {
         Recipe recipe = new Recipe();
         ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
 
@@ -86,26 +86,25 @@ public class TxtParser extends AConcreteParser implements Constants {
         //================STEP1==================
         recipe.setTitle(extractRecipename(textFileContent));
 
-       //=================STEP2==================
+        //=================STEP2==================
         // Set IngredientList from RecipeObject from temporaryList
         tempIncredientList = extractIncredentsList(textFileContent);
         for (int i = 0; i < tempIncredientList.size(); i++) {
-            String tempName = cutString(tempIncredientList.get(i)[2],fieldLength);
-            String tempUnit = cutString(tempIncredientList.get(i)[1],fieldLength);
-            String tempAmount = cutString(tempIncredientList.get(i)[0],fieldLength);
+            String tempName = cutString(tempIncredientList.get(i)[2], fieldLength);
+            String tempUnit = cutString(tempIncredientList.get(i)[1], fieldLength);
+            String tempAmount = cutString(tempIncredientList.get(i)[0], fieldLength);
             //         IngredientName, Amount, UnitName
             recipe.add(tempName, parseStringToDouble(tempAmount), tempUnit);
         }
         // FInd PreperationText with tag...If there is now Tag use specific Method
         // ===================STEP3===================================
-        String tempPreperation=findPreperationWithTag(textFileContent);
+        String tempPreperation = findPreperationWithTag(textFileContent);
 
-        if (tempPreperation==null){
+        if (tempPreperation == null) {
             recipe.setText(findPreparationOfRecipe(textFileContent));
-        }
-        else{
-            if (tempPreperation.length()>preparationLength){
-                tempPreperation = cutString(tempPreperation,preparationLength);
+        } else {
+            if (tempPreperation.length() > preparationLength) {
+                tempPreperation = cutString(tempPreperation, preparationLength);
             }
             recipe.setText(tempPreperation);
         }
@@ -136,12 +135,19 @@ public class TxtParser extends AConcreteParser implements Constants {
         recipe.setDaytime(daytime);
 
         String pictureFileName = recipe.getTitle();
-        pictureFileName.concat(".png");
-        if(recipe.getTitle() != null && new File(pictureFileName).exists()) {
-            try {
-                recipe.setImage(extractBytes(pictureFileName));
-            } catch (Exception e) {
-                // Bild ist optional
+        List<String> endings = new ArrayList<>();
+        endings.add(".PNG");
+        endings.add(".png");
+        endings.add(".JPEG");
+        endings.add(".jpeg");
+
+        for (String ending : endings){
+            if (new File(new String(pictureFileName).concat(ending)).exists()) {
+                try {
+                    recipe.setImage(extractBytes(pictureFileName));
+                } catch (Exception e) {
+                    // Bild ist optional
+                }
             }
         }
         //===================STEP5=============================
