@@ -59,6 +59,10 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
         List<ISortlevel> sortlevels = pojo.getSortlevel();
         if (null != sortlevels) {
             for (ISortlevel sortlevel : sortlevels) {
+                if(!cookbookDBO.get(SortlevelDBO.class, "name = ?", sortlevel.getName()).isEmpty()) {
+                    // Sortlevel is set only once
+                    continue;
+                }
                 final Optional<Sortlevel> byName = new SortlevelDAO().findFirst("name = ?", sortlevel.getName());
                 if (byName.isPresent()) {
                     // If already persisted but not associated yet then associate existing dbo to cookbook

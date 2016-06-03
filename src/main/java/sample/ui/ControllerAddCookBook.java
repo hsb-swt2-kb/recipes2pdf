@@ -1,5 +1,6 @@
 package sample.ui;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.File;
+
+import static org.apache.commons.io.FileUtils.getFile;
 
 /**
  * @author Tobias Stelter
@@ -100,10 +103,6 @@ public class ControllerAddCookBook  {
 
     }
 
-    private File getFile() {
-        return file;
-    }
-
     private String getForeWord(){
         foreword = textAreaVorwort.getText();
         return foreword;
@@ -152,7 +151,7 @@ public class ControllerAddCookBook  {
     @FXML
     void generateCookBook(ActionEvent event) {
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
-            UI.addCookBook(getName(), sortLevelsOfTheCookbook, getForeWord(), getFile());
+            Platform.runLater(() -> UI.addCookBook(getName(), sortLevelsOfTheCookbook, getForeWord(), getFile()));
             ControllerManageCookBook.getInstance().refresh();
             ControllerManageCookBooks.getInstance().refreshListViews();
             //Close Stage

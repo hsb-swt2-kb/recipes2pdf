@@ -14,10 +14,7 @@ import sample.database.dao.RecipeDAO;
 import sample.exceptions.CookBookNotFoundException;
 import sample.exceptions.CouldNotParseException;
 import sample.exceptions.RecipeNotFoundException;
-import sample.model.Cookbook;
-import sample.model.ICookbook;
-import sample.model.IRecipe;
-import sample.model.Recipe;
+import sample.model.*;
 import sample.parser.Parser;
 
 import java.io.*;
@@ -194,6 +191,13 @@ public class UI {
         new Database(DatabaseConnection.getDatabaseConnection());
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle(title);
+        List<ISortlevel> sortlevelList = new ArrayList<>();
+        sortLevelsOfTheCookbook.stream().map(s -> {
+            Sortlevel sortlevel = new Sortlevel(); sortlevel.setName(s); return sortlevel;
+        }).forEach(sortlevelList::add);
+        cookbook.setSortlevel( sortlevelList );
+        // TODO: Add foreword getForeWord()
+        // TODO: Add picture getFile(()
         new CookbookDAO().insert(cookbook);
     }
 
