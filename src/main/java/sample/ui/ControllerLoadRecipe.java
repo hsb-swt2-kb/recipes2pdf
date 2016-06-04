@@ -5,7 +5,7 @@ package sample.ui;
  * The Class ''ControllerCLoadRecipe'' manages the LoadRecipe-FXML and the LoadRecipePopOver-FXML.
  * It provides methods for adding new recipes.
  */
-
+import sample.config.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,9 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
+import sample.config.IConfig;
 import sample.exceptions.CouldNotParseException;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import static sample.ui.UI.addRecipes;
 
@@ -125,7 +128,10 @@ public class ControllerLoadRecipe {
         FileHandler fileHandler = new FileHandler();
         boolean success;
         try {
-            success = addRecipes(fileHandler.importFiles());
+            List<File> files = fileHandler.importFiles();
+            files.get(0).getAbsolutePath();
+            IConfig.getInstance().setProperty("lastFolder",files.get(0).getAbsolutePath());
+            success = addRecipes(files);
         }
         catch (CouldNotParseException e){
             // TODO: handle exception
