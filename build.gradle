@@ -28,6 +28,7 @@ task initSourceFolders { // add << before { to prevent executing during configur
 }
 
 
+
 buildscript {
     repositories {
         jcenter()
@@ -46,6 +47,7 @@ buildscript {
     jcenter()
     mavenCentral()
     maven { url 'http://repo.javalite.io' }
+
  }
 
 
@@ -63,9 +65,10 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.5'
     compile 'org.xerial:sqlite-jdbc:3.8.11'
     compile 'org.apache.commons:commons-lang3:3.4'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.0' // for chainlistSorter in RecipelIstSorter
     // Merged end
+    compile group: 'org.apache.velocity', name: 'velocity', version: '1.6.2'
     compile 'commons-io:commons-io:2.4'
-
     compile group: 'org.javalite', name: 'activejdbc', version: '1.4.11'
     compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
     compile 'org.jsoup:jsoup:1.8.3'
