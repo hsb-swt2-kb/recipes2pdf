@@ -1,6 +1,6 @@
 package sample.builder;
 
-import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections4.comparators.ComparatorChain;
 import sample.model.IRecipe;
 import sample.model.ISortlevel;
 import sample.model.comparator.CategoryComparator;
