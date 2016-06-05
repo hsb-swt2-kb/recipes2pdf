@@ -1,5 +1,6 @@
 package sample.ui;
 
+import javafx.collections.ObservableList;
 import sample.builder.Builder;
 import sample.builder.Exceptions.TexParserException;
 import sample.builder.IBuilder;
@@ -13,15 +14,11 @@ import sample.database.dao.RecipeDAO;
 import sample.exceptions.CookBookNotFoundException;
 import sample.exceptions.CouldNotParseException;
 import sample.exceptions.RecipeNotFoundException;
-import sample.model.Cookbook;
-import sample.model.ICookbook;
-import sample.model.IRecipe;
-import sample.model.Recipe;
+import sample.model.*;
 import sample.parser.Parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +32,43 @@ import java.util.Optional;
  */
 public class UI {
 
+    static void addRecipesFromFolder(final File folder) throws Exception {
+        for (final File file : folder.listFiles()) {
+            if (!file.isDirectory()) {
+                try{
+                    UI.addRecipe(file);
+                }
+                catch(Exception e){throw e;}
+            }
+            else {
+                try{
+                    UI.addRecipesFromFolder(file);
+                }
+                catch(Exception e){throw e;}
+            }
+        }
+    }
+
+    public static void addRecipeFromHyperlink(final String URL) throws IOException {
+        String line = "";
+        List<String> all = new ArrayList<>();
+        URL myUrl;
+        BufferedReader in = null;
+        try {
+            myUrl = new URL(URL);
+            in = new BufferedReader(new InputStreamReader(myUrl.openStream()));
+
+            while ((line = in.readLine()) != null) {
+                all.add(line);
+            }
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+        }
+        addRecipe(all);
+    }
+
     /**
      * addRecipes
      * <p>
@@ -45,7 +79,7 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static void addRecipes(List<File> files) throws Exception, FileNotFoundException, CouldNotParseException {
+    static void addRecipes(List<File> files) throws Exception {
         new Database(DatabaseConnection.getDatabaseConnection());
         for (File file : files) {
             addRecipe(file);
@@ -63,12 +97,16 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static void addRecipe(File file) throws Exception, FileNotFoundException, CouldNotParseException {
+    static void addRecipe(File file) throws Exception {
         new Database(DatabaseConnection.getDatabaseConnection());
         Recipe recipe = (Recipe) Parser.parse(file);
         if (!recipe.isIncomplete()) {
             new RecipeDAO().insert(recipe);
         }
+    }
+
+    static void addRecipe(List<String> lines){
+
     }
 
     /**
@@ -148,7 +186,7 @@ public class UI {
      * @param recipes recipes to delete in DB
      * @return boolean successs of the deletion
      */
-    static boolean delRecipes(ArrayList<Recipe> recipes) {
+    static boolean delRecipesFromDatabase(ArrayList<Recipe> recipes) {
         new Database(DatabaseConnection.getDatabaseConnection());
         boolean success = true;
         for (Recipe recipe : recipes)
@@ -162,13 +200,22 @@ public class UI {
      * <p>
      * inserts a cookbook to the database and returns the title if success, otherwise null
      *
-     * @param title cookbooks to add to DB
-     * @return boolean success of the insertion
+     *
+     * @param sortLevelsOfTheCookbook
+     *@param foreWord of the cookbook
+     * @param title cookbooks to add to DB  @return boolean success of the insertion
      */
-    static void addCookBook(String title) {
+    static void addCookBook(String title, ObservableList<String> sortLevelsOfTheCookbook, String foreWord, File picture) {
         new Database(DatabaseConnection.getDatabaseConnection());
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle(title);
+        List<ISortlevel> sortlevelList = new ArrayList<>();
+        sortLevelsOfTheCookbook.stream().map(s -> {
+            Sortlevel sortlevel = new Sortlevel(); sortlevel.setName(s); return sortlevel;
+        }).forEach(sortlevelList::add);
+        cookbook.setSortlevel( sortlevelList );
+        // TODO: Add foreword getForeWord()
+        // TODO: Add picture getFile(()
         new CookbookDAO().insert(cookbook);
     }
 
@@ -190,13 +237,30 @@ public class UI {
      * <p>
      * uses CookBookDAO to delete a Cookbook (only, not the Recipes of it) from the DB
      *
+     * @param cookbookName name of the cookbook to delete from DB
+     * @return boolean success of the deletion
+     */
+    static boolean delCookBook(String cookbookName) {
+        new Database(DatabaseConnection.getDatabaseConnection());
+        if(new CookbookDAO().findFirst("name=?", cookbookName).isPresent())
+        {
+            Cookbook cookbookToDelete = new CookbookDAO().findFirst("name=?",cookbookName).get();
+            return new CookbookDAO().delete(cookbookToDelete);
+        }
+        return false;
+    }
+
+    /**
+     * delCookBook
+     * <p>
+     * uses CookBookDAO to delete a Cookbook (only, not the Recipes of it) from the DB
+     *
      * @param cookbook cookbook to delete from DB
      * @return boolean success of the deletion
      */
     static boolean delCookBook(Cookbook cookbook) {
         new Database(DatabaseConnection.getDatabaseConnection());
         return new CookbookDAO().delete(cookbook);
-
     }
 
     /**
@@ -245,52 +309,52 @@ public class UI {
      * @throws CookBookNotFoundException
      */
     static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
-        List<Cookbook> cookBooks = new ArrayList<>();
-        cookBooks = new CookbookDAO().getAll();
-        for (Cookbook cookbook : cookBooks)
-
-            if (cookbook.getTitle().equals(cookbookname))
-                return cookbook;
+        Optional<Cookbook> cookbook = new CookbookDAO().findFirst("title=?",cookbookname);
+        if(cookbook.isPresent())
+            return cookbook.get();
         throw new CookBookNotFoundException();
-
+        //return new CookbookDAO().findFirst("title=?", cookbookname).orElseThrow(CookBookNotFoundException::new);
     }
 
     /**
      * searchRecipe
      * <p>
-     * search for a Recipe with given Title calling RecipeDAO
+     * search for a Recipe with given Title calling RecipeDAO.
      *
      * @param recipeName the name of the recipe to search
      * @return recipe the recipe that have been found in the database with the recipeName
      * @throws RecipeNotFoundException
      */
     static Recipe searchRecipe(String recipeName) throws RecipeNotFoundException {
-        Optional<Recipe> recipe = new RecipeDAO().findFirst("title=?", recipeName);
-
-        if(!recipe.isPresent())
-            throw new RecipeNotFoundException();
-        return recipe.get();
+        return new RecipeDAO().findFirst("title=?", recipeName).orElseThrow(RecipeNotFoundException::new);
     }
 
-    public static void exportCookbook(String cookbookName, String paperFormats) {
-
+    static void exportCookbook(String cookbookName, String paperFormats) throws CookBookNotFoundException,IOException,TexParserException{
         try {
-
             ICookbook cookbook = searchCookBook(cookbookName);
-
             List<IConcreteBuilder> builderList = new ArrayList<>();
-            IConcreteBuilder pdfBuilder = new PdfBuilder(IConfig.getInstance());
-            builderList.add(pdfBuilder);
+            builderList.add(new PdfBuilder(IConfig.getInstance()));
             IBuilder builder = new Builder(builderList);
             builder.build(cookbook);
-
-        } catch (TexParserException e) {
-            System.out.println("Konnte nicht in pdf geparsed werden");
-        } catch (IOException e) {
-            System.out.println("IO-Fehler beim parsen");
-        } catch (CookBookNotFoundException e) {
-            e.printStackTrace();
         }
+        catch (CookBookNotFoundException e) { throw e; }
+        catch (IOException e) { throw e; }
+        catch (TexParserException e) { throw e; }
 
+    }
+
+    /**
+     * getRecipesOfCookbook
+     *
+     * to get the Recipes that are associated with this cookbook
+     *
+     * @param cookbookname name of the cookbook of you want the recipes from
+     * @return List<Recipe> list of the recipes of the cookbook
+     * @throws CookBookNotFoundException
+     */
+    static List<IRecipe> getRecipesOfCookbook(String cookbookname) throws CookBookNotFoundException {
+        new Database(DatabaseConnection.getDatabaseConnection());
+        Cookbook cookbook = UI.searchCookBook(cookbookname);
+        return cookbook.getRecipes();
     }
 }

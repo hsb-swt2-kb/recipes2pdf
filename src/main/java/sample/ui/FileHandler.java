@@ -19,7 +19,7 @@ public class FileHandler {
     /**
      * These method imports the data of a single folder.
      */
-    File importFolder(){
+    File importFolder() {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final DirectoryChooser chooser = new DirectoryChooser();
@@ -27,7 +27,7 @@ public class FileHandler {
         //chooser.setInitialDirectory(defaultDirectory);
         File selectedDirectory = chooser.showDialog(stage);
 
-        return  selectedDirectory;
+        return selectedDirectory;
     }
 
 

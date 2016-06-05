@@ -1,5 +1,6 @@
 package sample.ui;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,9 +10,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.model.Cookbook;
 
 import java.io.File;
+
+import static org.apache.commons.io.FileUtils.getFile;
 
 /**
  * @author Tobias Stelter
@@ -135,6 +137,12 @@ public class ControllerAddCookBook  {
         this.listViewSortLevel.getItems().addAll(this.sortLevelsOfTheCookbook);
     }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     /**
      * The method ''generateCookBook()'' finally generates the cookbook,
      * when at least the name and the sortlevel setted.
@@ -143,14 +151,14 @@ public class ControllerAddCookBook  {
     @FXML
     void generateCookBook(ActionEvent event) {
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
-            UI.addCookBook(getName());
+            UI.addCookBook(getName(), sortLevelsOfTheCookbook, getForeWord(), getFile());
             ControllerManageCookBook.getInstance().refresh();
             ControllerManageCookBooks.getInstance().refreshListViews();
             //Close Stage
             Stage stage = (Stage) generateButton.getScene().getWindow();
             stage.close();
         }else{
-            //Exception
+            manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
         }
 
 

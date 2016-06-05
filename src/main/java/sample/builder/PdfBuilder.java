@@ -281,7 +281,6 @@ public class PdfBuilder implements IConcreteBuilder {
         parseTexFile(outputTexFile, templateFile, imgDir, myCookbook);
 
         return createPDFFile(outputTexFile, outputPdfFile, rootDir);
-
     }
 
 
@@ -299,10 +298,11 @@ public class PdfBuilder implements IConcreteBuilder {
         for (IRecipe recipe : recipes) {
             refNum = "";
             for (ISortlevel sortLevel : sortChain) {
-                refNum += propList.get(recipe).getProperty(sortLevel.getName()) + ".";
+                String prop = sortLevel.getName().toLowerCase();
+                refNum += propList.get(recipe).getProperty(prop) + ".";
             }
 
-            refNumList.put(recipe,(refNum =="") ? "" : refNum.substring(0, refNum.length() - 1));
+            refNumList.put(recipe,(refNum.equals("")) ? "" : refNum.substring(0, refNum.length() - 1));
         }
         return refNumList;
     }

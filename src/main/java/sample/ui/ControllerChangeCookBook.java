@@ -24,6 +24,7 @@ public class ControllerChangeCookBook {
     File file;
     String foreword;
     String path;
+    Cookbook cookbook;
     @FXML
     private Button fileChooserButton;
         @FXML
@@ -34,9 +35,6 @@ public class ControllerChangeCookBook {
     private TextArea textAreaVorwort;
     @FXML
     private TextField textFieldPicture;
-
-    Cookbook cookbook;
-
     @FXML
     private Button changeButton;
 
@@ -80,6 +78,12 @@ public class ControllerChangeCookBook {
         textFieldPicture.setText(path);
     }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     @FXML
     void changeCookBook(ActionEvent event) {
         if(this.textFieldName.getText().trim().isEmpty() == false) {
@@ -92,6 +96,8 @@ public class ControllerChangeCookBook {
             {
                 System.out.println("Couldn't load cookbook");
             }
+        } else {
+            manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
         }
 
             //Close Stage

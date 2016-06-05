@@ -16,6 +16,7 @@ import java.util.List;
  * @author Markus
  */
 public class Parser implements IParser {
+
     /**
      * parse
      * <p>
@@ -27,67 +28,43 @@ public class Parser implements IParser {
      * @throws CouldNotParseException
      */
     public static IRecipe parse(File recipeFile) throws CouldNotParseException, FileNotFoundException {
+        // read file content
+        List<String> fileContent;
+        try { fileContent = FileUtils.readLines(recipeFile); }
+        catch (IOException e) { throw new FileNotFoundException(e.getMessage()); }
+
+        return Parser.parse(fileContent);
+    }
+
+
+    public static IRecipe parse (List<String> fileContent) throws CouldNotParseException,FileNotFoundException {
+
+        // add concrete parsers
         List<AConcreteParser> parsers = new ArrayList<>();
         parsers.add(new TxtParser());
         parsers.add(new ChefkochParser());
         parsers.add(new WWParser());
-        //parsers.add(new CKParser ());
 
-
-        List<String> fileContent = null;
-        try {
-            fileContent = FileUtils.readLines(recipeFile);
-        } catch (IOException e) {
-            throw new FileNotFoundException(e.getMessage());
-        }
 
         Recipe recipe = new Recipe();
 
-        // Parser aufrufen
+        // call parsers
         for (AConcreteParser parser : parsers)
             if (parser.accepts(fileContent))
                 recipe = parser.parse(fileContent);
 
-        // Rezept prüfen
+        // check recipe
         if (!recipe.isIncomplete()) {
-            //leere Werte behandeln
+            // init null objects
+            if(recipe.getNurture()  == null){ recipe.setNurture(new Nurture());   }
+            if(recipe.getRegion()   == null){ recipe.setRegion(new Region());     }
+            if(recipe.getCourse()   == null){ recipe.setCourse(new Course());     }
+            if(recipe.getCategory() == null){ recipe.setCategory(new Category()); }
+            if(recipe.getDaytime()  == null){ recipe.setDaytime(new Daytime());   }
+            if(recipe.getSeason()   == null){ recipe.setSeason(new Season());     }
+            if(recipe.getSource()   == null){ recipe.setSource(new Source());     }
 
-            if(recipe.getNurture() == null){
-                INurture nurture = new Nurture();
-                nurture.setName("");
-                recipe.setNurture(nurture);
-            }
-            if(recipe.getRegion() == null){
-                IRegion region = new Region();
-                region.setName("");
-                recipe.setRegion(region);
-            }
-            if(recipe.getCourse() == null){
-                ICourse course = new Course();
-                course.setName("");
-                recipe.setCourse(course);
-            }
-            if(recipe.getCategory() == null){
-                ICategory category = new Category();
-                category.setName("");
-                recipe.setCategory(category);
-            }
-            if(recipe.getDaytime() == null){
-                IDaytime daytime = new Daytime();
-                daytime.setName("");
-                recipe.setDaytime(daytime);
-            }
-            if(recipe.getSeason() == null){
-                ISeason season = new Season();
-                season.setName("");
-                recipe.setSeason(season);
-            }
-            if(recipe.getSource() == null){
-                ISource source = new Source();
-                source.setName("");
-                recipe.setSource(source);
-            }
-
+            // fill null values
             if (recipe.getNurture() .getName() == null) recipe.getNurture() .setName("");
             if (recipe.getRegion()  .getName() == null) recipe.getRegion()  .setName("");
             if (recipe.getCourse()  .getName() == null) recipe.getCourse()  .setName("");
@@ -103,9 +80,7 @@ public class Parser implements IParser {
 
             return recipe;
         }
-        else
-            throw new CouldNotParseException();
-        // null -> "" bzw 0
+        throw new CouldNotParseException();
     }
 
     /**
@@ -114,13 +89,13 @@ public class Parser implements IParser {
      * helpful function, because textparser can handle ArrayList<String>
      * easier than the content as one complete String.
      *
-     * @param file
+     * @param file file to read out
      * @return
      * @throws IOException
      */
     public static ArrayList<String> readFile(String file) throws IOException {
-        String line;
         ArrayList<String> lines = new ArrayList<>();
+        String line;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             while ((line = reader.readLine()) != null) {

@@ -14,12 +14,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sample.builder.Exceptions.TexParserException;
+import sample.exceptions.CookBookNotFoundException;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public class ControllerExportCookBook {
-
+    final Logger LOG = LoggerFactory.getLogger(this.getClass());
     File file;
     @FXML
     private Button browseButton;
@@ -129,11 +134,19 @@ public class ControllerExportCookBook {
         }
     }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     @FXML
-    void saveCookBook(ActionEvent event){
-
-        UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBook(),"A4");
-
-
+    void saveCookBook(ActionEvent event) {
+        try {
+            UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBook(), "A4");
+        } catch (CookBookNotFoundException|IOException|TexParserException e) {
+            manageSaveError("Upps", "Da ist wohl was schief gegenagen");
+            LOG.error("Error While generating pdf", e);
+        }
     }
 }

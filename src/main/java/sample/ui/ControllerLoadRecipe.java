@@ -13,6 +13,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import org.apache.commons.validator.UrlValidator;
 import org.controlsfx.control.PopOver;
 import sample.exceptions.CouldNotParseException;
 
@@ -141,7 +142,13 @@ public class ControllerLoadRecipe {
     @FXML
     void openFolder() {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.importFolder();
+        boolean success;
+        try {
+            UI.addRecipesFromFolder(fileHandler.importFolder());
+        } catch (Exception e) {
+            // TODO: Meldung anzeigen
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -166,7 +173,7 @@ public class ControllerLoadRecipe {
     @FXML
     void selectOptionsForLoading(ActionEvent event) {
         if ((radioButtonLinkBoolean == true) && (this.hyperLinkTextField.getText().trim().isEmpty() == false)) {
-            System.out.println("(this.hyperLinkTextField.getText()");
+            openHyperlink();
         } else if (radioButtonFolderBoolean == true) {
             openFolder();
         } else if (radioButtonFileBoolean == true) {
@@ -174,6 +181,42 @@ public class ControllerLoadRecipe {
         }
         ControllerManageCookBook.getInstance().refresh();
         closeStage();
+    }
+
+    private void manageHyperlinkError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
+    private boolean hyperLinkCheck() {
+        String checfkoch = "chefkoch";
+        String weightwatchers = "weightwatchers";
+        String url = this.hyperLinkTextField.getText();
+
+        boolean hyperlink = false;
+        UrlValidator urlValidator = new UrlValidator();
+        //valid URL
+        if (!urlValidator.isValid(url)) {
+            manageHyperlinkError("Download fehlgeschlagen!", "Geben Sie bitte einen Hyperlink ein!");
+        } else if ((!(url.toLowerCase().contains(checfkoch.toLowerCase()))) && (!(url.toLowerCase().contains(weightwatchers.toLowerCase())))) {
+            manageHyperlinkError("Falsche Quelle!", "Geben Sie bitte einen WW- o. CK-Link ein!");
+        } else if (urlValidator.isValid(url)) {
+            hyperlink = true;
+        }
+        return hyperlink;
+    }
+
+    void openHyperlink() {
+        boolean hyperlink = hyperLinkCheck();
+        if (hyperlink == true) {
+            try {
+                UI.addRecipeFromHyperlink(this.hyperLinkTextField.getText());
+            }
+            catch(Exception e){
+                // TODO: Meldung ausgeben.
+            }
+        }
     }
 
     /**

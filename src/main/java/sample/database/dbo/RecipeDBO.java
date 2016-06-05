@@ -199,6 +199,7 @@ public class RecipeDBO extends Model implements IRecipe {
             unitDAO.insert(newUnit);
             unitDBO = unitDAO.toDBO(newUnit);
             unitDBO.add(recipeIngredient);
+            LOG.info("Added new unit: unitName = [" + unitName + "]");
         } else {
             unitDBO = unitDAO.toDBO(unit.get());
             unitDBO.add(recipeIngredient);
@@ -208,10 +209,11 @@ public class RecipeDBO extends Model implements IRecipe {
         // Create ingredient on the fly if it was not there yet
         if (!ingredient.isPresent()) {
             Ingredient newIngredient = new Ingredient();
-            newIngredient.setName(unitName);
+            newIngredient.setName(ingredientName);
             ingredientDAO.insert(newIngredient);
             ingredientDBO = ingredientDAO.toDBO(newIngredient);
             ingredientDBO.add(recipeIngredient);
+            LOG.info("Added new ingredient: ingredientName = [" + ingredientName + "]");
         } else {
             ingredientDBO = ingredientDAO.toDBO(ingredient.get());
             ingredientDBO.add(recipeIngredient);
@@ -220,10 +222,10 @@ public class RecipeDBO extends Model implements IRecipe {
         final boolean alreadyPersisted = 0 < RecipeIngredientDBO.count("recipe_id = ? AND ingredient_id = ?", this.getID(), ingredientDBO.getID());
         if (!alreadyPersisted) {
             this.add(recipeIngredient);
-            LOG.info("Added new recipe ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "]");
+            LOG.info("Associated recipe and ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "]");
         } else {
             recipeIngredient.delete();
-            LOG.info("Rejected adding of new recipe ingredient: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "] (already exists)");
+            LOG.info("Rejected association between recipe and ingredient as already present: ingredientName = [" + ingredientName + "], amount = [" + amount + "], unitName = [" + unitName + "] (already exists)");
         }
 
     }

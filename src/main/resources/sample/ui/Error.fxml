@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="117.0" minWidth="330.0" prefHeight="122.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerNoElementSelectedDialog">
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="117.0"
+            minWidth="330.0" prefHeight="122.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.65"
+            fx:controller="sample.ui.ControllerError">
    <children>
       <Button fx:id="closeButton" layoutX="281.0" layoutY="89.0" mnemonicParsing="false" onAction="#closeDialog" prefHeight="6.0" prefWidth="74.0" text="Schließen" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="10.0" />
-      <Label layoutX="116.0" layoutY="14.0" prefHeight="31.0" prefWidth="286.0" text="Sie haben kein Element ausgwählt.">
+       <Label fx:id="labelBoldPrint" layoutX="116.0" layoutY="14.0" prefHeight="31.0" prefWidth="286.0" text="..">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="116.0" layoutY="38.0" prefHeight="31.0" prefWidth="330.0" text="Bitte wählen Sie ein Element aus.">
+       <Label fx:id="labelLittlePrint" layoutX="116.0" layoutY="38.0" prefHeight="31.0" prefWidth="330.0" text="..">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>

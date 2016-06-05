@@ -65,6 +65,6 @@ public class Cookbook implements ICookbook {
 
     @Override
     public void removeRecipe(IRecipe recipe) {
-        this.recipes.remove(recipe);
+        recipes.removeIf(listRecipe -> listRecipe.getID().equals(recipe.getID()));
     }
 }

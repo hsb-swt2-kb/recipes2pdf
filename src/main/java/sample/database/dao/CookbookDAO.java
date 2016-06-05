@@ -7,6 +7,7 @@ import sample.model.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Database Access Object for Cookbook.
@@ -47,9 +48,21 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
         cookbookDBO.setTitle(pojo.getTitle());
         cookbookDBO.saveIt();
 
+        addAssociations(pojo, cookbookDBO);
+        removeUnusedAssociations(pojo, cookbookDBO);
+
+        return cookbookDBO;
+    }
+
+    private void addAssociations(Cookbook pojo, CookbookDBO cookbookDBO) {
+
         List<ISortlevel> sortlevels = pojo.getSortlevel();
         if (null != sortlevels) {
             for (ISortlevel sortlevel : sortlevels) {
+                if(!cookbookDBO.get(SortlevelDBO.class, "name = ?", sortlevel.getName()).isEmpty()) {
+                    // Sortlevel is set only once
+                    continue;
+                }
                 final Optional<Sortlevel> byName = new SortlevelDAO().findFirst("name = ?", sortlevel.getName());
                 if (byName.isPresent()) {
                     // If already persisted but not associated yet then associate existing dbo to cookbook
@@ -73,12 +86,57 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
         List<IRecipe> recipes = pojo.getRecipes();
         if (null != recipes) {
             for (IRecipe recipe : recipes) {
-                if (!new RecipeDAO().findById(recipe.getID()).isPresent()) {
-                    cookbookDBO.addRecipe(new RecipeDAO().toDBO((Recipe) recipe));
+                final Optional<Recipe> recipeOpt = new RecipeDAO().findById(recipe.getID());
+                if (!recipeOpt.isPresent()) {
+                    final RecipeDBO recipeDBO = new RecipeDAO().toDBO((Recipe) recipe);
+                    recipeDBO.saveIt();
+                    cookbookDBO.addRecipe(recipeDBO);
+                } else if (recipeOpt.isPresent()) {
+                    // Add recipe
+                    final RecipeDBO recipeDBO = new RecipeDAO().toDBO((Recipe) recipe);
+                    if( cookbookDBO.get(RecipeDBO.class, "recipe.id = ?", recipe.getID()).isEmpty()) {
+                        cookbookDBO.add(recipeDBO);
+                    }
                 }
             }
         }
+    }
 
-        return cookbookDBO;
+    private void removeUnusedAssociations(Cookbook pojo, CookbookDBO cookbookDBO) {
+
+        /*
+         * A list of the ids of the associated recipes.
+         * */
+        final List<Long> listOfAssociatedRecipeIDsInPojo = pojo.getRecipes()
+            .stream()
+            .filter(recipe -> recipe.getID() != null)
+            .map(IIdentifiable::getID)
+            .collect(Collectors.toList());
+
+         /*
+         * There might be pojos in this cookbook that are associated but not persisted yet.
+         * Therefore their id is null, but other attributes are set. The name is used as identification for there pojos
+         * */
+        final List<String> listOfAssociatedRecipeNamessInPojoButNotPersistedYet = pojo.getRecipes()
+            .stream()
+            .filter(recipe -> recipe.getID() == null)
+            .map(IRecipe::getTitle)
+            .collect(Collectors.toList());
+
+        /*
+         * Fill a list with dbo that need to be unassociated.
+         * This is the case if: there is a association in the database
+         * but the passed pojo doesn't has this association any more.
+         * But as there are recipe pojos that are not persisted yet but part of the cookbook
+         * pojo they must be not in the list of spared recipe names we have to skip them.
+         * */
+        List<RecipeDBO>listOfUnAssociatedIDsInPojoAndDBO = cookbookDBO.getAll(RecipeDBO.class)
+            .stream()
+            .filter(iRecipeDBO ->
+                !listOfAssociatedRecipeIDsInPojo.contains(iRecipeDBO.getID())
+                && !listOfAssociatedRecipeNamessInPojoButNotPersistedYet.contains(iRecipeDBO.getTitle()))
+            .collect(Collectors.toList());
+
+        listOfUnAssociatedIDsInPojoAndDBO.stream().forEach(cookbookDBO::remove);
     }
 }

@@ -2,10 +2,9 @@ package sample.database.dbo;
 
 import org.junit.Test;
 import sample.database.dao.CookbookDAO;
+import sample.database.dao.RecipeDAO;
 import sample.database.dao.SortlevelDAO;
-import sample.model.Cookbook;
-import sample.model.ISortlevel;
-import sample.model.Sortlevel;
+import sample.model.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +20,53 @@ import static org.javalite.test.jspec.JSpec.the;
  * Created by czoeller on 25.05.16.
  */
 public class CookbookTest extends ADatabaseTest {
+
+
+    @Test
+    public void testAddingRecipeToNewCookbook() {
+        CookbookDAO cookbookDAO = new CookbookDAO();
+        Cookbook cookbook = new Cookbook();
+        cookbook.setTitle("Test Cookbook for recipe relation");
+        final Recipe nudeln = new RecipeDAO().findFirst("title = ?", "Nudeln mit Soße").orElseThrow(IllegalStateException::new);
+        cookbook.addRecipe(nudeln);
+        cookbookDAO.insert(cookbook);
+        the(shouldContain(cookbook, nudeln)).shouldBeTrue();
+    }
+
+    private boolean shouldContain(Cookbook cookbook, Recipe recipe) {
+        Cookbook fromDatabase = new CookbookDAO().findFirst("title = ?", cookbook.getTitle()).orElseThrow(IllegalStateException::new);
+        return fromDatabase.getRecipes().stream().map(IIdentifiable::getID).collect(Collectors.toList()).contains(recipe.getID());
+    }
+
+    @Test
+    public void testAddingRecipeToExistingCookbook() {
+        CookbookDAO cookbookDAO = new CookbookDAO();
+        Cookbook newCookbook = new Cookbook();
+        newCookbook.setTitle("A New Cookbook");
+        cookbookDAO.insert(newCookbook);
+        Cookbook cookbook = new CookbookDAO().findFirst("title = ?", newCookbook.getTitle()).orElseThrow(IllegalStateException::new);
+        final Recipe nudeln = new RecipeDAO().findFirst("title = ?", "Nudeln mit Soße").orElseThrow(IllegalStateException::new);
+        cookbook.addRecipe(nudeln);
+        cookbookDAO.update(cookbook);
+        the(shouldContain(cookbook, nudeln)).shouldBeTrue();
+    }
+
+    @Test
+    public void testRemovingRecipeFromExistingCookbook() {
+        CookbookDAO cookbookDAO = new CookbookDAO();
+        Cookbook newCookbook = new Cookbook();
+        newCookbook.setTitle("A New Cookbook");
+        cookbookDAO.insert(newCookbook);
+        Cookbook cookbook = new CookbookDAO().findFirst("title = ?", newCookbook.getTitle()).orElseThrow(IllegalStateException::new);
+        final Recipe nudeln = new RecipeDAO().findFirst("title = ?", "Nudeln mit Soße").orElseThrow(IllegalStateException::new);
+        cookbook.addRecipe(nudeln);
+        cookbookDAO.update(cookbook);
+
+        cookbook.removeRecipe(nudeln);
+        cookbookDAO.update(cookbook);
+
+        the(shouldContain(cookbook, nudeln)).shouldBeFalse();
+    }
 
     /**
      * Test creation of sortlevels of cookbook.

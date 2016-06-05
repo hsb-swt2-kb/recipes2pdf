@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -71,20 +72,31 @@ public class ControllerManageCookBooks {
         refreshListViews();
     }
 
+    private void manageSaveError(String boldPrint, String littlePrint) {
+        ControllerDefault controllerDefault = new ControllerDefault();
+        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
+        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+    }
+
     /**
      * The method ''initializeListeners()'' initializes the listeners.
      */
 
     private void initializeListeners() {
+        setupMultipleSelection();
         doubleClick();
+        buttonActions();
 
+    }
+
+    private void buttonActions() {
         deleteButton.setOnAction((ActionEvent event) -> {
             String cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
             this.selectedItem = cookbook;
             if (cookbook != null) {
                 controllerDefault.newWindowNotResizable(Resources.getDeleteCookBookFXML(), Resources.getDeleteWindowText());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
             }
         });
 
@@ -94,7 +106,7 @@ public class ControllerManageCookBooks {
             if (cookbook != null) {
                 controllerDefault.newWindow(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
             } else {
-                controllerDefault.newWindowNotResizable(Resources.getNoElementsSelectedFXML(), Resources.getErrorWindowText());
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
             }
         });
     }
@@ -141,16 +153,25 @@ public class ControllerManageCookBooks {
 
             @Override
             public void handle(MouseEvent click) {
+                if (click.getClickCount() >= 1) {
+                    selectedItem = listViewCookBooks.getSelectionModel().getSelectedItem();
+                }
+                if ((!listViewCookBooks.getItems().isEmpty()) && (selectedItem != null)) {
 
-                String cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
-                selectedItem = cookbook;
-
-                if (click.getClickCount() == 2) {
+                    if (click.getClickCount() == 2) {
                     controllerDefault.newWindowNotResizable(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText());
 
                 }
+                }
             }
         });
+    }
+
+    /**
+     * Setup multiple selection for listviews.
+     */
+    private void setupMultipleSelection() {
+        listViewCookBooks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     /**
