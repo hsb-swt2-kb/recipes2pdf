@@ -45,7 +45,7 @@ public class ControllerExportCookBook {
 
     @FXML
     private void initialize() {
-        this.selectedCookBook = ControllerManageCookBook.getInstance().getSelectedCookBook();
+        this.selectedCookBook = ControllerManageCookBook.getInstance().getSelectedCookBooks();
         initializeListeners();
         format = FXCollections.observableArrayList("A4", "A5");
         refreshComboBox(format);
@@ -143,10 +143,15 @@ public class ControllerExportCookBook {
     @FXML
     void saveCookBook(ActionEvent event) {
         try {
-            UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBook(), "A4");
-        } catch (CookBookNotFoundException|IOException|TexParserException e) {
-            manageSaveError("Upps", "Da ist wohl was schief gegenagen");
-            LOG.error("Error While generating pdf", e);
+            UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
+        } catch (CookBookNotFoundException e) {
+            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
+
+        } catch (IOException e) {
+            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
+        } catch (TexParserException e) {
+            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
+
         }
     }
 }
