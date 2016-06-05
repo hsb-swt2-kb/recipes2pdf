@@ -299,7 +299,6 @@ public class PdfBuilderTest {
         assertTrue(builder.builds("pdf"));
         assertTrue(builder.builds("pDf"));
         assertTrue(builder.builds("PDF"));
-
     }
 
     IRecipe generateRecipe(String title, String text, Long id, String category, String region, String season, String ingredientName, Integer ingrentAmount, String ingredientUnit) {
