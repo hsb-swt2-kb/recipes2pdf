@@ -21,7 +21,6 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Class UI
@@ -31,6 +30,8 @@ import java.util.Optional;
  * Created by markus
  */
 public class UI {
+
+    private static Database db = new Database( DatabaseConnection.getDatabaseConnection() );
 
     static void addRecipesFromFolder(final File folder) throws Exception {
         for (final File file : folder.listFiles()) {
@@ -80,11 +81,9 @@ public class UI {
      * @throws CouldNotParseException
      */
     static void addRecipes(List<File> files) throws Exception {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         for (File file : files) {
             addRecipe(file);
         }
-        database.closeConnection();
     }
 
     /**
@@ -99,12 +98,10 @@ public class UI {
      * @throws CouldNotParseException
      */
     static void addRecipe(File file) throws Exception {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         Recipe recipe = (Recipe) Parser.parse(file);
         if (!recipe.isIncomplete()) {
             new RecipeDAO().insert(recipe);
         }
-        database.closeConnection();
     }
 
     static void addRecipe(List<String> lines){
@@ -119,9 +116,7 @@ public class UI {
      * @param recipe recipe to update
      */
     static void updateRecipe(Recipe recipe) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         new RecipeDAO().update(recipe);
-        database.closeConnection();
     }
 
     /**
@@ -132,10 +127,7 @@ public class UI {
      * @return List<Recipe> List of all Recipes present in DB
      */
     static List<Recipe> getAllRecipesFromDB() {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        final List<Recipe> all = new RecipeDAO().getAll();
-        database.closeConnection();
-        return all;
+        return new RecipeDAO().getAll();
     }
 
     /**
@@ -146,10 +138,7 @@ public class UI {
      * @return List<Recipe> List of all Cookbooks present in DB
      */
     static List<Cookbook> getAllCookbooksFromDB() {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        final List<Cookbook> all = new CookbookDAO().getAll();
-        database.closeConnection();
-        return all;
+        return new CookbookDAO().getAll();
     }
 
     /**
@@ -192,11 +181,9 @@ public class UI {
      * @param recipes recipes to delete in DB
      */
     static void delRecipesFromDatabase(ArrayList<Recipe> recipes) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         for (Recipe recipe : recipes) {
-            if (!new RecipeDAO().delete(recipe)) ;
+            new RecipeDAO().delete(recipe);
         }
-        database.closeConnection();
     }
 
     /**
@@ -210,7 +197,6 @@ public class UI {
      * @param title cookbooks to add to DB  @return boolean success of the insertion
      */
     static void addCookBook(String title, ObservableList<String> sortLevelsOfTheCookbook, String foreWord, File picture) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle(title);
         List<ISortlevel> sortlevelList = new ArrayList<>();
@@ -221,7 +207,6 @@ public class UI {
         // TODO: Add foreword getForeWord()
         // TODO: Add picture getFile(()
         new CookbookDAO().insert(cookbook);
-        database.closeConnection();
     }
 
     /**
@@ -232,9 +217,7 @@ public class UI {
      * @param cookbook cookbook to add to DB
      */
     static void addCookBook(Cookbook cookbook) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         new CookbookDAO().insert(cookbook);
-        database.closeConnection();
     }
 
     /**
@@ -245,13 +228,11 @@ public class UI {
      * @param cookbookName name of the cookbook to delete from DB
      */
     static void delCookBook(String cookbookName) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         if(new CookbookDAO().findFirst("name=?", cookbookName).isPresent())
         {
             Cookbook cookbookToDelete = new CookbookDAO().findFirst("name=?",cookbookName).get();
             new CookbookDAO().delete(cookbookToDelete);
         }
-        database.closeConnection();
     }
 
     /**
@@ -262,9 +243,7 @@ public class UI {
      * @param cookbook cookbook to delete from DB
      */
     static void delCookBook(Cookbook cookbook) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         new CookbookDAO().delete(cookbook);
-        database.closeConnection();
     }
 
     /**
@@ -275,9 +254,7 @@ public class UI {
      * @param cookbook cookbook which data have to be changed
      */
     static void changeCookBook(Cookbook cookbook) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         new CookbookDAO().update(cookbook);
-        database.closeConnection();
     }
 
     /**
@@ -288,9 +265,7 @@ public class UI {
      * @param recipe the recipe which data has to be changed
      */
     static void changeRecipe(Recipe recipe) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         new RecipeDAO().update(recipe);
-        database.closeConnection();
     }
 
     /**
@@ -301,9 +276,7 @@ public class UI {
      * @param recipe the recipe that have to be deleted
      */
     static void delRecipe(Recipe recipe) {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         new RecipeDAO().delete(recipe);
-        database.closeConnection();
     }
 
     /**
@@ -316,10 +289,7 @@ public class UI {
      * @throws CookBookNotFoundException
      */
     static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        final Optional<Cookbook> cookbook = new CookbookDAO().findFirst("title=?", cookbookname);
-        database.closeConnection();
-        return cookbook.orElseThrow(CookBookNotFoundException::new);
+        return new CookbookDAO().findFirst("title=?", cookbookname).orElseThrow(CookBookNotFoundException::new);
     }
 
     /**
@@ -332,10 +302,7 @@ public class UI {
      * @throws RecipeNotFoundException
      */
     static Recipe searchRecipe(String recipeName) throws RecipeNotFoundException {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
-        final Optional<Recipe> recipe = new RecipeDAO().findFirst("title=?", recipeName);
-        database.closeConnection();
-        return recipe.orElseThrow(RecipeNotFoundException::new);
+        return new RecipeDAO().findFirst("title=?", recipeName).orElseThrow(RecipeNotFoundException::new);
     }
 
     static void exportCookbook(String cookbookName, String paperFormats) throws CookBookNotFoundException,IOException,TexParserException{
@@ -349,7 +316,6 @@ public class UI {
         catch (CookBookNotFoundException e) { throw e; }
         catch (IOException e) { throw e; }
         catch (TexParserException e) { throw e; }
-
     }
 
     /**
@@ -362,10 +328,7 @@ public class UI {
      * @throws CookBookNotFoundException
      */
     static List<IRecipe> getRecipesOfCookbook(String cookbookname) throws CookBookNotFoundException {
-        final Database database = new Database(DatabaseConnection.getDatabaseConnection());
         Cookbook cookbook = UI.searchCookBook(cookbookname);
-        final List<IRecipe> recipes = cookbook.getRecipes();
-        database.closeConnection();
-        return recipes;
+        return cookbook.getRecipes();
     }
 }
