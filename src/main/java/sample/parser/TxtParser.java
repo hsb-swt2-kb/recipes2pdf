@@ -2,10 +2,6 @@ package sample.parser;
 
 import sample.model.*;
 
-import java.lang.reflect.Array;
-import java.time.Duration;
-import java.lang.Math;
-import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
