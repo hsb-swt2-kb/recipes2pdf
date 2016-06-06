@@ -245,7 +245,6 @@ public class PdfBuilderTest {
     public void testRicipeNoSortlevel() throws Exception {
         IConfig config = IConfig.getInstance();
         PdfBuilder builder = new PdfBuilder(config);
-        ICookbook cookbook = new Cookbook();
         IRecipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
 
         builder.build(r1);
@@ -264,6 +263,32 @@ public class PdfBuilderTest {
     }
 
     /**
+     * Tests if building a recipe that has a german umlaut in its name does work correctly
+     * @throws Exception
+     */
+    @Test
+    public void testRecipeUmlautInName() throws Exception {
+        IConfig config = IConfig.getInstance();
+        PdfBuilder builder = new PdfBuilder(config);
+
+        IRecipe r1 = generateRecipe("Germknödel", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
+
+        builder.build(r1);
+        String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
+
+        //Check generated Text
+        assertThat(texFile, containsString("\\chead{}"));
+        assertThat(texFile, containsString("\\lfoot{}"));
+        assertThat(texFile, containsString("\\rfoot{}"));
+        assertThat(texFile, containsString("\\item {Zutat1 5.0 g}"));
+        List<String> substrings = new ArrayList<>();
+        substrings.add("\\includegraphics[width=\\linewidth]{");
+        substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) + "/.recipes2pdf/images/Germknödel");
+        assertThat(texFile, stringContainsInOrder(substrings));
+        assertThat(texFile, containsString("Rezepttext 1"));
+    }
+
+    /**
      * tests if the builder returns true for diffrent cases of 'pdf'
      * @throws Exception
      */
@@ -274,7 +299,6 @@ public class PdfBuilderTest {
         assertTrue(builder.builds("pdf"));
         assertTrue(builder.builds("pDf"));
         assertTrue(builder.builds("PDF"));
-
     }
 
     IRecipe generateRecipe(String title, String text, Long id, String category, String region, String season, String ingredientName, Integer ingrentAmount, String ingredientUnit) {

@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.builder.Exceptions.TexParserException;
 import sample.exceptions.CookBookNotFoundException;
 
@@ -22,7 +24,7 @@ import java.io.IOException;
 
 
 public class ControllerExportCookBook {
-
+    final Logger LOG = LoggerFactory.getLogger(this.getClass());
     File file;
     @FXML
     private Button browseButton;
@@ -140,7 +142,6 @@ public class ControllerExportCookBook {
 
     @FXML
     void saveCookBook(ActionEvent event) {
-
         try {
             UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
         } catch (CookBookNotFoundException e) {
@@ -152,8 +153,5 @@ public class ControllerExportCookBook {
             manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
 
         }
-
     }
-
-
 }
