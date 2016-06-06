@@ -190,7 +190,6 @@ public class PdfBuilderTest {
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) + "/.recipes2pdf/images/Testrezept1");
         assertThat(texFile, stringContainsInOrder(substrings));
         assertThat(texFile, containsString("Rezepttext 1"));
-
     }
 
     /**
@@ -299,7 +298,6 @@ public class PdfBuilderTest {
         assertTrue(builder.builds("pdf"));
         assertTrue(builder.builds("pDf"));
         assertTrue(builder.builds("PDF"));
-
     }
 
     IRecipe generateRecipe(String title, String text, Long id, String category, String region, String season, String ingredientName, Integer ingrentAmount, String ingredientUnit) {

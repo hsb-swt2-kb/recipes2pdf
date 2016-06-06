@@ -2,6 +2,7 @@ package sample.builder;
 
 import de.nixosoft.jlr.JLRConverter;
 import de.nixosoft.jlr.JLRGenerator;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.exception.ParseErrorException;
@@ -101,12 +102,11 @@ public class PdfBuilder implements IConcreteBuilder {
      * @throws TexParserException Is thrown when the .tex file has wrong latex syntax and cannot be interpreted by pdflatex
      */
     private File createPDFFile(File inputTexFile, File outputPDFFile, File rootDir) throws IOException, TexParserException {
-
         JLRGenerator generator = new JLRGenerator();
         if (generator.generate(inputTexFile, inputTexFile.getParentFile(), rootDir)) {
             return outputPDFFile;
         } else {
-            throw new TexParserException("Parse \"" + inputTexFile + "\" to \"" + outputPDFFile + "\" failed! Error Message:\n" + generator.getErrorMessage());
+            throw new TexParserException("Parse \"" + inputTexFile + "\" to \"" + outputPDFFile + "\" failed! Error Message:\n" + generator.getErrorMessage() + "\nLogfile:" + FileUtils.readFileToString(new File(outputPDFFile.getParentFile().getAbsolutePath() + File.separator + FilenameUtils.getBaseName(outputPDFFile.getAbsolutePath()) +".log")));
         }
     }
 
