@@ -115,7 +115,7 @@ public class PdfBuilderTest {
         cookbook.addRecipe(r2);
         cookbook.addRecipe(r3);
         cookbook.addRecipe(r4);
-        ((Cookbook) cookbook).setSortlevel(generateSortlevelList("category", "region"));
+        ((Cookbook) cookbook).setSortlevel(generateSortlevelList("kategorie", "region"));
         pdfBuilder.build(cookbook);
         String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + cookbook.getTitle() + ".tex"));
 
@@ -176,7 +176,7 @@ public class PdfBuilderTest {
         IConcreteBuilder pdfBuilder = new PdfBuilder(config);
 
         IRecipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
-        List<ISortlevel> sortlevels = generateSortlevelList("category", "region", "season");
+        List<ISortlevel> sortlevels = generateSortlevelList("kategorie", "region", "saison");
         pdfBuilder.build(r1, sortlevels);
         String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
 
@@ -190,7 +190,6 @@ public class PdfBuilderTest {
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) + "/.recipes2pdf/images/Testrezept1");
         assertThat(texFile, stringContainsInOrder(substrings));
         assertThat(texFile, containsString("Rezepttext 1"));
-
     }
 
     /**
