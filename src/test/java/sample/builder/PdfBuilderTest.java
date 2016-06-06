@@ -190,7 +190,6 @@ public class PdfBuilderTest {
         substrings.add(FilenameUtils.separatorsToUnix(System.getProperty("user.home")) + "/.recipes2pdf/images/Testrezept1");
         assertThat(texFile, stringContainsInOrder(substrings));
         assertThat(texFile, containsString("Rezepttext 1"));
-
     }
 
     /**
