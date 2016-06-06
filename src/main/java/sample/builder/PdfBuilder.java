@@ -317,11 +317,13 @@ public class PdfBuilder implements IConcreteBuilder {
 
         for (IRecipe recipe : recipes) {
             Properties props = new Properties();
-            props.setProperty("category", (recipe.getCategory() == null) ? "" : recipe.getCategory().getName());
-            props.setProperty("season", (recipe.getSeason() == null) ? "" : recipe.getSeason().getName());
-            props.setProperty("nurture", (recipe.getNurture() == null) ? "" : recipe.getNurture().getName());
-            props.setProperty("curse", (recipe.getCourse() == null) ? "" : recipe.getCourse().getName());
+            props.setProperty("kategorie", (recipe.getCategory() == null) ? "" : recipe.getCategory().getName());
+            props.setProperty("saison", (recipe.getSeason() == null) ? "" : recipe.getSeason().getName());
+            props.setProperty("ernährungsart", (recipe.getNurture() == null) ? "" : recipe.getNurture().getName());
+            props.setProperty("gerichtart", (recipe.getCourse() == null) ? "" : recipe.getCourse().getName());
             props.setProperty("region", (recipe.getRegion() == null) ? "" : recipe.getRegion().getName());
+            props.setProperty("rezeptquelle", (recipe.getSource() == null) ? "" : recipe.getSource().getName());
+            props.setProperty("tageszeit", (recipe.getDaytime() == null) ? "" : recipe.getDaytime().getName());
             propList.put(recipe,props);
         }
         return propList;
