@@ -19,15 +19,12 @@ public class ControllerDeleteDialogRecipe {
 
     @FXML
     private Button closeButton;
-
     @FXML
     private Button deleteButton;
 
-    private ObservableList<String> selectedItems = ControllerManageCookBook.getInstance().getSelectedRecipes();
-
     @FXML
     void deleteElement(ActionEvent event) {
-        selectedItems = ControllerManageCookBook.getInstance().getSelectedRecipes();
+        ObservableList<String> selectedItems = ControllerManageCookBook.getInstance().getSelectedRecipes();
         Recipe recipe;
         try{
             for(String recipeName:selectedItems){
@@ -49,12 +46,9 @@ public class ControllerDeleteDialogRecipe {
      *
      * @param event
      */
-
     @FXML
     void closeDeleteDialog(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
-
     }
 }

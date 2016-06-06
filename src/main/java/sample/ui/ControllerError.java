@@ -25,7 +25,6 @@ public class ControllerError {
     private Button closeButton;
 
     public static ControllerError getInstance() {
-
         if (ControllerError.instance == null) {
             synchronized (ControllerError.class) {
                 if (ControllerError.instance == null) {
@@ -44,7 +43,6 @@ public class ControllerError {
     public void setLabels(String boldPrint, String littlePrint) {
         this.labelBoldPrint.setText(boldPrint);
         this.labelLittlePrint.setText(littlePrint);
-
     }
 
     /**
@@ -52,13 +50,9 @@ public class ControllerError {
      *
      * @param event
      */
-
     @FXML
     void closeDialog(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
-
-
     }
 }

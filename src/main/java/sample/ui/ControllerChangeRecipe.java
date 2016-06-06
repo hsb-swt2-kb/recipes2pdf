@@ -128,26 +128,35 @@ public class ControllerChangeRecipe {
             INurture nurture = new Nurture();
             nurture.setName(textFieldErnaehrungsart.getText());
             recipe.setNurture(nurture);
+
             ICourse course = new Course();
             course.setName(textFieldGerichtart.getText());
             recipe.setCourse(course);
+
             IRegion region = new Region();
             region.setName(textFieldRegion.getText());
             recipe.setRegion(region);
+
             ICategory category=new Category();
             category.setName(textFieldCategory.getText());
             recipe.setCategory(category);
+
             recipe.setPortions(Integer.parseInt(textFieldPortion.getText()));
+
             ISource source = new Source();
             source.setName(textFieldSource.getText());
             recipe.setSource(source);
+
             ISeason season = new Season();
             season.setName(textFieldSaison.getText());
             recipe.setSeason(season);
+
             IDaytime daytime = new Daytime();
             daytime.setName(textFieldDaytime.getText());
             recipe.setDaytime(daytime);
+
             recipe.setText(textAreaZubereitungstext.getText());
+
             UI.changeRecipe(recipe);
             ControllerManageCookBooks.getInstance().refreshListViews();
             Stage stage = (Stage) changeButton.getScene().getWindow();

@@ -26,22 +26,21 @@ import java.io.IOException;
 public class ControllerExportCookBook {
     final Logger LOG = LoggerFactory.getLogger(this.getClass());
     File file;
+
+    private String selectedCookBook;
+    private String formatChoice;
+    private ObservableList<String> format;
+
     @FXML
     private Button browseButton;
-    private String selectedCookBook;
     @FXML
     private TextField textFieldPath;
     @FXML
     private Button saveButton;
     @FXML
     private ComboBox<String> comboBoxFormat;
-
-    private ObservableList<String> format;
-
     @FXML
     private Button closeButton;
-
-    private String formatChoice;
 
     @FXML
     private void initialize() {
@@ -49,13 +48,11 @@ public class ControllerExportCookBook {
         initializeListeners();
         format = FXCollections.observableArrayList("A4", "A5");
         refreshComboBox(format);
-
     }
 
     /**
      * The method ''initializeListeners()'' initializes the listeners.
      */
-
     private void initializeListeners() {
         comboBoxFormat
             .setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -78,21 +75,15 @@ public class ControllerExportCookBook {
                                 }
                             } else {
                                 setText(null);
-
-
                             }
 
                         }
                     };
                     return cell;
-
                 }
 
             });
-
-
     }
-
 
     private void refreshComboBox(ObservableList<String> format) {
         comboBoxFormat.setItems(format);
@@ -103,7 +94,6 @@ public class ControllerExportCookBook {
      *
      * @param event
      */
-
     @FXML
     void closeWindow(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
@@ -113,13 +103,10 @@ public class ControllerExportCookBook {
     /**
      * The method ''closeCWindow()'' closes the export-window.
      */
-
     @FXML
     void closeWindow() {
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
-
-
     }
 
     /**

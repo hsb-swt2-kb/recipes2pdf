@@ -20,7 +20,6 @@ public class ControllerHelp {
      *
      * @param event
      */
-
     @FXML
     void closeHelp(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();

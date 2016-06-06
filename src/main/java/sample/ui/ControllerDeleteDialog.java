@@ -16,7 +16,6 @@ public class ControllerDeleteDialog {
 
     @FXML
     private Button closeButton;
-
     @FXML
     private Button deleteButton;
 
@@ -31,13 +30,9 @@ public class ControllerDeleteDialog {
      *
      * @param event
      */
-
     @FXML
     void closeDeleteDialog(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
-
-
     }
 }
