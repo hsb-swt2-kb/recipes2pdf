@@ -36,7 +36,6 @@ public class ControllerDeleteDialogRecipe {
         catch(RecipeNotFoundException e){
             System.out.println("Couldn't load recipe");
         }
-
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
     }

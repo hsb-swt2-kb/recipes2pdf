@@ -143,7 +143,6 @@ public class ControllerDefault {
     @FXML
     void openHelp(ActionEvent event) {
         newWindow(Resources.getHelpFXML(), Resources.getHelpWindowText(), 250, 200, Resources.getHelpIcon());
-
     }
 
     /**

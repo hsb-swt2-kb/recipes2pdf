@@ -21,8 +21,8 @@ import java.io.File;
 
 public class ControllerChangeRecipe {
 
-
     Recipe recipe;
+
     @FXML
     private TextField textFieldName;
     @FXML
@@ -69,7 +69,6 @@ public class ControllerChangeRecipe {
     /**
      * load recipe information
      */
-
     private void loadInformation() {
         try{
             //Recipe selection from the ControllerManageCookBook
@@ -83,7 +82,6 @@ public class ControllerChangeRecipe {
     /**
      * set loaded text to textfields
      */
-
     private void fillTextFields() {
 
         textFieldName.setText(recipe.getTitle());
@@ -105,13 +103,12 @@ public class ControllerChangeRecipe {
      *
      * @param event
      */
+    @FXML
+    void closeChangeRecipe(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
 
-        @FXML
-        void closeChangeRecipe(ActionEvent event) {
-            Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.close();
-
-        }
+    }
 
     private void manageSaveError(String boldPrint, String littlePrint) {
         ControllerDefault controllerDefault = new ControllerDefault();
@@ -171,7 +168,6 @@ public class ControllerChangeRecipe {
      * If the user imports a picture, the path will display in the textField-picture.
      * @param event
      */
-
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();

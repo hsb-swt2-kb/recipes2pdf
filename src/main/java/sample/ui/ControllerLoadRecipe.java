@@ -43,7 +43,6 @@ public class ControllerLoadRecipe {
 
     @FXML
     public void initialize(){
-
         groupRadioButtons();
         setHyperLinkNotEditable();
     }
@@ -70,7 +69,6 @@ public class ControllerLoadRecipe {
     /**
      * The method ''setHyperLinkEditable()'' sets the  hyperLinkTextField editable.
      */
-
     void setHyperLinkEditable() {
         hyperLinkTextField.setEditable(true);
         hyperLinkTextField.setDisable(false);
@@ -79,7 +77,6 @@ public class ControllerLoadRecipe {
     /**
      * The method ''setHyperLinkNotEditable()'' deactivate the hyperLinkTextField.
      */
-
     void setHyperLinkNotEditable() {
         hyperLinkTextField.setEditable(false);
         hyperLinkTextField.clear();
@@ -89,7 +86,6 @@ public class ControllerLoadRecipe {
     /**
      * The method ''changeRadioButtonFolder(ActionEvent event)'' sets the options for the folder-selection.
      */
-
     @FXML
     void changeRadioButtonFolder(ActionEvent event) {
         controllRadioButtons();
@@ -100,14 +96,12 @@ public class ControllerLoadRecipe {
     /**
      * The method ''changeRadioButtonFile(ActionEvent event)'' sets the options for the file-selection.
      */
-
     @FXML
     void changeRadioButtonFile(ActionEvent event) {
         controllRadioButtons();
         setHyperLinkNotEditable();
         radioButtonFileBoolean = true;
     }
-
 
     /**
      * The method ''changeHyperLinkEditability(ActionEvent event)'' sets the options for the hyperlink-selection.
@@ -132,13 +126,11 @@ public class ControllerLoadRecipe {
         catch(Exception e){
             e.printStackTrace();
         }
-
     }
 
     /**
      * The method ''openFolder()'' opens a filechooser for selecting a folder.
      */
-
     @FXML
     void openFolder() {
         FileHandler fileHandler = new FileHandler();
@@ -193,7 +185,6 @@ public class ControllerLoadRecipe {
         String checfkoch = "chefkoch";
         String weightwatchers = "weightwatchers";
         String url = this.hyperLinkTextField.getText();
-
         boolean hyperlink = false;
         UrlValidator urlValidator = new UrlValidator();
         //valid URL
@@ -225,10 +216,7 @@ public class ControllerLoadRecipe {
      */
     @FXML
     void closeWindow(ActionEvent event) {
-
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
     }
 }
-
-

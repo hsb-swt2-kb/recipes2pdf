@@ -17,6 +17,7 @@ public class ControllerError {
 
 
     private static ControllerError instance;
+
     @FXML
     private Label labelBoldPrint;
     @FXML

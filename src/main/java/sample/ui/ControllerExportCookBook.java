@@ -56,27 +56,20 @@ public class ControllerExportCookBook {
     private void initializeListeners() {
         comboBoxFormat
             .setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-
                 @Override
                 public ListCell<String> call(ListView<String> param) {
                     final ListCell<String> cell = new ListCell<String>() {
-
                         @Override
                         public void updateItem(String item, boolean empty) {
                             super.updateItem(item, empty);
                             if (item != null) {
                                 setText(item);
                                 if (item.contains("A4")) {
-
-
                                 } else if (item.contains("A5")) {
-
-
                                 }
                             } else {
                                 setText(null);
                             }
-
                         }
                     };
                     return cell;
@@ -133,12 +126,10 @@ public class ControllerExportCookBook {
             UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
         } catch (CookBookNotFoundException e) {
             manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
-
         } catch (IOException e) {
             manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
         } catch (TexParserException e) {
             manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
-
         }
     }
 }
