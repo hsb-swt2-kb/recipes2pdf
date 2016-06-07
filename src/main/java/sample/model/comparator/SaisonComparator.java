@@ -7,7 +7,7 @@ import java.util.Comparator;
 /**
  * Created by kai on 25.05.16.
  */
-public class SeasonComparator implements Comparator<IRecipe>{
+public class SaisonComparator implements Comparator<IRecipe> {
 
     @Override
     public int compare(IRecipe recipe1, IRecipe recipe2) {
