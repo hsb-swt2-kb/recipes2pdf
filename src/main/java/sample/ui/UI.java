@@ -103,6 +103,9 @@ public class UI {
         if (!recipe.isIncomplete()) {
             new RecipeDAO().insert(recipe);
         }
+        Cookbook cookbook = new CookbookDAO().findFirst("title=?", "Standardkochbuch").get();
+        cookbook.addRecipe(recipe);
+        new CookbookDAO().update(cookbook);
     }
 
     static void addRecipe(List<String> lines){
