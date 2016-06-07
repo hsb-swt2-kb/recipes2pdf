@@ -49,24 +49,26 @@ public class UI {
         }
     }
 
-    public static void addRecipeFromHyperlink(final String URL) throws IOException {
-        String line = "";
-        List<String> all = new ArrayList<>();
+    public static void addRecipeFromHyperlink(final String URL) throws Exception,IOException {
+        String line;
         URL myUrl;
         BufferedReader in = null;
+        PrintWriter writer = new PrintWriter("tmpFile.html", "UTF-8");
         try {
             myUrl = new URL(URL);
             in = new BufferedReader(new InputStreamReader(myUrl.openStream()));
 
             while ((line = in.readLine()) != null) {
-                all.add(line);
+                writer.println(line);
             }
         } finally {
             if (in != null) {
                 in.close();
             }
         }
-        addRecipe(all);
+        File file = new File("tmpFile.html");
+        addRecipe(new File("tmpFile.html"));
+        file.delete();
     }
 
     /**
@@ -109,10 +111,6 @@ public class UI {
             cookbook.addRecipe(recipe);
             new CookbookDAO().update(cookbook);
         }
-    }
-
-    static void addRecipe(List<String> lines){
-
     }
 
     /**
