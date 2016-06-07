@@ -14,22 +14,23 @@ public interface IConcreteBuilder {
     /**
      * This Method builds one documnet containing Document out of the given cookbook.
      * <h1>Precondition:</h1>
-     *     Cookbook is not Null and has Recipes and ISortlevels(optional but recommendet)<br>
+     * Cookbook is not Null and has Recipes and ISortlevels(optional but recommendet)<br>
      * Recipes in the cookbook have to have all attributes, that are needed for the document building process.<br>
      * The needed attributes in recipes are:<br>
      * <ul>
-     *     <li>id</li>
-     *     <li>title</li>
-     *     <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
-     *     <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
-     *     <li>text</li>
+     * <li>id</li>
+     * <li>title</li>
+     * <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
+     * <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
+     * <li>text</li>
      * </ul>
      * <h1>Postcondition:</h1>
      * Document is saved on Harddrive at the configurated path relativ to  userhomedir/.recipes2pdf, that is given in the config
+     *
      * @param cookbook Cookbook, that is converted into a Document
-     * @return: File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
-     * @throws IOException Is thrown by the JLR Converter, when anything with the Filesystem went wrong while converting the template to an explicit .tex for the cookbook
+     * @throws IOException        Is thrown by the JLR Converter, when anything with the Filesystem went wrong while converting the template to an explicit .tex for the cookbook
+     * @return: File object, that points to the generated Document
      */
     File build(ICookbook cookbook) throws IOException, TexParserException;
 
@@ -39,22 +40,22 @@ public interface IConcreteBuilder {
      * <h1>Precondition:</h1>
      * Recipe is not Null and has following Attributes filled with values: <br>
      * <ul>
-     *     <li>id</li>
-     *     <li>title</li>
-     *     <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
-     *     <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
-     *     <li>text</li>
+     * <li>id</li>
+     * <li>title</li>
+     * <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
+     * <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
+     * <li>text</li>
      * </ul>     *
      * <h1>Postcondition:</h1>
      * Document is saved on Harddrive at the configurated path relativ to  userhomedir/.recipes2pdf, that is given in the config
-     * @param recipe The recipe, that sould be converted into a Document
+     *
+     * @param recipe     The recipe, that sould be converted into a Document
      * @param sortLevels A sorted List of ISortLevel. The recipe will get a Referencenumber according to the order of this List.
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
-     * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
+     * @throws IOException        Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
      */
     File build(IRecipe recipe, List<ISortlevel> sortLevels) throws TexParserException, IOException;
-
 
 
     /**
@@ -62,19 +63,20 @@ public interface IConcreteBuilder {
      * <h1>Precondition:</h1>
      * Recipe is not Null and has following Attributes filled with values: <br>
      * <ul>
-     *     <li>id</li>
-     *     <li>title</li>
-     *     <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
-     *     <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
-     *     <li>text</li>
+     * <li>id</li>
+     * <li>title</li>
+     * <li>ingredients (the Ingredients have to be filled with values that are not null)</li>
+     * <li>image (optional but recommendet). When no image is found, a default image will be taken instead.</li>
+     * <li>text</li>
      * </ul>
-     *
+     * <p>
      * <h1>Postcondition:</h1>
      * Document is saved on Harddrive at the configurated path relativ to  userhomedir/.recipes2pdf, that is given in the config
+     *
      * @param recipe The recipe, that sould be converted into a Document
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
-     * @throws IOException Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
+     * @throws IOException        Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
      */
     File build(IRecipe recipe) throws TexParserException, IOException;
 

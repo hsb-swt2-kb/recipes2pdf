@@ -19,7 +19,7 @@ public class RecipeListSorter {
         ComparatorChain compChain = new ComparatorChain();
         Comparator comparator = null;
 
-        for (int i=0; i<sortLevelList.size();i++) {
+        for (int i = 0; i < sortLevelList.size(); i++) {
             final String sortlevelName = sortLevelList.get(i).getName();
             if (sortlevelName.equalsIgnoreCase("Kategorie")) {
                 comparator = new CategoryComparator();
@@ -40,7 +40,7 @@ public class RecipeListSorter {
             }
             compChain.addComparator(comparator);
         }
-        if (compChain.size() == 0){
+        if (compChain.size() == 0) {
             compChain.addComparator(new RecipeTitleComparator());
         }
         Collections.sort(recipeList, compChain);

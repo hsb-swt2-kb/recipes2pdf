@@ -9,8 +9,8 @@ import java.util.Comparator;
  */
 public class RecipeTitleComparator implements Comparator<IRecipe> {
 
-@Override
-public int compare(IRecipe recipe1, IRecipe recipe2) {
-    return recipe1.getTitle().compareToIgnoreCase(recipe2.getTitle());
+    @Override
+    public int compare(IRecipe recipe1, IRecipe recipe2) {
+        return recipe1.getTitle().compareToIgnoreCase(recipe2.getTitle());
     }
-    }
+}
