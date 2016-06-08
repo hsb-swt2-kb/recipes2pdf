@@ -35,19 +35,13 @@ public class UI {
 
     private static Database db = new Database( DatabaseConnection.getDatabaseConnection() );
 
-    static void addRecipesFromFolder(final File folder) throws Exception {
+    static void addRecipesFromFolder(final File folder) throws CouldNotParseException, FileNotFoundException {
         for (final File file : folder.listFiles()) {
             if (!file.isDirectory()) {
-                try{
-                    UI.addRecipe(file);
-                }
-                catch(Exception e){throw e;}
+                UI.addRecipe(file);
             }
             else {
-                try{
-                    UI.addRecipesFromFolder(file);
-                }
-                catch(Exception e){throw e;}
+                UI.addRecipesFromFolder(file);
             }
         }
     }

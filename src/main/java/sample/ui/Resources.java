@@ -32,9 +32,6 @@ public class Resources {
     protected static String getloadRecipeFXML() {
         return "/sample/ui/LoadRecipe.fxml";
     }
-    protected static String getloadRecipePopOverFXML() {
-        return "/sample/ui/LoadRecipePopOver.fxml";
-    }
     protected static String getHelpFXML() {
         return "/sample/ui/Help.fxml";
     }

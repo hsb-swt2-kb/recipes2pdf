@@ -399,13 +399,12 @@ public class ControllerManageCookBook {
      */
     @FXML
     void addRecipe(ActionEvent event) {
-        Node node = loadResource(Resources.getloadRecipePopOverFXML());
+        Node node = loadResource(Resources.getloadRecipeFXML());
         PopOver popOver = new PopOver(node);
         popOver.setDetachable(false);
         popOver.setCornerRadius(4);
         popOver.setArrowLocation(PopOver.ArrowLocation.BOTTOM_LEFT);
         popOver.show(this.plusButton);
-        //controllerDefault.newWindow(Resources.getloadRecipeFXML(), Resources.getLoadWindowText(), 290, 160, Resources.getDefaultIcon());
     }
 
     /**

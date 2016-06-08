@@ -28,12 +28,10 @@ import java.io.IOException;
 
 public class ControllerExportCookBook {
     final Logger LOG = LoggerFactory.getLogger(this.getClass());
-    File file;
 
     private String selectedCookBook;
     private String formatChoice;
     private ObservableList<String> format;
-
     @FXML
     private Button browseButton;
     @FXML
@@ -50,7 +48,8 @@ public class ControllerExportCookBook {
         this.selectedCookBook = ControllerManageCookBook.getInstance().getSelectedCookBooks();
         initializeListeners();
         format = FXCollections.observableArrayList("A4", "A5");
-        refreshComboBox(format);
+        comboBoxFormat.setItems(format);
+        comboBoxFormat.getSelectionModel().selectFirst();
     }
 
     /**
@@ -81,10 +80,6 @@ public class ControllerExportCookBook {
             });
     }
 
-    private void refreshComboBox(ObservableList<String> format) {
-        comboBoxFormat.setItems(format);
-    }
-
     /**
      * The method ''closeCWindow(ActionEvent event)'' closes the export-window after a interaction with the close-button.
      *
@@ -105,18 +100,6 @@ public class ControllerExportCookBook {
         stage.close();
     }
 
-    /**
-     * The method '' browse(ActionEvent event)'' opens the filechooser and set the choosen path to the path-textField.
-     */
-    @FXML
-    void browse(ActionEvent event) {
-        FileHandler fileHandler = new FileHandler();
-        this.file = fileHandler.exportFile();
-        if (this.file != null) {
-            textFieldPath.setText(file.getAbsolutePath());
-        }
-    }
-
     private void manageSaveError(String boldPrint, String littlePrint) {
         ControllerDefault controllerDefault = new ControllerDefault();
         controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
@@ -127,7 +110,7 @@ public class ControllerExportCookBook {
     void saveCookBook(ActionEvent event) {
         try {
             final File pdfFile = UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
-            if (null != pdfFile && Desktop.isDesktopSupported() ) {
+            if (null != pdfFile && Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().open(pdfFile);
             }
             this.closeWindow();

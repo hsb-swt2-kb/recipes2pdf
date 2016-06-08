@@ -24,7 +24,6 @@ public class FileHandler {
         stage.setTitle(Resources.getFileChooserWindowText());
         final DirectoryChooser chooser = new DirectoryChooser();
         File selectedDirectory = chooser.showDialog(stage);
-
         return selectedDirectory;
     }
 
