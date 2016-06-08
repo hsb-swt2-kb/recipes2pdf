@@ -130,6 +130,7 @@ public class ControllerExportCookBook {
             if (null != pdfFile && Desktop.isDesktopSupported() ) {
                 Desktop.getDesktop().open(pdfFile);
             }
+            this.closeWindow();
         } catch (CookBookNotFoundException | IOException | TexParserException e) {
             manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
         }
