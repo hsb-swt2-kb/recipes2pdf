@@ -2,8 +2,6 @@ package sample.parser;
 
 import sample.model.*;
 
-import java.lang.reflect.Array;
-import java.time.Duration;
 import java.lang.Math;
 import java.lang.StringBuilder;
 import java.util.ArrayList;
@@ -11,26 +9,23 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/* This Class can extract information for a recipe from a textfile
+/* This Class can extract information for a recipe from a textFile
 
-  precondition: A Arraylist of String, that contains information from a Textfile
-  each row in the Arraxlist is one row in the textfile
+  precondition: A ArrayList of String, that contains information from a textFile
+  each row in the ArrayList is one row in the textFile
 
-  After exctracting all availible information, the recipe will be check for
-  minimal data like recipename, Ingredientlist with at least one incredient
-  d a preperationtext.
+  After extracting all available information, the recipe will be checked for
+  minimal data like recipeName, ingredientList with at least one ingredient
+  and a preperation text.
 
   All additional data like region of the recipe (ex. Greece, France, Africans etc..)
-  have to be declared in the Textfile like "Region: France"
+  have to be declared in the textFile like "Region: France"
 
   Author: Henrik Giessel
   last edited: 3rd May of 2016
 */
 
-
-
-
-public class TxtParser extends AConcreteParser implements Constants {
+public class TxtParser extends AConcreteParser implements TxtParserConstants {
     /**
      * @param textFileContent via ArrayList of String, where one Element = one Line from Textfile
      * This parse()-Methode fill a Recipe-Object
@@ -60,74 +55,74 @@ public class TxtParser extends AConcreteParser implements Constants {
      * NOTE: Higher Instances have to make sure, that a recipe is valid with minimal Options
      */
     public Recipe parse(List<String> textFileContent) {
-        Recipe recipe = new Recipe();
-        ArrayList<String[]> tempIncredientList = new ArrayList<String[]>();
 
         //Try to find Name without Tag
         //================STEP1==================
-        recipe.setTitle(extractRecipename(textFileContent));
+        recipe.setTitle(extractRecipeName(textFileContent));
 
        //=================STEP2==================
         // Set IngredientList from RecipeObject from temporaryList
+        ArrayList<String[]> tempIncredientList = new ArrayList<>();
         tempIncredientList = extractIncredentsList(textFileContent);
-        for (int i = 0; i < tempIncredientList.size(); i++) {
-            String tempName = cutString(tempIncredientList.get(i)[2],fieldLength);
-            String tempUnit = cutString(tempIncredientList.get(i)[1],fieldLength);
-            String tempAmount = cutString(tempIncredientList.get(i)[0],fieldLength);
+
+        for (String[] ingredient:tempIncredientList) {
+            String tempName   = cutString(ingredient[2],fieldLength);
+            String tempUnit   = cutString(ingredient[1],fieldLength);
+            String tempAmount = cutString(ingredient[0],fieldLength);
+
             //         IngredientName, Amount, UnitName
             recipe.add(tempName, parseStringToDouble(tempAmount), tempUnit);
         }
-        // FInd PreperationText with tag...If there is now Tag use specific Method
+        // FInd PreparationText with tag...If there is now Tag use specific Method
         // ===================STEP3===================================
-        String tempPreperation=findPreperationWithTag(textFileContent);
+        String tempPreparation=findPreperationWithTag(textFileContent);
 
-        if (tempPreperation==null){
+        if (tempPreparation==null){
             recipe.setText(findPreparationOfRecipe(textFileContent));
         }
         else{
-            if (tempPreperation.length()>preparationLength){
-                tempPreperation = cutString(tempPreperation,preparationLength);
+            if (tempPreparation.length()>preparationLength){
+                tempPreparation = cutString(tempPreparation,preparationLength);
             }
-            recipe.setText(tempPreperation);
+            recipe.setText(tempPreparation);
         }
         // Try to extract additional recipedata
         //===================STEP4===================================
-        Region region = new Region();
-        region.setName(findDatafield(textFileContent, "Region"));
-        recipe.setRegion(region);
-        //=============================
-        Course course = new Course();
-        course.setName(findDatafield(textFileContent, "Gerichtsart"));
-        recipe.setCourse(course);
-        //=============================
         Category category = new Category();
-        category.setName(findDatafield(textFileContent, "Kategorie"));
+        category.setName(findDatafield(textFileContent, signalWord[3]));
         recipe.setCategory(category);
         //=============================
+        Course course = new Course();
+        course.setName(findDatafield(textFileContent, signalWord[5]));
+        recipe.setCourse(course);
+        //=============================
+        Region region = new Region();
+        region.setName(findDatafield(textFileContent, signalWord[8]));
+        recipe.setRegion(region);
+        //=============================
+        Daytime daytime = new Daytime();
+        daytime.setName(findDatafield(textFileContent, signalWord[9]));
+        recipe.setDaytime(daytime);
+        //=============================
         Season season = new Season();
-        season.setName(findDatafield(textFileContent, "Saison"));
+        season.setName(findDatafield(textFileContent, signalWord[10]));
         recipe.setSeason(season);
         //=============================
         Nurture nurture = new Nurture();
-        nurture.setName(findDatafield(textFileContent, "Ernährungsart"));
+        nurture.setName(findDatafield(textFileContent, signalWord[11]));
         recipe.setNurture(nurture);
-        //=============================
-        Daytime daytime = new Daytime();
-        daytime.setName(findDatafield(textFileContent, "Tageszeit"));
-        recipe.setDaytime(daytime);
 
         //===================STEP5=============================
         try {
-            String temp = findDatafield(textFileContent, "Arbeitszeit");
-            recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, "Arbeitszeit")));
+            String temp = findDatafield(textFileContent, signalWord[4]);
+            recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, signalWord[4])));
         } catch (NumberFormatException e) {
-            String [] str = extractAmountUnit(findDatafield(textFileContent, "Arbeitszeit"));
+            String [] str = extractAmountUnit(findDatafield(textFileContent, signalWord[4]));
 
-            if (str[0] == "0" || str[0] == null) {
+            if (str[0] == null || str[0].equals("0")) {
                 recipe.setDuration(0);
             }
-            else if (str[0] != null){
-
+            else {
                 double d = parseStringToDouble(str[0]);
                 boolean std = false;
 
@@ -138,7 +133,7 @@ public class TxtParser extends AConcreteParser implements Constants {
                     }
                 }
                 // Konvert hour to Minute
-                if (std == true){
+                if (std){
                     d = d*60;
                 }
                 // Cast double to int
@@ -152,7 +147,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         }
 
         catch (NumberFormatException e) {
-            String cal = findDatafield(textFileContent, "Kalorien");
+            String cal = findDatafield(textFileContent, signalWord[7]);
             recipe.setCalories(fixNumberFormat(cal));
         }
         catch (Exception e){
@@ -163,7 +158,7 @@ public class TxtParser extends AConcreteParser implements Constants {
             recipe.setPortions(Integer.parseInt(findDatafield(textFileContent, "Portionen")));
         }
         catch (NumberFormatException e){
-            String port = findDatafield(textFileContent, "Portionen");
+            String port = findDatafield(textFileContent, signalWord[6]);
             recipe.setPortions(fixNumberFormat(port));
         }
         catch (Exception e) {
@@ -178,7 +173,7 @@ public class TxtParser extends AConcreteParser implements Constants {
 
 
     /**
-     * @param fileContent
+     * @param fileContent List<String> of the recipe content
      * @return boolean: If it is true, the parse() could extract a minimal Recipe. If it is a wrong format like html, it
      * will be false.
      */
@@ -194,27 +189,24 @@ public class TxtParser extends AConcreteParser implements Constants {
   private int fixNumberFormat(String str){
         String string[] = extractAmountUnit(str);
         double d = parseStringToDouble(string[0]);
-        int i = (int) Math.floor(d);
-        return i;
+        return (int) Math.floor(d);
     }
-    //Extract the name of a recpipe. Must be in the first non empty row
-    //of the textfile
-    private String extractRecipename(List<String> textfileContent) {
-        String name = "";
-        String row = "";
+    //Extract the name of a recipe. Must be in the first non empty row
+    //of the textFile
+    private String extractRecipeName(List<String> textFileContent) {
+        String name,
+               row = "";
 
-        for (int i = 0; i < textfileContent.size(); i++) {
-            row = textfileContent.get(i).trim();
-            if (row.length() == 0) {
-                continue;
-            } else {
+        for (String line:textFileContent) {
+            row = line.trim();
+            if (row.length() > 0) {
                 name = row;
                 break;
             }
         }
         //If the Name-Tag is in String it will be replaced
         name = row.replaceAll("name:", "").trim();
-        name = row.replaceAll("Name:", "").trim();
+        name = row.replaceAll(signalWord[0], "").trim();
         name = cutString(name,fieldLength);
         return name;
     }
@@ -225,25 +217,25 @@ public class TxtParser extends AConcreteParser implements Constants {
      * Stepp 2: Extract Amount, Unit and Name of each Incredient by using
      * regular expression
      *
-     * @param textfileContent
+     * @param textFileContent List<String> content of the recipe file
      * @return ArrayList with
    */
-    private ArrayList<String[]> extractIncredentsList(List<String> textfileContent) {
+    private ArrayList<String[]> extractIncredentsList(List<String> textFileContent) {
 
-        String tempIncredent = null;
-        boolean anzVorhanden;
+        String tempIngredient = null;
+        boolean anzPresent;
         ArrayList<String> temporaryIingredients = new ArrayList<String>();
         ArrayList<String[]> ingredientList = new ArrayList<String[]>();
 
         //Step 1: ====================================
-        for (int i = 0; i < textfileContent.size(); i++) {
-            tempIncredent = textfileContent.get(i).trim();
-            if (tempIncredent.startsWith("-")) {
-                temporaryIingredients.add(tempIncredent.replace("-", "").trim());
+        for (int i = 0; i < textFileContent.size(); i++) {
+            tempIngredient = textFileContent.get(i).trim();
+            if (tempIngredient.startsWith("-")) {
+                temporaryIingredients.add(tempIngredient.replace("-", "").trim());
                 //checking next line to stop ingredients-parsing
                 //to prevent wrong ingredients in the rest of the recipe
-                if (((textfileContent.get(i + 1).trim().startsWith("-") == false)
-                    && textfileContent.get(i + 1).trim().length() > 0)) {
+                if (((!textFileContent.get(i + 1).trim().startsWith("-"))
+                    && textFileContent.get(i + 1).trim().length() > 0)) {
                     break;
                 }
             }
@@ -257,26 +249,26 @@ public class TxtParser extends AConcreteParser implements Constants {
             quanti = extractAmountUnit(zutatElement[0]);
 
             if (quanti[0] == null) {
-                anzVorhanden = false;
+                anzPresent = false;
             } else {
-                anzVorhanden = true;
+                anzPresent = true;
             }
 
-            if (zutatElement.length == 1 && anzVorhanden == false) {
+            if (zutatElement.length == 1 && !anzPresent ) {
                 //String Zutat[] = {amount,unit,ingredient};
                 String Zutat[] = {null, null, zutatElement[0]};
                 ingredientList.add(Zutat);
-            } else if (zutatElement.length >= 2 && anzVorhanden == false) {
+            } else if (zutatElement.length >= 2 && !anzPresent ) {
                 String tempStr = buildStringFromMultipleArrays(zutatElement, 0);
                 String Zutat[] = {quanti[0], quanti[1], tempStr};
                 ingredientList.add(Zutat);
-            } else if (zutatElement.length == 2 && anzVorhanden == true) {
+            } else if (zutatElement.length == 2 && anzPresent) {
                 String Zutat[] = {quanti[0], quanti[1], zutatElement[1]};
                 ingredientList.add(Zutat);
-            } else if (zutatElement.length == 3 && anzVorhanden == true) {
+            } else if (zutatElement.length == 3 && anzPresent) {
                 String Zutat[] = {quanti[0], zutatElement[1], zutatElement[2]};
                 ingredientList.add(Zutat);
-            } else if (zutatElement.length > 3 && anzVorhanden == true) {
+            } else if (zutatElement.length > 3 && anzPresent) {
                 String tempStr = buildStringFromMultipleArrays(zutatElement, 2);
                 String[] ingredient = {quanti[0], zutatElement[1], tempStr};
                 ingredientList.add(ingredient);
@@ -299,17 +291,17 @@ public class TxtParser extends AConcreteParser implements Constants {
             row = fileContent.get(i).trim();
             if (row.length() == 0) {
                 continue;
-            } else if (row.length() > 0 && fileContent.get(i).startsWith("-") == false) {
+            } else if (row.length() > 0 && !fileContent.get(i).startsWith("-")) {
                 nameFound = true;
-            } else if (fileContent.get(i).startsWith("-") == true) {
+            } else if (fileContent.get(i).startsWith("-")) {
                 for (int j = i + 1; j < fileContent.size(); j++) {
                     if ((fileContent.get(j).trim().length() == 0)) {
                         continue;
-                    } else if (fileContent.get(j).startsWith("-") == true) {
+                    } else if (fileContent.get(j).startsWith("-")) {
                         continue;
                     } else {
                         // Row could be a optional Informationen. Have to be checked
-                        if (checkRowForSignalwords(fileContent.get(j)) == true) {
+                        if (checkRowForSignalwords(fileContent.get(j))) {
                             continue;
                         } else {
 
@@ -327,7 +319,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         }
 
         //Find last row of preperation
-        int endRow = findNextSignalword(beginRow, fileContent, "Zubereitung");
+        int endRow = findNextSignalword(beginRow, fileContent, signalWord[2]);
 
         //extract preperation from file - if begin < 0 zero there is now preperation
         if (beginRow > 0) {
@@ -347,14 +339,14 @@ public class TxtParser extends AConcreteParser implements Constants {
     private String findPreperationWithTag(List<String> textFileContent){
         String tempStr = null;
 
-        int beginRow = findSignalword(textFileContent,"Zubereitung");
+        int beginRow = findSignalword(textFileContent,signalWord[2]);
         if (beginRow > 0){
-            int endRow = findNextSignalword(beginRow,textFileContent,"Zubereitung");
+            int endRow = findNextSignalword(beginRow,textFileContent,signalWord[2]);
             for (int i = beginRow;i<=endRow;i++){
 
                 tempStr = tempStr+textFileContent.get(i);
                 try{
-                    if (checkRowForSignalwords(textFileContent.get(i+1)) == true){
+                    if (checkRowForSignalwords(textFileContent.get(i + 1))){
                         break;
                     }
                 }
@@ -363,7 +355,7 @@ public class TxtParser extends AConcreteParser implements Constants {
                 }
             }
             tempStr=tempStr.replaceFirst("null","").trim();
-            tempStr=tempStr.replaceFirst("Zubereitung:","").trim();
+            tempStr=tempStr.replaceFirst(signalWord[2]+ attributeMarker,"").trim();
             return tempStr;
         }
         else
@@ -376,7 +368,7 @@ public class TxtParser extends AConcreteParser implements Constants {
 
         if (zeileS >= 0) {
             datafield = textFileContent.get(zeileS);
-            datafield = datafield.replaceFirst(signalwort + ":", "");
+            datafield = datafield.replaceFirst(signalwort + attributeMarker, "");
             datafield = datafield.trim();
             datafield = cutString(datafield,fieldLength);
             if (datafield.length() == 0) {
@@ -389,8 +381,8 @@ public class TxtParser extends AConcreteParser implements Constants {
     }
 
     private boolean checkRowForSignalwords(String row) {
-        for (int k = 0; k < signalwoerter.length; k++) {
-            if (row.contains(signalwoerter[k] + ":")) {
+        for (String aSignalWord : signalWord) {
+            if (row.contains(aSignalWord + attributeMarker)) {
                 return true;
             }
         }
@@ -405,7 +397,7 @@ public class TxtParser extends AConcreteParser implements Constants {
             int temp = str.lastIndexOf(".");
             int tempLength = str.length();
             StringBuilder build = new StringBuilder(str);
-            if(str.contains(".")==true){
+            if(str.contains(".")){
                 for (int i=tempLength-1;i>temp+3;i--){
                     build.deleteCharAt(i);
                     str = build.toString();
@@ -420,24 +412,24 @@ public class TxtParser extends AConcreteParser implements Constants {
         return d;
     }
 
-    private int findSignalword(List<String> textDateiInhalt, String signalwort) {
-        for (int i = 0; i < textDateiInhalt.size(); i++) {
-            if (textDateiInhalt.get(i).contains(signalwort + ":")) {
+    private int findSignalword(List<String> textFileContent, String signalWord) {
+        for (int i = 0; i < textFileContent.size(); i++) {
+            if (textFileContent.get(i).contains(signalWord + attributeMarker)) {
                 return i;
             }
         }
         return -1;
     }
 
-    private int findNextSignalword(int j, List<String> textDateiInhalt, String signalwort) {
-        for (int i = j + 1; i < textDateiInhalt.size(); i++) {
-            for (int k = 1; k < signalwoerter.length; k++) {
-                if ((textDateiInhalt.get(i).contains(signalwoerter[k] + ":")) && signalwoerter[k] + ":" != signalwort) {
+    private int findNextSignalword(int j, List<String> textFileContent, String signalWord) {
+        for (int i = j + 1; i < textFileContent.size(); i++) {
+            for (int k = 1; k < TxtParserConstants.signalWord.length; k++) {
+                if ((textFileContent.get(i).contains(TxtParserConstants.signalWord[k] + attributeMarker)) && TxtParserConstants.signalWord[k] + attributeMarker != signalWord) {
                     return i;
                 }
             }
         }
-        return textDateiInhalt.size() - 1;
+        return textFileContent.size() - 1;
     }
 
     /* Checks a String (From Step 1 in extractIncredentsList()) if it contains
@@ -487,7 +479,7 @@ public class TxtParser extends AConcreteParser implements Constants {
 
     private String cutString(String str, int maxLength){
         if (str == null) {return null;}
-        if (str != null && str.length()>maxLength) {
+        else if (str.length()>maxLength) {
             int tempLength = str.length();
             String tempStr = str;
             StringBuilder build = new StringBuilder(str);

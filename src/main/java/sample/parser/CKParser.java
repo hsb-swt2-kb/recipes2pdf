@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * Changed by fpfennig on 29.05.16
  * Chefkoch parser to parse recipes from chefkoch.de
  */
-public class ChefkochParser extends AConcreteParser {
+public class CKParser extends AHTMLParser {
 
     /**
      * The parse method uses Jsoup instead of an Web-API.

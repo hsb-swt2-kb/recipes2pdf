@@ -31,16 +31,16 @@ import static org.mockito.Mockito.*;*/
  * Updated by fpfennig on 30.05.16
  */
 //@RunWith(MockitoJUnitRunner.class)
-public class ChefkochParserTest {
+public class CKParserTest {
 
     private Recipe recipe;
-    private ChefkochParser ckParser;
+    private CKParser ckParser;
     private ArrayList<String> rawRecipeList = new ArrayList<>();
 
     @Before
     public void setUp() throws Throwable {
 
-        this.ckParser   = new ChefkochParser();
+        this.ckParser   = new CKParser();
         this.recipe     = new Recipe();
 
         this.rawRecipeList.add(ResourceLoader.loadFileContents(this.getClass(), "CK_test_zutaten.html"));

@@ -15,17 +15,32 @@ import java.util.List;
  *
  * @author Markus
  */
-public class Parser implements IParser {
+public class Parser {
+
+
+  /**
+   * parse
+   *
+   * just to provide parsing file of given fileName
+   *
+   * @param fileName String name of the file that may contain the recipe content
+   * @return IRecipe Recipe with the parsed content
+   * @throws CouldNotParseException
+   * @throws FileNotFoundException
+   */
+    public  static IRecipe parse(String fileName) throws  CouldNotParseException,FileNotFoundException {
+        return parse(new File(fileName));
+    }
 
     /**
      * parse
-     * <p>
-     * implementation of the parse method from IParser
      *
-     * @param recipeFile
-     * @return
-     * @throws FileNotFoundException
-     * @throws CouldNotParseException
+     * main function of this parserController to be called in the UI.
+     *
+     * @param recipeFile File that contains the content of the recipe to parse
+     * @return IRecipe the Recipe that is parsed from the given File.
+     * @throws FileNotFoundException if the file does not exist
+     * @throws CouldNotParseException if no parser present to parse the content of the existing file.
      */
     public static IRecipe parse(File recipeFile) throws CouldNotParseException, FileNotFoundException {
         // read file content
@@ -36,15 +51,23 @@ public class Parser implements IParser {
         return Parser.parse(fileContent);
     }
 
-
+    /**
+     * parse
+     *
+     * just parse from List<string> linesOfFile
+     *
+     * @param fileContent
+     * @return
+     * @throws CouldNotParseException
+     * @throws FileNotFoundException
+     */
     public static IRecipe parse (List<String> fileContent) throws CouldNotParseException,FileNotFoundException {
 
         // add concrete parsers
         List<AConcreteParser> parsers = new ArrayList<>();
         parsers.add(new TxtParser());
-        parsers.add(new ChefkochParser());
+        parsers.add(new CKParser());
         parsers.add(new WWParser());
-
 
         Recipe recipe = new Recipe();
 
@@ -77,32 +100,9 @@ public class Parser implements IParser {
             for(Triple<IIngredient,Double,IUnit> ingredient:ingredients){
                 if(ingredient.getRight().getName()==null) ingredient.getRight().setName("");
             }
-
             return recipe;
         }
         throw new CouldNotParseException();
-    }
-
-    /**
-     * readFile
-     * <p>
-     * helpful function, because textparser can handle ArrayList<String>
-     * easier than the content as one complete String.
-     *
-     * @param file file to read out
-     * @return
-     * @throws IOException
-     */
-    public static ArrayList<String> readFile(String file) throws IOException {
-        ArrayList<String> lines = new ArrayList<>();
-        String line;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-            return lines;
-        }
     }
 }
 

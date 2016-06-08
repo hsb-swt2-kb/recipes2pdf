@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 /**
  * Created by fpfennig on 18.05.2016.
  */
-public class WWParser extends AConcreteParser implements WWConstants{
+public class WWParser extends AHTMLParser implements WWConstants{
 
     /**
      * The parse method is used to parse the weight watchers HTML recipe.
