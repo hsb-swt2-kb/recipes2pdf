@@ -313,6 +313,7 @@ public class UI {
      * @throws CookBookNotFoundException
      */
     static Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
+        new Database(DatabaseConnection.getDatabaseConnection());
         Optional<Cookbook> cookbook = new CookbookDAO().findFirst("title=?",cookbookname);
         if(cookbook.isPresent())
             return cookbook.get();
@@ -333,18 +334,12 @@ public class UI {
         return new RecipeDAO().findFirst("title=?", recipeName).orElseThrow(RecipeNotFoundException::new);
     }
 
-    static void exportCookbook(String cookbookName, String paperFormats) throws CookBookNotFoundException,IOException,TexParserException{
-        try {
-            ICookbook cookbook = searchCookBook(cookbookName);
-            List<IConcreteBuilder> builderList = new ArrayList<>();
-            builderList.add(new PdfBuilder(IConfig.getInstance()));
-            IBuilder builder = new Builder(builderList);
-            builder.build(cookbook);
-        }
-        catch (CookBookNotFoundException e) { throw e; }
-        catch (IOException e) { throw e; }
-        catch (TexParserException e) { throw e; }
-
+    static File exportCookbook(String cookbookName, String paperFormats) throws CookBookNotFoundException,IOException,TexParserException{
+        ICookbook cookbook = searchCookBook(cookbookName);
+        List<IConcreteBuilder> builderList = new ArrayList<>();
+        builderList.add(new PdfBuilder(IConfig.getInstance()));
+        IBuilder builder = new Builder(builderList);
+        return builder.build(cookbook);
     }
 
     /**

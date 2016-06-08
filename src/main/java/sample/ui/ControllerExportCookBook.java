@@ -11,7 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import sample.builder.Exceptions.TexParserException;
 import sample.exceptions.CookBookNotFoundException;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -109,7 +112,7 @@ public class ControllerExportCookBook {
     void browse(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
         this.file = fileHandler.exportFile();
-        if(this.file != null) {
+        if (this.file != null) {
             textFieldPath.setText(file.getAbsolutePath());
         }
     }
@@ -123,12 +126,11 @@ public class ControllerExportCookBook {
     @FXML
     void saveCookBook(ActionEvent event) {
         try {
-            UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
-        } catch (CookBookNotFoundException e) {
-            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
-        } catch (IOException e) {
-            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
-        } catch (TexParserException e) {
+            final File pdfFile = UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
+            if (null != pdfFile && Desktop.isDesktopSupported() ) {
+                Desktop.getDesktop().open(pdfFile);
+            }
+        } catch (CookBookNotFoundException | IOException | TexParserException e) {
             manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
         }
     }
