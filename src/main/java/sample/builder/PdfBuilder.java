@@ -305,12 +305,14 @@ public class PdfBuilder implements IConcreteBuilder {
         Map<IRecipe, String> refNumList = new HashMap<>();
         Map<IRecipe, Properties> propList = generateRecipePropertyList(recipes);
         String refNum = "";
-
+        String propKey = "";
+        String propValue ="";
         for (IRecipe recipe : recipes) {
             refNum = "";
             for (ISortlevel sortLevel : sortChain) {
-                String prop = sortLevel.getName().toLowerCase();
-                refNum += propList.get(recipe).getProperty(prop) + ".";
+                propKey = sortLevel.getName().toLowerCase();
+                propValue = propList.get(recipe).getProperty(propKey);
+                refNum += propValue + ((propValue.equalsIgnoreCase("")) ? "" : ".");
             }
 
             refNumList.put(recipe, (refNum.equals("")) ? "" : refNum.substring(0, refNum.length() - 1));
