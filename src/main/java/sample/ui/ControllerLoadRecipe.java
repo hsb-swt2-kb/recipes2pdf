@@ -15,12 +15,17 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.apache.commons.validator.UrlValidator;
 import org.controlsfx.control.PopOver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.exceptions.CouldNotParseException;
+
+import java.io.IOException;
 
 import static sample.ui.UI.addRecipes;
 
 public class ControllerLoadRecipe {
 
+    final Logger LOG = LoggerFactory.getLogger(this.getClass());
     final ToggleGroup group = new ToggleGroup();
 
     @FXML
@@ -43,7 +48,6 @@ public class ControllerLoadRecipe {
 
     @FXML
     public void initialize(){
-
         groupRadioButtons();
         setHyperLinkNotEditable();
     }
@@ -70,7 +74,6 @@ public class ControllerLoadRecipe {
     /**
      * The method ''setHyperLinkEditable()'' sets the  hyperLinkTextField editable.
      */
-
     void setHyperLinkEditable() {
         hyperLinkTextField.setEditable(true);
         hyperLinkTextField.setDisable(false);
@@ -79,7 +82,6 @@ public class ControllerLoadRecipe {
     /**
      * The method ''setHyperLinkNotEditable()'' deactivate the hyperLinkTextField.
      */
-
     void setHyperLinkNotEditable() {
         hyperLinkTextField.setEditable(false);
         hyperLinkTextField.clear();
@@ -89,7 +91,6 @@ public class ControllerLoadRecipe {
     /**
      * The method ''changeRadioButtonFolder(ActionEvent event)'' sets the options for the folder-selection.
      */
-
     @FXML
     void changeRadioButtonFolder(ActionEvent event) {
         controllRadioButtons();
@@ -100,14 +101,12 @@ public class ControllerLoadRecipe {
     /**
      * The method ''changeRadioButtonFile(ActionEvent event)'' sets the options for the file-selection.
      */
-
     @FXML
     void changeRadioButtonFile(ActionEvent event) {
         controllRadioButtons();
         setHyperLinkNotEditable();
         radioButtonFileBoolean = true;
     }
-
 
     /**
      * The method ''changeHyperLinkEditability(ActionEvent event)'' sets the options for the hyperlink-selection.
@@ -132,13 +131,11 @@ public class ControllerLoadRecipe {
         catch(Exception e){
             e.printStackTrace();
         }
-
     }
 
     /**
      * The method ''openFolder()'' opens a filechooser for selecting a folder.
      */
-
     @FXML
     void openFolder() {
         FileHandler fileHandler = new FileHandler();
@@ -189,11 +186,10 @@ public class ControllerLoadRecipe {
         ControllerError.getInstance().setLabels(boldPrint, littlePrint);
     }
 
-    private boolean hyperLinkCheck() {
+    private boolean supportedSourceHyperlink() {
         String checfkoch = "chefkoch";
         String weightwatchers = "weightwatchers";
         String url = this.hyperLinkTextField.getText();
-
         boolean hyperlink = false;
         UrlValidator urlValidator = new UrlValidator();
         //valid URL
@@ -208,13 +204,14 @@ public class ControllerLoadRecipe {
     }
 
     void openHyperlink() {
-        boolean hyperlink = hyperLinkCheck();
-        if (hyperlink == true) {
+        if ( supportedSourceHyperlink() ) {
             try {
                 UI.addRecipeFromHyperlink(this.hyperLinkTextField.getText());
             }
-            catch(Exception e){
-                // TODO: Meldung ausgeben.
+            catch(IOException e) {
+                LOG.error("Could not load from url", e);
+            } catch (CouldNotParseException e) {
+                LOG.error("Could not parse the recipe from url", e);
             }
         }
     }
@@ -225,10 +222,7 @@ public class ControllerLoadRecipe {
      */
     @FXML
     void closeWindow(ActionEvent event) {
-
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
     }
 }
-
-

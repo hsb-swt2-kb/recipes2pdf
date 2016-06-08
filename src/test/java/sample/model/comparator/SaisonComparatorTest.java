@@ -3,21 +3,19 @@ package sample.model.comparator;
 import org.junit.Test;
 import sample.model.Recipe;
 import sample.model.Season;
-import sample.model.comparator.SeasonComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import static org.javalite.test.jspec.JSpec.the;
 
 import static org.junit.Assert.*;
 /**
  * Created by kai on 25.05.16.
  */
-public class SeasonComparatorTest {
+public class SaisonComparatorTest {
     @Test
     public void testSort(){
-        SeasonComparator scomp = new SeasonComparator();
+        SaisonComparator scomp = new SaisonComparator();
         List<Recipe> unsortedRecipeList = new ArrayList();
         List<Recipe> sortedRecipeList = new ArrayList();
 

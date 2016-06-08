@@ -23,13 +23,10 @@ public class FileHandler {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final DirectoryChooser chooser = new DirectoryChooser();
-        //File defaultDirectory = new File("c:/dev/javafx");
-        //chooser.setInitialDirectory(defaultDirectory);
         File selectedDirectory = chooser.showDialog(stage);
 
         return selectedDirectory;
     }
-
 
     /**
      * These method imports a single or multiple files.
@@ -38,7 +35,6 @@ public class FileHandler {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
-        //The user only can choose the formats txt and html.
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.txt", "*.TXT","*.html", "*.HTML");
         fileChooser.setSelectedExtensionFilter(extFilter);
         List<File> files =
@@ -54,13 +50,11 @@ public class FileHandler {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
-        //The user only can choose the formats png and jpg.
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.PNG", "*.png","*.JPG","*.jpg");
         fileChooser.setSelectedExtensionFilter(extFilter);
         File file = fileChooser.showOpenDialog(stage);
 
         return file;
-
     }
 
     /**

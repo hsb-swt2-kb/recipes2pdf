@@ -3,10 +3,7 @@ package sample.builder;
 import org.apache.commons.collections4.comparators.ComparatorChain;
 import sample.model.IRecipe;
 import sample.model.ISortlevel;
-import sample.model.comparator.CategoryComparator;
-import sample.model.comparator.RecipeComparator;
-import sample.model.comparator.RegionComparator;
-import sample.model.comparator.SeasonComparator;
+import sample.model.comparator.*;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,21 +19,29 @@ public class RecipeListSorter {
         ComparatorChain compChain = new ComparatorChain();
         Comparator comparator = null;
 
-        for (int i=0; i<sortLevelList.size();i++) {
+        for (int i = 0; i < sortLevelList.size(); i++) {
             final String sortlevelName = sortLevelList.get(i).getName();
-            if (sortlevelName.equalsIgnoreCase("category") || sortlevelName.equalsIgnoreCase("Kategorie")) {
+            if (sortlevelName.equalsIgnoreCase("Kategorie")) {
                 comparator = new CategoryComparator();
-            } else if (sortlevelName.equalsIgnoreCase("region") || sortlevelName.equalsIgnoreCase("Region")) {
+            } else if (sortlevelName.equalsIgnoreCase("Region")) {
                 comparator = new RegionComparator();
-            } else if (sortlevelName.equalsIgnoreCase("season") || sortlevelName.equalsIgnoreCase("Saison")) {
-                comparator = new SeasonComparator();
+            } else if (sortlevelName.equalsIgnoreCase("Saison")) {
+                comparator = new SaisonComparator();
+            } else if (sortlevelName.equalsIgnoreCase("Gerichtart")) {
+                comparator = new CourseComparator();
+            } else if (sortlevelName.equalsIgnoreCase("Ernährungsart")) {
+                comparator = new NutureComparator();
+            } else if (sortlevelName.equalsIgnoreCase("Tageszeit")) {
+                comparator = new DaytimeComparator();
+            } else if (sortlevelName.equalsIgnoreCase("Rezeptquelle")) {
+                comparator = new SourceComparator();
             } else {
                 throw new IllegalArgumentException("Illegal Sortlevel \"" + sortLevelList.get(i) + "\"");
             }
             compChain.addComparator(comparator);
         }
-        if (compChain.size() == 0){
-            compChain.addComparator(new RecipeComparator());
+        if (compChain.size() == 0) {
+            compChain.addComparator(new RecipeTitleComparator());
         }
         Collections.sort(recipeList, compChain);
         return recipeList;

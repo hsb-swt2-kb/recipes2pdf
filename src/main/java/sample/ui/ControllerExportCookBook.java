@@ -11,7 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import sample.builder.Exceptions.TexParserException;
 import sample.exceptions.CookBookNotFoundException;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -26,22 +29,21 @@ import java.io.IOException;
 public class ControllerExportCookBook {
     final Logger LOG = LoggerFactory.getLogger(this.getClass());
     File file;
+
+    private String selectedCookBook;
+    private String formatChoice;
+    private ObservableList<String> format;
+
     @FXML
     private Button browseButton;
-    private String selectedCookBook;
     @FXML
     private TextField textFieldPath;
     @FXML
     private Button saveButton;
     @FXML
     private ComboBox<String> comboBoxFormat;
-
-    private ObservableList<String> format;
-
     @FXML
     private Button closeButton;
-
-    private String formatChoice;
 
     @FXML
     private void initialize() {
@@ -49,50 +51,35 @@ public class ControllerExportCookBook {
         initializeListeners();
         format = FXCollections.observableArrayList("A4", "A5");
         refreshComboBox(format);
-
     }
 
     /**
      * The method ''initializeListeners()'' initializes the listeners.
      */
-
     private void initializeListeners() {
         comboBoxFormat
             .setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-
                 @Override
                 public ListCell<String> call(ListView<String> param) {
                     final ListCell<String> cell = new ListCell<String>() {
-
                         @Override
                         public void updateItem(String item, boolean empty) {
                             super.updateItem(item, empty);
                             if (item != null) {
                                 setText(item);
                                 if (item.contains("A4")) {
-
-
                                 } else if (item.contains("A5")) {
-
-
                                 }
                             } else {
                                 setText(null);
-
-
                             }
-
                         }
                     };
                     return cell;
-
                 }
 
             });
-
-
     }
-
 
     private void refreshComboBox(ObservableList<String> format) {
         comboBoxFormat.setItems(format);
@@ -103,7 +90,6 @@ public class ControllerExportCookBook {
      *
      * @param event
      */
-
     @FXML
     void closeWindow(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
@@ -113,13 +99,10 @@ public class ControllerExportCookBook {
     /**
      * The method ''closeCWindow()'' closes the export-window.
      */
-
     @FXML
     void closeWindow() {
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
-
-
     }
 
     /**
@@ -129,7 +112,7 @@ public class ControllerExportCookBook {
     void browse(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
         this.file = fileHandler.exportFile();
-        if(this.file != null) {
+        if (this.file != null) {
             textFieldPath.setText(file.getAbsolutePath());
         }
     }
@@ -143,15 +126,14 @@ public class ControllerExportCookBook {
     @FXML
     void saveCookBook(ActionEvent event) {
         try {
-            UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
-        } catch (CookBookNotFoundException e) {
+            final File pdfFile = UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
+            if (null != pdfFile && Desktop.isDesktopSupported() ) {
+                Desktop.getDesktop().open(pdfFile);
+            }
+            this.closeWindow();
+        } catch (CookBookNotFoundException | IOException | TexParserException e) {
             manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
-
-        } catch (IOException e) {
-            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
-        } catch (TexParserException e) {
-            manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
-
+            LOG.error("Failed to generate cookbook", e);
         }
     }
 }

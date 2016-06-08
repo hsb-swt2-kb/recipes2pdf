@@ -4,10 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import sample.database.dao.CookbookDAO;
 import sample.model.Cookbook;
+import sample.model.ICookbook;
 import sample.model.Recipe;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.javalite.test.jspec.JSpec.the;
 
@@ -35,7 +37,7 @@ public class CookbookDAOTest extends ADatabaseTest {
     public void getAll() {
         final List<Cookbook> cookbooks = cookbookDAO.getAll();
         the(cookbooks).shouldNotBeNull();
-        the(cookbooks.get(0).getTitle()).shouldEqual("First Cookbook");
+        the(cookbooks.stream().map(ICookbook::getTitle).collect(Collectors.toList())).shouldContain("First Cookbook");
     }
 
     /**
@@ -44,9 +46,13 @@ public class CookbookDAOTest extends ADatabaseTest {
      */
     @Test
     public void findById() {
-        final Optional<Cookbook> cookbook = cookbookDAO.findById(1L);
-        cookbook.orElseThrow(IllegalStateException::new);
-        the(cookbook.get().getTitle()).shouldEqual("First Cookbook");
+        Cookbook cookbook = new Cookbook();
+        String title = "A cookbook with important id";
+        cookbook.setTitle(title);
+        new CookbookDAO().insert(cookbook);
+
+        Cookbook byId = cookbookDAO.findById(cookbook.getID()).orElseThrow(IllegalStateException::new);
+        the(byId.getTitle()).shouldEqual(title);
     }
 
     /**

@@ -14,6 +14,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -24,37 +27,26 @@ public class ControllerDefault {
 
     private final String wrongPathException = "The FXML-file is wrong or the FXML-file does not exist or there are other problems with the loader.";
 
-
     @FXML
     private MenuItem endMenuItem;
-
     @FXML
     private MenuItem addCookBook;
-
     @FXML
     private MenuItem addReceipe;
-
     @FXML
     private MenuItem manageCookBook;
-
     @FXML
     private MenuItem openDataFromRecipe;
-
     @FXML
     private MenuItem openDataFromCookBook;
-
     @FXML
     private MenuItem openHelp;
-
     @FXML
     private AnchorPane content;
-
     @FXML
     private MenuItem openAbout;
-
     @FXML
     private MenuItem data;
-
 
     /**
      * These method changes the layout in the main window.
@@ -84,7 +76,6 @@ public class ControllerDefault {
      * @param fxml defenies the path of the FXML-File.
      * @param windowTitel defenies the window titel
      */
-
     void newWindowNotResizable(String fxml, String windowTitel) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
@@ -152,18 +143,15 @@ public class ControllerDefault {
      * The method ''openHelp()'' opens the help-window.
      * @param event
      */
-
     @FXML
     void openHelp(ActionEvent event) {
         newWindow(Resources.getHelpFXML(), Resources.getHelpWindowText(), 250, 200, Resources.getHelpIcon());
-
     }
 
     /**
      * The method ''openAbout()'' opens the about-window.
      * @param event
      */
-
     @FXML
     void openAbout(ActionEvent event) {
         newWindow(Resources.getAboutFXML(), Resources.getAboutWindowText(), 300, 220, Resources.getInfoIcon());
@@ -173,13 +161,10 @@ public class ControllerDefault {
      * The method ''openManageCookBooks()'' opens the  manage-cookbook-window.
      * @param event
      */
-
     @FXML
     void openManageCookBooks(ActionEvent event) {
         newWindow(Resources.getMangeCookBooksFXML(), Resources.getManageCookBooksWindowText(), 265, 350, Resources.getDefaultIcon());
-
     }
-
 }
 
 

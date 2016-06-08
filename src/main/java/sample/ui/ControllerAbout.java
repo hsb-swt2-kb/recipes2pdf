@@ -21,12 +21,9 @@ public class ControllerAbout {
      *
      * @param event
      */
-
     @FXML
     void closeAbout(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
     }
-
 }

@@ -45,6 +45,7 @@ public class ControllerManageCookBook {
     private ObservableList<String> recipeNamesOfCookBook;
     private ObservableList<String> cookBookNames;
     private ControllerDefault controllerDefault = new ControllerDefault();
+
     @FXML
     private ListView<String> listViewRecipes;
     @FXML
@@ -74,7 +75,6 @@ public class ControllerManageCookBook {
      * @return controllerInstance
      */
     public static ControllerManageCookBook getInstance() {
-
         if (ControllerManageCookBook.instance == null) {
             synchronized (ControllerManageCookBook.class) {
                 if (ControllerManageCookBook.instance == null) {
@@ -107,14 +107,12 @@ public class ControllerManageCookBook {
     }
 
     void loadInfo(){
-
         cookBookNames.clear();
         this.cookBookNames = FXCollections.observableArrayList();
         List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
         for (Cookbook cookbook : cookbooksDB) {
             this.cookBookNames.add(cookbook.getTitle());
         }
-
         recipeNames.clear();
         List<Recipe> recipes =  getAllRecipesFromDB();
         for (Recipe recipe : recipes){
@@ -140,14 +138,12 @@ public class ControllerManageCookBook {
                 System.out.println("The Cookbook has no recipes");
             }
             searchInListView(recipeNamesOfCookBook, searchFieldCookBooks, listViewCookBook);
-
         }
     }
 
     /**
      * The method ''refreshListViewsAllRecipes'' refreshs the listViews.
      */
-
     private void refreshListViewsAllRecipes() {
         FXCollections.sort(recipeNames);
         if (this.listViewRecipes != null) {
@@ -160,7 +156,6 @@ public class ControllerManageCookBook {
     /**
      * The method ''refreshComboBox(ObservableList<String> cookbooks)'' refreshs the comboBox.
      */
-
     private void refreshComboBox() {
         if(this.comboBoxCookBooks != null) {
             this.comboBoxCookBooks.getItems().clear();
@@ -173,7 +168,6 @@ public class ControllerManageCookBook {
     /**
      * The method ''initializeListeners()'' initializes the listeners.
      */
-
     private void initializeListeners() {
         setupMultipleSelection();
         doubleClick();
@@ -181,7 +175,6 @@ public class ControllerManageCookBook {
         dragright2left();
         buttonActions();
         comboBoxActions();
-
     }
 
     private void comboBoxActions() {
@@ -249,12 +242,9 @@ public class ControllerManageCookBook {
         leftArrowButton.setOnAction((ActionEvent event) -> {
             right2left();
         });
-
         rightArrowButton.setOnAction((ActionEvent event) -> {
             left2right();
         });
-
-
         //Buttonactions:
         delteButtonRecipe.setOnAction((ActionEvent event) -> {
             String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
@@ -265,8 +255,6 @@ public class ControllerManageCookBook {
                 manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
             }
         });
-
-
         changeRecipeButton.setOnAction((ActionEvent event) -> {
             String recipe = listViewRecipes.getSelectionModel().getSelectedItem();
             String recipeInCookBook = listViewCookBook.getSelectionModel().getSelectedItem();
@@ -276,9 +264,7 @@ public class ControllerManageCookBook {
                 manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
             }
         });
-
     }
-
 
     private void dragleft2right() {
         // drag from the left listView to right the right listView
@@ -288,22 +274,18 @@ public class ControllerManageCookBook {
                 if (listViewRecipes.getSelectionModel().getSelectedItem() == null || comboBoxCookBooks.getValue() == null) {
                     return;
                 }
-
                 Dragboard dragBoard = listViewRecipes.startDragAndDrop(TransferMode.MOVE);
                 ClipboardContent content = new ClipboardContent();
                 content.putString(listViewRecipes.getSelectionModel().getSelectedItem());
                 dragBoard.setContent(content);
             }
         });
-
-
         listViewCookBook.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
                 dragEvent.acceptTransferModes(TransferMode.MOVE);
             }
         });
-
         listViewCookBook.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
@@ -321,24 +303,20 @@ public class ControllerManageCookBook {
                 ClipboardContent content = new ClipboardContent();
                 content.putString(listViewCookBook.getSelectionModel().getSelectedItem());
                 dragBoard.setContent(content);
-
             }
         });
-
         listViewRecipes.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
                 dragEvent.acceptTransferModes(TransferMode.MOVE);
             }
         });
-
         listViewRecipes.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
                 right2left();
             }
         });
-
     }
 
     protected ObservableList<String> getSelectedRecipes() {
@@ -354,7 +332,6 @@ public class ControllerManageCookBook {
 
     private void doubleClick() {
         listViewCookBook.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent click) {
                 boolean cookBookListviewEmpty = listViewCookBook.getItems().isEmpty();
@@ -364,34 +341,26 @@ public class ControllerManageCookBook {
                 if ((!cookBookListviewEmpty) && (selectedRecipes != null)) {
                     if (click.getClickCount() == 2) {
                         controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
-
                 }
                 }
             }
         });
-
         listViewRecipes.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent click) {
                 boolean recipeListViewEmpty = listViewRecipes.getItems().isEmpty();
                 if (click.getClickCount() >= 1) {
                     selectedRecipes = listViewRecipes.getSelectionModel().getSelectedItems();
-
                 }
                 if (!recipeListViewEmpty) {
-
                     if (click.getClickCount() == 2 && (selectedRecipes != null)) {
                         controllerDefault.newWindowNotResizable(Resources.getChangeRecipeFXML(), Resources.getChangeRecipeWindowText());
                         selectedRecipes = listViewRecipes.getSelectionModel().getSelectedItems();
-
                 }
             }
             }
         });
     }
-
-
 
     /**
      * These method enables searching in a ListView. The specify list will bei filtered and sorted.
@@ -402,7 +371,6 @@ public class ControllerManageCookBook {
      */
     void searchInListView(ObservableList<String> list, TextField searchField, ListView<String> listView) {
         FilteredList<String> filteredData = new FilteredList<>(list, s -> true);
-
         searchField.textProperty().addListener(obs -> {
             String filter = searchField.getText();
             if (filter == null || filter.isEmpty()) {
@@ -423,14 +391,12 @@ public class ControllerManageCookBook {
     @FXML
     void export2pdf(ActionEvent event) {
         controllerDefault.newWindow(Resources.getExportFXML(), Resources.getExportWindowText(), 290, 200, Resources.getDefaultIcon());
-
     }
 
     /**
      * The method ''addRecipe(ActionEvent event)'' opens the addRecipe-Popover after a interaction with the plus-button.
      * @param event
      */
-
     @FXML
     void addRecipe(ActionEvent event) {
         Node node = loadResource(Resources.getloadRecipePopOverFXML());
@@ -462,5 +428,4 @@ public class ControllerManageCookBook {
     protected String getSelectedCookBooks(){
         return this.comboBoxCookBooks.getValue();
     }
-
 }

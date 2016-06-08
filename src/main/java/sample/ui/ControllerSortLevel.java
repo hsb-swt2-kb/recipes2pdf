@@ -19,35 +19,25 @@ import static sample.ui.ControllerAddCookBook.getInstance;
 
 public class ControllerSortLevel {
 
-
-
-    @FXML
-    private Button closeButton;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private ListView<String> listViewSortLevels;
-
-
-    @FXML
-    private Button plusButton;
-
-    @FXML
-    private Button minusButton;
-
-    @FXML
-    private ComboBox<String> comboBoxSortLevels;
-
     private ObservableList<String> sortLevels;
     private ObservableList<String> sortLevelsOfTheCookbook;
 
+    @FXML
+    private Button closeButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private ListView<String> listViewSortLevels;
+    @FXML
+    private Button plusButton;
+    @FXML
+    private Button minusButton;
+    @FXML
+    private ComboBox<String> comboBoxSortLevels;
 
     /**
      * The ControllerSortLevel initializes the listeners, the sortLevel-list and the combobox.
      */
-
     @FXML
     private void initialize() {
         initializeListeners();
@@ -55,11 +45,9 @@ public class ControllerSortLevel {
         refreshComboBox(sortLevels);
     }
 
-
     /**
      * The method ''initializeListeners()'' initialize the listeners.
      */
-
     private void initializeListeners() {
         //Adds a sortlevel to the SortLevel-list after a interaction with plus-button.
         plusButton.setOnAction((ActionEvent event) -> {
@@ -81,7 +69,6 @@ public class ControllerSortLevel {
     /**
      * The method ''refreshComboBox(ObservableList<String> sortLevels)'' refreshs the comboBox.
      */
-
     private void refreshComboBox(ObservableList<String> sortLevels) {
         comboBoxSortLevels.setItems(sortLevels);
     }
@@ -90,12 +77,10 @@ public class ControllerSortLevel {
      * The method ''closeSortLevel()'' closes the SortLevel-Window after a interaction with the close-button.
      * @param event
      */
-
     @FXML
     void closeSortLevel(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
     }
 
     /**
@@ -112,8 +97,5 @@ public class ControllerSortLevel {
             stage.close();
 
         }
-
     }
-
-
 }

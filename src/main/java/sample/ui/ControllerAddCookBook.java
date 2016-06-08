@@ -26,8 +26,6 @@ public class ControllerAddCookBook  {
 
     private static ControllerAddCookBook instance;
     File file;
-    String name;
-    String foreword;
     @FXML
     private Button closeButton;
     @FXML
@@ -51,9 +49,7 @@ public class ControllerAddCookBook  {
      *
      * @return controllerInstance
      */
-
     public static ControllerAddCookBook getInstance() {
-
         if (ControllerAddCookBook.instance == null) {
             synchronized (ControllerAddCookBook.class) {
                 if (ControllerAddCookBook.instance == null) {
@@ -67,10 +63,8 @@ public class ControllerAddCookBook  {
     /**
      * The ControllerAddCookBook initializes the ControllerInstance and the SortLevel-list.
      */
-
     @FXML
     private void initialize() {
-
         instance = this;
         this.sortLevelsOfTheCookbook= FXCollections.observableArrayList();
     }
@@ -79,12 +73,10 @@ public class ControllerAddCookBook  {
      * The method ''closeAddCookBook()'' closes the AddCookBook-Window after a interaction with the close-button.
      * @param event
      */
-
     @FXML
     void closeAddCookBook(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
     }
 
     /**
@@ -92,7 +84,6 @@ public class ControllerAddCookBook  {
      * If the user imports a picture, the path will display in the textField-picture.
      * @param event
      */
-
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
@@ -100,18 +91,7 @@ public class ControllerAddCookBook  {
         if(file != null) {
             textFieldPicture.setText(file.getAbsolutePath());
         }
-
     }
-
-    private String getForeWord(){
-        foreword = textAreaVorwort.getText();
-        return foreword;
-    }
-    private String getName(){
-        name = textFieldName.getText();
-        return  name;
-    }
-
 
     /**
      * The method ''openSortLevel()'' opens the SortLevel-Window after a interaction with the sortLevel-button.
@@ -130,8 +110,6 @@ public class ControllerAddCookBook  {
      * @param sortLevelsOfTheCookbook
      */
     void setSortLevel(ObservableList<String> sortLevelsOfTheCookbook){
-
-
         this.sortLevelsOfTheCookbook = sortLevelsOfTheCookbook;
         this.listViewSortLevel.getItems().clear();
         this.listViewSortLevel.getItems().addAll(this.sortLevelsOfTheCookbook);
@@ -151,7 +129,7 @@ public class ControllerAddCookBook  {
     @FXML
     void generateCookBook(ActionEvent event) {
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
-            UI.addCookBook(getName(), sortLevelsOfTheCookbook, getForeWord(), getFile());
+            UI.addCookBook(textFieldName.getText(), sortLevelsOfTheCookbook, textAreaVorwort.getText(), getFile());
             ControllerManageCookBook.getInstance().refresh();
             ControllerManageCookBooks.getInstance().refreshListViews();
             //Close Stage
@@ -160,8 +138,5 @@ public class ControllerAddCookBook  {
         }else{
             manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
         }
-
-
     }
-
 }

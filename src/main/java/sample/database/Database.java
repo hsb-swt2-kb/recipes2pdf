@@ -94,7 +94,7 @@ public class Database {
     /**
      * Close connection to database.
      */
-    private void closeConnection() {
+    public void closeConnection() {
         Base.close(true);
     }
 
