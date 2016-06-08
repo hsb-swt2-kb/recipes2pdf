@@ -28,6 +28,8 @@ public class ControllerManageCookBooks {
     private static ControllerManageCookBooks instance;
     protected String selectedItem;
     ControllerDefault controllerDefault = new ControllerDefault();
+    private ObservableList<String> cookbooks;
+
     @FXML
     private Button closeButton;
     @FXML
@@ -40,14 +42,12 @@ public class ControllerManageCookBooks {
     private Button deleteButton;
     @FXML
     private Button addButton;
-    private ObservableList<String> cookbooks;
 
     /**
      * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBooks and ControllerChangeCookBook.
      *
      * @return controllerInstance
      */
-
     public static ControllerManageCookBooks getInstance() {
 
         if (ControllerManageCookBooks.instance == null) {
@@ -81,12 +81,10 @@ public class ControllerManageCookBooks {
     /**
      * The method ''initializeListeners()'' initializes the listeners.
      */
-
     private void initializeListeners() {
         setupMultipleSelection();
         doubleClick();
         buttonActions();
-
     }
 
     private void buttonActions() {
@@ -99,7 +97,6 @@ public class ControllerManageCookBooks {
                 manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
             }
         });
-
         changeButton.setOnAction((ActionEvent event) -> {
             String cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
             this.selectedItem = cookbook;
@@ -114,7 +111,6 @@ public class ControllerManageCookBooks {
     /**
      * The method ''refreshListView(ObservableList<String> cookbooks)'' refreshs the listView.
      */
-
     protected void refreshListViews() {
         loadInfo();
         if(this.listViewCookBooks != null) {
@@ -132,7 +128,6 @@ public class ControllerManageCookBooks {
         for (Cookbook cookbook : cookbooksDB) {
             this.cookbooks.add(cookbook.getTitle());
         }
-
     }
 
 
@@ -141,26 +136,21 @@ public class ControllerManageCookBooks {
      *
      * @param event
      */
-
     @FXML
     void addCookBook(ActionEvent event) {
         controllerDefault.newWindow(Resources.getAddCookBookFXML(), Resources.getAddCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
-
     }
 
     private void doubleClick() {
         listViewCookBooks.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent click) {
                 if (click.getClickCount() >= 1) {
                     selectedItem = listViewCookBooks.getSelectionModel().getSelectedItem();
                 }
                 if ((!listViewCookBooks.getItems().isEmpty()) && (selectedItem != null)) {
-
                     if (click.getClickCount() == 2) {
                     controllerDefault.newWindowNotResizable(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText());
-
                 }
                 }
             }
@@ -179,18 +169,13 @@ public class ControllerManageCookBooks {
      *
      * @param event
      */
-
     @FXML
     void closeWindow(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
-
     }
 
     @FXML
     void changeCookBook(ActionEvent event) {
-
     }
-
 }

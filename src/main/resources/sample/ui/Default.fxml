@@ -5,6 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.input.KeyCodeCombination?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerDefault">
     <children>
         <AnchorPane fx:id="content" layoutY="4.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0" />
@@ -12,18 +13,34 @@
             <menus>
                 <Menu mnemonicParsing="false" text="%menu.program">
                     <items>
-                        <MenuItem fx:id="endMenuItem" mnemonicParsing="false" onAction="#endProgramm" text="%menu.program.quit" />
+                        <MenuItem fx:id="endMenuItem" mnemonicParsing="false" onAction="#endProgramm" text="%menu.program.quit" >
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menu.cookbook">
                     <items>
-                        <MenuItem fx:id="data" mnemonicParsing="false" onAction="#openManageCookBooks" text="%menu.data" />
-                  <MenuItem fx:id="addCookBook1" mnemonicParsing="false" onAction="#addCookBook" text="%add" />
+                        <MenuItem fx:id="data"         mnemonicParsing="false" onAction="#openManageCookBooks" text="%menu.data" >
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="addCookBook1" mnemonicParsing="false" onAction="#addCookBook" text="%add" >
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="B" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menu.recipe">
                     <items>
-                        <MenuItem fx:id="addReceipe" mnemonicParsing="false" onAction="#addReceipe" text="%add" />
+                        <MenuItem fx:id="addReceipe" mnemonicParsing="false" onAction="#addReceipe" text="%add" >
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="%menu.help">

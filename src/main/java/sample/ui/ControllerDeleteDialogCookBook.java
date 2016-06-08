@@ -18,18 +18,14 @@ public class ControllerDeleteDialogCookBook {
 
     @FXML
     private Button closeButton;
-
     @FXML
     private Button deleteButton;
 
-    private String selectedItem = ControllerManageCookBooks.getInstance().getSelectedItem();
-
     @FXML
     void deleteElement(ActionEvent event) {
-        selectedItem = ControllerManageCookBooks.getInstance().getSelectedItem();
         Cookbook cookbook;
         try{
-            cookbook = UI.searchCookBook(selectedItem);
+            cookbook = UI.searchCookBook(ControllerManageCookBooks.getInstance().getSelectedItem());
             UI.delCookBook(cookbook);
             ControllerManageCookBooks.getInstance().refreshListViews();
             ControllerManageCookBook.getInstance().refresh();
@@ -44,13 +40,9 @@ public class ControllerDeleteDialogCookBook {
      * The method ''closeDeleteDialog()'' closes the delete-dialog after a interaction with the close-button.
      * @param event
      */
-
     @FXML
     void closeDeleteDialog(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
-
-
     }
 }

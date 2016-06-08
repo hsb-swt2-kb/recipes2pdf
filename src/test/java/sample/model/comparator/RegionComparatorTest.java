@@ -3,8 +3,6 @@ package sample.model.comparator;
 import org.junit.Test;
 import sample.model.Recipe;
 import sample.model.Region;
-import sample.model.comparator.RegionComparator;
-import sample.model.comparator.SeasonComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

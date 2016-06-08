@@ -46,9 +46,9 @@ public class RecipeListSorterTest {
         sortedRecipeList.add(r1);
         sortedRecipeList.add(r4);
 
-        sortlevel.add(generateSortlevel("category"));
+        sortlevel.add(generateSortlevel("kategorie"));
         sortlevel.add(generateSortlevel("region"));
-        sortlevel.add(generateSortlevel("season"));
+        sortlevel.add(generateSortlevel("saison"));
 
         rSorter.sort(recipeListToSort, sortlevel);
         assertEquals(recipeListToSort,sortedRecipeList);
@@ -62,8 +62,8 @@ public class RecipeListSorterTest {
 
         sortlevel.clear();
         sortlevel.add(generateSortlevel("region"));
-        sortlevel.add(generateSortlevel("category"));
-        sortlevel.add(generateSortlevel("season"));
+        sortlevel.add(generateSortlevel("kategorie"));
+        sortlevel.add(generateSortlevel("saison"));
         rSorter.sort(recipeListToSort, sortlevel);
         assertEquals(recipeListToSort,sortedRecipeList);
     }

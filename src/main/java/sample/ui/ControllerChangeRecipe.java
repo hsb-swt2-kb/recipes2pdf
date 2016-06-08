@@ -15,27 +15,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.exceptions.RecipeNotFoundException;
-import sample.model.Recipe;
+import sample.model.*;
 
 import java.io.File;
 
 public class ControllerChangeRecipe {
 
-
-    //Recipe selection from the ControllerManageCookBook
-    String name = ControllerManageCookBook.getInstance().getSelectedRecipes().get(0);
-    String ernaehrungsart;
-    String gerichtart;
-    String portion;
-    String region;
-    String category;
-    String source;
-    String saison;
-    String daytime;
-    String zubereitungszeit;
-    String zubereitungstext;
-    String ingredients;
     Recipe recipe;
+
     @FXML
     private TextField textFieldName;
     @FXML
@@ -70,17 +57,6 @@ public class ControllerChangeRecipe {
 
     @FXML
     public void initialize() {
-        String ernaehrungsart = "";
-        String gerichtart = "";
-        String portion = "";
-        String region= "";
-        String category= "";
-        String source= "";
-        String saison= "";
-        String daytime= "";
-        String zubereitungszeit= "";
-        String zubereitungstext= "";
-        String ingredients= "";
         Recipe recipe;
         refreshData();
     }
@@ -93,22 +69,10 @@ public class ControllerChangeRecipe {
     /**
      * load recipe information
      */
-
     private void loadInformation() {
         try{
-            recipe = UI.searchRecipe(name);
-            ernaehrungsart = recipe.getNurture().getName();
-            gerichtart = recipe.getCourse().getName();
-            portion = Double.toString(recipe.getPortions());
-            region = recipe.getRegion().getName();
-            category = recipe.getCategory().getName();
-            source = recipe.getSource().getName();
-            path = "";
-            ingredients = "";
-            saison = recipe.getSeason().getName();
-            daytime = recipe.getDaytime().getName();
-            zubereitungszeit = Integer.toString(recipe.getDuration());
-            zubereitungstext = recipe.getText();
+            //Recipe selection from the ControllerManageCookBook
+            recipe = UI.searchRecipe(ControllerManageCookBook.getInstance().getSelectedRecipes().get(0));
         }
         catch (RecipeNotFoundException e){
             System.out.println("Couldn't load recipe.");
@@ -118,37 +82,33 @@ public class ControllerChangeRecipe {
     /**
      * set loaded text to textfields
      */
-
     private void fillTextFields() {
 
-        textFieldName.setText(name);
-        textFieldErnaehrungsart.setText(ernaehrungsart);
-        textFieldGerichtart.setText(gerichtart);
-        textFieldPortion.setText(portion);
-        textFieldRegion.setText(region);
-        textFieldCategory.setText(category);
-        textFieldSource.setText(source);
-        textFieldSaison.setText(saison);
-        textFieldDaytime.setText(daytime);
-        textFieldPicture.setText(path);
-        textFieldZubereitungszeit.setText(zubereitungszeit);
-        textAreaZubereitungstext.setText(zubereitungstext);
+        textFieldName.setText(recipe.getTitle());
+        textFieldErnaehrungsart.setText(recipe.getNurture().getName());
+        textFieldGerichtart.setText(recipe.getCourse().getName());
+        textFieldPortion.setText(Integer.toString(recipe.getPortions()));
+        textFieldRegion.setText(recipe.getRegion().getName());
+        textFieldCategory.setText(recipe.getCategory().getName());
+        textFieldSource.setText(recipe.getSource().getName());
+        textFieldSaison.setText(recipe.getSeason().getName());
+        textFieldDaytime.setText(recipe.getDaytime().getName());
+        textFieldPicture.setText(""); // TODO: handle picturepath
+        textFieldZubereitungszeit.setText(""); // TODO: Zubereitungszeit behandeln
+        textAreaZubereitungstext.setText(recipe.getText());
     }
-
-
 
     /**
      * The method ''closeChangeRecipe()'' closes the ChangeRecipe-Window after a interaction with the close-button.
      *
      * @param event
      */
+    @FXML
+    void closeChangeRecipe(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
 
-        @FXML
-        void closeChangeRecipe(ActionEvent event) {
-            Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.close();
-
-        }
+    }
 
     private void manageSaveError(String boldPrint, String littlePrint) {
         ControllerDefault controllerDefault = new ControllerDefault();
@@ -158,27 +118,49 @@ public class ControllerChangeRecipe {
 
     @FXML
     void changeRecipe(ActionEvent event) {
-              if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
-            recipe.setTitle(getName());
+        if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
+            recipe.setTitle(textFieldName.getText());
             recipe.setDuration(getZubereitungszeit());
-               //   getErnaehrungsart();
-               //   getGerichtart();
-               //   getRegion();
-               //   getCategory();
-            recipe.setPortions(Integer.parseInt(getPortion()));
-               //   getSource();
-               //   getSaison();
-               //   getDaytime();
-            recipe.setText(getZubereitungstext());
+
+            INurture nurture = new Nurture();
+            nurture.setName(textFieldErnaehrungsart.getText());
+            recipe.setNurture(nurture);
+
+            ICourse course = new Course();
+            course.setName(textFieldGerichtart.getText());
+            recipe.setCourse(course);
+
+            IRegion region = new Region();
+            region.setName(textFieldRegion.getText());
+            recipe.setRegion(region);
+
+            ICategory category=new Category();
+            category.setName(textFieldCategory.getText());
+            recipe.setCategory(category);
+
+            recipe.setPortions(Integer.parseInt(textFieldPortion.getText()));
+
+            ISource source = new Source();
+            source.setName(textFieldSource.getText());
+            recipe.setSource(source);
+
+            ISeason season = new Season();
+            season.setName(textFieldSaison.getText());
+            recipe.setSeason(season);
+
+            IDaytime daytime = new Daytime();
+            daytime.setName(textFieldDaytime.getText());
+            recipe.setDaytime(daytime);
+
+            recipe.setText(textAreaZubereitungstext.getText());
+
             UI.changeRecipe(recipe);
             ControllerManageCookBooks.getInstance().refreshListViews();
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();
-              } else {
-                  manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
-              }
-
-
+        } else {
+            manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
+        }
     }
 
     /**
@@ -186,7 +168,6 @@ public class ControllerChangeRecipe {
      * If the user imports a picture, the path will display in the textField-picture.
      * @param event
      */
-
     @FXML
     void openFileChooser(ActionEvent event) {
         FileHandler fileHandler = new FileHandler();
@@ -194,68 +175,14 @@ public class ControllerChangeRecipe {
         if(file != null) {
             textFieldPicture.setText(file.getAbsolutePath());
         }
-
-
-    }
-
-    private String getErnaehrungsart(){
-        ernaehrungsart = textFieldErnaehrungsart.getText();
-        return ernaehrungsart;
-    }
-    private String getName(){
-        name = textFieldName.getText();
-        return  name;
-    }
-
-    private String getGerichtart(){
-        gerichtart = textFieldGerichtart.getText();
-        return  gerichtart;
-    }
-
-    private String getRegion(){
-        region = textFieldRegion.getText();
-        return  region;
-    }
-
-    private String getPortion(){
-       portion = textFieldPortion.getText();
-        return  portion;
-    }
-
-    private String getCategory(){
-        category = textFieldCategory.getText();
-        return  category;
-    }
-
-    private String getSource(){
-        source = textFieldSource.getText();
-        return  source;
-    }
-
-    private String getSaison(){
-        saison = textFieldSaison.getText();
-        return  saison;
-    }
-
-    private String getDaytime(){
-       daytime = textFieldDaytime.getText();
-        return  daytime;
     }
 
     private int getZubereitungszeit(){
-       zubereitungszeit = textFieldZubereitungszeit.getText();
+       String zubereitungszeit = textFieldZubereitungszeit.getText();
         int duration = 0;
         try {
             duration = Integer.parseInt(zubereitungszeit);
         }catch (NumberFormatException e){}
         return duration;
     }
-    private String getZubereitungstext(){
-        zubereitungstext = textAreaZubereitungstext.getText();
-        return  zubereitungstext;
-    }
-
-
 }
-
-
