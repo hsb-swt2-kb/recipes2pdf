@@ -133,6 +133,7 @@ public class ControllerExportCookBook {
             this.closeWindow();
         } catch (CookBookNotFoundException | IOException | TexParserException e) {
             manageSaveError("Upps", "Da ist wohl was schief gegenagen.");
+            LOG.error("Failed to generate cookbook", e);
         }
     }
 }
