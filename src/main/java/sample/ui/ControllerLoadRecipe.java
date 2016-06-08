@@ -15,12 +15,17 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.apache.commons.validator.UrlValidator;
 import org.controlsfx.control.PopOver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sample.exceptions.CouldNotParseException;
+
+import java.io.IOException;
 
 import static sample.ui.UI.addRecipes;
 
 public class ControllerLoadRecipe {
 
+    final Logger LOG = LoggerFactory.getLogger(this.getClass());
     final ToggleGroup group = new ToggleGroup();
 
     @FXML
@@ -181,7 +186,7 @@ public class ControllerLoadRecipe {
         ControllerError.getInstance().setLabels(boldPrint, littlePrint);
     }
 
-    private boolean hyperLinkCheck() {
+    private boolean supportedSourceHyperlink() {
         String checfkoch = "chefkoch";
         String weightwatchers = "weightwatchers";
         String url = this.hyperLinkTextField.getText();
@@ -199,13 +204,14 @@ public class ControllerLoadRecipe {
     }
 
     void openHyperlink() {
-        boolean hyperlink = hyperLinkCheck();
-        if (hyperlink == true) {
+        if ( supportedSourceHyperlink() ) {
             try {
                 UI.addRecipeFromHyperlink(this.hyperLinkTextField.getText());
             }
-            catch(Exception e){
-                // TODO: Meldung ausgeben.
+            catch(IOException e) {
+                LOG.error("Could not load from url", e);
+            } catch (CouldNotParseException e) {
+                LOG.error("Could not parse the recipe from url", e);
             }
         }
     }

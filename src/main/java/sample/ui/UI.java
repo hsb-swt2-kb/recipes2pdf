@@ -1,6 +1,7 @@
 package sample.ui;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.io.IOUtils;
 import sample.builder.Builder;
 import sample.builder.Exceptions.TexParserException;
 import sample.builder.IBuilder;
@@ -51,26 +52,21 @@ public class UI {
         }
     }
 
-    public static void addRecipeFromHyperlink(final String URL) throws Exception,IOException {
+    public static void addRecipeFromHyperlink(final String URL) throws IOException,CouldNotParseException {
+        List<String> lines = new ArrayList<>();
         String line;
         URL myUrl;
         BufferedReader in = null;
-        PrintWriter writer = new PrintWriter("tmpFile.html", "UTF-8");
         try {
             myUrl = new URL(URL);
             in = new BufferedReader(new InputStreamReader(myUrl.openStream()));
-
             while ((line = in.readLine()) != null) {
-                writer.println(line);
+                lines.add(line);
             }
         } finally {
-            if (in != null) {
-                in.close();
-            }
+            IOUtils.closeQuietly(in);
         }
-        File file = new File("tmpFile.html");
-        addRecipe(new File("tmpFile.html"));
-        file.delete();
+        addRecipe(lines);
     }
 
     /**
@@ -96,20 +92,47 @@ public class UI {
      * uses the RecipeDAO to save the Recipe to the database.
      *
      * @param file File of the recipe to add to DB
-     * @return boolean success of the insertion
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static void addRecipe(File file) throws Exception {
+    static void addRecipe(File file) throws CouldNotParseException, FileNotFoundException {
         Recipe recipe = (Recipe) Parser.parse(file);
-        if (!recipe.isIncomplete()) {
+        addToStandardCookBook(recipe);
+    }
+
+    /**
+     * addRecipe
+     * <p>
+     * calls Parser to parse the Recipe out of the given File,
+     * uses the RecipeDAO to save the Recipe to the database.
+     *
+     * @param lines Lines of recipe to parse.
+     * @throws FileNotFoundException
+     * @throws CouldNotParseException
+     */
+    static void addRecipe(List<String> lines) throws CouldNotParseException, FileNotFoundException {
+        Recipe recipe = (Recipe) Parser.parse(lines);
+        addToStandardCookBook(recipe);
+    }
+
+    /**
+     * Adds recipe to the standard cookbook.
+     *
+     * @param recipe The recipe to add.
+     */
+    private static void addToStandardCookBook(Recipe recipe) {
+        if (null == recipe) {
+            throw new IllegalStateException("Recipe is null.");
+        } else if( recipe.isIncomplete() ) {
+            throw new IllegalStateException("Recipe is incomplete.");
+        } else {
             new RecipeDAO().insert(recipe);
-        }
-        Optional<Cookbook> oCookBook = new CookbookDAO().findFirst("title=?", "Standardkochbuch");
-        if(oCookBook.isPresent()) {
-            Cookbook cookbook = oCookBook.get();
-            cookbook.addRecipe(recipe);
-            new CookbookDAO().update(cookbook);
+            Optional<Cookbook> oCookBook = new CookbookDAO().findFirst("title=?", "Standardkochbuch");
+            if(oCookBook.isPresent()) {
+                Cookbook cookbook = oCookBook.get();
+                cookbook.addRecipe(recipe);
+                new CookbookDAO().update(cookbook);
+            }
         }
     }
 
