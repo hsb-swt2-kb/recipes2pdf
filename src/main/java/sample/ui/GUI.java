@@ -25,6 +25,7 @@ public class GUI extends Application {
     // TODO: view ingredients in a tableView
     // TODO: add preamble and title picture to database
     // TODO: pdfBuilder: insert title page and TOC
+    // TODO: use config for defaultInputDir und defaultOutputDir
 
     /**
      * @author Tobias Stelter
