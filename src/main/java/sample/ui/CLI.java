@@ -9,8 +9,9 @@ import java.util.ArrayList;
  *  * Created by sabine on 21.05.16.
  *   */
 public class CLI extends UI {
+    // TODO: implement CLI
 
-    public CLI(){};
+    public CLI(){}
 
     public void start(String[] args) {
         switch (args[0]) {
