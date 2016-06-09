@@ -115,7 +115,7 @@ class TxtParser extends AConcreteParser implements TxtParserConstants {
         recipe.setNurture(nurture);
 
         //===================STEP5=============================
-        try {
+        try {  // TODO: handle null values
             recipe.setDuration(Integer.parseInt(findDatafield(textFileContent, signalWord[4])));
         } catch (NumberFormatException e) {
             String [] str = extractAmountUnit(findDatafield(textFileContent, signalWord[4]));
@@ -133,7 +133,7 @@ class TxtParser extends AConcreteParser implements TxtParserConstants {
                         break;
                     }
                 }
-                // Konvert hour to Minute
+                // convert hour to Minute
                 if (std){
                     d = d*60;
                 }
@@ -227,7 +227,7 @@ class TxtParser extends AConcreteParser implements TxtParserConstants {
         for (int i = 0; i < textFileContent.size(); i++) {
             tempIngredient = textFileContent.get(i).trim();
             if (tempIngredient.startsWith("-")) {
-                temporaryIngredients.add(tempIngredient.replace("-", "").trim());
+                temporaryIngredients.add(tempIngredient.replace(ingredientMarker, "").trim());
                 //checking next line to stop ingredients-parsing
                 //to prevent wrong ingredients in the rest of the recipe
                 if (((!textFileContent.get(i + 1).trim().startsWith("-"))

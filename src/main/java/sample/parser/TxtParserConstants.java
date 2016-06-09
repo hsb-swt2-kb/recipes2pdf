@@ -1,6 +1,6 @@
 package sample.parser;
 
-public interface TxtParserConstants {
+interface TxtParserConstants {
 
   /**
    * SignalWords for the attributes of the recipe
@@ -23,7 +23,6 @@ public interface TxtParserConstants {
         };
 
     //TriggerWords to convert between Time-Units
-    String[] timeMinWords = {"minuten", "min", "m"};
     String[] timeHourWords = {"stunden","stunde","std","h"};
 
     String ingredientMarker = "-";

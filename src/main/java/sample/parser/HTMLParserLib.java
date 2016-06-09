@@ -1,24 +1,23 @@
 package sample.parser;
 
-import sample.model.Recipe;
-
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by fpfennig on 29.05.2016.
+ * implemented by fpfennig on 29.05.2016
  */
-public class HTMLParserLib {
-    public static final String numberWithCharacters    = "^(\\d)+([.,]\\d)*([äüöÄÖÜ\\w])*";
-    public static final String charactersWithoutNumbers = "([^.,\\d])+";
-    public static final int    fractionalDigits        = 3;
-    public static final int    maxFieldsize            = 45;
-    public static final String numberSeperator         = "[.,]";
+class HTMLParserLib {
+    private static final String numberWithCharacters     = "^(\\d)+([.,]\\d)*([äüöÄÖÜ\\w])*";
+    private static final String charactersWithoutNumbers = "([^.,\\d])+";
+    private static final int    fractionalDigits         = 3;
+    private static final int    maxFieldSize             = 45;
+    private static final String numberSeparator          = "[.,]";
 
     /**
      * Method to download the image of an recipe.
@@ -26,7 +25,7 @@ public class HTMLParserLib {
      * @param image String containing the url to the image.
      * @return the downloaded image as Byte Array.
      */
-    public byte[] downloadImage(String image){
+    byte[] downloadImage(String image){
         byte[] result = null;
 
         try {
@@ -34,57 +33,48 @@ public class HTMLParserLib {
             InputStream input = new BufferedInputStream(url.openStream());
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             byte[] buf = new byte[1024];
-            int next = 0;
-            while ((next = input.read(buf)) != -1) {
-                output.write(buf, 0, next);
-            }
+            int next;
+            while ((next = input.read(buf)) != -1) output.write(buf, 0, next);
             output.close();
             input.close();
             result = output.toByteArray();
         }
         catch(Exception e){
             // TODO: Exception handling
-            //e.printStackTrace();
         }
-
         return result;
     }
 
     /**
-     * Method to remove unnecessary decimal seperators and change comma to point.
+     * Method to remove unnecessary decimal separators and change comma to point.
      *
      * @param number The String which contains a number.
      * @return Number with only one decimal point.
      */
-    public String replaceDecimalSeperators(String number){
+    private String replaceDecimalSeparators(String number){
         String result = "";
-        Pattern regexPattern = Pattern.compile(numberSeperator);
+        Pattern regexPattern = Pattern.compile(numberSeparator);
         Matcher regexMatcher = regexPattern.matcher(number);
 
         if(regexMatcher.find()){
-            String[] seperate = number.split(numberSeperator);
-            boolean firstSperator = true;
+            String[] separate = number.split(numberSeparator);
+            boolean firstSeparator = true;
 
-            for (int counter = 0; counter < seperate.length; counter++){
+            for (int counter = 0; counter < separate.length; counter++){
 
-                if(!seperate[counter].isEmpty()){
-                    result = result + seperate[counter];
-                }
+                if(!separate[counter].isEmpty()) result = result + separate[counter];
 
-                if(firstSperator){
-                    if(counter == 0 && seperate[counter].isEmpty()){
+                if(firstSeparator){
+                    //noinspection ConstantConditions
+                    if(counter == 0 && separate[counter].isEmpty()){
                         result = result + "0";
                     }
                     result = result + ".";
-
-                    firstSperator = false;
+                    firstSeparator = false;
                 }
             }
         }
-        else{
-            result = number;
-        }
-
+        else result = number;
         return result;
     }
 
@@ -94,7 +84,7 @@ public class HTMLParserLib {
      * @param ingredientList ArrayList of Strings
      * @return Converted IngredientList, ArrayList of String Arrays
      */
-    public ArrayList<String[]> convertIngredientList(ArrayList<String> ingredientList){
+    ArrayList<String[]> convertIngredientList(List<String> ingredientList){
         ArrayList<String[]> result = new ArrayList<>();
 
         for (String listEntry : ingredientList) {
@@ -107,18 +97,12 @@ public class HTMLParserLib {
                 Matcher filterMatcher = filterRegex.matcher(filtering[0]);
                 Matcher filterMatcher2 = filterRegex.matcher(filtering[1]);
 
-                if (filterMatcher.find() && filterMatcher2.find()) {
-                    for (int counter = 1; counter < filtering.length; counter++) {
+                if (filterMatcher.find() && filterMatcher2.find())
+                    for (int counter = 1; counter < filtering.length; counter++)
                         filteredString = filteredString + " " + filtering[counter];
-                    }
-                }
-                else {
-                    filteredString = listEntry;
-                }
+                else filteredString = listEntry;
             }
-            else {
-                filteredString = listEntry;
-            }
+            else filteredString = listEntry;
 
             String[] workingArray = filteredString.trim().split(" ");
             String amount = "";
@@ -136,14 +120,12 @@ public class HTMLParserLib {
                     int index = regexMatcher.start();
                     String amountRaw = workingArray[0].substring(0,index);
 
-                    amount = replaceDecimalSeperators(amountRaw);
+                    amount = replaceDecimalSeparators(amountRaw);
 
                     // The characters in the amount String are the unit.
                     unit = workingArray[0].substring(index);
                 }
-                else {
-                    amount = replaceDecimalSeperators(workingArray[0]);
-                }
+                else amount = replaceDecimalSeparators(workingArray[0]);
             }
 
             // Looking for the unit if it was not in the amount AND if the array has more than 2 entries.
@@ -155,32 +137,21 @@ public class HTMLParserLib {
                     unit = workingArray[1];
 
                     for(int counter = 2; counter < workingArray.length; counter++){
-                        if(counter == 2){
-                            ingredient = ingredient + workingArray[counter];
-                        }
-                        else{
-                            ingredient = ingredient + " " + workingArray[counter];
-                        }
+                        if(counter == 2) ingredient = ingredient + workingArray[counter];
+                        else ingredient = ingredient + " " + workingArray[counter];
                     }
                 }
                 else{
                     for (int counter = 0; counter < workingArray.length; counter++) {
-                        if (counter == 0) {
-                            ingredient = ingredient + workingArray[counter];
-                        } else {
-                            ingredient = ingredient + " " + workingArray[counter];
-                        }
+                        if (counter == 0) ingredient = ingredient + workingArray[counter];
+                        else ingredient = ingredient + " " + workingArray[counter];
                     }
                 }
             }
             else if(!unit.isEmpty()){
                 for(int counter = 1; counter < workingArray.length; counter++){
-                    if(counter == 1){
-                        ingredient = ingredient + workingArray[counter];
-                    }
-                    else{
-                        ingredient = ingredient + " " + workingArray[counter];
-                    }
+                    if(counter == 1) ingredient = ingredient + workingArray[counter];
+                    else ingredient = ingredient + " " + workingArray[counter];
                 }
             }
             else{
@@ -188,22 +159,15 @@ public class HTMLParserLib {
 
                 if(workingArray[0].matches(numberWithCharacters)){
                     for (int counter = 1; counter < workingArray.length; counter++) {
-                        if (counter == 1) {
-                            ingredient = ingredient + workingArray[counter];
-                        } else {
-                            ingredient = ingredient + " " + workingArray[counter];
-                        }
+                        if (counter == 1) ingredient = ingredient + workingArray[counter];
+                        else ingredient = ingredient + " " + workingArray[counter];
                     }
                 }
                 else{
                     for (int counter = 0; counter < workingArray.length; counter++) {
-                        if (counter == 0) {
-                            ingredient = ingredient + workingArray[counter];
-                        } else {
-                            ingredient = ingredient + " " + workingArray[counter];
-                        }
+                        if (counter == 0) ingredient = ingredient + workingArray[counter];
+                        else ingredient = ingredient + " " + workingArray[counter];
                     }
-
                 }
             }
 
@@ -219,55 +183,29 @@ public class HTMLParserLib {
 
             // Collecting needed Data into one array
             String[] ingredientArray = new String[3];
-            if(amount.length() > maxFieldsize){
-                ingredientArray[0] = amount.substring(0, maxFieldsize);
-            }
-            else {
-                ingredientArray[0] = amount.trim();
-            }
+            if(amount.length() > maxFieldSize) ingredientArray[0] = amount.substring(0, maxFieldSize);
+            else ingredientArray[0] = amount.trim();
 
-            if(unit != null && unit.length() > maxFieldsize){
-                ingredientArray[1] = unit.substring(0, maxFieldsize);
-            }
-            else{
-                if(unit == null){
-                    unit = "";
-                }
-
+            if(unit != null && unit.length() > maxFieldSize) ingredientArray[1] = unit.substring(0, maxFieldSize);
+            else if(unit == null) unit = "";
                 ingredientArray[1] = unit.trim();
-            }
 
-            if(ingredient.length() > maxFieldsize){
-                ingredientArray[2] = ingredient.substring(0, maxFieldsize);
-            }
-            else{
-                ingredientArray[2] = ingredient.trim();
-            }
+            if(ingredient.length() > maxFieldSize) ingredientArray[2] = ingredient.substring(0, maxFieldSize);
+            else ingredientArray[2] = ingredient.trim();
 
             result.add(ingredientArray);
         }
-
         return result;
     }
 
     /**
      * Method to round the double values.
      *
-     * @param amount
-     * @return
+     * @param amount value to round
+     * @return double rounded value
      */
     public double round(double amount){
         double rounding = Math.pow(10, fractionalDigits);
-
         return (double)Math.round(amount * rounding) / rounding;
-    }
-
-    /**
-     * Method to check all fields of the recipe.
-     *
-     * @return true if all mandatory fields are set, false if not.
-     */
-    public boolean checkRecipe(Recipe recipe){
-        return !recipe.isIncomplete();
     }
 }

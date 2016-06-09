@@ -1,20 +1,20 @@
 package sample.parser;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * implemented by on 08.06.16 by markus
  */
-public abstract class AHTMLParser extends AConcreteParser {
+abstract class AHTMLParser extends AConcreteParser {
 
-  protected HTMLParserLib lib = new HTMLParserLib();
+  HTMLParserLib lib = new HTMLParserLib();
 
   /**
    * Method to put the IngredientsList into the recipe.
    *
    * @param ingredientsList ArrayList<String[]> containing all the ingredients split into amount, unit and ingredient.
    */
-  protected void setRecipeIngredientsList(ArrayList<String[]> ingredientsList){
+  void setRecipeIngredientsList(List<String[]> ingredientsList){
     for (String[] ingredient : ingredientsList) {
       if(ingredient[2] != null) {
         if (ingredient[0].isEmpty()) {

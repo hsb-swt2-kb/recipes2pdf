@@ -2,14 +2,12 @@ package sample.parser;
 
 import sample.exceptions.CouldNotParseException;
 import sample.model.Recipe;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by markus on 21.05.16.
+ * implemented by markus on 21.05.16
  */
-public interface IConcreteParser {
+interface IConcreteParser {
     /**
      * parse
      *
@@ -18,9 +16,9 @@ public interface IConcreteParser {
      *
      * @param text content of the recipe in the file
      * @return Recipe object that holds the structured recipe content
-     * @throws Exception
+     * @throws CouldNotParseException
      */
-    public Recipe parse(List<String> text) throws CouldNotParseException;
+    Recipe parse(List<String> text) throws CouldNotParseException;
 
     /**
      * accepts
@@ -29,8 +27,8 @@ public interface IConcreteParser {
      * to be asked from other components if the concrete parser
      * can handle the given recipe-format.
      *
-     * @param text
-     * @return
+     * @param text content of the recipe to parse
+     * @return boolean if the concrete parser can handle the given content
      */
-    public boolean accepts(List<String> text);
+    boolean accepts(List<String> text);
 }

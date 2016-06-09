@@ -56,8 +56,8 @@ public class Parser {
      *
      * just parse from List<string> linesOfFile
      *
-     * @param fileContent
-     * @return
+     * @param fileContent fileContent to parse
+     * @return IRecipe Recipe with the parsed content
      * @throws CouldNotParseException
      * @throws FileNotFoundException
      */
@@ -97,9 +97,7 @@ public class Parser {
             if (recipe.getSource()  .getName() == null) recipe.getSource()  .setName("");
 
             List<Triple<IIngredient,Double,IUnit>> ingredients = recipe.getIngredients();
-            for(Triple<IIngredient,Double,IUnit> ingredient:ingredients){
-                if(ingredient.getRight().getName()==null) ingredient.getRight().setName("");
-            }
+            ingredients.stream().filter(ingredient -> ingredient.getRight().getName() == null).forEach(ingredient -> ingredient.getRight().setName(""));
             return recipe;
         }
         throw new CouldNotParseException();

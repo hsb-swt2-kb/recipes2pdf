@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * Changed by fpfennig on 29.05.16
  * Chefkoch parser to parse recipes from chefkoch.de
  */
-public class CKParser extends AHTMLParser {
+class CKParser extends AHTMLParser {
 
     /**
      * The parse method uses Jsoup instead of an Web-API.
@@ -28,7 +28,7 @@ public class CKParser extends AHTMLParser {
      *
      * @param text The recipe as text
      * @return IRecipe The populated IRecipe
-     * @throws Exception
+     * @throws CouldNotParseException
      */
     @Override
     public Recipe parse(final List<String> text) throws CouldNotParseException {
@@ -40,7 +40,7 @@ public class CKParser extends AHTMLParser {
             format = format + " " + entry;
         }
 
-        Document htmlDoc = Jsoup.parse(format.toString());
+        Document htmlDoc = Jsoup.parse(format);
         Element script = searchForDataScript(htmlDoc);
         getDataFromScript(script);
 
@@ -70,8 +70,8 @@ public class CKParser extends AHTMLParser {
     /**
      * Method to search for the <script> which contains all the necessary data.
      *
-     * @param htmlDoc
-     * @return
+     * @param htmlDoc input html document
+     * @return Element data element
      */
     private Element searchForDataScript(Document htmlDoc){
         Element result = null;
@@ -129,8 +129,8 @@ public class CKParser extends AHTMLParser {
      * Example: text = recipeCategory: [, "Spezielles", "Ernährungskonzepte", "Vegetarisch" ]
      * -> returns a list containing: Spezielles, Ernährungskonzepte and Vegetarisch.
      *
-     * @param text
-     * @return
+     * @param text contains the attributes
+     * @return ArrayList<String> with the found attributes
      */
     private ArrayList<String> getAttributeArrayValue(String text){
         ArrayList<String> result = new ArrayList<>();
@@ -144,8 +144,8 @@ public class CKParser extends AHTMLParser {
         // Splitting the "array"
         working = work.split("\",");
 
-        for(int counter = 0; counter < working.length; counter++){
-            result.add(working[counter].replaceAll("\"","").trim());
+        for (String aWorking : working) {
+            result.add(aWorking.replaceAll("\"", "").trim());
         }
 
         return result;
@@ -157,11 +157,11 @@ public class CKParser extends AHTMLParser {
      * Example: text = name: Zucchini-Pilz-Lasagne mit Feta-Topping
      * -> return string: Zucchini-Pilz-Lasagne mit Feta-Topping
      *
-     * @param text
-     * @return
+     * @param text text that contains the value of the attribute
+     * @return String attribute
      */
     private String getAttributeValue(String text){
-        String result = "";
+        String result;
         String[] working = text.split(": ");
 
         result = working[1].trim();
@@ -175,8 +175,8 @@ public class CKParser extends AHTMLParser {
     /**
      * Method to get the time to cook/prepare.
      *
-     * @param text
-     * @return
+     * @param text text that contains the preparation time
+     * @return String with only the preparation time
      */
     private String getTime(String text){
         String result = "";
@@ -189,79 +189,76 @@ public class CKParser extends AHTMLParser {
         if(regexMatcher.find()){
             result = working[1].replaceAll(WWConstants.notANumber, "").trim();
         }
-
         return result;
     }
 
     /**
      * Method to add all the data to the recipe.
      *
-     * @param attributeList
+     * @param attributeList filtered list with the attributes of the recipe
      */
     private void fillAttributes(ArrayList<String> attributeList){
         ArrayList<String> time = new ArrayList<>();
 
-        for (int counter = 0; counter < attributeList.size(); counter++){
-            if(attributeList.get(counter).contains(CKConstants.cookTime)){
-                time.add(getTime(attributeList.get(counter)));
+        for (String anAttributeList : attributeList) {
+            if (anAttributeList.contains(CKConstants.cookTime)) {
+                time.add(getTime(anAttributeList));
             }
 
-            if(attributeList.get(counter).contains(CKConstants.image)){
-                String image = getAttributeValue(attributeList.get(counter));
+            if (anAttributeList.contains(CKConstants.image)) {
+                String image = getAttributeValue(anAttributeList);
                 byte[] img = lib.downloadImage(image);
-                if(img != null) {
+                if (img != null) {
                     recipe.setImage(img);
                 }
             }
 
-            if(attributeList.get(counter).contains(CKConstants.recipeIngredient)){
-                ArrayList<String> arrayValues = getAttributeArrayValue(attributeList.get(counter));
+            if (anAttributeList.contains(CKConstants.recipeIngredient)) {
+                ArrayList<String> arrayValues = getAttributeArrayValue(anAttributeList);
                 ArrayList<String[]> ingredientsList = lib.convertIngredientList(arrayValues);
                 setRecipeIngredientsList(ingredientsList);
             }
 
-            if(attributeList.get(counter).contains(CKConstants.name)){
-                String title = getAttributeValue(attributeList.get(counter));
-                if(title != null) {
+            if (anAttributeList.contains(CKConstants.name)) {
+                String title = getAttributeValue(anAttributeList);
+                if (title != null) {
                     recipe.setTitle(title);
                 }
             }
 
-            if(attributeList.get(counter).contains(CKConstants.prepTime)){
-                time.add(getTime(attributeList.get(counter)));
+            if (anAttributeList.contains(CKConstants.prepTime)) {
+                time.add(getTime(anAttributeList));
             }
 
-            if(attributeList.get(counter).contains(CKConstants.recipeInstructions)){
-                String text = getAttributeValue(attributeList.get(counter));
-                if(text != null) {
+            if (anAttributeList.contains(CKConstants.recipeInstructions)) {
+                String text = getAttributeValue(anAttributeList);
+                if (text != null) {
                     recipe.setText(text);
                 }
             }
 
-            if(attributeList.get(counter).contains(CKConstants.recipeYield)){
+            if (anAttributeList.contains(CKConstants.recipeYield)) {
                 int servings = 0;
                 try {
-                    servings = Integer.parseInt(getAttributeValue(attributeList.get(counter)));
-                }
-                catch (Exception e){
+                    servings = Integer.parseInt(getAttributeValue(anAttributeList));
+                } catch (Exception e) {
                     // TODO: Exception handling
                 }
                 recipe.setPortions(servings);
             }
 
-            if(attributeList.get(counter).contains(CKConstants.recipeCategory)){
-                ArrayList<String> arrayValues = getAttributeArrayValue(attributeList.get(counter));
+            //if (anAttributeList.contains(CKConstants.recipeCategory)) {
+                // ArrayList<String> arrayValues = getAttributeArrayValue(anAttributeList);
                 // TODO: Category
-            }
+            //}
         }
 
         int preparingTime = 0;
 
-        for(int counter = 0; counter < time.size(); counter++){
+        for (String aTime : time) {
             try {
-                preparingTime = preparingTime + Integer.parseInt(time.get(counter));
-            }
-            catch (Exception e){
+                preparingTime = preparingTime + Integer.parseInt(aTime);
+            } catch (Exception e) {
                 // TODO: Exception handling
             }
         }
@@ -276,8 +273,8 @@ public class CKParser extends AHTMLParser {
     /**
      * Method to put together the necessary fields for further refining.     *
      *
-     * @param completeList
-     * @return
+     * @param completeList list of the attributes
+     * @return ArrayList<String> attributes of the recipe formatted like needed in further steps
      */
     private ArrayList<String> getAttributeList(ArrayList<String> completeList){
         ArrayList<String> result = new ArrayList<>();
