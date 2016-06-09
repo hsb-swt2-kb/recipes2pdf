@@ -11,11 +11,11 @@ import java.io.*;
  */
 public class Image {
 
-    final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
     private byte[] bytes;
 
     /**
-     * @param bytes
+     * @param bytes bytecode of the image
      */
     public Image(byte[] bytes) {
         this.bytes = bytes;
@@ -72,6 +72,7 @@ public class Image {
      *
      * @return byte[] Bytes of the Image.
      */
+    @SuppressWarnings("unused")
     public byte[] getBytes() {
         return bytes;
     }
