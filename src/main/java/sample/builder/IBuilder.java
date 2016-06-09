@@ -33,7 +33,7 @@ public interface IBuilder {
      * @throws IOException        Is thrown by the JLR Converter, when anything with the Filesystem went wrong while converting the template to an explicit .tex for the cookbook
      * @return: File object, that points to the generated Document
      */
-    File build(ICookbook cookbook) throws TexParserException, IOException;
+    File build(ICookbook cookbook,String paperFormat) throws TexParserException, IOException;
 
 
     /**

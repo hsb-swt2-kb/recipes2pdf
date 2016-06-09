@@ -10,24 +10,23 @@ package sample.ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.model.Cookbook;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ControllerManageCookBooks {
 
 
     private static ControllerManageCookBooks instance;
-    protected String selectedItem;
-    ControllerDefault controllerDefault = new ControllerDefault();
+    private String selectedItem;
+    private ControllerDefault controllerDefault = new ControllerDefault();
     private ObservableList<String> cookbooks;
 
     @FXML
@@ -44,7 +43,7 @@ public class ControllerManageCookBooks {
     private Button addButton;
 
     /**
-     * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBooks and ControllerChangeCookBook.
+     * The method ''getInstance'' returns the controllerInstance for passing data between the ControllerManageCookBooks and ControllerChangeCookBook.
      *
      * @return controllerInstance
      */
@@ -60,7 +59,7 @@ public class ControllerManageCookBooks {
         return ControllerManageCookBooks.instance;
     }
 
-    protected String getSelectedItem() {
+    String getSelectedItem() {
         return this.selectedItem;
     }
 
@@ -109,9 +108,9 @@ public class ControllerManageCookBooks {
     }
 
     /**
-     * The method ''refreshListView(ObservableList<String> cookbooks)'' refreshs the listView.
+     * The method ''refreshListView(ObservableList<String> cookbooks)'' refreshes the listView.
      */
-    protected void refreshListViews() {
+    void refreshListViews() {
         loadInfo();
         if(this.listViewCookBooks != null) {
             FXCollections.sort(this.cookbooks);
@@ -122,19 +121,17 @@ public class ControllerManageCookBooks {
         }
     }
 
-    void loadInfo(){
+    private void loadInfo(){
         this.cookbooks = FXCollections.observableArrayList();
         List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
-        for (Cookbook cookbook : cookbooksDB) {
-            this.cookbooks.add(cookbook.getTitle());
-        }
+        this.cookbooks.addAll(cookbooksDB.stream().map(Cookbook::getTitle).collect(Collectors.toList()));
     }
 
 
     /**
      * The method ''addCookBook(ActionEvent event)'' opens the addCookBook-window.
      *
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void addCookBook(ActionEvent event) {
@@ -142,23 +139,20 @@ public class ControllerManageCookBooks {
     }
 
     private void doubleClick() {
-        listViewCookBooks.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent click) {
-                if (click.getClickCount() >= 1) {
-                    selectedItem = listViewCookBooks.getSelectionModel().getSelectedItem();
-                }
-                if ((!listViewCookBooks.getItems().isEmpty()) && (selectedItem != null)) {
-                    if (click.getClickCount() == 2) {
-                    controllerDefault.newWindowNotResizable(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText());
-                }
-                }
+        listViewCookBooks.setOnMouseClicked(click -> {
+            if (click.getClickCount() >= 1) {
+                selectedItem = listViewCookBooks.getSelectionModel().getSelectedItem();
+            }
+            if ((!listViewCookBooks.getItems().isEmpty()) && (selectedItem != null)) {
+                if (click.getClickCount() == 2) {
+                controllerDefault.newWindowNotResizable(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText());
+            }
             }
         });
     }
 
     /**
-     * Setup multiple selection for listviews.
+     * Setup multiple selection for listViews.
      */
     private void setupMultipleSelection() {
         listViewCookBooks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -167,7 +161,7 @@ public class ControllerManageCookBooks {
     /**
      * The method ''closeWindow()'' closes the manage-cookbooks-window after a interaction with the close-button.
      *
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeWindow(ActionEvent event) {

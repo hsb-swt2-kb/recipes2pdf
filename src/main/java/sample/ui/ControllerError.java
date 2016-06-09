@@ -41,7 +41,7 @@ public class ControllerError {
         instance = this;
     }
 
-    public void setLabels(String boldPrint, String littlePrint) {
+    void setLabels(String boldPrint, String littlePrint) {
         this.labelBoldPrint.setText(boldPrint);
         this.labelLittlePrint.setText(littlePrint);
     }
@@ -49,7 +49,7 @@ public class ControllerError {
     /**
      * The method ''closeDialog()'' closes the notEnoughArguments-dialog after a interaction with the close-button.
      *
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeDialog(ActionEvent event) {

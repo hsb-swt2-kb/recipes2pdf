@@ -5,7 +5,6 @@ package sample.ui;
  * The Class ''ControllerCLoadRecipe'' manages the LoadRecipe-FXML and the LoadRecipePopOver-FXML.
  * It provides methods for adding new recipes.
  */
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,7 +26,7 @@ import static sample.ui.UI.addRecipes;
 
 public class ControllerLoadRecipe {
 
-    final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @FXML
     private RadioButton radioButtonHyperLink;
@@ -79,7 +78,7 @@ public class ControllerLoadRecipe {
     /**
      * Thes method ''closeStage'' closes the loadRecipe-window or the loadRecipe-popOver.
      */
-    void closeStage(){
+    private void closeStage(){
         try {
             Stage stage = (Stage) loadButton.getScene().getWindow();
             stage.close();
@@ -97,7 +96,7 @@ public class ControllerLoadRecipe {
      */
     @FXML
     void selectOptionsForLoading(ActionEvent event) {
-        if ( radioButtonHyperLink.isSelected() && (this.hyperLinkTextField.getText().trim().isEmpty() == false)) {
+        if ( radioButtonHyperLink.isSelected() && (!this.hyperLinkTextField.getText().trim().isEmpty())) {
             openHyperlink();
         } else if ( radioButtonFolder.isSelected() ) {
             openFolder();
@@ -115,15 +114,15 @@ public class ControllerLoadRecipe {
     }
 
     private boolean supportedSourceHyperlink() {
-        String checfkoch = "chefkoch";
+        String chefkoch = "chefkoch";
         String weightwatchers = "weightwatchers";
         String url = this.hyperLinkTextField.getText();
         boolean hyperlink = false;
-        UrlValidator urlValidator = new UrlValidator();
+        UrlValidator urlValidator = new UrlValidator(); // TODO: UrlValidator is deprecated.
         //valid URL
         if (!urlValidator.isValid(url)) {
             manageHyperlinkError("Download fehlgeschlagen!", "Geben Sie bitte einen Hyperlink ein!");
-        } else if ((!(url.toLowerCase().contains(checfkoch.toLowerCase()))) && (!(url.toLowerCase().contains(weightwatchers.toLowerCase())))) {
+        } else if ((!(url.toLowerCase().contains(chefkoch.toLowerCase()))) && (!(url.toLowerCase().contains(weightwatchers.toLowerCase())))) {
             manageHyperlinkError("Falsche Quelle!", "Geben Sie bitte einen WW- o. CK-Link ein!");
         } else if (urlValidator.isValid(url)) {
             hyperlink = true;
@@ -131,7 +130,7 @@ public class ControllerLoadRecipe {
         return hyperlink;
     }
 
-    void openHyperlink() {
+    private void openHyperlink() {
         if ( supportedSourceHyperlink() ) {
             try {
                 UI.addRecipeFromHyperlink(this.hyperLinkTextField.getText());

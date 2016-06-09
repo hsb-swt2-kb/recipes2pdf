@@ -19,7 +19,7 @@ public class ControllerAbout {
     /**
      * The method ''closeAbout()'' closes the About-Window.
      *
-     * @param event
+     * @param event event that this method was effected by
      */
     @FXML
     void closeAbout(ActionEvent event) {

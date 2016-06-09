@@ -60,14 +60,14 @@ public class CookbookDAO extends ADAO<Cookbook, CookbookDBO> {
         if (null != sortlevels) {
             for (ISortlevel sortlevel : sortlevels) {
                 if(!cookbookDBO.get(SortlevelDBO.class, "name = ?", sortlevel.getName()).isEmpty()) {
-                    // Sortlevel is set only once
+                    // SortLevel is set only once
                     continue;
                 }
                 final Optional<Sortlevel> byName = new SortlevelDAO().findFirst("name = ?", sortlevel.getName());
                 if (byName.isPresent()) {
                     // If already persisted but not associated yet then associate existing dbo to cookbook
                     cookbookDBO.addSortlevel(new SortlevelDAO().toDBO(byName.get()));
-                    LOG.debug("Associated already persisted Sortlevel = [" + byName.get() + "] to cookbook = [" + cookbookDBO + "].");
+                    LOG.debug("Associated already persisted SortLevel = [" + byName.get() + "] to cookbook = [" + cookbookDBO + "].");
                 } else if (!byName.isPresent()) {
                     // If not persisted yet then persist and associate to cookbook
                     final Sortlevel notInsertedSortlevel = (Sortlevel) sortlevel;

@@ -19,9 +19,6 @@ import static sample.ui.ControllerAddCookBook.getInstance;
 
 public class ControllerSortLevel {
 
-    private ObservableList<String> sortLevels;
-    private ObservableList<String> sortLevelsOfTheCookbook;
-
     @FXML
     private Button closeButton;
     @FXML
@@ -36,12 +33,12 @@ public class ControllerSortLevel {
     private ComboBox<String> comboBoxSortLevels;
 
     /**
-     * The ControllerSortLevel initializes the listeners, the sortLevel-list and the combobox.
+     * The ControllerSortLevel initializes the listeners, the sortLevel-list and the comboBox.
      */
     @FXML
     private void initialize() {
         initializeListeners();
-        this.sortLevels = FXCollections.observableArrayList("Region", "Saison", "Tageszeit", "Gerichtart", "Kategorie", "Ernährungsart", "Rezeptquelle");
+        ObservableList<String> sortLevels = FXCollections.observableArrayList("Region", "Saison", "Tageszeit", "Gerichtart", "Kategorie", "Ernährungsart", "Rezeptquelle");
         refreshComboBox(sortLevels);
     }
 
@@ -49,15 +46,15 @@ public class ControllerSortLevel {
      * The method ''initializeListeners()'' initialize the listeners.
      */
     private void initializeListeners() {
-        //Adds a sortlevel to the SortLevel-list after a interaction with plus-button.
+        //Adds a sortLevel to the SortLevel-list after a interaction with plus-button.
         plusButton.setOnAction((ActionEvent event) -> {
             String name = comboBoxSortLevels.getSelectionModel().getSelectedItem();
             boolean insite = listViewSortLevels.getItems().contains(name);
-            if (name != null && insite==false) {
+            if (name != null && !insite) {
                 listViewSortLevels.getItems().addAll(name);
             }
         });
-        //Delets a sortlevel from the SortLevel-list after a interaction with minus-button.
+        //Deletes a sortLevel from the SortLevel-list after a interaction with minus-button.
         minusButton.setOnAction((ActionEvent event) -> {
             String name = comboBoxSortLevels.getSelectionModel().getSelectedItem();
             if (name != null) {
@@ -67,7 +64,7 @@ public class ControllerSortLevel {
     }
 
     /**
-     * The method ''refreshComboBox(ObservableList<String> sortLevels)'' refreshs the comboBox.
+     * The method ''refreshComboBox(ObservableList<String> sortLevels)'' refreshes the comboBox.
      */
     private void refreshComboBox(ObservableList<String> sortLevels) {
         comboBoxSortLevels.setItems(sortLevels);
@@ -75,7 +72,7 @@ public class ControllerSortLevel {
 
     /**
      * The method ''closeSortLevel()'' closes the SortLevel-Window after a interaction with the close-button.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeSortLevel(ActionEvent event) {
@@ -84,18 +81,17 @@ public class ControllerSortLevel {
     }
 
     /**
-     * The method ''saveSortLevel'' saves the sortlevel and writes back the data to the ControllerAddCookBook.
-     * @param event
+     * The method ''saveSortLevel'' saves the sortLevel and writes back the data to the ControllerAddCookBook.
+     * @param event event this method was effected by
      */
     @FXML
     void saveSortLevel(ActionEvent event) {
-        if (listViewSortLevels.getItems().isEmpty()==false)
+        if (!listViewSortLevels.getItems().isEmpty())
         {
             getInstance().setSortLevel(listViewSortLevels.getItems());
             //close window
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
-
         }
     }
 }

@@ -27,11 +27,9 @@ import java.io.IOException;
 
 
 public class ControllerExportCookBook {
-    final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-    private String selectedCookBook;
     private String formatChoice;
-    private ObservableList<String> format;
     @FXML
     private Button browseButton;
     @FXML
@@ -45,9 +43,8 @@ public class ControllerExportCookBook {
 
     @FXML
     private void initialize() {
-        this.selectedCookBook = ControllerManageCookBook.getInstance().getSelectedCookBooks();
         initializeListeners();
-        format = FXCollections.observableArrayList("A4", "A5");
+        ObservableList<String> format = FXCollections.observableArrayList("A4", "A5");
         comboBoxFormat.setItems(format);
         comboBoxFormat.getSelectionModel().selectFirst();
     }
@@ -66,24 +63,20 @@ public class ControllerExportCookBook {
                             super.updateItem(item, empty);
                             if (item != null) {
                                 setText(item);
-                                if (item.contains("A4")) {
-                                } else if (item.contains("A5")) {
-                                }
-                            } else {
-                                setText(null);
-                            }
+                                if (item.contains("A4")) formatChoice = "A4";
+                                else if (item.contains("A5")) formatChoice = "A5";
+                            } else setText(null);
                         }
                     };
                     return cell;
                 }
-
             });
     }
 
     /**
      * The method ''closeCWindow(ActionEvent event)'' closes the export-window after a interaction with the close-button.
      *
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeWindow(ActionEvent event) {
@@ -109,7 +102,7 @@ public class ControllerExportCookBook {
     @FXML
     void saveCookBook(ActionEvent event) {
         try {
-            final File pdfFile = UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
+            final File pdfFile = UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), formatChoice);
             if (null != pdfFile && Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().open(pdfFile);
             }

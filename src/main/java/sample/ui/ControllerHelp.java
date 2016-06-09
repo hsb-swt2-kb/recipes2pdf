@@ -10,7 +10,6 @@ import javafx.stage.Stage;
  * The Class ''ControllerHelp'' manages the Help-FXML.
  * The Help-FXML contains a helptext.
  */
-
 public class ControllerHelp {
     @FXML
     private Button closeButton;
@@ -18,7 +17,7 @@ public class ControllerHelp {
     /**
      * The method ''closeHelp()'' closes the Help-Window.
      *
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeHelp(ActionEvent event) {

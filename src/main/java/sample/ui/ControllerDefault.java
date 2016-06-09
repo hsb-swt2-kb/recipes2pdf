@@ -14,9 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -51,10 +48,10 @@ public class ControllerDefault {
     /**
      * These method changes the layout in the main window.
      *
-     * @param fxml defenies the path of the new FXML-Layout-File.
+     * @param fxml defines the path of the new FXML-Layout-File.
      */
     void changeLayout(String fxml) {
-        //Pane (Content) durch anderes Pane in anderer FXML ersetzten
+        // replace Pane with other Pane in a different FXML file
         Parent newContent = null;
         try {
             newContent = FXMLLoader.load(getClass().getResource(fxml));
@@ -73,10 +70,10 @@ public class ControllerDefault {
 
     /**
      * The method opens a new not resizable window.
-     * @param fxml defenies the path of the FXML-File.
-     * @param windowTitel defenies the window titel
+     * @param fxml defines the path of the FXML-File.
+     * @param windowTitle defines the window title
      */
-    void newWindowNotResizable(String fxml, String windowTitel) {
+    void newWindowNotResizable(String fxml, String windowTitle) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
         try {
@@ -87,20 +84,22 @@ public class ControllerDefault {
         }
         Stage stage = new Stage();
         stage.getIcons().add(new Image(this.getClass().getResourceAsStream(Resources.getDefaultIcon())));
-        stage.setScene(new Scene(root));
-        stage.setTitle(windowTitel);
+        if (root != null) {
+            stage.setScene(new Scene(root));
+        }
+        stage.setTitle(windowTitle);
         stage.setResizable(false);
         stage.show();
     }
 
     /**
      * Opens a new resizable window.
-     * @param fxml defenies the path of the FXML-File.
-     * @param windowTitel defenies the window titel
-     * @param minValueWidth defenies the min value for the window size
-     * @param maxValueHeight defenies the max value for the window size
+     * @param fxml defines the path of the FXML-File.
+     * @param windowTitle defines the window title
+     * @param minValueWidth defines the min value for the window size
+     * @param maxValueHeight defines the max value for the window size
      */
-    void newWindow(String fxml, String windowTitel, double minValueWidth, double maxValueHeight, String pathIcon) {
+    void newWindow(String fxml, String windowTitle, double minValueWidth, double maxValueHeight, String pathIcon) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
         try {
@@ -111,8 +110,10 @@ public class ControllerDefault {
         }
         Stage stage = new Stage();
         stage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
-        stage.setScene(new Scene(root));
-        stage.setTitle(windowTitel);
+        if (root != null) {
+            stage.setScene(new Scene(root));
+        }
+        stage.setTitle(windowTitle);
         stage.setMinWidth(minValueWidth);
         stage.setMinHeight(maxValueHeight);
         stage.show();
@@ -121,11 +122,11 @@ public class ControllerDefault {
     /**
      * The method ''addCookBook()'' opens the addCookBook-window.
      *
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void addCookBook(ActionEvent event) {
-        //Pane (Content) durch anderes Pane in anderer FXML ersetzten
+        // replace Pane with other Pane in a different FXML file
         newWindow(Resources.getAddCookBookFXML(), Resources.getAddCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
     }
 
@@ -141,7 +142,7 @@ public class ControllerDefault {
 
     /**
      * The method ''openHelp()'' opens the help-window.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void openHelp(ActionEvent event) {
@@ -150,7 +151,7 @@ public class ControllerDefault {
 
     /**
      * The method ''openAbout()'' opens the about-window.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void openAbout(ActionEvent event) {
@@ -159,17 +160,10 @@ public class ControllerDefault {
 
     /**
      * The method ''openManageCookBooks()'' opens the  manage-cookbook-window.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void openManageCookBooks(ActionEvent event) {
         newWindow(Resources.getMangeCookBooksFXML(), Resources.getManageCookBooksWindowText(), 265, 350, Resources.getDefaultIcon());
     }
 }
-
-
-
-
-
-
-

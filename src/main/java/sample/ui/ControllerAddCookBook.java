@@ -1,6 +1,5 @@
 package sample.ui;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,7 +44,7 @@ public class ControllerAddCookBook  {
     private Button generateButton;
 
     /**
-     * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerAddCookBook and ControllerSortLevel.
+     * The method ''getInstance'' returns the controllerInstance for passing data between the ControllerAddCookBook and ControllerSortLevel.
      *
      * @return controllerInstance
      */
@@ -71,7 +70,7 @@ public class ControllerAddCookBook  {
 
     /**
      * The method ''closeAddCookBook()'' closes the AddCookBook-Window after a interaction with the close-button.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeAddCookBook(ActionEvent event) {
@@ -80,9 +79,9 @@ public class ControllerAddCookBook  {
     }
 
     /**
-     * The method ''openFileChooser()'' opens the filechooser after a interaction with the browse-Button.
+     * The method ''openFileChooser()'' opens the fileChooser after a interaction with the browse-Button.
      * If the user imports a picture, the path will display in the textField-picture.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void openFileChooser(ActionEvent event) {
@@ -95,7 +94,7 @@ public class ControllerAddCookBook  {
 
     /**
      * The method ''openSortLevel()'' opens the SortLevel-Window after a interaction with the sortLevel-button.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void openSortLevel(ActionEvent event) {
@@ -105,9 +104,9 @@ public class ControllerAddCookBook  {
     }
 
     /**
-     * The method ''setSortLevel()'' sets the SortLevel and refreshs the SortLevel-ListView.
+     * The method ''setSortLevel()'' sets the SortLevel and refreshes the SortLevel-ListView.
      * It will used in ControllerSortLevel after a interaction with the save-Button.
-     * @param sortLevelsOfTheCookbook
+     * @param sortLevelsOfTheCookbook the sortLevel of the cookBook
      */
     void setSortLevel(ObservableList<String> sortLevelsOfTheCookbook){
         this.sortLevelsOfTheCookbook = sortLevelsOfTheCookbook;
@@ -123,12 +122,12 @@ public class ControllerAddCookBook  {
 
     /**
      * The method ''generateCookBook()'' finally generates the cookbook,
-     * when at least the name and the sortlevel setted.
-     * @param event
+     * when at least the name and the sortLevel was set.
+     * @param event event this method was effected by
      */
     @FXML
     void generateCookBook(ActionEvent event) {
-        if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
+        if((!this.textFieldName.getText().trim().isEmpty()) && (!this.listViewSortLevel.getItems().isEmpty())) {
             UI.addCookBook(textFieldName.getText(), sortLevelsOfTheCookbook, textAreaVorwort.getText(), getFile());
             ControllerManageCookBook.getInstance().refresh();
             ControllerManageCookBooks.getInstance().refreshListViews();

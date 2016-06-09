@@ -21,7 +21,7 @@ import java.io.File;
 
 public class ControllerChangeRecipe {
 
-    Recipe recipe;
+    private Recipe recipe;
 
     @FXML
     private TextField textFieldName;
@@ -49,7 +49,6 @@ public class ControllerChangeRecipe {
     private Button fileChooserButton;
     @FXML
     private TextField textFieldPicture;
-    private String path;
     @FXML
     private Button closeButton;
     @FXML
@@ -57,11 +56,10 @@ public class ControllerChangeRecipe {
 
     @FXML
     public void initialize() {
-        Recipe recipe;
         refreshData();
     }
 
-    protected void refreshData() {
+    private void refreshData() {
         loadInformation();
         fillTextFields();
     }
@@ -80,7 +78,7 @@ public class ControllerChangeRecipe {
     }
 
     /**
-     * set loaded text to textfields
+     * set loaded text to textFields
      */
     private void fillTextFields() {
 
@@ -93,7 +91,7 @@ public class ControllerChangeRecipe {
         textFieldSource.setText(recipe.getSource().getName());
         textFieldSaison.setText(recipe.getSeason().getName());
         textFieldDaytime.setText(recipe.getDaytime().getName());
-        textFieldPicture.setText(""); // TODO: handle picturepath
+        textFieldPicture.setText(""); // TODO: handle picturePath
         textFieldZubereitungszeit.setText(""); // TODO: Zubereitungszeit behandeln
         textAreaZubereitungstext.setText(recipe.getText());
     }
@@ -101,7 +99,7 @@ public class ControllerChangeRecipe {
     /**
      * The method ''closeChangeRecipe()'' closes the ChangeRecipe-Window after a interaction with the close-button.
      *
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeChangeRecipe(ActionEvent event) {
@@ -118,7 +116,7 @@ public class ControllerChangeRecipe {
 
     @FXML
     void changeRecipe(ActionEvent event) {
-        if((this.textFieldName.getText().trim().isEmpty() == false)&&(this.textAreaZubereitungstext.getText().trim().isEmpty() == false)){
+        if((!this.textFieldName.getText().trim().isEmpty())&&(!this.textAreaZubereitungstext.getText().trim().isEmpty())){
             recipe.setTitle(textFieldName.getText());
             recipe.setDuration(getZubereitungszeit());
 
@@ -164,9 +162,9 @@ public class ControllerChangeRecipe {
     }
 
     /**
-     * The method ''openFileChooser()'' opens the filechooser after a interaction with the browse-Button.
+     * The method ''openFileChooser()'' opens the fileChooser after a interaction with the browse-Button.
      * If the user imports a picture, the path will display in the textField-picture.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void openFileChooser(ActionEvent event) {
@@ -182,7 +180,7 @@ public class ControllerChangeRecipe {
         int duration = 0;
         try {
             duration = Integer.parseInt(zubereitungszeit);
-        }catch (NumberFormatException e){}
+        }catch (NumberFormatException e){e.printStackTrace();}
         return duration;
     }
 }

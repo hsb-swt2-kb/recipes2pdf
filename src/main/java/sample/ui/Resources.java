@@ -2,90 +2,78 @@ package sample.ui;
 
 /**
  * Created by Tobias on 14.05.2016.
- * The Class ''Ressources'' stores the FXML-pathes, the icon-pathes and the window-titles.
+ * The Class ''Resources'' stores the FXML-paths, the icon-paths and the window-titles.
  */
 public class Resources {
 
     //FXMLs
-    protected static String getDefaultFXML() {return "/sample/ui/Default.fxml";}
-    protected static String getErrorFXML() {
+    static String getDefaultFXML() {return "/sample/ui/Default.fxml";}
+    static String getErrorFXML() {
         return "/sample/ui/Error.fxml";
     }
-    protected static String getMangeCookBookFXML() {
+    static String getMangeCookBookFXML() {
         return "/sample/ui/ManageCookBook.fxml";
     }
-    protected static String getMangeCookBooksFXML() {
+    static String getMangeCookBooksFXML() {
         return "/sample/ui/ManageCookBooks.fxml";
     }
-    protected static String getChangeCookBooksFXML() {
+    static String getChangeCookBooksFXML() {
         return "/sample/ui/ChangeCookBook.fxml";
     }
-    protected static String getAddCookBookFXML() {
+    static String getAddCookBookFXML() {
         return "/sample/ui/AddCookBook.fxml";
     }
-    protected static String getDeleteCookBookFXML() {
+    static String getDeleteCookBookFXML() {
         return "/sample/ui/DeleteDialogCookBook.fxml";
     }
-    protected static String getDeleteRecipeFXML() {
+    static String getDeleteRecipeFXML() {
         return "/sample/ui/DeleteDialogRecipe.fxml";
     }
-    protected static String getloadRecipeFXML() {
+    static String getloadRecipeFXML() {
         return "/sample/ui/LoadRecipe.fxml";
     }
-    protected static String getHelpFXML() {
+    static String getHelpFXML() {
         return "/sample/ui/Help.fxml";
     }
-    protected static String getAboutFXML() {
+    static String getAboutFXML() {
         return "/sample/ui/About.fxml";
     }
-    protected static String getExportFXML() {
+    static String getExportFXML() {
         return "/sample/ui/ExportCookBook.fxml";
     }
-    protected static String getSortLevelFXML() {
+    static String getSortLevelFXML() {
         return "/sample/ui/SortLevel.fxml";
     }
-    protected static String getChangeRecipeFXML() {return "/sample/ui/ChangeRecipe.fxml";}
+    static String getChangeRecipeFXML() {return "/sample/ui/ChangeRecipe.fxml";}
 
     //Icons
-    protected static String getDefaultIcon() { return "/sample/ui/icon_bg_small.png"; }
-    protected static String getHelpIcon() {
+    static String getDefaultIcon() { return "/sample/ui/icon_bg_small.png"; }
+    static String getHelpIcon() {
         return "/sample/ui/Help.png";
     }
-    protected static String getInfoIcon() {
+    static String getInfoIcon() {
         return "/sample/ui/Info.png";
     }
 
     //Window-Titles
-    protected static String getFileChooserWindowText() {
+    static String getFileChooserWindowText() {
         return "File Chooser";
     }
-    protected static String getDeleteWindowText() {
+    static String getDeleteWindowText() {
         return "Löschen";
     }
-    protected static String getSortLevelWindowText() {return "Einstellungen";}
-    protected static String getChangeCookBookWindowText() {
-        return "Kochbuch ändern";
-    }
-    protected static String getErrorWindowText() {
+    static String getSortLevelWindowText() {return "Einstellungen";}
+    static String getChangeCookBookWindowText() {return "Kochbuch ändern";}
+    static String getErrorWindowText() {
         return "Error";
     }
-    protected static String getAddCookBookWindowText() {
-        return "Kochbuch hinzufügen";
-    }
-    protected static String getExportWindowText() {
-        return "Exportieren";
-    }
-    protected static String getChangeRecipeWindowText() {
+    static String getAddCookBookWindowText() {return "Kochbuch hinzufügen";}
+    static String getExportWindowText() {return "Exportieren";}
+    static String getChangeRecipeWindowText() {
         return "Rezept ändern";
     }
-    protected static String getLoadWindowText() {
-        return "Rezept laden";
-    }
-    protected static String getHelpWindowText() {
-        return "Hilfe";
-    }
-    protected static String getAboutWindowText() {
-        return "Über";
-    }
-    protected static String getManageCookBooksWindowText() {return "Kochbuchverwaltung";}
+    static String getLoadWindowText() { return "Rezept laden"; }
+    static String getHelpWindowText() { return "Hilfe"; }
+    static String getAboutWindowText() { return "Über";}
+    static String getManageCookBooksWindowText() {return "Kochbuchverwaltung";}
 }

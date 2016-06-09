@@ -43,7 +43,7 @@ public class ControllerDeleteDialogRecipe {
     /**
      * The method ''closeDeleteDialog()'' closes the delete-dialog after a interaction with the close-button.
      *
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeDeleteDialog(ActionEvent event) {

@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.exceptions.CookBookNotFoundException;
 import sample.model.Cookbook;
 
 import java.io.File;
@@ -42,12 +41,12 @@ public class ControllerChangeCookBook {
         refreshData();
     }
 
-    protected void refreshData() {
+    private void refreshData() {
         fillTextFields();
     }
 
     /**
-     * set loaded text to textfields
+     * set loaded text to textFields
      */
     private void fillTextFields() {
 
@@ -65,7 +64,7 @@ public class ControllerChangeCookBook {
 
     @FXML
     void changeCookBook(ActionEvent event) {
-        if(this.textFieldName.getText().trim().isEmpty() == false) {
+        if(!this.textFieldName.getText().trim().isEmpty()) {
             try {
                 cookbook.setTitle(textFieldName.getText());
                 UI.changeCookBook(cookbook);
@@ -85,7 +84,7 @@ public class ControllerChangeCookBook {
 
     /**
      * The method ''closeChangeCookBook()'' closes the ChangeCookBook-Window after a interaction with the close-button.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void closeChangeCookBook(ActionEvent event) {
@@ -94,9 +93,9 @@ public class ControllerChangeCookBook {
     }
 
     /**
-     * The method ''openFileChooser()'' opens the filechooser after a interaction with the browse-Button.
+     * The method ''openFileChooser()'' opens the fileChooser after a interaction with the browse-Button.
      * If the user imports a picture, the path will display in the textField-picture.
-     * @param event
+     * @param event event this method was effected by
      */
     @FXML
     void openFileChooser(ActionEvent event) {

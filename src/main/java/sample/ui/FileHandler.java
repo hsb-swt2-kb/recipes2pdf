@@ -14,7 +14,7 @@ import java.io.File;
 import java.util.List;
 
 
-public class FileHandler {
+class FileHandler {
 
     /**
      * These method imports the data of a single folder.
@@ -23,8 +23,7 @@ public class FileHandler {
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final DirectoryChooser chooser = new DirectoryChooser();
-        File selectedDirectory = chooser.showDialog(stage);
-        return selectedDirectory;
+        return chooser.showDialog(stage);
     }
 
     /**
@@ -36,10 +35,7 @@ public class FileHandler {
         final FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.txt", "*.TXT","*.html", "*.HTML");
         fileChooser.setSelectedExtensionFilter(extFilter);
-        List<File> files =
-            fileChooser.showOpenMultipleDialog(stage);
-
-        return files;
+        return  fileChooser.showOpenMultipleDialog(stage);
     }
 
     /**
@@ -51,20 +47,17 @@ public class FileHandler {
         final FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.PNG", "*.png","*.JPG","*.jpg");
         fileChooser.setSelectedExtensionFilter(extFilter);
-        File file = fileChooser.showOpenDialog(stage);
-
-        return file;
+        return fileChooser.showOpenDialog(stage);
     }
 
     /**
      * These method exports a single file.
      */
+    @SuppressWarnings("unused")
     File exportFile(){
         Stage stage = new Stage();
         stage.setTitle(Resources.getFileChooserWindowText());
         final FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showSaveDialog(stage);
-
-        return file;
+        return fileChooser.showSaveDialog(stage);
     }
 }

@@ -46,7 +46,7 @@ public class UI {
         }
     }
 
-    public static void addRecipeFromHyperlink(final String URL) throws IOException,CouldNotParseException {
+    static void addRecipeFromHyperlink(final String URL) throws IOException,CouldNotParseException {
         List<String> lines = new ArrayList<>();
         String line;
         URL myUrl;
@@ -89,7 +89,7 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static void addRecipe(File file) throws CouldNotParseException, FileNotFoundException {
+    private static void addRecipe(File file) throws CouldNotParseException, FileNotFoundException {
         Recipe recipe = (Recipe) Parser.parse(file);
         addToStandardCookBook(recipe);
     }
@@ -104,7 +104,7 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    static void addRecipe(List<String> lines) throws CouldNotParseException, FileNotFoundException {
+    private static void addRecipe(List<String> lines) throws CouldNotParseException, FileNotFoundException {
         Recipe recipe = (Recipe) Parser.parse(lines);
         addToStandardCookBook(recipe);
     }
@@ -171,6 +171,7 @@ public class UI {
      * @param iRecipes iRecipes to cast to Recipe
      * @return List<Recipe> List of the converted Recipes
      */
+    @SuppressWarnings("unused")
     static List<Recipe> castIRecipeToRecipe(List<IRecipe> iRecipes) {
         List<Recipe> recipes = new ArrayList<>();
         for (IRecipe iRecipe : iRecipes) {
@@ -187,6 +188,7 @@ public class UI {
      * @param iCookbooks iCookbook to cast to Cookbook
      * @return List<Cookbook> List of the converted Cookbooks
      */
+    @SuppressWarnings("unused")
     static public List<Cookbook> castICookBookToCookBook(List<ICookbook> iCookbooks) {
         List<Cookbook> cookbooks = new ArrayList<>();
         for (ICookbook iCookBook : iCookbooks) {
@@ -214,18 +216,18 @@ public class UI {
      * inserts a cookbook to the database and returns the title if success, otherwise null
      *
      *
-     * @param sortLevelsOfTheCookbook
+     * @param sortLevelsOfTheCookbook the sortLevels of the cookBook
      *@param foreWord of the cookbook
      * @param title cookbooks to add to DB  @return boolean success of the insertion
      */
     static void addCookBook(String title, ObservableList<String> sortLevelsOfTheCookbook, String foreWord, File picture) {
         Cookbook cookbook = new Cookbook();
         cookbook.setTitle(title);
-        List<ISortlevel> sortlevelList = new ArrayList<>();
+        List<ISortlevel> sortLevelList = new ArrayList<>();
         sortLevelsOfTheCookbook.stream().map(s -> {
             Sortlevel sortlevel = new Sortlevel(); sortlevel.setName(s); return sortlevel;
-        }).forEach(sortlevelList::add);
-        cookbook.setSortlevel( sortlevelList );
+        }).forEach(sortLevelList::add);
+        cookbook.setSortlevel( sortLevelList );
         // TODO: Add foreword getForeWord()
         // TODO: Add picture getFile(()
         new CookbookDAO().insert(cookbook);
@@ -252,8 +254,9 @@ public class UI {
     static void delCookBook(String cookbookName) {
         if(new CookbookDAO().findFirst("name=?", cookbookName).isPresent())
         {
-            Cookbook cookbookToDelete = new CookbookDAO().findFirst("name=?",cookbookName).get();
-            new CookbookDAO().delete(cookbookToDelete);
+            Optional<Cookbook> oCookBook = new CookbookDAO().findFirst("name=?",cookbookName);
+            if(oCookBook.isPresent())
+                new CookbookDAO().delete(new CookbookDAO().findFirst("name=?",cookbookName).get());
         }
     }
 
@@ -333,7 +336,7 @@ public class UI {
         List<IConcreteBuilder> builderList = new ArrayList<>();
         builderList.add(new PdfBuilder(IConfig.getInstance()));
         IBuilder builder = new Builder(builderList);
-        return builder.build(cookbook);
+        return builder.build(cookbook,paperFormats);
     }
 
     /**
@@ -341,12 +344,12 @@ public class UI {
      *
      * to get the Recipes that are associated with this cookbook
      *
-     * @param cookbookname name of the cookbook of you want the recipes from
+     * @param cookBookName name of the cookbook of you want the recipes from
      * @return List<Recipe> list of the recipes of the cookbook
      * @throws CookBookNotFoundException
      */
-    static List<IRecipe> getRecipesOfCookbook(String cookbookname) throws CookBookNotFoundException {
-        Cookbook cookbook = UI.searchCookBook(cookbookname);
+    static List<IRecipe> getRecipesOfCookbook(String cookBookName) throws CookBookNotFoundException {
+        Cookbook cookbook = UI.searchCookBook(cookBookName);
         return cookbook.getRecipes();
     }
 }
