@@ -65,7 +65,7 @@ public class PdfBuilder implements IConcreteBuilder {
     private void parseTexFile(File outputTexFile, File templateFile, File imageDir, Cookbook cookbook) throws IOException, ParseErrorException {
         JLRConverter converter = new JLRConverter(templateFile.getParentFile());
         List<Sortlevel> sortAttributeChain = cookbook.getSortlevel();
-        ((Cookbook) cookbook).setRecipes(RecipeListSorter.sort(cookbook.getRecipes(), sortAttributeChain));
+        cookbook.setRecipes(RecipeListSorter.sort(cookbook.getRecipes(), sortAttributeChain));
 
         converter.replace("cookbook", cookbook);
         converter.replace("refNumList", generateRefNumList(cookbook.getRecipes(), sortAttributeChain));
