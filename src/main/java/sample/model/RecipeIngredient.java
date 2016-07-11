@@ -10,9 +10,9 @@ import javax.persistence.*;
 public class RecipeIngredient {
     private Integer id;
     private Double amount;
-    private Unit unitByUnitId;
-    private Ingredient ingredientByIngredientId;
-    private Recipe recipeByRecipeId;
+    private Unit unit;
+    private Ingredient ingredient;
+    private Recipe recipe;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,31 +57,31 @@ public class RecipeIngredient {
 
     @ManyToOne
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
-    public Unit getUnitByUnitId() {
-        return unitByUnitId;
+    public Unit getUnit() {
+        return unit;
     }
 
-    public void setUnitByUnitId(Unit unitByUnitId) {
-        this.unitByUnitId = unitByUnitId;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     @ManyToOne
     @JoinColumn(name = "ingredient_id", referencedColumnName = "id")
-    public Ingredient getIngredientByIngredientId() {
-        return ingredientByIngredientId;
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 
-    public void setIngredientByIngredientId(Ingredient ingredientByIngredientId) {
-        this.ingredientByIngredientId = ingredientByIngredientId;
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
     }
 
     @ManyToOne
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
-    public Recipe getRecipeByRecipeId() {
-        return recipeByRecipeId;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setRecipeByRecipeId(Recipe recipeByRecipeId) {
-        this.recipeByRecipeId = recipeByRecipeId;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

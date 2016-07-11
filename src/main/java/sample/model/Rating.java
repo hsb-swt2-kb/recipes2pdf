@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * Created by czoeller on 11.07.16.
+ * Not used yet
  */
 @Entity
 public class Rating {

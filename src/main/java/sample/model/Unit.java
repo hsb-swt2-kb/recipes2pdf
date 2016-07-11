@@ -10,7 +10,7 @@ import java.util.Collection;
 public class Unit {
     private Integer id;
     private String name;
-    private Collection<RecipeIngredient> recipeIngredientsById;
+    private Collection<RecipeIngredient> recipeIngredients;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,12 +53,12 @@ public class Unit {
         return result;
     }
 
-    @OneToMany(mappedBy = "unitByUnitId")
-    public Collection<RecipeIngredient> getRecipeIngredientsById() {
-        return recipeIngredientsById;
+    @OneToMany(mappedBy = "unit")
+    public Collection<RecipeIngredient> getRecipeIngredients() {
+        return recipeIngredients;
     }
 
-    public void setRecipeIngredientsById(Collection<RecipeIngredient> recipeIngredientsById) {
-        this.recipeIngredientsById = recipeIngredientsById;
+    public void setRecipeIngredients(Collection<RecipeIngredient> recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
     }
 }

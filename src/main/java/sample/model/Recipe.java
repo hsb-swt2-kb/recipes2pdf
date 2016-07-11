@@ -15,15 +15,15 @@ public class Recipe {
     private Integer duration;
     private String image;
     private Integer calories;
-    private Collection<CookbookRecipe> cookbookRecipesById;
-    private Source sourceBySourceId;
-    private Nurture nurtureByNurtureId;
-    private Season seasonBySeasonId;
-    private Daytime daytimeByDaytimeId;
-    private Region regionByRegionId;
-    private Course courseByCourseId;
-    private Category categoryByCategoryId;
-    private Collection<RecipeIngredient> recipeIngredientsById;
+    private Collection<CookbookRecipe> cookbookRecipes;
+    private Source source;
+    private Nurture nurture;
+    private Season season;
+    private Daytime daytime;
+    private Region region;
+    private Course course;
+    private Category category;
+    private Collection<RecipeIngredient> recipeIngredients;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -127,90 +127,90 @@ public class Recipe {
     }
 
     @OneToMany(mappedBy = "recipeByRecipeId")
-    public Collection<CookbookRecipe> getCookbookRecipesById() {
-        return cookbookRecipesById;
+    public Collection<CookbookRecipe> getCookbookRecipes() {
+        return cookbookRecipes;
     }
 
-    public void setCookbookRecipesById(Collection<CookbookRecipe> cookbookRecipesById) {
-        this.cookbookRecipesById = cookbookRecipesById;
+    public void setCookbookRecipes(Collection<CookbookRecipe> cookbookRecipes) {
+        this.cookbookRecipes = cookbookRecipes;
     }
 
     @ManyToOne
     @JoinColumn(name = "source_id", referencedColumnName = "id")
-    public Source getSourceBySourceId() {
-        return sourceBySourceId;
+    public Source getSource() {
+        return source;
     }
 
-    public void setSourceBySourceId(Source sourceBySourceId) {
-        this.sourceBySourceId = sourceBySourceId;
+    public void setSource(Source source) {
+        this.source = source;
     }
 
     @ManyToOne
     @JoinColumn(name = "nurture_id", referencedColumnName = "id")
-    public Nurture getNurtureByNurtureId() {
-        return nurtureByNurtureId;
+    public Nurture getNurture() {
+        return nurture;
     }
 
-    public void setNurtureByNurtureId(Nurture nurtureByNurtureId) {
-        this.nurtureByNurtureId = nurtureByNurtureId;
+    public void setNurture(Nurture nurture) {
+        this.nurture = nurture;
     }
 
     @ManyToOne
     @JoinColumn(name = "season_id", referencedColumnName = "id")
-    public Season getSeasonBySeasonId() {
-        return seasonBySeasonId;
+    public Season getSeason() {
+        return season;
     }
 
-    public void setSeasonBySeasonId(Season seasonBySeasonId) {
-        this.seasonBySeasonId = seasonBySeasonId;
+    public void setSeason(Season season) {
+        this.season = season;
     }
 
     @ManyToOne
     @JoinColumn(name = "daytime_id", referencedColumnName = "id")
-    public Daytime getDaytimeByDaytimeId() {
-        return daytimeByDaytimeId;
+    public Daytime getDaytime() {
+        return daytime;
     }
 
-    public void setDaytimeByDaytimeId(Daytime daytimeByDaytimeId) {
-        this.daytimeByDaytimeId = daytimeByDaytimeId;
+    public void setDaytime(Daytime daytime) {
+        this.daytime = daytime;
     }
 
     @ManyToOne
     @JoinColumn(name = "region_id", referencedColumnName = "id")
-    public Region getRegionByRegionId() {
-        return regionByRegionId;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setRegionByRegionId(Region regionByRegionId) {
-        this.regionByRegionId = regionByRegionId;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id")
-    public Course getCourseByCourseId() {
-        return courseByCourseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseByCourseId(Course courseByCourseId) {
-        this.courseByCourseId = courseByCourseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    public Category getCategoryByCategoryId() {
-        return categoryByCategoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryByCategoryId(Category categoryByCategoryId) {
-        this.categoryByCategoryId = categoryByCategoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @OneToMany(mappedBy = "recipeByRecipeId")
-    public Collection<RecipeIngredient> getRecipeIngredientsById() {
-        return recipeIngredientsById;
+    public Collection<RecipeIngredient> getRecipeIngredients() {
+        return recipeIngredients;
     }
 
-    public void setRecipeIngredientsById(Collection<RecipeIngredient> recipeIngredientsById) {
-        this.recipeIngredientsById = recipeIngredientsById;
+    public void setRecipeIngredients(Collection<RecipeIngredient> recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
     }
 }

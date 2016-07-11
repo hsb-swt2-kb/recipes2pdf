@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Table(name = "cookbook_recipe", schema = "", catalog = "")
 public class CookbookRecipe {
     private Integer id;
-    private Recipe recipeByRecipeId;
-    private Cookbook cookbookByCookbookId;
+    private Recipe recipe;
+    private Cookbook cookbook;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,21 +43,21 @@ public class CookbookRecipe {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
-    public Recipe getRecipeByRecipeId() {
-        return recipeByRecipeId;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setRecipeByRecipeId(Recipe recipeByRecipeId) {
-        this.recipeByRecipeId = recipeByRecipeId;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     @ManyToOne
     @JoinColumn(name = "cookbook_id", referencedColumnName = "id", nullable=false,insertable=false,updatable=false )
-    public Cookbook getCookbookByCookbookId() {
-        return cookbookByCookbookId;
+    public Cookbook getCookbook() {
+        return cookbook;
     }
 
-    public void setCookbookByCookbookId(Cookbook cookbookByCookbookId) {
-        this.cookbookByCookbookId = cookbookByCookbookId;
+    public void setCookbook(Cookbook cookbook) {
+        this.cookbook = cookbook;
     }
 }

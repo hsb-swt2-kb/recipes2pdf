@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Table(name = "cookbook_sortlevel", schema = "", catalog = "")
 public class CookbookSortlevel {
     private Integer id;
-    private Sortlevel sortlevelBySortlevelId;
-    private Cookbook cookbookByCookbookId;
+    private Sortlevel sortlevel;
+    private Cookbook cookbook;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,21 +43,21 @@ public class CookbookSortlevel {
 
     @ManyToOne
     @JoinColumn(name = "sortlevel_id", referencedColumnName = "id")
-    public Sortlevel getSortlevelBySortlevelId() {
-        return sortlevelBySortlevelId;
+    public Sortlevel getSortlevel() {
+        return sortlevel;
     }
 
-    public void setSortlevelBySortlevelId(Sortlevel sortlevelBySortlevelId) {
-        this.sortlevelBySortlevelId = sortlevelBySortlevelId;
+    public void setSortlevel(Sortlevel sortlevel) {
+        this.sortlevel = sortlevel;
     }
 
     @ManyToOne
     @JoinColumn(name = "cookbook_id", referencedColumnName = "id")
-    public Cookbook getCookbookByCookbookId() {
-        return cookbookByCookbookId;
+    public Cookbook getCookbook() {
+        return cookbook;
     }
 
-    public void setCookbookByCookbookId(Cookbook cookbookByCookbookId) {
-        this.cookbookByCookbookId = cookbookByCookbookId;
+    public void setCookbook(Cookbook cookbook) {
+        this.cookbook = cookbook;
     }
 }

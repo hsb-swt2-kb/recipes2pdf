@@ -11,7 +11,7 @@ import java.util.Collection;
 public class Course {
     private Integer id;
     private String name;
-    private Collection<Recipe> recipesById;
+    private Collection<Recipe> recipes;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,12 +54,12 @@ public class Course {
         return result;
     }
 
-    @OneToMany(mappedBy = "courseByCourseId")
-    public Collection<Recipe> getRecipesById() {
-        return recipesById;
+    @OneToMany(mappedBy = "course")
+    public Collection<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setRecipesById(Collection<Recipe> recipesById) {
-        this.recipesById = recipesById;
+    public void setRecipes(Collection<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }

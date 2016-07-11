@@ -10,8 +10,8 @@ import java.util.Collection;
 public class Cookbook {
     private Integer id;
     private String title;
-    private Collection<CookbookRecipe> cookbookRecipesById;
-    private Collection<CookbookSortlevel> cookbookSortlevelsById;
+    private Collection<CookbookRecipe> cookbookRecipes;
+    private Collection<CookbookSortlevel> cookbookSortlevels;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,21 +54,21 @@ public class Cookbook {
         return result;
     }
 
-    @OneToMany(mappedBy = "cookbookByCookbookId", fetch = FetchType.EAGER)
-    public Collection<CookbookRecipe> getCookbookRecipesById() {
-        return cookbookRecipesById;
+    @OneToMany(mappedBy = "cookbook", fetch = FetchType.EAGER)
+    public Collection<CookbookRecipe> getCookbookRecipes() {
+        return cookbookRecipes;
     }
 
-    public void setCookbookRecipesById(Collection<CookbookRecipe> cookbookRecipesById) {
-        this.cookbookRecipesById = cookbookRecipesById;
+    public void setCookbookRecipes(Collection<CookbookRecipe> cookbookRecipes) {
+        this.cookbookRecipes = cookbookRecipes;
     }
 
-    @OneToMany(mappedBy = "cookbookByCookbookId")
-    public Collection<CookbookSortlevel> getCookbookSortlevelsById() {
-        return cookbookSortlevelsById;
+    @OneToMany(mappedBy = "cookbook")
+    public Collection<CookbookSortlevel> getCookbookSortlevels() {
+        return cookbookSortlevels;
     }
 
-    public void setCookbookSortlevelsById(Collection<CookbookSortlevel> cookbookSortlevelsById) {
-        this.cookbookSortlevelsById = cookbookSortlevelsById;
+    public void setCookbookSortlevels(Collection<CookbookSortlevel> cookbookSortlevels) {
+        this.cookbookSortlevels = cookbookSortlevels;
     }
 }

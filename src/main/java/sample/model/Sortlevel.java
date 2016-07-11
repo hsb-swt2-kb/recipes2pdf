@@ -10,7 +10,7 @@ import java.util.Collection;
 public class Sortlevel {
     private Integer id;
     private String name;
-    private Collection<CookbookSortlevel> cookbookSortlevelsById;
+    private Collection<CookbookSortlevel> cookbookSortlevels;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,12 +53,12 @@ public class Sortlevel {
         return result;
     }
 
-    @OneToMany(mappedBy = "sortlevelBySortlevelId")
-    public Collection<CookbookSortlevel> getCookbookSortlevelsById() {
-        return cookbookSortlevelsById;
+    @OneToMany(mappedBy = "sortlevel")
+    public Collection<CookbookSortlevel> getCookbookSortlevels() {
+        return cookbookSortlevels;
     }
 
-    public void setCookbookSortlevelsById(Collection<CookbookSortlevel> cookbookSortlevelsById) {
-        this.cookbookSortlevelsById = cookbookSortlevelsById;
+    public void setCookbookSortlevels(Collection<CookbookSortlevel> cookbookSortlevels) {
+        this.cookbookSortlevels = cookbookSortlevels;
     }
 }
