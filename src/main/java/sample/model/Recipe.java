@@ -126,7 +126,7 @@ public class Recipe {
         return result;
     }
 
-    @OneToMany(mappedBy = "recipeByRecipeId")
+    @OneToMany(mappedBy = "recipe")
     public Collection<CookbookRecipe> getCookbookRecipes() {
         return cookbookRecipes;
     }
@@ -205,7 +205,7 @@ public class Recipe {
         this.category = category;
     }
 
-    @OneToMany(mappedBy = "recipeByRecipeId")
+    @OneToMany(mappedBy = "recipe")
     public Collection<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }
