@@ -1,6 +1,7 @@
 package sample.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,7 @@ public class Recipe {
     private Integer duration;
     private byte[] image;
     private Integer calories;
-    private List<CookbookRecipe> cookbookRecipes;
+    private List<CookbookRecipe> cookbookRecipes = new ArrayList<>();
     private Source source;
     private Nurture nurture;
     private Season season;
@@ -24,7 +25,7 @@ public class Recipe {
     private Region region;
     private Course course;
     private Category category;
-    private List<RecipeIngredient> recipeIngredients;
+    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -196,7 +197,7 @@ public class Recipe {
         this.course = course;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     public Category getCategory() {
         return category;
@@ -206,7 +207,7 @@ public class Recipe {
         this.category = category;
     }
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }
@@ -225,8 +226,8 @@ public class Recipe {
         throw new IllegalStateException("Not implemented yet.");
     }
 
-    public void add(String ingredient, double amount, String unit) {
-        //TODO: implement
-        throw new IllegalStateException("Not implemented yet.");
+    @Deprecated
+    public void add(String s, double amount, String s1) {
+        throw new IllegalStateException("Moved to DAO.");
     }
 }

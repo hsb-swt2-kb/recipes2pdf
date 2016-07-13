@@ -75,7 +75,7 @@ public class RecipeIngredient {
         this.ingredient = ingredient;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     public Recipe getRecipe() {
         return recipe;

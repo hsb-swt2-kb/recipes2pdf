@@ -53,7 +53,7 @@ public class Category {
         return result;
     }
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL})
     public List<Recipe> getRecipes() {
         return recipes;
     }

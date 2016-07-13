@@ -2,9 +2,14 @@ package sample.database;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Scopes;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import sample.database.dao.IIngredientDAO;
+import sample.database.dao.IUnitDAO;
+import sample.database.dao.IngredientDAOImpl;
+import sample.database.dao.UnitDAOImpl;
 
 import javax.inject.Singleton;
 
@@ -21,7 +26,8 @@ public class DatabaseModule extends AbstractModule {
          * HibernateConnection connection = injector.getInstance(HibernateConnection.class);
          * a new Instance of HibernateConnection (with the included HibernateUtil) will be created.
          */
-        //bind(SessionFactory.class).to(SessionProvider.class).in(Scopes.SINGLETON);
+        bind(IUnitDAO.class).to(UnitDAOImpl.class).in(Scopes.SINGLETON);
+        bind(IIngredientDAO.class).to(IngredientDAOImpl.class).in(Scopes.SINGLETON);
 
     }
 

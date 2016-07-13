@@ -77,8 +77,11 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
 
     @Override
     public Optional<E> findFirst(String field, Object value) {
-        return Optional.ofNullable((E) currentSession().createCriteria(daoType)
+        currentSession().beginTransaction();
+        final Optional<E> result = Optional.ofNullable((E) currentSession().createCriteria(daoType)
             .add(Restrictions.eq(field, value))
             .uniqueResult());
+        currentSession().getTransaction().commit();
+        return result;
     }
 }
