@@ -27,7 +27,6 @@
       <mapping class="sample.model.Sortlevel"/>
       <mapping class="sample.model.Source"/>
       <mapping class="sample.model.Unit"/>
-
       <!-- <property name="connection.url"/> -->
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->

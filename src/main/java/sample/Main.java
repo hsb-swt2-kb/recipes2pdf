@@ -25,10 +25,11 @@ public class Main
         Injector injector = Guice.createInjector(new DatabaseModule() );
         final ICookbookDAO cookbookDAO = injector.getInstance(CookbookDAOImpl.class);
         final IRecipeDAO recipeDAO = injector.getInstance(RecipeDAOImpl.class);
-        cookbookDAO.add(new Cookbook());
+        Cookbook cookbook = new Cookbook();
+        cookbookDAO.add(cookbook);
 
         final Category category = new Category();
-        category.setName("Keine Hnung ey");
+        category.setName("Keine Hnung eyesevsln" + System.currentTimeMillis());
         Recipe recipe = new Recipe();
         recipe.setTitle("Nudeln mit Soße");
         recipeDAO.add(recipe, "Nudeln", 500, "g");
@@ -36,6 +37,8 @@ public class Main
         recipe.setCategory( category );
         recipeDAO.add(recipe);
 
+        cookbook.addRecipe(recipe);
+        cookbookDAO.saveOrUpdate(cookbook);
         // select UI
         if(args.length==0)
             ;

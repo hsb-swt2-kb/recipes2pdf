@@ -1,6 +1,7 @@
 package sample.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
 public class Ingredient {
     private Integer id;
     private String name;
-    private List<RecipeIngredient> recipeIngredients;
+    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +54,7 @@ public class Ingredient {
         return result;
     }
 
-    @OneToMany(mappedBy = "ingredient")
+    @OneToMany(mappedBy = "ingredient", fetch = FetchType.EAGER)
     public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }

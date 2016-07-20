@@ -1,6 +1,7 @@
 package sample.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,8 +12,8 @@ import java.util.stream.Collectors;
 public class Cookbook {
     private Integer id;
     private String title;
-    private List<CookbookRecipe> cookbookRecipes;
-    private List<CookbookSortlevel> cookbookSortlevels;
+    private List<CookbookRecipe> cookbookRecipes = new ArrayList<>();
+    private List<CookbookSortlevel> cookbookSortlevels = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

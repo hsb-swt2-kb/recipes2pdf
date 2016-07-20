@@ -207,6 +207,7 @@ public class Recipe {
         this.category = category;
     }
 
+
     @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
