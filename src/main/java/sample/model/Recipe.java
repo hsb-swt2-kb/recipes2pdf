@@ -78,7 +78,7 @@ public class Recipe {
         this.duration = duration;
     }
 
-    @Lob
+    //TODO: fix dialect support for lob. @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "image")
     public byte[] getImage() {
@@ -198,7 +198,7 @@ public class Recipe {
         this.course = course;
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     public Category getCategory() {
         return category;

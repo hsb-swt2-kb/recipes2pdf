@@ -52,7 +52,7 @@ public class CookbookRecipe {
     }
 
     @ManyToOne
-    @JoinColumn(name = "cookbook_id", referencedColumnName = "id", nullable=false,insertable=false,updatable=false )
+    @JoinColumn(name = "cookbook_id", referencedColumnName = "id")
     public Cookbook getCookbook() {
         return cookbook;
     }

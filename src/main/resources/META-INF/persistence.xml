@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+    <persistence-unit name="recipes2pdf-db" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>sample.model.Category</class>
+        <class>sample.model.Cookbook</class>
+        <class>sample.model.CookbookRecipe</class>
+        <class>sample.model.CookbookSortlevel</class>
+        <class>sample.model.Course</class>
+        <class>sample.model.Daytime</class>
+        <class>sample.model.Ingredient</class>
+        <class>sample.model.Nurture</class>
+        <class>sample.model.Rating</class>
+        <class>sample.model.Recipe</class>
+        <class>sample.model.RecipeIngredient</class>
+        <class>sample.model.Region</class>
+        <class>sample.model.Season</class>
+        <class>sample.model.Sortlevel</class>
+        <class>sample.model.Source</class>
+        <class>sample.model.Unit</class>
+
+        <properties>
+            <property name="hibernate.current_session_context_class" value="thread"/>
+            <property name="hibernate.dialect" value="sample.database.SQLiteDialect"/>
+            <property name="hibernate.connection.driver_class" value="org.sqlite.JDBC" />
+            <property name="hibernate.connection.url" value="jdbc:sqlite:/Users/czoeller/.recipes2pdf/database/database.db"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

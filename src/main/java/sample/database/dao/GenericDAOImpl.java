@@ -1,10 +1,10 @@
 package sample.database.dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
+import com.uaihebert.factory.EasyCriteriaFactory;
+import com.uaihebert.model.EasyCriteria;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -18,7 +18,8 @@ import java.util.Optional;
 public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E, ID> {
 
     @Inject
-    private SessionFactory sessionFactory;
+    private EntityManager em;
+
     protected Class<? extends ID> daoType;
 
     public GenericDAOImpl() {
@@ -27,61 +28,50 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
         daoType = (Class) pt.getActualTypeArguments()[0];
     }
 
-    protected Session currentSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
     @Override
     public void add(E entity) {
-        currentSession().beginTransaction();
-        currentSession().save(entity);
-        currentSession().getTransaction().commit();
+        em.getTransaction().begin();
+        em.persist(entity);
+        em.getTransaction().commit();
     }
 
     @Override
     public void saveOrUpdate(E entity) {
-        currentSession().beginTransaction();
-        currentSession().saveOrUpdate(entity);
-        currentSession().getTransaction().commit();
+        em.getTransaction().begin();
+        em.merge(entity);
+        em.getTransaction().commit();
     }
 
     @Override
     public void update(E entity) {
-        currentSession().beginTransaction();
-        currentSession().saveOrUpdate(entity);
-        currentSession().getTransaction().commit();
+        em.getTransaction().begin();
+        em.merge(entity);
+        em.getTransaction().commit();
     }
 
     @Override
     public void remove(E entity) {
-        currentSession().beginTransaction();
-        currentSession().delete(entity);
-        currentSession().getTransaction().commit();
+        em.getTransaction().begin();
+        em.remove(entity);
+        em.getTransaction().commit();
     }
 
     @Override
     public E find(ID key) {
-        currentSession().beginTransaction();
-        final E e = (E) currentSession().get(daoType, key);
-        currentSession().getTransaction().commit();
+        em.getTransaction().begin();
+        final E e = (E) em.find(daoType, key);
+        em.getTransaction().commit();
         return e;
     }
 
     @Override
     public List<E> getAll() {
-        currentSession().beginTransaction();
-        final List list = currentSession().createCriteria(daoType).list();
-        currentSession().getTransaction().commit();
-        return list;
+        return em.createQuery("Select t from " + daoType.getSimpleName() + " t").getResultList();
     }
 
     @Override
     public Optional<E> findFirst(String field, Object value) {
-        currentSession().beginTransaction();
-        final Optional<E> result = Optional.ofNullable((E) currentSession().createCriteria(daoType)
-            .add(Restrictions.eq(field, value))
-            .uniqueResult());
-        currentSession().getTransaction().commit();
-        return result;
+        EasyCriteria<? extends ID> easyCriteria = EasyCriteriaFactory.createQueryCriteria(em, daoType);
+        return Optional.ofNullable((E) easyCriteria.andEquals(field,value).getSingleResult() );
     }
 }

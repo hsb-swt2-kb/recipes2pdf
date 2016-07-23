@@ -22,14 +22,16 @@ public class Main
 {
     public static void main(String[] args) {
         new Database( DatabaseConnection.getDatabaseConnection() );
-        Injector injector = Guice.createInjector(new DatabaseModule() );
+        Injector injector = Guice.createInjector(
+            new DatabaseModule()
+        );
         final ICookbookDAO cookbookDAO = injector.getInstance(CookbookDAOImpl.class);
         final IRecipeDAO recipeDAO = injector.getInstance(RecipeDAOImpl.class);
         Cookbook cookbook = new Cookbook();
         cookbookDAO.add(cookbook);
 
         final Category category = new Category();
-        category.setName("Keine Ahnung" + System.currentTimeMillis());
+        category.setName("Keine Ahnung");
         Recipe recipe = new Recipe();
         recipe.setTitle("Nudeln mit Soße");
         recipeDAO.add(recipe, "Nudeln", 500, "g");
@@ -38,7 +40,7 @@ public class Main
         recipeDAO.add(recipe);
 
         cookbook.addRecipe(recipe);
-        cookbookDAO.saveOrUpdate(cookbook);
+        cookbookDAO.add(cookbook);
         // select UI
         if(args.length==0)
             ;

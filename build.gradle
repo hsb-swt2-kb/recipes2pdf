@@ -83,10 +83,15 @@ dependencies {
     compile group: 'commons-validator', name: 'commons-validator', version: '1.4.0'
 
     compile 'org.hibernate:hibernate-core:5.2.1.Final'
+    //del: compile 'org.hibernate:hibernate-entitymanager:5.2.1.Final'
     //compile 'org.hibernate:hibernate-core:4.3.10.Final'
     //compile group: 'net.kemitix', name: 'sqlite-dialect', version: '0.1.0'
     //compile 'com.googlecode.genericdao:dao-hibernate:1.2.0'
     compile group: 'com.google.inject', name: 'guice', version: '3.0'
+    compile 'com.google.inject.extensions:guice-persist:3.0'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+    compile 'uaihebert.com:EasyCriteria:3.0.0'
+
     compile 'org.javalite:javalite-common:1.4.9'
 }
 
