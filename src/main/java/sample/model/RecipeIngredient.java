@@ -55,7 +55,7 @@ public class RecipeIngredient {
         return result;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
     public Unit getUnit() {
         return unit;
@@ -65,7 +65,7 @@ public class RecipeIngredient {
         this.unit = unit;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "ingredient_id", referencedColumnName = "id")
     public Ingredient getIngredient() {
         return ingredient;
@@ -75,7 +75,7 @@ public class RecipeIngredient {
         this.ingredient = ingredient;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     public Recipe getRecipe() {
         return recipe;
