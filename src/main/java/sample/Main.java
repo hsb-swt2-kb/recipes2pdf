@@ -29,7 +29,7 @@ public class Main
         cookbookDAO.add(cookbook);
 
         final Category category = new Category();
-        category.setName("Keine Hnung eyesevsln" + System.currentTimeMillis());
+        category.setName("Keine Ahnung" + System.currentTimeMillis());
         Recipe recipe = new Recipe();
         recipe.setTitle("Nudeln mit Soße");
         recipeDAO.add(recipe, "Nudeln", 500, "g");

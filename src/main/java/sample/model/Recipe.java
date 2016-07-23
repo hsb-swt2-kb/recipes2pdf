@@ -78,7 +78,8 @@ public class Recipe {
         this.duration = duration;
     }
 
-    @Basic
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "image")
     public byte[] getImage() {
         return image;
@@ -208,7 +209,7 @@ public class Recipe {
     }
 
 
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }

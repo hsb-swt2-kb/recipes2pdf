@@ -56,7 +56,7 @@ public class Cookbook {
         return result;
     }
 
-    @OneToMany(mappedBy = "cookbook", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cookbook")
     public List<CookbookRecipe> getCookbookRecipes() {
         return cookbookRecipes;
     }

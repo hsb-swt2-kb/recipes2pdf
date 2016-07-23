@@ -19,7 +19,7 @@ public class RecipeDAOImpl extends GenericDAOImpl<Recipe, Integer> implements IR
     private IUnitDAO unitDAO;
 
     @Override
-    public void add(Recipe recipe, String ingredientName, double amount, String unitName) {
+    public void add(final Recipe recipe, final String ingredientName, final double amount, String unitName) {
 
         final RecipeIngredient recipeIngredient = new RecipeIngredient();
         final Optional<Ingredient> persistedIngredient = ingredientDAO.findFirst("name", ingredientName);
