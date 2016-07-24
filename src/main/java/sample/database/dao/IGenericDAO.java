@@ -14,4 +14,7 @@ public interface IGenericDAO<E,K> {
     E find(K key);
     List<E> getAll() ;
     Optional<E> findFirst(String field, Object value);
+    E findOrCreate(String field, Object value);
+    E findOrCreate(E entity);
+    E findOrCreate_old(String field, Object value);
 }

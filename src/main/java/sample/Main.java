@@ -5,10 +5,7 @@ import com.google.inject.Injector;
 import sample.database.Database;
 import sample.database.DatabaseConnection;
 import sample.database.DatabaseModule;
-import sample.database.dao.CookbookDAOImpl;
-import sample.database.dao.ICookbookDAO;
-import sample.database.dao.IRecipeDAO;
-import sample.database.dao.RecipeDAOImpl;
+import sample.database.dao.*;
 import sample.model.Category;
 import sample.model.Cookbook;
 import sample.model.Recipe;
@@ -27,11 +24,14 @@ public class Main
         );
         final ICookbookDAO cookbookDAO = injector.getInstance(CookbookDAOImpl.class);
         final IRecipeDAO recipeDAO = injector.getInstance(RecipeDAOImpl.class);
+        final ICategoryDAO categoryDAO = injector.getInstance(CategoryDAOImpl.class);
         Cookbook cookbook = new Cookbook();
         cookbookDAO.add(cookbook);
 
-        final Category category = new Category();
+        Category category = new Category();
         category.setName("Keine Ahnung");
+        category = categoryDAO.findOrCreate(category);
+
         Recipe recipe = new Recipe();
         recipe.setTitle("Nudeln mit Soße");
         recipeDAO.add(recipe, "Nudeln", 500, "g");

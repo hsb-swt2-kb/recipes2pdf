@@ -2,10 +2,12 @@ package sample.database.dao;
 
 import com.uaihebert.factory.EasyCriteriaFactory;
 import com.uaihebert.model.EasyCriteria;
+import org.apache.commons.beanutils.BeanUtils;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -73,5 +75,30 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
     public Optional<E> findFirst(String field, Object value) {
         EasyCriteria<? extends ID> easyCriteria = EasyCriteriaFactory.createQueryCriteria(em, daoType);
         return Optional.ofNullable((E) easyCriteria.andEquals(field,value).getSingleResult() );
+    }
+
+    @Override
+    public E findOrCreate(String field, Object value) {
+        return null;
+    }
+
+    @Override
+    public E findOrCreate(E entity) {
+        if ( !em.contains(entity) ) {
+            add(entity);
+        }
+        return entity;
+    }
+    @Override
+    public E findOrCreate_old(String field, Object value) {
+        try {
+            final E e = (E) daoType.newInstance();
+            //MethodUtils.invokeMethod(e, "set" + field, value);
+            BeanUtils.setProperty(e, field, value);
+            return findFirst(field, value).orElse( e );
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
