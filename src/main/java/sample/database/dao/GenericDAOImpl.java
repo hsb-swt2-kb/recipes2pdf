@@ -6,6 +6,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -74,12 +75,23 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
     @Override
     public Optional<E> findFirst(String field, Object value) {
         EasyCriteria<? extends ID> easyCriteria = EasyCriteriaFactory.createQueryCriteria(em, daoType);
-        return Optional.ofNullable((E) easyCriteria.andEquals(field,value).getSingleResult() );
+        try {
+            return Optional.ofNullable((E) easyCriteria.andEquals(field,value).getSingleResult() );
+        }
+        catch(NoResultException nre) {
+            return Optional.empty();
+        }
     }
 
     @Override
-    public E findOrCreate(String field, Object value) {
-        return null;
+    public E findOrCreate(E entity, String field, Object value) {
+        final Optional<E> entitySearch = findFirst(field, value);
+        if( !entitySearch.isPresent() ) {
+            add( entity );
+            return entity;
+        } else {
+            return entitySearch.get();
+        }
     }
 
     @Override

@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "recipe_ingredient", schema = "", catalog = "")
-public class RecipeIngredient {
+public class RecipeIngredient implements Comparable<RecipeIngredient> {
     private Integer id;
     private Double amount;
     private Unit unit;
@@ -52,6 +52,7 @@ public class RecipeIngredient {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + (getIngredient() != null ? getIngredient().hashCode() : 0);
         return result;
     }
 
@@ -83,5 +84,11 @@ public class RecipeIngredient {
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    @Override
+    public int compareTo(RecipeIngredient o) {
+        if( o.getIngredient().getName().equals( this.getIngredient().getName())) return 0;
+        else return -1;
     }
 }

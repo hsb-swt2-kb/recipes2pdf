@@ -49,7 +49,6 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.13'
 
     // Merged start
-    compile 'org.apache.pdfbox:pdfbox:1.5.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //compile 'commons-configuration:commons-configuration:1.6' //For configuration files: alternative to java.util.properties
     //compile 'com.itextpdf:itextpdf:5.0.6' //fuer iText: Alternative zu JLR

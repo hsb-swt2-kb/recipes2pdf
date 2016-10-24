@@ -3,6 +3,8 @@ package sample.model;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +27,7 @@ public class Recipe {
     private Region region;
     private Course course;
     private Category category;
-    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+    private Set<RecipeIngredient> recipeIngredients = new TreeSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -198,7 +200,7 @@ public class Recipe {
         this.course = course;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     public Category getCategory() {
         return category;
@@ -210,11 +212,11 @@ public class Recipe {
 
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    public List<RecipeIngredient> getRecipeIngredients() {
+    public Set<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }
 
-    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
+    public void setRecipeIngredients(Set<RecipeIngredient> recipeIngredients) {
         this.recipeIngredients = recipeIngredients;
     }
 

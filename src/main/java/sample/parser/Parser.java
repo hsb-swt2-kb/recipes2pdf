@@ -74,7 +74,7 @@ public class Parser implements IParser {
             if (recipe.getSeason()  .getName() == null) recipe.getSeason()  .setName("");
             if (recipe.getSource()  .getName() == null) recipe.getSource()  .setName("");
 
-            final List<RecipeIngredient> recipeIngredients = recipe.getRecipeIngredients();
+            final Collection<RecipeIngredient> recipeIngredients = recipe.getRecipeIngredients();
 
             for( RecipeIngredient recipeIngredient : recipeIngredients){
                 if( recipeIngredient.getUnit().getName()==null) recipeIngredient.getUnit().setName("");

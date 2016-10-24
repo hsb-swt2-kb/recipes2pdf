@@ -30,10 +30,12 @@ public class Main
 
         Category category = new Category();
         category.setName("Keine Ahnung");
-        category = categoryDAO.findOrCreate(category);
+        //category = categoryDAO.findOrCreate(category);
+        category = categoryDAO.findOrCreate(category, "name", "Keine Ahnung");
 
         Recipe recipe = new Recipe();
         recipe.setTitle("Nudeln mit Soße");
+        recipe = recipeDAO.findOrCreate(recipe, "title", "Nudeln mit Soße");
         recipeDAO.add(recipe, "Nudeln", 500, "g");
         recipeDAO.add(recipe, "Paprika", 2, "Stück");
         recipe.setCategory( category );
