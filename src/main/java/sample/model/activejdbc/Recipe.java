@@ -1,7 +1,7 @@
 /*package sample.model.activejdbc;
 
 import sample.model.IIngredient;
-import sample.model.IRecipe;
+import sample.model.Recipe;
 import sample.model.IUnit;
 
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by czoeller on 16.04.16.
  */
-/*public class Recipe implements IRecipe {
+/*public class Recipe implements Recipe {
 
     private byte[] image;
 

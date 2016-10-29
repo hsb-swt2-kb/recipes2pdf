@@ -2,9 +2,9 @@ package sample.builder;
 
 import sample.builder.Exceptions.TexParserException;
 import sample.config.IConfig;
-import sample.model.ICookbook;
-import sample.model.IRecipe;
-import sample.model.ISortlevel;
+import sample.model.Cookbook;
+import sample.model.Recipe;
+import sample.model.Sortlevel;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class Builder implements IBuilder {
     /**
      * This Method builds one PDF File out of the given cookbook.
      * <h1>Precondition:</h1>
-     * Cookbook is not Null and has Recipes and ISortlevels(optional but recommendet)<br>
+     * Cookbook is not Null and has Recipes and Sortlevels(optional but recommendet)<br>
      * Recipes in the cookbook have to have all attributes, that are needed for the document building process.<br>
      * The needed attributes in recipes are:<br>
      * <ul>
@@ -47,7 +47,7 @@ public class Builder implements IBuilder {
      * @throws IOException        Is thrown by the JLR Converter, when anything with the Filesystem went wrong while converting the template to an explicit .tex for the cookbook
      * @return: File object, that points to the generated Document
      */
-    public File build(ICookbook cookbook) throws TexParserException, IOException {
+    public File build(Cookbook cookbook) throws TexParserException, IOException {
         for (IConcreteBuilder builder : builders) {
             if (builder.builds(IConfig.getInstance().getProperty("OUTPUT_FILETYPE"))) {
                 return builder.build(cookbook);
@@ -71,13 +71,13 @@ public class Builder implements IBuilder {
      * Document is saved on Harddrive at the configurated path relativ to  userhomedir/.recipes2pdf, that is given in the config
      *
      * @param recipe     The recipe, that sould be converted into a Document
-     * @param sortlevels A sorted List of ISortLevel. The recipe will get a Referencenumber according to the order of this List.
+     * @param sortlevels A sorted List of Sortlevel. The recipe will get a Referencenumber according to the order of this List.
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException        Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
      */
     @Override
-    public File build(IRecipe recipe, List<ISortlevel> sortlevels) throws TexParserException, IOException {
+    public File build(Recipe recipe, List<Sortlevel> sortlevels) throws TexParserException, IOException {
         for (IConcreteBuilder builder : builders) {
             if (builder.builds(IConfig.getInstance().getProperty("OUTPUT_FILETYPE"))) {
                 return builder.build(recipe, sortlevels);
@@ -107,7 +107,7 @@ public class Builder implements IBuilder {
      * @throws IOException        Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
      */
     @Override
-    public File build(IRecipe recipe) throws TexParserException, IOException {
+    public File build(Recipe recipe) throws TexParserException, IOException {
         for (IConcreteBuilder builder : builders) {
             if (builder.builds(IConfig.getInstance().getProperty("OUTPUT_FILETYPE"))) {
                 return builder.build(recipe);

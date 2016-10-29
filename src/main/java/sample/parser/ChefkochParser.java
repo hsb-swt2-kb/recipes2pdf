@@ -27,7 +27,7 @@ public class ChefkochParser extends AConcreteParser {
      * It might need some time to fetch the recipe details and generate the recipe.
      *
      * @param text The recipe as text
-     * @return IRecipe The populated IRecipe
+     * @return Recipe The populated Recipe
      * @throws Exception
      */
     @Override

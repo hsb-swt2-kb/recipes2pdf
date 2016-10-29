@@ -22,10 +22,10 @@ public class DummyParser extends AConcreteParser {
         ISource source = new Source();
         source.setName("Testquelle");
         recipe.setSource(source);
-        ISeason season = new Season();
+        Season season = new Season();
         season.setName("Testsaison");
         recipe.setSeason(season);
-        ICategory category = new Category();
+        Category category = new Category();
         category.setName("Testkategorie");
         recipe.setCategory(category);
         ICourse course = new Course();
@@ -37,7 +37,7 @@ public class DummyParser extends AConcreteParser {
         INurture nurture = new Nurture();
         nurture.setName("TestErnährungsart");
         recipe.setNurture(nurture);
-        IRegion region = new Region();
+        Region region = new Region();
         region.setName("Testregion");
         recipe.setRegion(region);
 

@@ -31,7 +31,7 @@ public class PdfBuilderTest {
         IConfig config = IConfig.getInstance();
         IConcreteBuilder pdfBuilder = new PdfBuilder(config);
 
-        ICookbook cookbook = new Cookbook();
+        Cookbook cookbook = new Cookbook();
         cookbook.setTitle("DasKochbuch");
 
 
@@ -45,15 +45,15 @@ public class PdfBuilderTest {
         Region grichenland = new Region();
         Region frankreich = new Region();
 
-        IRecipe r1 = new Recipe();
-        IRecipe r2 = new Recipe();
-        IRecipe r3 = new Recipe();
-        IRecipe r4 = new Recipe();
+        Recipe r1 = new Recipe();
+        Recipe r2 = new Recipe();
+        Recipe r3 = new Recipe();
+        Recipe r4 = new Recipe();
 
-        r1.setID(1L);
-        r2.setID(2L);
-        r3.setID(3L);
-        r4.setID(4L);
+        r1.setId(1);
+        r2.setId(2);
+        r3.setId(3);
+        r4.setId(4);
 
         Season fruehling = new Season();
         Season sommer = new Season();
@@ -175,8 +175,8 @@ public class PdfBuilderTest {
         IConfig config = IConfig.getInstance();
         IConcreteBuilder pdfBuilder = new PdfBuilder(config);
 
-        IRecipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
-        List<ISortlevel> sortlevels = generateSortlevelList("kategorie", "region", "saison");
+        Recipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
+        List<Sortlevel> sortlevels = generateSortlevelList("kategorie", "region", "saison");
         pdfBuilder.build(r1, sortlevels);
         String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
 
@@ -206,7 +206,7 @@ public class PdfBuilderTest {
         try {
             FileUtils.copyInputStreamToFile(templateStream, templateFile);
             PdfBuilder builder = new PdfBuilder(config);
-            ICookbook cookbook = new Cookbook();
+            Cookbook cookbook = new Cookbook();
             cookbook.addRecipe(generateRecipe("Testrezept", "Testrezepttext", 1L, "Hauptspeise", "Deutschland", "Sommer", "Mehl", 400, "g"));
             builder.build(cookbook);
         } catch (ParseErrorException e) {
@@ -231,7 +231,7 @@ public class PdfBuilderTest {
     public void testThrowParserEsception() throws Exception {
         IConfig config = IConfig.getInstance();
         PdfBuilder builder = new PdfBuilder(config);
-        ICookbook cookbook = new Cookbook();
+        Cookbook cookbook = new Cookbook();
         cookbook.addRecipe(new Recipe());
         builder.build(cookbook);
     }
@@ -244,7 +244,7 @@ public class PdfBuilderTest {
     public void testRicipeNoSortlevel() throws Exception {
         IConfig config = IConfig.getInstance();
         PdfBuilder builder = new PdfBuilder(config);
-        IRecipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
+        Recipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
 
         builder.build(r1);
         String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
@@ -270,7 +270,7 @@ public class PdfBuilderTest {
         IConfig config = IConfig.getInstance();
         PdfBuilder builder = new PdfBuilder(config);
 
-        IRecipe r1 = generateRecipe("Germknödel", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
+        Recipe r1 = generateRecipe("Germknödel", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
 
         builder.build(r1);
         String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
@@ -300,11 +300,11 @@ public class PdfBuilderTest {
         assertTrue(builder.builds("PDF"));
     }
 
-    IRecipe generateRecipe(String title, String text, Long id, String category, String region, String season, String ingredientName, Integer ingrentAmount, String ingredientUnit) {
-        IRecipe recipe = new Recipe();
-        ICategory testCategory = new Category();
-        IRegion testRegion = new Region();
-        ISeason testSeason = new Season();
+    Recipe generateRecipe(String title, String text, Long id, String category, String region, String season, String ingredientName, Integer ingrentAmount, String ingredientUnit) {
+        Recipe recipe = new Recipe();
+        Category testCategory = new Category();
+        Region testRegion = new Region();
+        Season testSeason = new Season();
 
         testCategory.setName(category);
         testRegion.setName(region);
@@ -312,7 +312,7 @@ public class PdfBuilderTest {
 
         recipe.setTitle(title);
         recipe.setText(text);
-        recipe.setID(id);
+        recipe.setId(id);
         recipe.setCategory(testCategory);
         recipe.setRegion(testRegion);
         recipe.setSeason(testSeason);
@@ -320,23 +320,23 @@ public class PdfBuilderTest {
         return recipe;
     }
 
-    List<ISortlevel> generateSortlevelList(String primaryLevel, String secondaryLevel, String thirdLevel) {
-        List<ISortlevel> sortlevelList = new ArrayList<>();
+    List<Sortlevel> generateSortlevelList(String primaryLevel, String secondaryLevel, String thirdLevel) {
+        List<Sortlevel> sortlevelList = new ArrayList<>();
         sortlevelList.add(generateSortlevel(primaryLevel));
         sortlevelList.add(generateSortlevel(secondaryLevel));
         sortlevelList.add(generateSortlevel(thirdLevel));
         return sortlevelList;
     }
 
-    List<ISortlevel> generateSortlevelList(String primaryLevel, String secondaryLevel) {
-        List<ISortlevel> sortlevelList = new ArrayList<>();
+    List<Sortlevel> generateSortlevelList(String primaryLevel, String secondaryLevel) {
+        List<Sortlevel> sortlevelList = new ArrayList<>();
         sortlevelList.add(generateSortlevel(primaryLevel));
         sortlevelList.add(generateSortlevel(secondaryLevel));
         return sortlevelList;
     }
 
-    ISortlevel generateSortlevel(String sortlevelName) {
-        ISortlevel sortlevel = new Sortlevel();
+    Sortlevel generateSortlevel(String sortlevelName) {
+        Sortlevel sortlevel = new Sortlevel();
         sortlevel.setName(sortlevelName);
         return sortlevel;
     }

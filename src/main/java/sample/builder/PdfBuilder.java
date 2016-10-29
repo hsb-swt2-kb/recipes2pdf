@@ -9,9 +9,9 @@ import org.apache.velocity.exception.ParseErrorException;
 import sample.builder.Exceptions.TexParserException;
 import sample.config.IConfig;
 import sample.model.Cookbook;
-import sample.model.ICookbook;
-import sample.model.IRecipe;
-import sample.model.ISortlevel;
+import sample.model.Cookbook;
+import sample.model.Recipe;
+import sample.model.Sortlevel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,9 +62,9 @@ public class PdfBuilder implements IConcreteBuilder {
      * @param cookbook      Coobook that is converted to a PDF File
      * @throws IOException Is thrown by the JLRConverter while converting.
      */
-    private void parseTexFile(File outputTexFile, File templateFile, File imageDir, ICookbook cookbook) throws IOException, ParseErrorException {
+    private void parseTexFile(File outputTexFile, File templateFile, File imageDir, Cookbook cookbook) throws IOException, ParseErrorException {
         JLRConverter converter = new JLRConverter(templateFile.getParentFile());
-        List<ISortlevel> sortAttributeChain = cookbook.getSortlevel();
+        List<Sortlevel> sortAttributeChain = cookbook.getSortlevel();
         ((Cookbook) cookbook).setRecipes(RecipeListSorter.sort(cookbook.getRecipes(), sortAttributeChain));
 
         converter.replace("cookbook", cookbook);
@@ -129,8 +129,8 @@ public class PdfBuilder implements IConcreteBuilder {
      * @param cookcook cookbook that holds all recipes with teir images
      * @param imgDir   directory where the images are saved
      */
-    private void createAllImages(ICookbook cookcook, File imgDir) {
-        for (IRecipe recipe : cookcook.getRecipes()) {
+    private void createAllImages(Cookbook cookcook, File imgDir) {
+        for (Recipe recipe : cookcook.getRecipes()) {
             createImage(recipe, imgDir);
         }
     }
@@ -150,7 +150,7 @@ public class PdfBuilder implements IConcreteBuilder {
      * @param recipe recipe that holds the image
      * @param imgDir Directory to save the image.
      */
-    private void createImage(IRecipe recipe, File imgDir) {
+    private void createImage(Recipe recipe, File imgDir) {
         try {
             byte[] img = (recipe.getImage() == null) ? defaultImagetoByteArray() : recipe.getImage();
 
@@ -176,7 +176,7 @@ public class PdfBuilder implements IConcreteBuilder {
     /**
      * This Method builds one documnet containing Document out of the given cookbook.
      * <h1>Precondition:</h1>
-     * Cookbook is not Null and has Recipes and ISortlevels(optional but recommendet)<br>
+     * Cookbook is not Null and has Recipes and Sortlevels(optional but recommendet)<br>
      * Recipes in the cookbook have to have all attributes, that are needed for the document building process.<br>
      * The needed attributes in recipes are:<br>
      * <ul>
@@ -195,7 +195,7 @@ public class PdfBuilder implements IConcreteBuilder {
      * @return: File object, that points to the generated Document
      */
     @Override
-    public File build(ICookbook cookbook) throws IOException, TexParserException {
+    public File build(Cookbook cookbook) throws IOException, TexParserException {
 
         Cookbook myCookbook = (Cookbook) cookbook;
 
@@ -226,14 +226,14 @@ public class PdfBuilder implements IConcreteBuilder {
      * Document is saved on Harddrive at the configurated path relativ to  userhomedir/.recipes2pdf, that is given in the config
      *
      * @param recipe     The recipe, that sould be converted into a Document
-     * @param sortLevels A sorted List of ISortLevel. The recipe will get a Referencenumber according to the order of this List.
+     * @param sortLevels A sorted List of Sortlevel. The recipe will get a Referencenumber according to the order of this List.
      * @return File object, that points to the generated Document
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException        Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
      */
     @Override
-    public File build(IRecipe recipe, List<ISortlevel> sortLevels) throws IOException, TexParserException {
-        ICookbook myCookbook = new Cookbook();
+    public File build(Recipe recipe, List<Sortlevel> sortLevels) throws IOException, TexParserException {
+        Cookbook myCookbook = new Cookbook();
         myCookbook.setTitle(recipe.getTitle());
         myCookbook.addRecipe(recipe);
         ((Cookbook) myCookbook).setSortlevel(sortLevels);
@@ -272,11 +272,11 @@ public class PdfBuilder implements IConcreteBuilder {
      * @throws TexParserException Is thrown, when the recipe does have a null-Attribute in one of the fields, that are needed for the Template
      * @throws IOException        Is thrown by the JLR Parser, when anything with the Filesystem went wrong while parsing the PDF File
      */
-    public File build(IRecipe recipe) throws IOException, TexParserException {
-        ICookbook myCookbook = new Cookbook();
+    public File build(Recipe recipe) throws IOException, TexParserException {
+        Cookbook myCookbook = new Cookbook();
         myCookbook.setTitle(recipe.getTitle());
         myCookbook.addRecipe(recipe);
-        List<ISortlevel> sortlevels = new ArrayList<>();
+        List<Sortlevel> sortlevels = new ArrayList<>();
 
         ((Cookbook) myCookbook).setSortlevel(sortlevels);
 
@@ -297,18 +297,18 @@ public class PdfBuilder implements IConcreteBuilder {
     /**
      * This Method creates a referencenumber and than  relates a recipe to its referencenumber via Hashmap. this is needed for the velocity template
      *
-     * @param recipes   List of IRecipes to generate a referencenumber for.
-     * @param sortChain Sorted list of Isortlevels where the fist Listogject is the primary sortattribute of the Recipes. the refnum will be primarySortLevel.secondarySortLeve.thirdSortLevel...
+     * @param recipes   List of Recipes to generate a referencenumber for.
+     * @param sortChain Sorted list of Sortlevels where the fist Listogject is the primary sortattribute of the Recipes. the refnum will be primarySortLevel.secondarySortLeve.thirdSortLevel...
      * @return Hashmap, that relates each Recipe to its referencenumber
      */
-    private Map<IRecipe, String> generateRefNumList(List<IRecipe> recipes, List<ISortlevel> sortChain) {
-        Map<IRecipe, String> refNumList = new HashMap<>();
-        Map<IRecipe, Properties> propList = generateRecipePropertyList(recipes);
+    private Map<Recipe, String> generateRefNumList(List<Recipe> recipes, List<Sortlevel> sortChain) {
+        Map<Recipe, String> refNumList = new HashMap<>();
+        Map<Recipe, Properties> propList = generateRecipePropertyList(recipes);
         String refNum = "";
 
-        for (IRecipe recipe : recipes) {
+        for (Recipe recipe : recipes) {
             refNum = "";
-            for (ISortlevel sortLevel : sortChain) {
+            for (Sortlevel sortLevel : sortChain) {
                 String prop = sortLevel.getName().toLowerCase();
                 refNum += propList.get(recipe).getProperty(prop) + ".";
             }
@@ -321,13 +321,13 @@ public class PdfBuilder implements IConcreteBuilder {
     /**
      * This Method creates a referencenumber and than  relates a recipe to its referencenumber via Hashmap. this is needed for the velocity template
      *
-     * @param recipes List of IRecipes to generate a Properties Object for.
+     * @param recipes List of Recipes to generate a Properties Object for.
      * @return Hashmap, that relates each Recipe its sortable Properties, The Properties are category,season,nuture,curse and region
      */
-    private Map<IRecipe, Properties> generateRecipePropertyList(List<IRecipe> recipes) { //TODO: Meybe get the List of Sortable Attributes out of database and work with reflections on recipe?
-        Map<IRecipe, Properties> propList = new HashMap<>();
+    private Map<Recipe, Properties> generateRecipePropertyList(List<Recipe> recipes) { //TODO: Meybe get the List of Sortable Attributes out of database and work with reflections on recipe?
+        Map<Recipe, Properties> propList = new HashMap<>();
 
-        for (IRecipe recipe : recipes) {
+        for (Recipe recipe : recipes) {
             Properties props = new Properties();
             props.setProperty("kategorie", (recipe.getCategory() == null) ? "" : recipe.getCategory().getName());
             props.setProperty("saison", (recipe.getSeason() == null) ? "" : recipe.getSeason().getName());

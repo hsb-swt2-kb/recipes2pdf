@@ -74,11 +74,11 @@ public class UITest {
     }
 
     @Test
-    public void castIRecipeToRecipe() throws Exception {
+    public void castRecipeToRecipe() throws Exception {
     }
 
     @Test
-    public void castICookBookToCookBook() throws Exception {
+    public void castCookbookToCookBook() throws Exception {
     }
 
     @Test

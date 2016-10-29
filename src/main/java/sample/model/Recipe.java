@@ -1,222 +1,216 @@
 package sample.model;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.apache.commons.lang3.tuple.Triple;
-
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by czoeller on 28.04.16.
+ * Created by czoeller on 11.07.16.
  */
-public class Recipe implements IRecipe {
-
-    private Long id;
+@Entity
+public class Recipe {
+    private Integer id;
     private String title;
     private String text;
-    private int portions;
-    private int duration;
-    private byte[] image;
-    private int calories;
-    private ICategory category;
-    private ICourse course;
-    private IRegion region;
-    private IDaytime daytime;
-    private ISeason season;
-    private INurture nurture;
-    private ISource source;
-    private List<Triple<IIngredient, Double, IUnit>> ingredients = new ArrayList<>(10);
+    private Integer portions;
+    private Integer duration;
+    private String image;
+    private Integer calories;
+    private Collection<CookbookRecipe> cookbookRecipesById;
+    private Source sourceBySourceId;
+    private Nurture nurtureByNurtureId;
+    private Season seasonBySeasonId;
+    private Daytime daytimeByDaytimeId;
+    private Region regionByRegionId;
+    private Course courseByCourseId;
+    private Category categoryByCategoryId;
+    private Collection<RecipeIngredient> recipeIngredientsById;
 
-    @Override
-    public Long getID() {
-        return this.id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public Integer getId() {
+        return id;
     }
 
-    @Override
-    public void setID(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    @Override
+    @Basic
+    @Column(name = "title")
     public String getTitle() {
         return title;
     }
 
-    @Override
     public void setTitle(String title) {
         this.title = title;
     }
 
-    @Override
+    @Basic
+    @Column(name = "text")
     public String getText() {
         return text;
     }
 
-    @Override
     public void setText(String text) {
         this.text = text;
     }
 
-    @Override
-    public int getPortions() {
+    @Basic
+    @Column(name = "portions")
+    public Integer getPortions() {
         return portions;
     }
 
-    @Override
-    public void setPortions(int portions) {
+    public void setPortions(Integer portions) {
         this.portions = portions;
     }
 
-    @Override
-    public int getDuration() {
+    @Basic
+    @Column(name = "duration")
+    public Integer getDuration() {
         return duration;
     }
 
-    @Override
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
-    @Override
-    public byte[] getImage() {
+    @Basic
+    @Column(name = "image")
+    public String getImage() {
         return image;
     }
 
-    @Override
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    @Override
-    public int getCalories() {
+    @Basic
+    @Column(name = "calories")
+    public Integer getCalories() {
         return calories;
     }
 
-    @Override
-    public void setCalories(int calories) {
+    public void setCalories(Integer calories) {
         this.calories = calories;
     }
 
     @Override
-    public ICategory getCategory() {
-        return category;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Recipe recipe = (Recipe) o;
+
+        if (id != null ? !id.equals(recipe.id) : recipe.id != null) return false;
+        if (title != null ? !title.equals(recipe.title) : recipe.title != null) return false;
+        if (text != null ? !text.equals(recipe.text) : recipe.text != null) return false;
+        if (portions != null ? !portions.equals(recipe.portions) : recipe.portions != null) return false;
+        if (duration != null ? !duration.equals(recipe.duration) : recipe.duration != null) return false;
+        if (image != null ? !image.equals(recipe.image) : recipe.image != null) return false;
+        if (calories != null ? !calories.equals(recipe.calories) : recipe.calories != null) return false;
+
+        return true;
     }
 
     @Override
-    public void setCategory(ICategory category) {
-        this.category = category;
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (text != null ? text.hashCode() : 0);
+        result = 31 * result + (portions != null ? portions.hashCode() : 0);
+        result = 31 * result + (duration != null ? duration.hashCode() : 0);
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        result = 31 * result + (calories != null ? calories.hashCode() : 0);
+        return result;
     }
 
-    @Override
-    public ICourse getCourse() {
-        return course;
+    @OneToMany(mappedBy = "recipeByRecipeId")
+    public Collection<CookbookRecipe> getCookbookRecipesById() {
+        return cookbookRecipesById;
     }
 
-    @Override
-    public void setCourse(ICourse course) {
-        this.course = course;
+    public void setCookbookRecipesById(Collection<CookbookRecipe> cookbookRecipesById) {
+        this.cookbookRecipesById = cookbookRecipesById;
     }
 
-    @Override
-    public IRegion getRegion() {
-        return region;
+    @ManyToOne
+    @JoinColumn(name = "source_id", referencedColumnName = "id")
+    public Source getSourceBySourceId() {
+        return sourceBySourceId;
     }
 
-    @Override
-    public void setRegion(IRegion region) {
-        this.region = region;
+    public void setSourceBySourceId(Source sourceBySourceId) {
+        this.sourceBySourceId = sourceBySourceId;
     }
 
-    @Override
-    public IDaytime getDaytime() {
-        return daytime;
+    @ManyToOne
+    @JoinColumn(name = "nurture_id", referencedColumnName = "id")
+    public Nurture getNurtureByNurtureId() {
+        return nurtureByNurtureId;
     }
 
-    @Override
-    public void setDaytime(IDaytime daytime) {
-        this.daytime = daytime;
+    public void setNurtureByNurtureId(Nurture nurtureByNurtureId) {
+        this.nurtureByNurtureId = nurtureByNurtureId;
     }
 
-    @Override
-    public ISeason getSeason() {
-        return season;
+    @ManyToOne
+    @JoinColumn(name = "season_id", referencedColumnName = "id")
+    public Season getSeasonBySeasonId() {
+        return seasonBySeasonId;
     }
 
-    @Override
-    public void setSeason(ISeason season) {
-        this.season = season;
+    public void setSeasonBySeasonId(Season seasonBySeasonId) {
+        this.seasonBySeasonId = seasonBySeasonId;
     }
 
-    @Override
-    public INurture getNurture() {
-        return nurture;
+    @ManyToOne
+    @JoinColumn(name = "daytime_id", referencedColumnName = "id")
+    public Daytime getDaytimeByDaytimeId() {
+        return daytimeByDaytimeId;
     }
 
-    @Override
-    public void setNurture(INurture nurture) {
-        this.nurture = nurture;
+    public void setDaytimeByDaytimeId(Daytime daytimeByDaytimeId) {
+        this.daytimeByDaytimeId = daytimeByDaytimeId;
     }
 
-    @Override
-    public ISource getSource() {
-        return source;
+    @ManyToOne
+    @JoinColumn(name = "region_id", referencedColumnName = "id")
+    public Region getRegionByRegionId() {
+        return regionByRegionId;
     }
 
-    @Override
-    public void setSource(ISource source) {
-        this.source = source;
+    public void setRegionByRegionId(Region regionByRegionId) {
+        this.regionByRegionId = regionByRegionId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void add(String ingredientName, double amount, String unitName) {
-        IIngredient ingredient = new Ingredient();
-        ingredient.setName(ingredientName);
-
-        IUnit unit = new Unit();
-        unit.setName(unitName);
-
-        this.ingredients.add(new ImmutableTriple<>(ingredient, amount, unit));
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    public Course getCourseByCourseId() {
+        return courseByCourseId;
     }
 
-    public boolean isEmpty(){
-        if(this.getTitle()       == null &&
-           this.getIngredients() == null &&
-           this.getText()        == null &&
-           this.getTitle().isEmpty()     &&
-           this.getText().isEmpty()      &&
-           this.getIngredients().isEmpty())
-            return true;
-        else
-            return false;
+    public void setCourseByCourseId(Course courseByCourseId) {
+        this.courseByCourseId = courseByCourseId;
     }
 
-    public boolean isIncomplete(){
-        if(this.getTitle()       == null  ||
-            this.getIngredients() == null ||
-            this.getText()        == null ||
-            this.getTitle().isEmpty()     ||
-            this.getText().isEmpty()      ||
-            this.getIngredients().isEmpty())
-            return true;
-        else
-            return false;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    public Category getCategoryByCategoryId() {
+        return categoryByCategoryId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public List<Triple<IIngredient, Double, IUnit>> getIngredients() {
-        return this.ingredients;
+    public void setCategoryByCategoryId(Category categoryByCategoryId) {
+        this.categoryByCategoryId = categoryByCategoryId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void add(Triple<IIngredient, Double, IUnit> recipeIngredient) {
-        this.ingredients.add(recipeIngredient);
+    @OneToMany(mappedBy = "recipeByRecipeId")
+    public Collection<RecipeIngredient> getRecipeIngredientsById() {
+        return recipeIngredientsById;
     }
 
+    public void setRecipeIngredientsById(Collection<RecipeIngredient> recipeIngredientsById) {
+        this.recipeIngredientsById = recipeIngredientsById;
+    }
 }

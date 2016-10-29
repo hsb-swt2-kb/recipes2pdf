@@ -2,7 +2,7 @@ package sample.parser;
 
 import org.junit.Before;
 import org.junit.Test;
-import sample.model.IRecipe;
+import sample.model.Recipe;
 import sample.model.Recipe;
 import sample.util.ResourceLoader;
 
@@ -53,7 +53,7 @@ public class WWParserTest {
 
     @Test
     public void theParserShouldReturnARecipe() throws Throwable {
-        the(recipe).shouldBeA(IRecipe.class);
+        the(recipe).shouldBeA(Recipe.class);
     }
 
 

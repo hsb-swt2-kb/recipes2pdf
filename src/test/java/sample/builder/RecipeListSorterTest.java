@@ -26,14 +26,14 @@ public class RecipeListSorterTest {
     public void testSort(){
 
         RecipeListSorter rSorter = new RecipeListSorter();
-        List<IRecipe> recipeListToSort = new ArrayList();
-        List<IRecipe> sortedRecipeList = new ArrayList();
-        List<ISortlevel> sortlevel = new ArrayList<>();
+        List<Recipe> recipeListToSort = new ArrayList();
+        List<Recipe> sortedRecipeList = new ArrayList();
+        List<Sortlevel> sortlevel = new ArrayList<>();
 
-        IRecipe r1 = generateRecipe("Vorspeise","Griechenland","Frühling");
-        IRecipe r2 = generateRecipe("Nachspeise","Mexiko","Sommer");
-        IRecipe r3 = generateRecipe("Hauptspeise","China","Frühling");
-        IRecipe r4 = generateRecipe("Vorspeise","Mexiko","Winter");
+        Recipe r1 = generateRecipe("Vorspeise","Griechenland","Frühling");
+        Recipe r2 = generateRecipe("Nachspeise","Mexiko","Sommer");
+        Recipe r3 = generateRecipe("Hauptspeise","China","Frühling");
+        Recipe r4 = generateRecipe("Vorspeise","Mexiko","Winter");
 
         recipeListToSort.add(r1);
         recipeListToSort.add(r2);
@@ -68,18 +68,18 @@ public class RecipeListSorterTest {
         assertEquals(recipeListToSort,sortedRecipeList);
     }
 
-    ISortlevel generateSortlevel(String sortlevelName){
-        ISortlevel sortlevel = new Sortlevel();
+    Sortlevel generateSortlevel(String sortlevelName){
+        Sortlevel sortlevel = new Sortlevel();
         sortlevel.setName(sortlevelName);
         return sortlevel;
     }
 
-    IRecipe generateRecipe(String category, String region,String season)
+    Recipe generateRecipe(String category, String region,String season)
     {
-        IRecipe recipe = new Recipe();
-        ICategory testCategory = new Category();
-        IRegion testRegion = new Region();
-        ISeason testSeason = new Season();
+        Recipe recipe = new Recipe();
+        Category testCategory = new Category();
+        Region testRegion = new Region();
+        Season testSeason = new Season();
 
         testCategory.setName(category);
         testRegion.setName(region);

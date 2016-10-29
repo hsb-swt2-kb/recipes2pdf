@@ -3,7 +3,7 @@ package sample.parser;
 import org.junit.Before;
 import org.junit.Test;
 import sample.exceptions.CouldNotParseException;
-import sample.model.IRecipe;
+import sample.model.Recipe;
 import sample.model.Recipe;
 
 import java.io.File;
@@ -25,7 +25,7 @@ public class ParserTest {
     @Test
     public void testParsePositive() throws IOException, CouldNotParseException {
         File file = new File("src/test/resources/sample/Rezepte/Bolognese.txt");
-        IRecipe recipe = Parser.parse(file);
+        Recipe recipe = Parser.parse(file);
         the(recipe.getTitle()).shouldBeEqual("Bolognese");
         the(recipe.getIngredients().size()).shouldBeEqual(15);
     }

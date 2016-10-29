@@ -1,8 +1,8 @@
 package sample.builder;
 
 import org.apache.commons.collections4.comparators.ComparatorChain;
-import sample.model.IRecipe;
-import sample.model.ISortlevel;
+import sample.model.Recipe;
+import sample.model.Sortlevel;
 import sample.model.comparator.*;
 
 import java.util.Collections;
@@ -10,12 +10,12 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * This Class is for Sorting a recipelist according to a List of ISortlevels, where the first list element is the
+ * This Class is for Sorting a recipelist according to a List of Sortlevels, where the first list element is the
  * primary sortlevel, the second listelement is the secondary sortlevel and so on
  */
 public class RecipeListSorter {
 
-    static List<IRecipe> sort(List<IRecipe> recipeList, List<ISortlevel> sortLevelList) {
+    static List<Recipe> sort(List<Recipe> recipeList, List<Sortlevel> sortLevelList) {
         ComparatorChain compChain = new ComparatorChain();
         Comparator comparator = null;
 

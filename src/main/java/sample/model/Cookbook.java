@@ -1,70 +1,74 @@
 package sample.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by czoeller on 02.05.2016.
+ * Created by czoeller on 11.07.16.
  */
-public class Cookbook implements ICookbook {
-    private Long id;
+@Entity
+public class Cookbook {
+    private Integer id;
     private String title;
-    private List<IRecipe> recipes;
-    private List<ISortlevel> sortlevel;
+    private Collection<CookbookRecipe> cookbookRecipesById;
+    private Collection<CookbookSortlevel> cookbookSortlevelsById;
 
-    public Cookbook() {
-        this.recipes = new ArrayList<>();
-        this.sortlevel = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getID() {
-        return this.id;
-    }
-
-    public void setRecipes(List<IRecipe> recipes){
-        this.recipes = recipes;
-    }
-
-    @Override
+    @Basic
+    @Column(name = "title")
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
-    @Override
     public void setTitle(String title) {
         this.title = title;
     }
 
     @Override
-    public List<ISortlevel> getSortlevel() {
-        return this.sortlevel;
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    public void setSortlevel(List<ISortlevel>  sortlevel){
-        this.sortlevel=sortlevel;
-    }
+        Cookbook cookbook = (Cookbook) o;
 
-    @Override
-    public void addSortlevel(ISortlevel sortlevel) {
-        this.sortlevel.add(sortlevel);
-    }
+        if (id != null ? !id.equals(cookbook.id) : cookbook.id != null) return false;
+        if (title != null ? !title.equals(cookbook.title) : cookbook.title != null) return false;
 
-    @Override
-    public List<IRecipe> getRecipes() {
-        return this.recipes;
+        return true;
     }
 
     @Override
-    public void addRecipe(IRecipe recipe) {
-        this.recipes.add(recipe);
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
     }
 
-    @Override
-    public void removeRecipe(IRecipe recipe) {
-        recipes.removeIf(listRecipe -> listRecipe.getID().equals(recipe.getID()));
+    @OneToMany(mappedBy = "cookbookByCookbookId", fetch = FetchType.EAGER)
+    public Collection<CookbookRecipe> getCookbookRecipesById() {
+        return cookbookRecipesById;
+    }
+
+    public void setCookbookRecipesById(Collection<CookbookRecipe> cookbookRecipesById) {
+        this.cookbookRecipesById = cookbookRecipesById;
+    }
+
+    @OneToMany(mappedBy = "cookbookByCookbookId")
+    public Collection<CookbookSortlevel> getCookbookSortlevelsById() {
+        return cookbookSortlevelsById;
+    }
+
+    public void setCookbookSortlevelsById(Collection<CookbookSortlevel> cookbookSortlevelsById) {
+        this.cookbookSortlevelsById = cookbookSortlevelsById;
     }
 }

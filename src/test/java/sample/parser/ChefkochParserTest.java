@@ -2,7 +2,7 @@ package sample.parser;
 
 import org.junit.Before;
 import org.junit.Test;
-import sample.model.IRecipe;
+import sample.model.Recipe;
 import sample.model.Recipe;
 import sample.util.ResourceLoader;
 
@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import sample.external.ChefkochAPI;
-import sample.model.IRecipe;
+import sample.model.Recipe;
 import sample.util.ResourceLoader;
 
 import java.util.Optional;
@@ -69,7 +69,7 @@ public class ChefkochParserTest {
 
     @Test
     public void theParserShouldReturnARecipe() throws Throwable {
-        the(recipe).shouldBeA(IRecipe.class);
+        the(recipe).shouldBeA(Recipe.class);
     }
 
 

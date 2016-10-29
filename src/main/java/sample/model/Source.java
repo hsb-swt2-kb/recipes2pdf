@@ -1,30 +1,64 @@
 package sample.model;
 
+import javax.persistence.*;
+import java.util.Collection;
+
 /**
- * Created by czoeller on 02.05.2016.
+ * Created by czoeller on 11.07.16.
  */
-public class Source implements ISource {
-
+@Entity
+public class Source {
+    private Integer id;
     private String name;
-    private Long id;
+    private Collection<Recipe> recipesById;
 
-    @Override
-    public String getName() {
-        return this.name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public Integer getId() {
+        return id;
     }
 
-    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     @Override
-    public Long getID() {
-        return this.id;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Source source = (Source) o;
+
+        if (id != null ? !id.equals(source.id) : source.id != null) return false;
+        if (name != null ? !name.equals(source.name) : source.name != null) return false;
+
+        return true;
     }
 
     @Override
-    public void setID(Long id) {
-        this.id = id;
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @OneToMany(mappedBy = "sourceBySourceId")
+    public Collection<Recipe> getRecipesById() {
+        return recipesById;
+    }
+
+    public void setRecipesById(Collection<Recipe> recipesById) {
+        this.recipesById = recipesById;
     }
 }

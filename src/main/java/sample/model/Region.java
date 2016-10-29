@@ -1,28 +1,64 @@
 package sample.model;
 
-/**
- * Created by czoeller on 03.05.16.
- */
-public class Region implements IRegion {
-    private Long id;
-    private String name;
+import javax.persistence.*;
+import java.util.Collection;
 
-    public void setID(Long id) {
+/**
+ * Created by czoeller on 11.07.16.
+ */
+@Entity
+public class Region {
+    private Integer id;
+    private String name;
+    private Collection<Recipe> recipesById;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getID() {
-        return this.id;
-    }
-
-
-    @Override
+    @Basic
+    @Column(name = "name")
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Region region = (Region) o;
+
+        if (id != null ? !id.equals(region.id) : region.id != null) return false;
+        if (name != null ? !name.equals(region.name) : region.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @OneToMany(mappedBy = "regionByRegionId")
+    public Collection<Recipe> getRecipesById() {
+        return recipesById;
+    }
+
+    public void setRecipesById(Collection<Recipe> recipesById) {
+        this.recipesById = recipesById;
     }
 }
