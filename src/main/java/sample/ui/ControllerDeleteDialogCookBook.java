@@ -20,13 +20,14 @@ public class ControllerDeleteDialogCookBook {
     private Button closeButton;
     @FXML
     private Button deleteButton;
+    UI ui;
 
     @FXML
     void deleteElement(ActionEvent event) {
         Cookbook cookbook;
         try{
-            cookbook = UI.searchCookBook(ControllerManageCookBooks.getInstance().getSelectedItem());
-            UI.delCookBook(cookbook);
+            cookbook = ui.searchCookBook(ControllerManageCookBooks.getInstance().getSelectedItem());
+            ui.delCookBook(cookbook);
             ControllerManageCookBooks.getInstance().refreshListViews();
             ControllerManageCookBook.getInstance().refresh();
         }

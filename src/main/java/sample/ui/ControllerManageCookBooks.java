@@ -42,6 +42,7 @@ public class ControllerManageCookBooks {
     private Button deleteButton;
     @FXML
     private Button addButton;
+    UI ui;
 
     /**
      * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBooks and ControllerChangeCookBook.
@@ -124,7 +125,7 @@ public class ControllerManageCookBooks {
 
     void loadInfo(){
         this.cookbooks = FXCollections.observableArrayList();
-        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
+        List<Cookbook> cookbooksDB = ui.getAllCookbooksFromDB();
         for (Cookbook cookbook : cookbooksDB) {
             this.cookbooks.add(cookbook.getTitle());
         }

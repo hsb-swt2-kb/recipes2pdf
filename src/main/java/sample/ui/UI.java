@@ -3,6 +3,7 @@ package sample.ui;
 import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
 import sample.builder.Builder;
 import sample.builder.Exceptions.TexParserException;
 import sample.builder.IBuilder;
@@ -333,5 +334,15 @@ public class UI {
     List<Recipe> getRecipesOfCookbook(String cookbookname) throws CookBookNotFoundException {
         Cookbook cookbook = this.searchCookBook(cookbookname);
         return cookbook.getRecipes();
+    }
+
+    public void addRecipeToCookbook(Cookbook cookbook, Recipe recipe) {
+        //TODO: implement
+        throw new NotImplementedException("Add recipe to cookbook is implemented yet");
+    }
+
+    public void removeRecipeFromCookbook(Cookbook cookbook, Recipe recipe) {
+        //TODO: implement
+        throw new NotImplementedException("Add recipe to cookbook is implemented yet");
     }
 }

@@ -21,6 +21,7 @@ public class ControllerDeleteDialogRecipe {
     private Button closeButton;
     @FXML
     private Button deleteButton;
+    UI ui;
 
     @FXML
     void deleteElement(ActionEvent event) {
@@ -28,8 +29,8 @@ public class ControllerDeleteDialogRecipe {
         Recipe recipe;
         try{
             for(String recipeName:selectedItems){
-                recipe= UI.searchRecipe(recipeName);
-                UI.delRecipe(recipe);
+                recipe= ui.searchRecipe(recipeName);
+                ui.delRecipe(recipe);
                 ControllerManageCookBook.getInstance().refresh();
             }
         }

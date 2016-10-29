@@ -21,8 +21,6 @@ import sample.exceptions.CouldNotParseException;
 
 import java.io.IOException;
 
-import static sample.ui.UI.addRecipes;
-
 public class ControllerLoadRecipe {
 
     final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -40,6 +38,7 @@ public class ControllerLoadRecipe {
     private Button loadButton;
     @FXML
     private Button closeButton;
+    UI ui;
 
     private boolean editability = false;
     private boolean radioButtonFileBoolean = false;
@@ -123,7 +122,7 @@ public class ControllerLoadRecipe {
         FileHandler fileHandler = new FileHandler();
         boolean success;
         try {
-           addRecipes(fileHandler.importFiles());
+           ui.addRecipes(fileHandler.importFiles());
         }
         catch (CouldNotParseException e){
             e.printStackTrace();
@@ -141,7 +140,7 @@ public class ControllerLoadRecipe {
         FileHandler fileHandler = new FileHandler();
         boolean success;
         try {
-            UI.addRecipesFromFolder(fileHandler.importFolder());
+            ui.addRecipesFromFolder(fileHandler.importFolder());
         } catch (Exception e) {
             // TODO: Meldung anzeigen
             e.printStackTrace();
@@ -206,7 +205,7 @@ public class ControllerLoadRecipe {
     void openHyperlink() {
         if ( supportedSourceHyperlink() ) {
             try {
-                UI.addRecipeFromHyperlink(this.hyperLinkTextField.getText());
+                ui.addRecipeFromHyperlink(this.hyperLinkTextField.getText());
             }
             catch(IOException e) {
                 LOG.error("Could not load from url", e);

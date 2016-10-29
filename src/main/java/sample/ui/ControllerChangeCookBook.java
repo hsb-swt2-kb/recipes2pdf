@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.exceptions.CookBookNotFoundException;
 import sample.model.Cookbook;
 
 import java.io.File;
@@ -36,6 +35,7 @@ public class ControllerChangeCookBook {
     private TextField textFieldPicture;
     @FXML
     private Button changeButton;
+    UI ui;
 
     @FXML
     public void initialize() {
@@ -68,7 +68,7 @@ public class ControllerChangeCookBook {
         if(this.textFieldName.getText().trim().isEmpty() == false) {
             try {
                 cookbook.setTitle(textFieldName.getText());
-                UI.changeCookBook(cookbook);
+                ui.changeCookBook(cookbook);
                 ControllerManageCookBooks.getInstance().refreshListViews();
                 ControllerManageCookBook.getInstance().refresh();
             }catch (Exception e)

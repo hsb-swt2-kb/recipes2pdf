@@ -54,6 +54,7 @@ public class ControllerChangeRecipe {
     private Button closeButton;
     @FXML
     private Button changeButton;
+    UI ui;
 
     @FXML
     public void initialize() {
@@ -72,7 +73,7 @@ public class ControllerChangeRecipe {
     private void loadInformation() {
         try{
             //Recipe selection from the ControllerManageCookBook
-            recipe = UI.searchRecipe(ControllerManageCookBook.getInstance().getSelectedRecipes().get(0));
+            recipe = ui.searchRecipe(ControllerManageCookBook.getInstance().getSelectedRecipes().get(0));
         }
         catch (RecipeNotFoundException e){
             System.out.println("Couldn't load recipe.");
@@ -122,39 +123,39 @@ public class ControllerChangeRecipe {
             recipe.setTitle(textFieldName.getText());
             recipe.setDuration(getZubereitungszeit());
 
-            INurture nurture = new Nurture();
+            Nurture nurture = new Nurture();
             nurture.setName(textFieldErnaehrungsart.getText());
             recipe.setNurture(nurture);
 
-            ICourse course = new Course();
+            Course course = new Course();
             course.setName(textFieldGerichtart.getText());
             recipe.setCourse(course);
 
-            IRegion region = new Region();
+            Region region = new Region();
             region.setName(textFieldRegion.getText());
             recipe.setRegion(region);
 
-            ICategory category=new Category();
+            Category category=new Category();
             category.setName(textFieldCategory.getText());
             recipe.setCategory(category);
 
             recipe.setPortions(Integer.parseInt(textFieldPortion.getText()));
 
-            ISource source = new Source();
+            Source source = new Source();
             source.setName(textFieldSource.getText());
             recipe.setSource(source);
 
-            ISeason season = new Season();
+            Season season = new Season();
             season.setName(textFieldSaison.getText());
             recipe.setSeason(season);
 
-            IDaytime daytime = new Daytime();
+            Daytime daytime = new Daytime();
             daytime.setName(textFieldDaytime.getText());
             recipe.setDaytime(daytime);
 
             recipe.setText(textAreaZubereitungstext.getText());
 
-            UI.changeRecipe(recipe);
+            ui.changeRecipe(recipe);
             ControllerManageCookBooks.getInstance().refreshListViews();
             Stage stage = (Stage) changeButton.getScene().getWindow();
             stage.close();

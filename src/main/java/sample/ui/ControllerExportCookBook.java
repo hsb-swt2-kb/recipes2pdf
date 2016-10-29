@@ -44,6 +44,7 @@ public class ControllerExportCookBook {
     private ComboBox<String> comboBoxFormat;
     @FXML
     private Button closeButton;
+    UI ui;
 
     @FXML
     private void initialize() {
@@ -126,7 +127,7 @@ public class ControllerExportCookBook {
     @FXML
     void saveCookBook(ActionEvent event) {
         try {
-            final File pdfFile = UI.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
+            final File pdfFile = ui.exportCookbook(ControllerManageCookBook.getInstance().getSelectedCookBooks(), "A4");
             if (null != pdfFile && Desktop.isDesktopSupported() ) {
                 Desktop.getDesktop().open(pdfFile);
             }

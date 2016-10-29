@@ -1,6 +1,5 @@
 package sample.ui;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,7 +42,7 @@ public class ControllerAddCookBook  {
     private ObservableList<String> sortLevelsOfTheCookbook;
     @FXML
     private Button generateButton;
-
+    UI ui;
     /**
      * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerAddCookBook and ControllerSortLevel.
      *
@@ -129,7 +128,7 @@ public class ControllerAddCookBook  {
     @FXML
     void generateCookBook(ActionEvent event) {
         if((this.textFieldName.getText().trim().isEmpty() == false) && (this.listViewSortLevel.getItems().isEmpty() == false)) {
-            UI.addCookBook(textFieldName.getText(), sortLevelsOfTheCookbook, textAreaVorwort.getText(), getFile());
+            ui.addCookBook(textFieldName.getText(), sortLevelsOfTheCookbook, textAreaVorwort.getText(), getFile());
             ControllerManageCookBook.getInstance().refresh();
             ControllerManageCookBooks.getInstance().refreshListViews();
             //Close Stage

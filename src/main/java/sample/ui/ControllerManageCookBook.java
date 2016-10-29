@@ -25,18 +25,12 @@ import org.controlsfx.control.PopOver;
 import sample.exceptions.CookBookNotFoundException;
 import sample.exceptions.RecipeNotFoundException;
 import sample.model.Cookbook;
-import sample.model.ICookbook;
-import sample.model.IRecipe;
 import sample.model.Recipe;
 
 import java.io.IOException;
 import java.util.List;
 
-import static sample.ui.UI.getAllRecipesFromDB;
-
-
 public class ControllerManageCookBook {
-
 
     private static ControllerManageCookBook instance;
     protected ObservableList<String> selectedRecipes;
@@ -68,6 +62,7 @@ public class ControllerManageCookBook {
     private TextField searchFieldCookBooks;
     @FXML
     private ListView<String> listViewCookBook;
+    private UI ui;
 
     /**
      * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBook and ControllerChangeRecipe.
@@ -97,6 +92,7 @@ public class ControllerManageCookBook {
         loadInfo();
         Platform.runLater(() -> {comboBoxCookBooks.setItems(this.cookBookNames); comboBoxCookBooks.getSelectionModel().selectFirst();});
         refresh();
+        ui = new UI();
     }
 
     void refresh(){
@@ -109,12 +105,12 @@ public class ControllerManageCookBook {
     void loadInfo(){
         cookBookNames.clear();
         this.cookBookNames = FXCollections.observableArrayList();
-        List<Cookbook> cookbooksDB = UI.getAllCookbooksFromDB();
+        List<Cookbook> cookbooksDB = ui.getAllCookbooksFromDB();
         for (Cookbook cookbook : cookbooksDB) {
             this.cookBookNames.add(cookbook.getTitle());
         }
         recipeNames.clear();
-        List<Recipe> recipes =  getAllRecipesFromDB();
+        List<Recipe> recipes = ui.getAllRecipesFromDB();
         for (Recipe recipe : recipes){
             recipeNames.add(recipe.getTitle());
         }
@@ -127,8 +123,8 @@ public class ControllerManageCookBook {
         if (comboBoxCookBooks.getValue() != null) {
             recipeNamesOfCookBook.clear();
             try {
-                List<IRecipe> iRecipes = UI.getRecipesOfCookbook(this.selectedCookBooks.get(0));
-                for (IRecipe iRecipeDB : iRecipes) {
+                List<Recipe> iRecipes = ui.getRecipesOfCookbook(this.selectedCookBooks.get(0));
+                for (Recipe iRecipeDB : iRecipes) {
                     recipeNamesOfCookBook.add(iRecipeDB.getTitle());
                 }
                 FXCollections.sort(recipeNamesOfCookBook);
@@ -187,12 +183,12 @@ public class ControllerManageCookBook {
         this.selectedRecipes = listViewRecipes.getSelectionModel().getSelectedItems();
         boolean insite = listViewCookBook.getItems().contains(this.selectedRecipes);
         if (this.selectedRecipes != null && insite == false) {
-            ICookbook cookbook = null;
+            Cookbook cookbook = null;
             try {
-                cookbook = UI.searchCookBook(this.selectedCookBooks.get(0));
+                cookbook = ui.searchCookBook(this.selectedCookBooks.get(0));
                 for(String recipeName:selectedRecipes)
-                cookbook.addRecipe(UI.searchRecipe(recipeName));
-                UI.changeCookBook((Cookbook) cookbook);
+                ui.addRecipeToCookbook(cookbook, ui.searchRecipe(recipeName));
+                ui.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
                 e.printStackTrace();
             } catch (RecipeNotFoundException e) {
@@ -219,10 +215,10 @@ public class ControllerManageCookBook {
         if (this.selectedRecipes != null) {
             recipeNamesOfCookBook.remove(this.selectedRecipes);
             try {
-                ICookbook cookbook = UI.searchCookBook(this.selectedCookBooks.get(0));
+                Cookbook cookbook = ui.searchCookBook(this.selectedCookBooks.get(0));
                 for(String recipe:selectedRecipes)
-                cookbook.removeRecipe(UI.searchRecipe(recipe));
-                UI.changeCookBook((Cookbook) cookbook);
+                ui.removeRecipeFromCookbook(cookbook, ui.searchRecipe(recipe));
+                ui.changeCookBook((Cookbook) cookbook);
             } catch (CookBookNotFoundException e) {
                 //
                 e.printStackTrace();
