@@ -1,7 +1,7 @@
 package sample.util;
 
+import com.github.vbauer.herald.annotation.Log;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
@@ -11,7 +11,9 @@ import java.io.*;
  */
 public class Image {
 
-    final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    @Log
+    private Logger LOG;
+
     private byte[] bytes;
 
     /**

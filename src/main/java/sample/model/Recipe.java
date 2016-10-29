@@ -1,6 +1,11 @@
 package sample.model;
 
+import org.apache.commons.lang3.NotImplementedException;
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -51,7 +56,7 @@ public class Recipe {
     }
 
     @Basic
-    @Column(name = "text")
+    @Column(name = "text", length = 424242)
     public String getText() {
         return text;
     }
@@ -191,6 +196,7 @@ public class Recipe {
     }
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     public Course getCourse() {
         return course;
@@ -227,7 +233,7 @@ public class Recipe {
 
     public void setIngredients(List<Ingredient> ingredients) {
         //TODO: implement
-        throw new IllegalStateException("Not implemented yet.");
+        throw new NotImplementedException("setIngredients is not implemented yet");
     }
 
     @Deprecated

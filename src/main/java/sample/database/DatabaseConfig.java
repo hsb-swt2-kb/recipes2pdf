@@ -1,10 +1,11 @@
 package sample.database;
 
+import com.github.vbauer.herald.annotation.Log;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sample.config.IConfig;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,13 +14,17 @@ import java.io.IOException;
  * Created by czoeller on 29.05.2016.
  */
 public class DatabaseConfig {
-    final Logger LOG = LoggerFactory.getLogger(DatabaseConfig.class);
+
+    @Log
+    private Logger LOG;
+
     /**
      * Instance of base configuration
      */
     private final IConfig baseConfig;
 
-    DatabaseConfig(IConfig config) {
+    @Inject
+    public DatabaseConfig(IConfig config) {
         this.baseConfig = config;
         makeDirs();
     }
@@ -50,6 +55,10 @@ public class DatabaseConfig {
      * @return the path of the file based database.
      */
     String getDatabasePath() {
-        return getDatabaseDir() + File.separator + "database.db";
+        return getDatabaseDir() + File.separator + "database";
+    }
+
+    public String getDatabaseURL() {
+        return "jdbc:h2:file:" + getDatabasePath().replaceAll("\\\\", "/");
     }
 }

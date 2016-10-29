@@ -1,14 +1,14 @@
 package sample.database.dao;
 
+import com.google.inject.TypeLiteral;
 import com.uaihebert.factory.EasyCriteriaFactory;
 import com.uaihebert.model.EasyCriteria;
-import org.apache.commons.beanutils.BeanUtils;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -22,8 +22,13 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
 
     @Inject
     private EntityManager em;
-
     protected Class<? extends ID> daoType;
+
+    @Inject
+    @SuppressWarnings("unchecked")
+    public GenericDAOImpl(TypeLiteral<E> type) {
+        this.daoType = (Class<? extends ID>) type.getRawType();
+    }
 
     public GenericDAOImpl() {
         Type t = getClass().getGenericSuperclass();
@@ -73,18 +78,18 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
     }
 
     @Override
-    public Optional<E> findFirst(String field, Object value) {
+    public Optional<E> findFirst(String field, String value) {
         EasyCriteria<? extends ID> easyCriteria = EasyCriteriaFactory.createQueryCriteria(em, daoType);
         try {
-            return Optional.ofNullable((E) easyCriteria.andEquals(field,value).getSingleResult() );
+            return Optional.ofNullable((E) easyCriteria.andStringLike(field,value).getSingleResult() );
         }
-        catch(NoResultException nre) {
+        catch(NoResultException | EntityNotFoundException nre) {
             return Optional.empty();
         }
     }
 
     @Override
-    public E findOrCreate(E entity, String field, Object value) {
+    public E findOrCreate(E entity, String field, String value) {
         final Optional<E> entitySearch = findFirst(field, value);
         if( !entitySearch.isPresent() ) {
             add( entity );
@@ -100,17 +105,5 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
             add(entity);
         }
         return entity;
-    }
-    @Override
-    public E findOrCreate_old(String field, Object value) {
-        try {
-            final E e = (E) daoType.newInstance();
-            //MethodUtils.invokeMethod(e, "set" + field, value);
-            BeanUtils.setProperty(e, field, value);
-            return findFirst(field, value).orElse( e );
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

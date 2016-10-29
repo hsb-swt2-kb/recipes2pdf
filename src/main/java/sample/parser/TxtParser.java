@@ -1,12 +1,9 @@
 package sample.parser;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import sample.model.*;
 import sample.model.util.RecipeUtil;
 
-import java.lang.reflect.Array;
-import java.time.Duration;
-import java.lang.Math;
-import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -76,7 +73,19 @@ public class TxtParser extends AConcreteParser implements Constants {
             String tempUnit = cutString(tempIncredientList.get(i)[1],fieldLength);
             String tempAmount = cutString(tempIncredientList.get(i)[0],fieldLength);
             //         IngredientName, Amount, UnitName
-            recipe.add(tempName, parseStringToDouble(tempAmount), tempUnit);
+            Unit unit = new Unit();
+            unit.setName( tempUnit );
+
+            Ingredient ingredient = new Ingredient();
+            ingredient.setName(tempName);
+
+            final RecipeIngredient recipeIngredient = new RecipeIngredient();
+            recipeIngredient.setAmount( NumberUtils.toDouble("tempAmount", 0d) );
+            recipeIngredient.setUnit( unit );
+            recipeIngredient.setIngredient(ingredient);
+
+            recipe.getRecipeIngredients().add(recipeIngredient);
+
         }
         // FInd PreperationText with tag...If there is now Tag use specific Method
         // ===================STEP3===================================

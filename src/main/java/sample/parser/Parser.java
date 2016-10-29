@@ -95,7 +95,7 @@ public class Parser implements IParser {
      * @return
      * @throws IOException
      */
-    public static ArrayList<String> readFile(String file) throws IOException {
+    protected static ArrayList<String> readFile(String file) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
         String line;
 

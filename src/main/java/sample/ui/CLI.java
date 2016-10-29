@@ -6,7 +6,7 @@ package sample.ui;
  *   */
 public class CLI extends UI {
 
-    public CLI(){};
+
 
     public void start(String[] args) {
         switch (args[0]) {

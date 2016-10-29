@@ -8,10 +8,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.velocity.exception.ParseErrorException;
 import sample.builder.Exceptions.TexParserException;
 import sample.config.IConfig;
+import sample.model.*;
 import sample.model.Cookbook;
-import sample.model.Cookbook;
-import sample.model.Recipe;
-import sample.model.Sortlevel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -235,7 +233,12 @@ public class PdfBuilder implements IConcreteBuilder {
     public File build(Recipe recipe, List<Sortlevel> sortLevels) throws IOException, TexParserException {
         Cookbook myCookbook = new Cookbook();
         myCookbook.setTitle(recipe.getTitle());
-        myCookbook.addRecipe(recipe);
+
+        final CookbookRecipe cookbookRecipe = new CookbookRecipe();
+        cookbookRecipe.setCookbook(myCookbook);
+        cookbookRecipe.setRecipe(recipe);
+
+        myCookbook.getCookbookRecipes().add(cookbookRecipe);
         ((Cookbook) myCookbook).setSortlevel(sortLevels);
 
         File rootDir = config.getParserRootDir();
@@ -275,7 +278,13 @@ public class PdfBuilder implements IConcreteBuilder {
     public File build(Recipe recipe) throws IOException, TexParserException {
         Cookbook myCookbook = new Cookbook();
         myCookbook.setTitle(recipe.getTitle());
-        myCookbook.addRecipe(recipe);
+
+        final CookbookRecipe cookbookRecipe = new CookbookRecipe();
+        cookbookRecipe.setCookbook(myCookbook);
+        cookbookRecipe.setRecipe(recipe);
+
+        myCookbook.getCookbookRecipes().add(cookbookRecipe);
+
         List<Sortlevel> sortlevels = new ArrayList<>();
 
         ((Cookbook) myCookbook).setSortlevel(sortlevels);

@@ -13,8 +13,7 @@ public interface IGenericDAO<E,K> {
     void remove(E entity);
     E find(K key);
     List<E> getAll() ;
-    Optional<E> findFirst(String field, Object value);
-    E findOrCreate(E entity, String field, Object value);
+    Optional<E> findFirst(String field, String value);
+    E findOrCreate(E entity, String field, String value);
     E findOrCreate(E entity);
-    E findOrCreate_old(String field, Object value);
 }

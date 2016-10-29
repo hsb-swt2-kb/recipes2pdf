@@ -40,19 +40,31 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
     mavenCentral()
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
+
+
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'org.slf4j:slf4j-log4j12:1.7.21'
+    compile 'log4j:log4j:1.2.17'
+
+
+    compile 'com.github.vbauer:herald:1.2.3'
+
     // The production code uses the SLF4J logging API at compile time
-    compile 'org.slf4j:slf4j-api:1.7.13'
+    //compile 'org.slf4j:slf4j-api:1.7.13'
 
     // Merged start
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //compile 'commons-configuration:commons-configuration:1.6' //For configuration files: alternative to java.util.properties
     //compile 'com.itextpdf:itextpdf:5.0.6' //fuer iText: Alternative zu JLR
-    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.5'
+    //compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.5'
     compile 'org.xerial:sqlite-jdbc:3.8.11'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.0' // for chainlistSorter in RecipelIstSorter
@@ -86,11 +98,11 @@ dependencies {
     //compile 'org.hibernate:hibernate-core:4.3.10.Final'
     //compile group: 'net.kemitix', name: 'sqlite-dialect', version: '0.1.0'
     //compile 'com.googlecode.genericdao:dao-hibernate:1.2.0'
-    compile group: 'com.google.inject', name: 'guice', version: '3.0'
-    compile 'com.google.inject.extensions:guice-persist:3.0'
+    compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
+    compile 'com.google.inject.extensions:guice-persist:4.1.0'
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
     compile 'uaihebert.com:EasyCriteria:3.0.0'
-
+    compile 'com.h2database:h2:1.4.192'
     compile 'org.javalite:javalite-common:1.4.9'
 }
 

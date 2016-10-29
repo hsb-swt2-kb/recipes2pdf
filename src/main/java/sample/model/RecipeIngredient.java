@@ -50,7 +50,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient> {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = 0;//id != null ? id.hashCode() : 0;
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
         result = 31 * result + (getIngredient() != null ? getIngredient().hashCode() : 0);
         return result;

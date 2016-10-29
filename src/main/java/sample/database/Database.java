@@ -1,9 +1,9 @@
 package sample.database;
 
+import com.github.vbauer.herald.annotation.Log;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,8 @@ import java.sql.*;
  */
 public class Database {
 
-    final Logger LOG = LoggerFactory.getLogger(Database.class);
+    @Log
+    private Logger LOG;
     /**
      * DatabaseConnection details
      */

@@ -1,5 +1,6 @@
 package sample.ui;
 
+import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import org.apache.commons.io.IOUtils;
 import sample.builder.Builder;
@@ -8,23 +9,22 @@ import sample.builder.IBuilder;
 import sample.builder.IConcreteBuilder;
 import sample.builder.PdfBuilder;
 import sample.config.IConfig;
-import sample.database.dao.ICookbookDAO;
-import sample.database.dao.IRecipeDAO;
+import sample.database.dao.IGenericDAO;
+import sample.database.service.RecipeService;
 import sample.exceptions.CookBookNotFoundException;
 import sample.exceptions.CouldNotParseException;
 import sample.exceptions.RecipeNotFoundException;
 import sample.model.Cookbook;
+import sample.model.CookbookRecipe;
 import sample.model.Recipe;
 import sample.model.Sortlevel;
 import sample.model.util.RecipeUtil;
 import sample.parser.Parser;
 
-import javax.inject.Inject;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,11 +34,15 @@ import java.util.Optional;
  * <p>
  * Created by markus
  */
+
 public class UI {
+
     @Inject
-    private final ICookbookDAO cookbookDAO = null;
+    private IGenericDAO<Cookbook, Integer> cookbookDAO;
     @Inject
-    private final IRecipeDAO recipeDAO = null;
+    private IGenericDAO<Recipe, Integer> recipeDAO;
+    @javax.inject.Inject
+    private RecipeService recipeService;
 
     void addRecipesFromFolder(final File folder) throws CouldNotParseException, FileNotFoundException {
         for (final File file : folder.listFiles()) {
@@ -77,7 +81,7 @@ public class UI {
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    public void addRecipes(List<File> files) throws Exception {
+    public void addRecipes(List<File> files) throws CouldNotParseException, FileNotFoundException {
         for (File file : files) {
             addRecipe(file);
         }
@@ -124,11 +128,17 @@ public class UI {
         } else if( RecipeUtil.isRecipeIncomplete(recipe) ) {
             throw new IllegalStateException("Recipe is incomplete.");
         } else {
-            this.recipeDAO.add(recipe);
-            Optional<Cookbook> oCookBook = this.cookbookDAO.findFirst("title=?", "Standardkochbuch");
+            this.recipeService.create(recipe);
+            Optional<Cookbook> oCookBook = this.cookbookDAO.findFirst("title", "Standardkochbuch");
             if(oCookBook.isPresent()) {
-                Cookbook cookbook = oCookBook.get();
-                cookbook.addRecipe(recipe);
+                final Cookbook cookbook = oCookBook.get();
+
+                final CookbookRecipe cookbookRecipe = new CookbookRecipe();
+                cookbookRecipe.setCookbook(cookbook);
+                cookbookRecipe.setRecipe(recipe);
+
+                cookbook.getCookbookRecipes().add(cookbookRecipe);
+
                 this.cookbookDAO.update(cookbook);
             }
         }
@@ -300,7 +310,7 @@ public class UI {
      * @throws RecipeNotFoundException
      */
     Recipe searchRecipe(String recipeName) throws RecipeNotFoundException {
-        return this.recipeDAO.findFirst("title=?", recipeName).orElseThrow(RecipeNotFoundException::new);
+        return this.recipeDAO.findFirst("title", recipeName).orElseThrow(RecipeNotFoundException::new);
     }
 
     File exportCookbook(String cookbookName, String paperFormats) throws CookBookNotFoundException,IOException,TexParserException{

@@ -74,13 +74,6 @@ public class Cookbook {
         this.cookbookSortlevels = cookbookSortlevels;
     }
 
-    public void addRecipe(Recipe recipe) {
-        CookbookRecipe cookbookRecipe = new CookbookRecipe();
-        cookbookRecipe.setCookbook(this);
-        cookbookRecipe.setRecipe(recipe);
-        this.getCookbookRecipes().add( cookbookRecipe );
-    }
-
     @Transient
     public List<Recipe> getRecipes() {
         return this.getCookbookRecipes().stream().map(CookbookRecipe::getRecipe).collect(Collectors.toList());

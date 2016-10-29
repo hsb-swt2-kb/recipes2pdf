@@ -6,7 +6,6 @@ import sample.model.RecipeIngredient;
 import sample.model.Unit;
 
 import javax.inject.Inject;
-import java.util.Optional;
 
 /**
  * Created by czoeller on 11.07.16.
@@ -21,33 +20,23 @@ public class RecipeDAOImpl extends GenericDAOImpl<Recipe, Integer> implements IR
     @Override
     public void add(final Recipe recipe, final String ingredientName, final double amount, String unitName) {
 
-        final RecipeIngredient recipeIngredient = new RecipeIngredient();
-        final Optional<Ingredient> persistedIngredient = ingredientDAO.findFirst("name", ingredientName);
-        final Optional<Unit> persistedUnit = unitDAO.findFirst("name", unitName);
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName(ingredientName);
+        ingredient = ingredientDAO.findOrCreate(ingredient, "name", ingredientName);
 
-        if( !persistedIngredient.isPresent() ) {
-            final Ingredient ingredient = new Ingredient();
-            ingredient.setName(ingredientName);
-            ingredientDAO.add(ingredient);
-            recipeIngredient.setIngredient(ingredient);
-        } else {
-            recipeIngredient.setIngredient( persistedIngredient.get() );
-            persistedIngredient.get().getRecipeIngredients().add(recipeIngredient);
-        }
+        Unit unit = new Unit();
+        unit.setName(unitName);
+        unit = unitDAO.findOrCreate(unit, "name", unitName);
 
-        if( !persistedUnit.isPresent() ) {
-            final Unit unit = new Unit();
-            unit.setName(unitName);
-            unitDAO.add(unit);
+        boolean alreadyContains = recipe.getIngredients().stream().map(Ingredient::getName).filter(name -> name.equals(ingredientName)).findAny().isPresent();//recipe.getRecipeIngredients().contains(recipeIngredient);
+
+        if( !alreadyContains ) {
+            final RecipeIngredient recipeIngredient = new RecipeIngredient();
+            recipeIngredient.setAmount(amount);
             recipeIngredient.setUnit(unit);
-        } else {
-            recipeIngredient.setUnit( persistedUnit.get() );
-            persistedUnit.get().getRecipeIngredients().add(recipeIngredient);
+            recipeIngredient.setIngredient(ingredient);
+            recipeIngredient.setRecipe(recipe);
+            recipe.getRecipeIngredients().add(recipeIngredient);
         }
-
-        recipeIngredient.setAmount(amount);
-        recipeIngredient.setRecipe(recipe);
-        recipe.getRecipeIngredients().add(recipeIngredient);
-        recipeIngredient.setRecipe(recipe);
     }
 }
