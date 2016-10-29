@@ -5,9 +5,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import sample.exceptions.CouldNotParseException;
-import sample.model.ISource;
 import sample.model.Recipe;
 import sample.model.Source;
+import sample.model.util.RecipeUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public class ChefkochParser extends AConcreteParser {
         Element script = searchForDataScript(htmlDoc);
         getDataFromScript(script);
 
-        if(recipe.isIncomplete()){
+        if(RecipeUtil.isRecipeIncomplete(recipe)){
             throw new CouldNotParseException("Invalid recipe, mandatory fields are empty!");
         }
 
@@ -266,7 +266,7 @@ public class ChefkochParser extends AConcreteParser {
             }
         }
 
-        ISource source = new Source();
+        Source source = new Source();
         source.setName("Chefkoch");
         recipe.setSource(source);
 
@@ -274,7 +274,7 @@ public class ChefkochParser extends AConcreteParser {
     }
 
     /**
-     * Method to put together the necessary fields for further refining.     *
+     * Method to put together the necessary fields for further refining.
      *
      * @param completeList
      * @return

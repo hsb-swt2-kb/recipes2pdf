@@ -1,6 +1,7 @@
 package sample.parser;
 
 import sample.model.Recipe;
+import sample.model.util.RecipeUtil;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -268,6 +269,6 @@ public class HTMLParserLib {
      * @return true if all mandatory fields are set, false if not.
      */
     public boolean checkRecipe(Recipe recipe){
-        return !recipe.isIncomplete();
+        return !RecipeUtil.isRecipeIncomplete(recipe);
     }
 }

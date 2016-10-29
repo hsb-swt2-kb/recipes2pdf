@@ -1,7 +1,7 @@
 package sample.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by czoeller on 11.07.16.
@@ -10,7 +10,7 @@ import java.util.Collection;
 public class Sortlevel {
     private Integer id;
     private String name;
-    private Collection<CookbookSortlevel> cookbookSortlevels;
+    private List<CookbookSortlevel> cookbookSortlevels;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +54,11 @@ public class Sortlevel {
     }
 
     @OneToMany(mappedBy = "sortlevel")
-    public Collection<CookbookSortlevel> getCookbookSortlevels() {
+    public List<CookbookSortlevel> getCookbookSortlevels() {
         return cookbookSortlevels;
     }
 
-    public void setCookbookSortlevels(Collection<CookbookSortlevel> cookbookSortlevels) {
+    public void setCookbookSortlevels(List<CookbookSortlevel> cookbookSortlevels) {
         this.cookbookSortlevels = cookbookSortlevels;
     }
 }

@@ -19,7 +19,7 @@ public class DummyParser extends AConcreteParser {
         recipe.setPortions(1);
         recipe.setCalories(5);
         recipe.setDuration(5);
-        ISource source = new Source();
+        Source source = new Source();
         source.setName("Testquelle");
         recipe.setSource(source);
         Season season = new Season();
@@ -28,13 +28,13 @@ public class DummyParser extends AConcreteParser {
         Category category = new Category();
         category.setName("Testkategorie");
         recipe.setCategory(category);
-        ICourse course = new Course();
+        Course course = new Course();
         course.setName("TestGerichtart");
         recipe.setCourse(course);
-        IDaytime daytime = new Daytime();
+        Daytime daytime = new Daytime();
         daytime.setName("Testtageszeit");
         recipe.setDaytime(daytime);
-        INurture nurture = new Nurture();
+        Nurture nurture = new Nurture();
         nurture.setName("TestErnährungsart");
         recipe.setNurture(nurture);
         Region region = new Region();

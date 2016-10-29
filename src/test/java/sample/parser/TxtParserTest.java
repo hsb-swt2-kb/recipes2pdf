@@ -84,145 +84,145 @@ public class TxtParserTest {
     @Test
     public void testParseMethod9() {
         Setup("TestGericht9.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod10() {
         Setup("TestGericht10.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod11() {
         Setup("TestGericht11.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod12() {
         Setup("TestGericht12.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod13() {
         Setup("TestGericht13.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod14() {
         Setup("TestGericht14.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod15() {
         Setup("TestGericht15.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod16() {
         Setup("TestGericht16.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod17() {
         Setup("TestGericht17.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeNull();
     }
 
     @Test
     public void testParseMethod18() {
         Setup("TestGericht18.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Salz");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(0);
         ;
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeNull();
     }
 
     @Test
     public void testParseMethod19() {
         Setup("TestGericht19.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Salz (grob)");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(0);
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Salz (grob)");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(0);
         ;
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeNull();
     }
 
     @Test
     public void testParseMethod20() {
         Setup("TestGericht20.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Thunfisch eingelegt in Olivenoel");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(3);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("Dosen");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Thunfisch eingelegt in Olivenoel");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(3);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("Dosen");
     }
 
     @Test
     public void testParseMethod21() {
         Setup("TestGericht21.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
-        the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(0);
-        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(1).getIngredient().getName()).shouldBeEqual("Salz");
+        the(recipe.getRecipeIngredients().get(1).getAmount()).shouldBeEqual(0);
+        the(recipe.getRecipeIngredients().get(1).getUnit().getName()).shouldBeNull();
     }
 
     @Test
     public void testParseMethod22() {
         Setup("TestGericht22.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
-        the(recipe.getIngredients().get(1).getLeft().getName()).shouldBeEqual("Salz");
-        the(recipe.getIngredients().get(1).getMiddle()).shouldBeEqual(0);
-        the(recipe.getIngredients().get(1).getRight().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(1).getIngredient().getName()).shouldBeEqual("Salz");
+        the(recipe.getRecipeIngredients().get(1).getAmount()).shouldBeEqual(0);
+        the(recipe.getRecipeIngredients().get(1).getUnit().getName()).shouldBeNull();
     }
 
     @Test
     public void testParseMethod23() {
         Setup("TestGericht23.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeNull();
     }
 
     @Test
     public void testParseMethod24() {
         Setup("TestGericht24.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeNull();
     }
 
     @Test
     public void testParseMethod25() {
         Setup("TestGericht25.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeNull();
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeNull();
     }
 
     @Test
@@ -240,81 +240,81 @@ public class TxtParserTest {
     @Test
     public void testParseMethod28() {
         Setup("TestGericht28.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Kartoffeln");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(1.850);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("kg");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Kartoffeln");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(1.850);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("kg");
     }
 
     @Test
     public void testParseMethod29() {
         Setup("TestGericht29.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 44 Zeichen1234567");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 44 Zeichen1234567");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod30() {
         Setup("TestGericht30.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 45 Zeichen12345678");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 45 Zeichen12345678");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod31() {
         Setup("TestGericht31.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 46 Zeichen12345678");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("TL");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Eine Zutatsbezeichnung mit 46 Zeichen12345678");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("TL");
     }
 
     @Test
     public void testParseMethod32() {
         Setup("TestGericht32.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("EineEinheitsbezeichnungMit44Zeichen123456789");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("EineEinheitsbezeichnungMit44Zeichen123456789");
     }
 
     @Test
     public void testParseMethod33() {
         Setup("TestGericht33.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("EineEinheitsbezeichnungMit45Zeichen1234567890");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("EineEinheitsbezeichnungMit45Zeichen1234567890");
     }
 
     @Test
     public void testParseMethod34() {
         Setup("TestGericht34.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Tomaten");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeEqual(2.5);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("EineEinheitsbezeichnungMit46Zeichen1234567890");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Tomaten");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeEqual(2.5);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("EineEinheitsbezeichnungMit46Zeichen1234567890");
     }
 
     @Test
     public void testParseMethod35() {
         Setup("TestGericht35.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeType(Double.class);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("pg");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeType(Double.class);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("pg");
     }
 
     @Test
     public void testParseMethod36() {
         Setup("TestGericht36.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeType(Double.class);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("pg");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeType(Double.class);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("pg");
     }
 
     @Test
     public void testParseMethod37() {
         Setup("TestGericht37.txt");
-        the(recipe.getIngredients().get(0).getLeft().getName()).shouldBeEqual("Zucker");
-        the(recipe.getIngredients().get(0).getMiddle()).shouldBeType(Double.class);
-        the(recipe.getIngredients().get(0).getRight().getName()).shouldBeEqual("pg");
+        the(recipe.getRecipeIngredients().get(0).getIngredient().getName()).shouldBeEqual("Zucker");
+        the(recipe.getRecipeIngredients().get(0).getAmount()).shouldBeType(Double.class);
+        the(recipe.getRecipeIngredients().get(0).getUnit().getName()).shouldBeEqual("pg");
     }
 
     @Test

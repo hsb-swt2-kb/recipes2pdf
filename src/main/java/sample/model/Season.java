@@ -1,7 +1,7 @@
 package sample.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by czoeller on 11.07.16.
@@ -10,7 +10,7 @@ import java.util.Collection;
 public class Season {
     private Integer id;
     private String name;
-    private Collection<Recipe> recipes;
+    private List<Recipe> recipes;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +54,11 @@ public class Season {
     }
 
     @OneToMany(mappedBy = "season")
-    public Collection<Recipe> getRecipesById() {
+    public List<Recipe> getRecipesById() {
         return recipes;
     }
 
-    public void setRecipesById(Collection<Recipe> recipes) {
+    public void setRecipesById(List<Recipe> recipes) {
         this.recipes = recipes;
     }
 }

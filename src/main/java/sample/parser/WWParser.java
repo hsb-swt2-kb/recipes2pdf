@@ -6,9 +6,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import sample.exceptions.CouldNotParseException;
 import sample.model.Course;
-import sample.model.ISource;
 import sample.model.Recipe;
 import sample.model.Source;
+import sample.model.util.RecipeUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
                 break;
         }
 
-        if(recipe.isIncomplete()){
+        if(RecipeUtil.isRecipeIncomplete(recipe)){
             throw new CouldNotParseException("Invalid recipe, mandatory fields are empty!");
         }
 
@@ -120,7 +120,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
         if(description != null) {
             recipe.setText(description);
         }
-        ISource source = new Source();
+        Source source = new Source();
         source.setName("Weightwatchers");
         recipe.setSource(source);
     }
@@ -169,7 +169,7 @@ public class WWParser extends AConcreteParser implements WWConstants{
         if(description != null) {
             recipe.setText(description);
         }
-        ISource source = new Source();
+        Source source = new Source();
         source.setName("Weightwatchers");
         recipe.setSource(source);
     }

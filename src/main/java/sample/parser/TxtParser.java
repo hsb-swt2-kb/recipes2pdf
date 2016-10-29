@@ -1,6 +1,7 @@
 package sample.parser;
 
 import sample.model.*;
+import sample.model.util.RecipeUtil;
 
 import java.lang.reflect.Array;
 import java.time.Duration;
@@ -169,7 +170,7 @@ public class TxtParser extends AConcreteParser implements Constants {
         catch (Exception e) {
             recipe.setPortions(0);
         }
-        ISource source = new Source();
+        Source source = new Source();
         source.setName("Eigene");
         recipe.setSource(source);
 
@@ -184,7 +185,8 @@ public class TxtParser extends AConcreteParser implements Constants {
      */
     public boolean accepts(List<String> fileContent) {
       /* parse it to check it :) */
-        return !this.parse(fileContent).isIncomplete();
+        final Recipe maybeRecipe = this.parse(fileContent);
+        return !RecipeUtil.isRecipeIncomplete(maybeRecipe);
     }
 
   /** A Method to fix a NumberFormatException in parse()

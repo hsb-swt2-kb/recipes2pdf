@@ -1,12 +1,13 @@
 package sample.parser;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.tuple.Triple;
 import sample.exceptions.CouldNotParseException;
 import sample.model.*;
+import sample.model.util.RecipeUtil;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /* Class Parser
@@ -54,7 +55,7 @@ public class Parser implements IParser {
                 recipe = parser.parse(fileContent);
 
         // check recipe
-        if (!recipe.isIncomplete()) {
+        if (!RecipeUtil.isRecipeIncomplete(recipe)) {
             // init null objects
             if(recipe.getNurture()  == null){ recipe.setNurture(new Nurture());   }
             if(recipe.getRegion()   == null){ recipe.setRegion(new Region());     }
@@ -73,9 +74,10 @@ public class Parser implements IParser {
             if (recipe.getSeason()  .getName() == null) recipe.getSeason()  .setName("");
             if (recipe.getSource()  .getName() == null) recipe.getSource()  .setName("");
 
-            List<Triple<IIngredient,Double,IUnit>> ingredients = recipe.getIngredients();
-            for(Triple<IIngredient,Double,IUnit> ingredient:ingredients){
-                if(ingredient.getRight().getName()==null) ingredient.getRight().setName("");
+            final List<RecipeIngredient> recipeIngredients = recipe.getRecipeIngredients();
+
+            for( RecipeIngredient recipeIngredient : recipeIngredients){
+                if( recipeIngredient.getUnit().getName()==null) recipeIngredient.getUnit().setName("");
             }
 
             return recipe;

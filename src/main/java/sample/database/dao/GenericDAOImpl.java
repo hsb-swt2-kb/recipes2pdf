@@ -2,12 +2,14 @@ package sample.database.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by czoeller on 11.07.16.
@@ -73,4 +75,10 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
         return list;
     }
 
+    @Override
+    public Optional<E> findFirst(String field, Object value) {
+        return Optional.ofNullable((E) currentSession().createCriteria(daoType)
+            .add(Restrictions.eq(field, value))
+            .uniqueResult());
+    }
 }

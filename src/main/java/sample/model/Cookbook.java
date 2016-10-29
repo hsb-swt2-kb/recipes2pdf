@@ -1,7 +1,8 @@
 package sample.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by czoeller on 11.07.16.
@@ -10,8 +11,8 @@ import java.util.Collection;
 public class Cookbook {
     private Integer id;
     private String title;
-    private Collection<CookbookRecipe> cookbookRecipes;
-    private Collection<CookbookSortlevel> cookbookSortlevels;
+    private List<CookbookRecipe> cookbookRecipes;
+    private List<CookbookSortlevel> cookbookSortlevels;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,20 +56,48 @@ public class Cookbook {
     }
 
     @OneToMany(mappedBy = "cookbook", fetch = FetchType.EAGER)
-    public Collection<CookbookRecipe> getCookbookRecipes() {
+    public List<CookbookRecipe> getCookbookRecipes() {
         return cookbookRecipes;
     }
 
-    public void setCookbookRecipes(Collection<CookbookRecipe> cookbookRecipes) {
+    public void setCookbookRecipes(List<CookbookRecipe> cookbookRecipes) {
         this.cookbookRecipes = cookbookRecipes;
     }
 
     @OneToMany(mappedBy = "cookbook")
-    public Collection<CookbookSortlevel> getCookbookSortlevels() {
+    public List<CookbookSortlevel> getCookbookSortlevels() {
         return cookbookSortlevels;
     }
 
-    public void setCookbookSortlevels(Collection<CookbookSortlevel> cookbookSortlevels) {
+    public void setCookbookSortlevels(List<CookbookSortlevel> cookbookSortlevels) {
         this.cookbookSortlevels = cookbookSortlevels;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        CookbookRecipe cookbookRecipe = new CookbookRecipe();
+        cookbookRecipe.setCookbook(this);
+        cookbookRecipe.setRecipe(recipe);
+        this.getCookbookRecipes().add( cookbookRecipe );
+    }
+
+    @Transient
+    public List<Recipe> getRecipes() {
+        return this.getCookbookRecipes().stream().map(CookbookRecipe::getRecipe).collect(Collectors.toList());
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        //TODO: implement
+        throw new IllegalStateException("Not implemented yet.");
+    }
+
+    @Transient
+    public List<Sortlevel>getSortlevel() {
+        //TODO: implement
+        throw new IllegalStateException("Not implemented yet.");
+    }
+
+    public void setSortlevel(List<Sortlevel> sortlevel) {
+        //TODO: implement
+        throw new IllegalStateException("Not implemented yet.");
     }
 }

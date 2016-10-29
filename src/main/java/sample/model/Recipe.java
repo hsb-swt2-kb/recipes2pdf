@@ -1,7 +1,8 @@
 package sample.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by czoeller on 11.07.16.
@@ -13,9 +14,9 @@ public class Recipe {
     private String text;
     private Integer portions;
     private Integer duration;
-    private String image;
+    private byte[] image;
     private Integer calories;
-    private Collection<CookbookRecipe> cookbookRecipes;
+    private List<CookbookRecipe> cookbookRecipes;
     private Source source;
     private Nurture nurture;
     private Season season;
@@ -23,7 +24,7 @@ public class Recipe {
     private Region region;
     private Course course;
     private Category category;
-    private Collection<RecipeIngredient> recipeIngredients;
+    private List<RecipeIngredient> recipeIngredients;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,11 +79,11 @@ public class Recipe {
 
     @Basic
     @Column(name = "image")
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -127,11 +128,11 @@ public class Recipe {
     }
 
     @OneToMany(mappedBy = "recipe")
-    public Collection<CookbookRecipe> getCookbookRecipes() {
+    public List<CookbookRecipe> getCookbookRecipes() {
         return cookbookRecipes;
     }
 
-    public void setCookbookRecipes(Collection<CookbookRecipe> cookbookRecipes) {
+    public void setCookbookRecipes(List<CookbookRecipe> cookbookRecipes) {
         this.cookbookRecipes = cookbookRecipes;
     }
 
@@ -206,11 +207,26 @@ public class Recipe {
     }
 
     @OneToMany(mappedBy = "recipe")
-    public Collection<RecipeIngredient> getRecipeIngredients() {
+    public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }
 
-    public void setRecipeIngredients(Collection<RecipeIngredient> recipeIngredients) {
+    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
         this.recipeIngredients = recipeIngredients;
+    }
+
+    @Transient
+    public List<Ingredient> getIngredients() {
+        return this.getRecipeIngredients().stream().map(RecipeIngredient::getIngredient).collect(Collectors.toList());
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        //TODO: implement
+        throw new IllegalStateException("Not implemented yet.");
+    }
+
+    public void add(String ingredient, double amount, String unit) {
+        //TODO: implement
+        throw new IllegalStateException("Not implemented yet.");
     }
 }

@@ -1,6 +1,7 @@
 package sample.database.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by czoeller on 11.07.16.
@@ -12,4 +13,5 @@ public interface IGenericDAO<E,K> {
     void remove(E entity);
     E find(K key);
     List<E> getAll() ;
+    Optional<E> findFirst(String field, Object value);
 }

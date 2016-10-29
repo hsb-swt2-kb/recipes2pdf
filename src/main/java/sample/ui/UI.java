@@ -8,8 +8,6 @@ import sample.builder.IBuilder;
 import sample.builder.IConcreteBuilder;
 import sample.builder.PdfBuilder;
 import sample.config.IConfig;
-import sample.database.Database;
-import sample.database.DatabaseConnection;
 import sample.database.dao.ICookbookDAO;
 import sample.database.dao.IRecipeDAO;
 import sample.exceptions.CookBookNotFoundException;
@@ -18,6 +16,7 @@ import sample.exceptions.RecipeNotFoundException;
 import sample.model.Cookbook;
 import sample.model.Recipe;
 import sample.model.Sortlevel;
+import sample.model.util.RecipeUtil;
 import sample.parser.Parser;
 
 import javax.inject.Inject;
@@ -25,6 +24,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -35,31 +35,18 @@ import java.util.Optional;
  * Created by markus
  */
 public class UI {
-
-    private final ICookbookDAO cookbookDAO;
-    private final IRecipeDAO recipeDAO;
-
     @Inject
-    public UI(ICookbookDAO cookbookDAO, IRecipeDAO recipeDAO) {
-        this.cookbookDAO = cookbookDAO;
-        this.recipeDAO = recipeDAO;
-    }
+    private final ICookbookDAO cookbookDAO = null;
+    @Inject
+    private final IRecipeDAO recipeDAO = null;
 
-    private Database db = new Database( DatabaseConnection.getDatabaseConnection() );
-
-    void addRecipesFromFolder(final File folder) throws Exception {
+    void addRecipesFromFolder(final File folder) throws CouldNotParseException, FileNotFoundException {
         for (final File file : folder.listFiles()) {
             if (!file.isDirectory()) {
-                try{
-                    this.addRecipe(file);
-                }
-                catch(Exception e){throw e;}
+                this.addRecipe(file);
             }
             else {
-                try{
-                    this.addRecipesFromFolder(file);
-                }
-                catch(Exception e){throw e;}
+                this.addRecipesFromFolder(file);
             }
         }
     }
@@ -87,11 +74,10 @@ public class UI {
      * multiple calls of addRecipe
      *
      * @param files List of the Files of the recipes to add to DB
-     * @return boolean success of the insetions, false if one is not inserted
      * @throws FileNotFoundException
      * @throws CouldNotParseException
      */
-    void addRecipes(List<File> files) throws Exception {
+    public void addRecipes(List<File> files) throws Exception {
         for (File file : files) {
             addRecipe(file);
         }
@@ -135,10 +121,10 @@ public class UI {
     private void addToStandardCookBook(Recipe recipe) {
         if (null == recipe) {
             throw new IllegalStateException("Recipe is null.");
-        } else if( recipe.isIncomplete() ) {
+        } else if( RecipeUtil.isRecipeIncomplete(recipe) ) {
             throw new IllegalStateException("Recipe is incomplete.");
         } else {
-            this.recipeDAO.insert(recipe);
+            this.recipeDAO.add(recipe);
             Optional<Cookbook> oCookBook = this.cookbookDAO.findFirst("title=?", "Standardkochbuch");
             if(oCookBook.isPresent()) {
                 Cookbook cookbook = oCookBook.get();
@@ -214,7 +200,7 @@ public class UI {
         cookbook.setSortlevel( sortlevelList );
         // TODO: Add foreword getForeWord()
         // TODO: Add picture getFile(()
-        this.cookbookDAO.insert(cookbook);
+        this.cookbookDAO.add(cookbook);
     }
 
     /**
@@ -225,7 +211,7 @@ public class UI {
      * @param cookbook cookbook to add to DB
      */
     void addCookBook(Cookbook cookbook) {
-        this.cookbookDAO.insert(cookbook);
+        this.cookbookDAO.add(cookbook);
     }
 
     /**
@@ -236,10 +222,14 @@ public class UI {
      * @param cookbookName name of the cookbook to delete from DB
      */
     void delCookBook(String cookbookName) {
-        if(this.cookbookDAO.findFirst("name=?", cookbookName).isPresent())
+        if(this.cookbookDAO.findFirst("name", cookbookName).isPresent())
         {
-            Cookbook cookbookToDelete = this.cookbookDAO.findFirst("name=?",cookbookName).get();
-            this.cookbookDAO.delete(cookbookToDelete);
+            Optional<Cookbook> cookbookToDelete = this.cookbookDAO.findFirst("name",cookbookName);
+            if(cookbookToDelete.isPresent()) {
+                this.cookbookDAO.remove(cookbookToDelete.get());
+            } else {
+                throw new IllegalStateException("Could not find cookbook to delete.");
+            }
         }
     }
 
@@ -251,7 +241,7 @@ public class UI {
      * @param cookbook cookbook to delete from DB
      */
     void delCookBook(Cookbook cookbook) {
-        this.cookbookDAO.delete(cookbook);
+        this.cookbookDAO.remove(cookbook);
     }
 
     /**
@@ -297,7 +287,6 @@ public class UI {
      * @throws CookBookNotFoundException
      */
     Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
-        new Database(DatabaseConnection.getDatabaseConnection());
         return this.cookbookDAO.findFirst("title=?", cookbookname).orElseThrow(CookBookNotFoundException::new);
     }
 

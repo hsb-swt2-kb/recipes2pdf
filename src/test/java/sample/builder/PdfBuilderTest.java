@@ -83,7 +83,7 @@ public class PdfBuilderTest {
         r1.setText("Rezepttext 1");
         r1.setTitle("Rezepttitel1");
         r1.add("Zutat1", 5, "g");
-        r1 = generateRecipe("Rezepttitel1", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
+        r1 = generateRecipe("Rezepttitel1", "Rezepttext 1", 1, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
 
         r2.setCategory(nachspeise);
         r2.setSeason(sommer);
@@ -91,7 +91,7 @@ public class PdfBuilderTest {
         r2.setText("Rezepttext 2");
         r2.setTitle("Rezepttitel2");
         r2.add("Zutat2", 8, "g");
-        r2 = generateRecipe("Rezepttitel2", "Rezepttext 2", 2L, "Nachspeise", "Mexiko", "Sommer", "Zutat2", 8, "g");
+        r2 = generateRecipe("Rezepttitel2", "Rezepttext 2", 2, "Nachspeise", "Mexiko", "Sommer", "Zutat2", 8, "g");
 
 
         r3.setCategory(hauptspeise);
@@ -100,7 +100,7 @@ public class PdfBuilderTest {
         r3.setText("Rezepttext 3");
         r3.setTitle("Rezepttitel3");
         r3.add("Zutat3", 6, "g");
-        r3 = generateRecipe("Rezepttitel3", "Rezepttext 3", 3L, "Hauptspeise", "China", "Frühling", "Zutat3", 6, "g");
+        r3 = generateRecipe("Rezepttitel3", "Rezepttext 3", 3, "Hauptspeise", "China", "Frühling", "Zutat3", 6, "g");
 
         r4.setCategory(vorspeise);
         r4.setSeason(winter);
@@ -108,7 +108,7 @@ public class PdfBuilderTest {
         r4.setText("Rezepttext 4");
         r4.setTitle("Rezepttitel4");
         r4.add("Zutat4", 4, "g");
-        r4 = generateRecipe("Rezepttitel4", "Rezepttext 4", 4L, "Vorspeise", "Mexiko", "Winter", "Zutat4", 4, "g");
+        r4 = generateRecipe("Rezepttitel4", "Rezepttext 4", 4, "Vorspeise", "Mexiko", "Winter", "Zutat4", 4, "g");
 
 
         cookbook.addRecipe(r1);
@@ -175,7 +175,7 @@ public class PdfBuilderTest {
         IConfig config = IConfig.getInstance();
         IConcreteBuilder pdfBuilder = new PdfBuilder(config);
 
-        Recipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
+        Recipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
         List<Sortlevel> sortlevels = generateSortlevelList("kategorie", "region", "saison");
         pdfBuilder.build(r1, sortlevels);
         String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
@@ -207,7 +207,7 @@ public class PdfBuilderTest {
             FileUtils.copyInputStreamToFile(templateStream, templateFile);
             PdfBuilder builder = new PdfBuilder(config);
             Cookbook cookbook = new Cookbook();
-            cookbook.addRecipe(generateRecipe("Testrezept", "Testrezepttext", 1L, "Hauptspeise", "Deutschland", "Sommer", "Mehl", 400, "g"));
+            cookbook.addRecipe(generateRecipe("Testrezept", "Testrezepttext", 1, "Hauptspeise", "Deutschland", "Sommer", "Mehl", 400, "g"));
             builder.build(cookbook);
         } catch (ParseErrorException e) {
             ex = e;
@@ -244,7 +244,7 @@ public class PdfBuilderTest {
     public void testRicipeNoSortlevel() throws Exception {
         IConfig config = IConfig.getInstance();
         PdfBuilder builder = new PdfBuilder(config);
-        Recipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
+        Recipe r1 = generateRecipe("Testrezept", "Rezepttext 1", 1, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
 
         builder.build(r1);
         String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
@@ -270,7 +270,7 @@ public class PdfBuilderTest {
         IConfig config = IConfig.getInstance();
         PdfBuilder builder = new PdfBuilder(config);
 
-        Recipe r1 = generateRecipe("Germknödel", "Rezepttext 1", 1L, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
+        Recipe r1 = generateRecipe("Germknödel", "Rezepttext 1", 1, "Vorspeise", "Griechenland", "Frühling", "Zutat1", 5, "g");
 
         builder.build(r1);
         String texFile = FileUtils.readFileToString(new File(config.getProperty("PROGRAM_USERDATA_DIR") + File.separator + config.getProperty("OUTPUT_FOLDER_NAME") + File.separator + r1.getTitle() + ".tex"));
@@ -300,7 +300,7 @@ public class PdfBuilderTest {
         assertTrue(builder.builds("PDF"));
     }
 
-    Recipe generateRecipe(String title, String text, Long id, String category, String region, String season, String ingredientName, Integer ingrentAmount, String ingredientUnit) {
+    Recipe generateRecipe(String title, String text, Integer id, String category, String region, String season, String ingredientName, Integer ingrentAmount, String ingredientUnit) {
         Recipe recipe = new Recipe();
         Category testCategory = new Category();
         Region testRegion = new Region();
