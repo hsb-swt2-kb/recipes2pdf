@@ -298,7 +298,7 @@ public class UI {
      * @throws CookBookNotFoundException
      */
     Cookbook searchCookBook(String cookbookname) throws CookBookNotFoundException {
-        return this.cookbookDAO.findFirst("title=?", cookbookname).orElseThrow(CookBookNotFoundException::new);
+        return this.cookbookDAO.findFirst("title", cookbookname).orElseThrow(CookBookNotFoundException::new);
     }
 
     /**

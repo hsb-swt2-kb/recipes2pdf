@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -27,10 +28,13 @@ import sample.exceptions.RecipeNotFoundException;
 import sample.model.Cookbook;
 import sample.model.Recipe;
 
+import javax.inject.Inject;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ControllerManageCookBook {
+public class ControllerManageCookBook implements Initializable {
 
     private static ControllerManageCookBook instance;
     protected ObservableList<String> selectedRecipes;
@@ -62,7 +66,10 @@ public class ControllerManageCookBook {
     private TextField searchFieldCookBooks;
     @FXML
     private ListView<String> listViewCookBook;
+    @Inject
     private UI ui;
+    @Inject
+    Service service;
 
     /**
      * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBook and ControllerChangeRecipe.
@@ -80,8 +87,9 @@ public class ControllerManageCookBook {
         return ControllerManageCookBook.instance;
     }
 
-    @FXML
-    private void initialize() {
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         instance = this;
         initializeListeners();
         this.recipeNames = FXCollections.observableArrayList();
@@ -92,7 +100,6 @@ public class ControllerManageCookBook {
         loadInfo();
         Platform.runLater(() -> {comboBoxCookBooks.setItems(this.cookBookNames); comboBoxCookBooks.getSelectionModel().selectFirst();});
         refresh();
-        ui = new UI();
     }
 
     void refresh(){

@@ -14,12 +14,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 
@@ -47,6 +45,8 @@ public class ControllerDefault {
     private MenuItem openAbout;
     @FXML
     private MenuItem data;
+    @Inject
+    FXMLLoader fxmlLoader;
 
     /**
      * These method changes the layout in the main window.
@@ -57,10 +57,15 @@ public class ControllerDefault {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
         Parent newContent = null;
         try {
-            newContent = FXMLLoader.load(getClass().getResource(fxml));
+            fxmlLoader.setLocation(getClass().getResource(fxml));
+            newContent = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(wrongPathException);
+        }
+
+        if( !(newContent instanceof AnchorPane) ) {
+            throw new IllegalStateException("Switchable content must be located in a AnchorPane");
         }
 
         //Set Constrains Back to the defaults

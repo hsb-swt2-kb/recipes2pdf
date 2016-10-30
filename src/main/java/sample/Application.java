@@ -8,6 +8,7 @@ import sample.config.IConfig;
 import sample.database.DatabaseConfig;
 import sample.exceptions.CouldNotParseException;
 import sample.ui.CLI;
+import sample.ui.GUI;
 import sample.ui.Shell;
 import sample.ui.UI;
 
@@ -42,7 +43,7 @@ public class Application {
         } catch (Exception e) {
             LOG.error("cannot start H2 [{}]", e);
         }
-
+        new GUI().start(args);
         /*final ICookbookDAO cookbookDAO = injector.getInstance(CookbookDAOImpl.class);
         final IRecipeDAO recipeDAO = injector.getInstance(RecipeDAOImpl.class);
         final ICategoryDAO categoryDAO = injector.getInstance(CategoryDAOImpl.class);*/
@@ -66,6 +67,7 @@ public class Application {
         cookbookDAO.addRecipe(cookbook, recipe);
         cookbookDAO.add(cookbook);
 */
+
 
         try {
             final List<File> files = Lists.newArrayList(new File( "C:\\Users\\noex_\\IdeaProjects\\Java\\recipes2pdf\\src\\main\\resources\\sample\\Rezepte\\Bolognese.txt") );
