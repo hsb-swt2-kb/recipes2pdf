@@ -12,11 +12,7 @@ import javafx.stage.Stage;
  * It displays the notEnoughArguments-dialog.
  */
 
-
 public class ControllerError {
-
-
-    private static ControllerError instance;
 
     @FXML
     private Label labelBoldPrint;
@@ -24,22 +20,6 @@ public class ControllerError {
     private Label labelLittlePrint;
     @FXML
     private Button closeButton;
-
-    public static ControllerError getInstance() {
-        if (ControllerError.instance == null) {
-            synchronized (ControllerError.class) {
-                if (ControllerError.instance == null) {
-                    ControllerError.instance = new ControllerError();
-                }
-            }
-        }
-        return ControllerError.instance;
-    }
-
-    @FXML
-    private void initialize() {
-        instance = this;
-    }
 
     public void setLabels(String boldPrint, String littlePrint) {
         this.labelBoldPrint.setText(boldPrint);

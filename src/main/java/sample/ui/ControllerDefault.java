@@ -53,7 +53,7 @@ public class ControllerDefault {
      *
      * @param fxml defenies the path of the new FXML-Layout-File.
      */
-    void changeLayout(String fxml) {
+    void changeLayout(final String fxml) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
         Parent newContent = null;
         try {

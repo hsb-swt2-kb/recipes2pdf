@@ -54,7 +54,7 @@ public class Unit {
         return result;
     }
 
-    @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "unit")
     public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }

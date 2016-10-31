@@ -29,6 +29,7 @@ public class DatabaseModule extends AbstractModule {
          * HibernateConnection connection = injector.getInstance(HibernateConnection.class);
          * a new Instance of HibernateConnection (with the included HibernateUtil) will be created.
          */
+        bind(new TypeLiteral<IGenericDAO<CookbookRecipe, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<CookbookRecipe, Integer>>(){}).in(Scopes.SINGLETON);
         bind(new TypeLiteral<IGenericDAO<Cookbook, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Cookbook, Integer>>(){}).in(Scopes.SINGLETON);
         bind(new TypeLiteral<IGenericDAO<Recipe, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Recipe, Integer>>(){}).in(Scopes.SINGLETON);
         bind(new TypeLiteral<IGenericDAO<Ingredient, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Ingredient, Integer>>(){}).in(Scopes.SINGLETON);

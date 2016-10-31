@@ -6,10 +6,10 @@ package sample.ui;
  * It provides methods for adding new recipes.
  */
 
+import com.jfoenix.controls.JFXRadioButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.exceptions.CouldNotParseException;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 public class ControllerLoadRecipe {
@@ -27,23 +28,29 @@ public class ControllerLoadRecipe {
     final ToggleGroup group = new ToggleGroup();
 
     @FXML
-    private RadioButton radioButtonHyperLink;
+    private JFXRadioButton radioButtonHyperLink;
     @FXML
-    private RadioButton radioButtonFolder;
+    private JFXRadioButton radioButtonFolder;
     @FXML
-    private RadioButton radioButtonFile;
+    private JFXRadioButton radioButtonFile;
     @FXML
     private TextField hyperLinkTextField;
     @FXML
     private Button loadButton;
     @FXML
     private Button closeButton;
+    @Inject
     UI ui;
+    @Inject
+    ControllerManageCookBook controllerManageCookBook;
 
     private boolean editability = false;
     private boolean radioButtonFileBoolean = false;
     private boolean radioButtonFolderBoolean = false;
     private boolean radioButtonLinkBoolean = false;
+
+    @Inject
+    private ControllerError controllerError;
 
     @FXML
     public void initialize(){
@@ -175,14 +182,14 @@ public class ControllerLoadRecipe {
         } else if (radioButtonFileBoolean == true) {
             openFileChooser();
         }
-        ControllerManageCookBook.getInstance().refresh();
+        controllerManageCookBook.refresh();
         closeStage();
     }
 
     private void manageHyperlinkError(String boldPrint, String littlePrint) {
         ControllerDefault controllerDefault = new ControllerDefault();
         controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
-        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+        controllerError.setLabels(boldPrint, littlePrint);
     }
 
     private boolean supportedSourceHyperlink() {

@@ -56,7 +56,7 @@ public class Cookbook {
         return result;
     }
 
-    @OneToMany(mappedBy = "cookbook", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "cookbook", cascade = CascadeType.ALL)
     public List<CookbookRecipe> getCookbookRecipes() {
         return cookbookRecipes;
     }
@@ -65,7 +65,7 @@ public class Cookbook {
         this.cookbookRecipes = cookbookRecipes;
     }
 
-    @OneToMany(mappedBy = "cookbook", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "cookbook", cascade = CascadeType.ALL)
     public List<CookbookSortlevel> getCookbookSortlevels() {
         return cookbookSortlevels;
     }

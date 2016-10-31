@@ -48,6 +48,11 @@ repositories {
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
+    compile 'uaihebert.com:uaiCriteria:4.0.0'
+    compile 'org.lazyluke:log4jdbc-remix:0.2.7'
+
+    compile 'com.jfoenix:jfoenix:1.0.0'
+    compile 'org.fxmisc.easybind:easybind:1.0.3'
     compile 'com.gluonhq:ignite-guice:1.0.1'
 
     compile 'org.slf4j:slf4j-api:1.7.21'
@@ -101,7 +106,7 @@ dependencies {
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
     compile 'com.google.inject.extensions:guice-persist:4.1.0'
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
-    compile 'uaihebert.com:EasyCriteria:3.0.0'
+    //compile 'uaihebert.com:EasyCriteria:3.0.0'
     compile 'com.h2database:h2:1.4.192'
     compile 'org.javalite:javalite-common:1.4.9'
 }

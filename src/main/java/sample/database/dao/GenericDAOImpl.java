@@ -1,8 +1,10 @@
 package sample.database.dao;
 
+import com.github.vbauer.herald.annotation.Log;
 import com.google.inject.TypeLiteral;
-import com.uaihebert.factory.EasyCriteriaFactory;
-import com.uaihebert.model.EasyCriteria;
+import com.uaihebert.uaicriteria.UaiCriteria;
+import com.uaihebert.uaicriteria.UaiCriteriaFactory;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -20,14 +22,17 @@ import java.util.Optional;
 @SuppressWarnings("unchecked")
 public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E, ID> {
 
+    @Log
+    Logger LOG;
+
     @Inject
     private EntityManager em;
-    protected Class<? extends ID> daoType;
+    protected Class<E> daoType;
 
     @Inject
     @SuppressWarnings("unchecked")
     public GenericDAOImpl(TypeLiteral<E> type) {
-        this.daoType = (Class<? extends ID>) type.getRawType();
+        this.daoType = (Class<E>) type.getRawType();
     }
 
     public GenericDAOImpl() {
@@ -79,9 +84,10 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
 
     @Override
     public Optional<E> findFirst(String field, String value) {
-        EasyCriteria<? extends ID> easyCriteria = EasyCriteriaFactory.createQueryCriteria(em, daoType);
+        //EasyCriteria<? extends ID> easyCriteria = EasyCriteriaFactory.createQueryCriteria(em, daoType);
+        UaiCriteria<E> uaiCriteria = UaiCriteriaFactory.createQueryCriteria(em, daoType);
         try {
-            return Optional.ofNullable((E) easyCriteria.andStringLike(field,value).getSingleResult() );
+            return Optional.ofNullable((E) uaiCriteria.andStringLike(field,value).getSingleResult() );
         }
         catch(NoResultException | EntityNotFoundException nre) {
             return Optional.empty();
@@ -92,6 +98,7 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
     public E findOrCreate(E entity, String field, String value) {
         final Optional<E> entitySearch = findFirst(field, value);
         if( !entitySearch.isPresent() ) {
+            LOG.debug(field + "='" + value + "' not found! Creating: " + entity);
             add( entity );
             return entity;
         } else {

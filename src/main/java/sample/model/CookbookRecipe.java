@@ -41,7 +41,7 @@ public class CookbookRecipe {
         return result;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     public Recipe getRecipe() {
         return recipe;
@@ -51,7 +51,7 @@ public class CookbookRecipe {
         this.recipe = recipe;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cookbook_id", referencedColumnName = "id")
     public Cookbook getCookbook() {
         return cookbook;

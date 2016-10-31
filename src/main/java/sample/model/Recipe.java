@@ -1,11 +1,8 @@
 package sample.model;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.hibernate.annotations.*;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -136,7 +133,7 @@ public class Recipe {
         return result;
     }
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     public List<CookbookRecipe> getCookbookRecipes() {
         return cookbookRecipes;
     }
@@ -145,7 +142,7 @@ public class Recipe {
         this.cookbookRecipes = cookbookRecipes;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "source_id", referencedColumnName = "id")
     public Source getSource() {
         return source;
@@ -155,7 +152,7 @@ public class Recipe {
         this.source = source;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "nurture_id", referencedColumnName = "id")
     public Nurture getNurture() {
         return nurture;
@@ -165,7 +162,7 @@ public class Recipe {
         this.nurture = nurture;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "season_id", referencedColumnName = "id")
     public Season getSeason() {
         return season;
@@ -175,7 +172,7 @@ public class Recipe {
         this.season = season;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "daytime_id", referencedColumnName = "id")
     public Daytime getDaytime() {
         return daytime;
@@ -185,7 +182,7 @@ public class Recipe {
         this.daytime = daytime;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id", referencedColumnName = "id")
     public Region getRegion() {
         return region;
@@ -195,8 +192,7 @@ public class Recipe {
         this.region = region;
     }
 
-    @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     public Course getCourse() {
         return course;
@@ -206,7 +202,7 @@ public class Recipe {
         this.course = course;
     }
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     public Category getCategory() {
         return category;

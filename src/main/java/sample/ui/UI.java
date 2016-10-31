@@ -3,7 +3,6 @@ package sample.ui;
 import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
 import sample.builder.Builder;
 import sample.builder.Exceptions.TexParserException;
 import sample.builder.IBuilder;
@@ -11,6 +10,7 @@ import sample.builder.IConcreteBuilder;
 import sample.builder.PdfBuilder;
 import sample.config.IConfig;
 import sample.database.dao.IGenericDAO;
+import sample.database.service.CookbookService;
 import sample.database.service.RecipeService;
 import sample.exceptions.CookBookNotFoundException;
 import sample.exceptions.CouldNotParseException;
@@ -44,6 +44,8 @@ public class UI {
     private IGenericDAO<Recipe, Integer> recipeDAO;
     @javax.inject.Inject
     private RecipeService recipeService;
+    @javax.inject.Inject
+    private CookbookService cookbookService;
 
     void addRecipesFromFolder(final File folder) throws CouldNotParseException, FileNotFoundException {
         for (final File file : folder.listFiles()) {
@@ -327,6 +329,7 @@ public class UI {
      *
      * to get the Recipes that are associated with this cookbook
      *
+     * @deprecated Use {@see getRecipesOfCookbook}
      * @param cookbookname name of the cookbook of you want the recipes from
      * @return List<Recipe> list of the recipes of the cookbook
      * @throws CookBookNotFoundException
@@ -336,13 +339,15 @@ public class UI {
         return cookbook.getRecipes();
     }
 
+    List<Recipe> getRecipesOfCookbook(Cookbook cookbook) throws CookBookNotFoundException {
+        return cookbook.getRecipes();
+    }
+
     public void addRecipeToCookbook(Cookbook cookbook, Recipe recipe) {
-        //TODO: implement
-        throw new NotImplementedException("Add recipe to cookbook is implemented yet");
+        cookbookService.addRecipeToCookbook(cookbook, recipe);
     }
 
     public void removeRecipeFromCookbook(Cookbook cookbook, Recipe recipe) {
-        //TODO: implement
-        throw new NotImplementedException("Add recipe to cookbook is implemented yet");
+        cookbookService.removeRecipeFromCookbook(cookbook, recipe);
     }
 }

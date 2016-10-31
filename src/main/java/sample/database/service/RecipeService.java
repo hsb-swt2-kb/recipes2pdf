@@ -14,6 +14,10 @@ import javax.inject.Singleton;
 public class RecipeService {
 
     @Inject
+    private IGenericDAO<CookbookRecipe, Integer> cookbookRecipeDAO;
+    @Inject
+    private IGenericDAO<Cookbook, Integer> cookbookDAO;
+    @Inject
     private IGenericDAO<Recipe, Integer> recipeDAO;
     @Inject
     private IGenericDAO<Ingredient, Integer> ingredientDAO;
@@ -36,6 +40,21 @@ public class RecipeService {
 
     public void create(Recipe recipe) {
 
+        if( recipe.getCookbookRecipes().isEmpty() ) {
+            Cookbook cookbook = new Cookbook();
+            cookbook.setTitle("Generated Cookbook");
+            cookbook = cookbookDAO.findOrCreate(cookbook, "title", cookbook.getTitle());
+
+            final CookbookRecipe cookbookRecipe = new CookbookRecipe();
+            cookbookRecipe.setCookbook(cookbook);
+            cookbookRecipe.setRecipe(recipe);
+
+            cookbook.getCookbookRecipes().add(cookbookRecipe);
+            recipe.getCookbookRecipes().add(cookbookRecipe);
+            //cookbookDAO.add(cookbook);
+            //cookbookRecipeDAO.add(cookbookRecipe);
+        }
+
         // Reuse Entities in database
         recipe.setCategory( categoryDAO.findOrCreate( recipe.getCategory(), "name", recipe.getCategory().getName()));
         recipe.setCourse( courseDAO.findOrCreate( recipe.getCourse(), "name", recipe.getCourse().getName()));
@@ -46,11 +65,11 @@ public class RecipeService {
         recipe.setSource( sourceDAO.findOrCreate( recipe.getSource(), "name", recipe.getSource().getName()));
 
         for (RecipeIngredient recipeIngredient: recipe.getRecipeIngredients() ) {
-            recipeIngredient.setIngredient( ingredientDAO.findOrCreate(recipeIngredient.getIngredient(), "name", recipeIngredient.getIngredient().getName() ) );
-            recipeIngredient.setUnit( unitDAO.findOrCreate(recipeIngredient.getUnit(), "name", recipeIngredient.getUnit().getName() ) );
+            recipeIngredient.setIngredient( ingredientDAO.findOrCreate(recipeIngredient.getIngredient(), "name", recipeIngredient.getIngredient().getName().replace("\t", "").trim() ) );
+            recipeIngredient.setUnit( unitDAO.findOrCreate(recipeIngredient.getUnit(), "name", recipeIngredient.getUnit().getName().replace("\t", "").trim() ) );
             recipeIngredient.setRecipe(recipe);
         }
 
-        recipeDAO.add(recipe);
+        recipeDAO.saveOrUpdate(recipe);
     }
 }

@@ -6,9 +6,10 @@ import org.h2.tools.Server;
 import org.slf4j.Logger;
 import sample.config.IConfig;
 import sample.database.DatabaseConfig;
+import sample.database.dao.IGenericDAO;
 import sample.exceptions.CouldNotParseException;
+import sample.model.Cookbook;
 import sample.ui.CLI;
-import sample.ui.GUI;
 import sample.ui.Shell;
 import sample.ui.UI;
 
@@ -27,6 +28,9 @@ public class Application {
     @Inject
     private UI ui;
 
+    @Inject
+    private IGenericDAO<Cookbook, Integer> cookbookDAO;
+
     @Log
     private Logger LOG;
 
@@ -36,14 +40,26 @@ public class Application {
         try {
             Server.createTcpServer("-tcpAllowOthers").start();
             Class.forName("org.h2.Driver");
-            DriverManager.getConnection(  databaseConfig.getDatabaseURL() + ";AUTO_SERVER=TRUE");
+            DriverManager.getConnection(  databaseConfig.getDatabaseURL() + ";AUTO_SERVER=TRUE;TRACE_LEVEL_FILE=4");
             final Server webServer = Server.createWebServer();
             webServer.start();
             LOG.debug("Server at: " + webServer.getURL() );
         } catch (Exception e) {
             LOG.error("cannot start H2 [{}]", e);
         }
-        new GUI().start(args);
+
+        final Cookbook cookbook = new Cookbook();
+        cookbook.setTitle("Neues Kochbuch");
+        cookbookDAO.add(cookbook);
+
+        try {
+            final List<File> files = Lists.newArrayList(new File( "C:\\Users\\noex_\\IdeaProjects\\Java\\recipes2pdf\\src\\main\\resources\\sample\\Rezepte\\Bolognese.txt") );
+            ui.addRecipes( files );
+        } catch (CouldNotParseException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //new GUI().start(args);
         /*final ICookbookDAO cookbookDAO = injector.getInstance(CookbookDAOImpl.class);
         final IRecipeDAO recipeDAO = injector.getInstance(RecipeDAOImpl.class);
         final ICategoryDAO categoryDAO = injector.getInstance(CategoryDAOImpl.class);*/
@@ -69,12 +85,6 @@ public class Application {
 */
 
 
-        try {
-            final List<File> files = Lists.newArrayList(new File( "C:\\Users\\noex_\\IdeaProjects\\Java\\recipes2pdf\\src\\main\\resources\\sample\\Rezepte\\Bolognese.txt") );
-            ui.addRecipes( files );
-        } catch (CouldNotParseException | FileNotFoundException e) {
-            e.printStackTrace();
-        }
         // select UI
         if(args.length==0)
             ;

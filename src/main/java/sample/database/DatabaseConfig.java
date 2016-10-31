@@ -59,6 +59,6 @@ public class DatabaseConfig {
     }
 
     public String getDatabaseURL() {
-        return "jdbc:h2:file:" + getDatabasePath().replaceAll("\\\\", "/");
+        return "jdbc:log4jdbc:h2:file:" + getDatabasePath().replaceAll("\\\\", "/");
     }
 }
