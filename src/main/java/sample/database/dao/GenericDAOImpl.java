@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -49,17 +50,24 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
     }
 
     @Override
-    public void saveOrUpdate(E entity) {
-        em.getTransaction().begin();
-        em.merge(entity);
-        em.getTransaction().commit();
+    public E saveOrUpdate(E entity) {
+        return update(entity);
     }
 
     @Override
-    public void update(E entity) {
-        em.getTransaction().begin();
-        em.merge(entity);
-        em.getTransaction().commit();
+    public E update(E entity) {
+        E merged = null;
+        try {
+            if (!em.getTransaction().isActive()) em.getTransaction().begin();
+            merged = em.merge(entity);
+            em.getTransaction()
+              .commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
+
+        Objects.requireNonNull(merged);
+        return merged;
     }
 
     @Override
@@ -67,6 +75,21 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
         em.getTransaction().begin();
         em.remove(entity);
         em.getTransaction().commit();
+    }
+
+    @Override
+    public void detach(E entity) {
+        try {
+            if (!em.getTransaction().isActive()) em.getTransaction().begin();
+            em.detach(entity);
+            em.getTransaction()
+              .commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
+        /*em.getTransaction().begin();
+        em.detach(entity);
+        em.getTransaction().commit();*/
     }
 
     @Override
@@ -100,6 +123,16 @@ public class GenericDAOImpl<E, ID extends Serializable> implements IGenericDAO<E
         if( !entitySearch.isPresent() ) {
             LOG.debug(field + "='" + value + "' not found! Creating: " + entity);
             add( entity );
+            return entity;
+        } else {
+            return entitySearch.get();
+        }
+    }
+
+    @Override
+    public E findOrNew(E entity, String field, String value) {
+        final Optional<E> entitySearch = findFirst(field, value);
+        if( !entitySearch.isPresent() ) {
             return entity;
         } else {
             return entitySearch.get();

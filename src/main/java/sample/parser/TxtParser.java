@@ -80,7 +80,7 @@ public class TxtParser extends AConcreteParser implements Constants {
             ingredient.setName(tempName);
 
             final RecipeIngredient recipeIngredient = new RecipeIngredient();
-            recipeIngredient.setAmount( NumberUtils.toDouble("tempAmount", 0d) );
+            recipeIngredient.setAmount( NumberUtils.toDouble(tempAmount, 0d) );
             recipeIngredient.setUnit( unit );
             recipeIngredient.setIngredient(ingredient);
 

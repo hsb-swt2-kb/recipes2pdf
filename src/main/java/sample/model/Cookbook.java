@@ -1,8 +1,9 @@
 package sample.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
 /**
@@ -12,8 +13,8 @@ import java.util.stream.Collectors;
 public class Cookbook {
     private Integer id;
     private String title;
-    private List<CookbookRecipe> cookbookRecipes = new ArrayList<>();
-    private List<CookbookSortlevel> cookbookSortlevels = new ArrayList<>();
+    private Set<CookbookRecipe> cookbookRecipes = new CopyOnWriteArraySet<>();
+    private Set<CookbookSortlevel> cookbookSortlevels = new CopyOnWriteArraySet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,20 +58,20 @@ public class Cookbook {
     }
 
     @OneToMany(mappedBy = "cookbook", cascade = CascadeType.ALL)
-    public List<CookbookRecipe> getCookbookRecipes() {
+    public Set<CookbookRecipe> getCookbookRecipes() {
         return cookbookRecipes;
     }
 
-    public void setCookbookRecipes(List<CookbookRecipe> cookbookRecipes) {
+    public void setCookbookRecipes(Set<CookbookRecipe> cookbookRecipes) {
         this.cookbookRecipes = cookbookRecipes;
     }
 
     @OneToMany(mappedBy = "cookbook", cascade = CascadeType.ALL)
-    public List<CookbookSortlevel> getCookbookSortlevels() {
+    public Set<CookbookSortlevel> getCookbookSortlevels() {
         return cookbookSortlevels;
     }
 
-    public void setCookbookSortlevels(List<CookbookSortlevel> cookbookSortlevels) {
+    public void setCookbookSortlevels(Set<CookbookSortlevel> cookbookSortlevels) {
         this.cookbookSortlevels = cookbookSortlevels;
     }
 

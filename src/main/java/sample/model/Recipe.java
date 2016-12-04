@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +29,7 @@ public class Recipe {
     private Region region;
     private Course course;
     private Category category;
-    private Set<RecipeIngredient> recipeIngredients = new TreeSet<>();
+    private Set<RecipeIngredient> recipeIngredients = new CopyOnWriteArraySet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,7 +82,7 @@ public class Recipe {
         this.duration = duration;
     }
 
-    //TODO: fix dialect support for lob. @Lob
+    @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "image")
     public byte[] getImage() {

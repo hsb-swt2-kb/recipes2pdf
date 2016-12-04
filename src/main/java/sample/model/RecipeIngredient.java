@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "recipe_ingredient", schema = "", catalog = "")
-public class RecipeIngredient implements Comparable<RecipeIngredient> {
+public class RecipeIngredient {
     private Integer id;
     private Double amount;
     private Unit unit;
@@ -44,6 +44,8 @@ public class RecipeIngredient implements Comparable<RecipeIngredient> {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
+        if (recipe != null ? !recipe.equals(that.recipe) : that.recipe != null) return false;
+        if (ingredient != null ? !ingredient.equals(that.ingredient) : that.ingredient != null) return false;
 
         return true;
     }
@@ -55,8 +57,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient> {
         result = 31 * result + (getIngredient() != null ? getIngredient().hashCode() : 0);
         return result;
     }
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
     public Unit getUnit() {
         return unit;
@@ -66,7 +67,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient> {
         this.unit = unit;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "ingredient_id", referencedColumnName = "id")
     public Ingredient getIngredient() {
         return ingredient;
@@ -76,7 +77,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient> {
         this.ingredient = ingredient;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     public Recipe getRecipe() {
         return recipe;
@@ -84,11 +85,5 @@ public class RecipeIngredient implements Comparable<RecipeIngredient> {
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
-    }
-
-    @Override
-    public int compareTo(RecipeIngredient o) {
-        if( o.getIngredient().getName().equals( this.getIngredient().getName())) return 0;
-        else return -1;
     }
 }

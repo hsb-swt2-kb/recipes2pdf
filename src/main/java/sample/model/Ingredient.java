@@ -54,7 +54,7 @@ public class Ingredient {
         return result;
     }
 
-    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.MERGE, orphanRemoval = true)
     public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }

@@ -1,12 +1,13 @@
 package sample.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Created by czoeller on 11.07.16.
  */
 @Entity
-@Table(name = "cookbook_recipe", schema = "", catalog = "")
+@Table(name = "cookbook_recipe", schema = "", catalog = "", uniqueConstraints = {@UniqueConstraint(columnNames = {"recipe_id" , "cookbook_id"})})
 public class CookbookRecipe {
     private Integer id;
     private Recipe recipe;
@@ -27,21 +28,19 @@ public class CookbookRecipe {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         CookbookRecipe that = (CookbookRecipe) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-
-        return true;
+        return Objects.equals(recipe.getId(), that.recipe.getId()) && Objects.equals(cookbook.getId(), that.cookbook.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = recipe != null && recipe.getId() != null ? recipe.getId().hashCode() : 0;
+        result = 31 * result + (cookbook != null && cookbook.getId() != null ? cookbook.getId().hashCode() : 0);
         return result;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    // Cascade all but REMOVE: A recipe should not be deleted when removing the association
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     public Recipe getRecipe() {
         return recipe;
@@ -51,7 +50,8 @@ public class CookbookRecipe {
         this.recipe = recipe;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    // Cascade all but REMOVE: A cookbook should not be deleted when removing the association
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "cookbook_id", referencedColumnName = "id")
     public Cookbook getCookbook() {
         return cookbook;

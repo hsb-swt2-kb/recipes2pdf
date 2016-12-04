@@ -33,6 +33,7 @@ public class DatabaseModule extends AbstractModule {
         bind(new TypeLiteral<IGenericDAO<Cookbook, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Cookbook, Integer>>(){}).in(Scopes.SINGLETON);
         bind(new TypeLiteral<IGenericDAO<Recipe, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Recipe, Integer>>(){}).in(Scopes.SINGLETON);
         bind(new TypeLiteral<IGenericDAO<Ingredient, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Ingredient, Integer>>(){}).in(Scopes.SINGLETON);
+        bind(new TypeLiteral<IGenericDAO<RecipeIngredient, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<RecipeIngredient, Integer>>(){}).in(Scopes.SINGLETON);
         bind(new TypeLiteral<IGenericDAO<Category, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Category, Integer>>(){}).in(Scopes.SINGLETON);
         bind(new TypeLiteral<IGenericDAO<Unit, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Unit, Integer>>(){}).in(Scopes.SINGLETON);
         bind(new TypeLiteral<IGenericDAO<Course, Integer>>(){}).to(new TypeLiteral<GenericDAOImpl<Course, Integer>>(){}).in(Scopes.SINGLETON);
@@ -48,7 +49,7 @@ public class DatabaseModule extends AbstractModule {
 
     private JpaPersistModule createJpaPersistModule(DatabaseConfig databaseConfig) {
         Properties props = new Properties();
-        props.put("javax.persistence.jdbc.url", databaseConfig.getDatabaseURL());
+        props.put("javax.persistence.jdbc.url", databaseConfig.getDatabaseURL() + ";DB_CLOSE_DELAY=-1");
         System.out.println("Database at: " + databaseConfig.getDatabaseURL() );
         JpaPersistModule jpaModule = new JpaPersistModule("recipes2pdf-db");
         jpaModule.properties(props);
