@@ -1,6 +1,5 @@
 package sample.ui;
 
-import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import org.apache.commons.io.IOUtils;
 import sample.builder.Builder;
@@ -22,6 +21,7 @@ import sample.model.Sortlevel;
 import sample.model.util.RecipeUtil;
 import sample.parser.Parser;
 
+import javax.inject.Inject;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -42,17 +42,16 @@ public class UI {
     private IGenericDAO<Cookbook, Integer> cookbookDAO;
     @Inject
     private IGenericDAO<Recipe, Integer> recipeDAO;
-    @javax.inject.Inject
+    @Inject
     private RecipeService recipeService;
-    @javax.inject.Inject
+    @Inject
     private CookbookService cookbookService;
 
     void addRecipesFromFolder(final File folder) throws CouldNotParseException, FileNotFoundException {
         for (final File file : folder.listFiles()) {
             if (!file.isDirectory()) {
                 this.addRecipe(file);
-            }
-            else {
+            } else {
                 this.addRecipesFromFolder(file);
             }
         }
@@ -166,7 +165,9 @@ public class UI {
      * @return List<Recipe> List of all Recipes present in DB
      */
     List<Recipe> getAllRecipesFromDB() {
-        return this.recipeDAO.getAll();
+        final List<Recipe> all = this.recipeDAO.getAll();
+        all.forEach(recipe -> recipeDAO.detach(recipe));
+        return all;
     }
 
     /**
@@ -177,7 +178,9 @@ public class UI {
      * @return List<Recipe> List of all Cookbooks present in DB
      */
     List<Cookbook> getAllCookbooksFromDB() {
-        return this.cookbookDAO.getAll();
+        final List<Cookbook> all = this.cookbookDAO.getAll();
+        all.forEach(cookbook -> cookbookDAO.detach(cookbook));
+        return all;
     }
 
     /**
@@ -340,7 +343,11 @@ public class UI {
     }
 
     List<Recipe> getRecipesOfCookbook(Cookbook cookbook) throws CookBookNotFoundException {
-        return cookbook.getRecipes();
+        cookbook = cookbookDAO.update(cookbook);
+        final List<Recipe> recipes = cookbook.getRecipes();
+        cookbookDAO.detach(cookbook);
+        recipes.forEach(recipe -> recipeDAO.detach(recipe));
+        return recipes;
     }
 
     public void addRecipeToCookbook(Cookbook cookbook, Recipe recipe) {

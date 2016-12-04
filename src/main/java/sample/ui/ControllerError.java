@@ -1,5 +1,6 @@
 package sample.ui;
 
+import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,10 +21,20 @@ public class ControllerError {
     private Label labelLittlePrint;
     @FXML
     private Button closeButton;
+    Stage stage;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     public void setLabels(String boldPrint, String littlePrint) {
         this.labelBoldPrint.setText(boldPrint);
         this.labelLittlePrint.setText(littlePrint);
+        showDialog();
+    }
+
+    public void showDialog() {
+        stage.show();
     }
 
     /**

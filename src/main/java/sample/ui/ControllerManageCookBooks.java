@@ -9,6 +9,7 @@ package sample.ui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,31 +19,37 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.fxmisc.easybind.EasyBind;
 import sample.model.Cookbook;
+import sample.ui.adapter.CookbookAdapter;
 
+import javax.inject.Inject;
+import java.util.Comparator;
 import java.util.List;
 
 public class ControllerManageCookBooks {
 
-
     private static ControllerManageCookBooks instance;
-    protected String selectedItem;
+    protected Cookbook selectedItem;
     ControllerDefault controllerDefault = new ControllerDefault();
-    private ObservableList<String> cookbooks;
+    private ObservableList<Cookbook> cookbooks;
 
     @FXML
     private Button closeButton;
     @FXML
     private TextField searchFieldCookBooks;
     @FXML
-    private ListView<String> listViewCookBooks;
+    private ListView<Cookbook> listViewCookBooks;
     @FXML
     private Button changeButton;
     @FXML
     private Button deleteButton;
     @FXML
     private Button addButton;
+    @Inject
     UI ui;
+    @Inject
+    ControllerError controllerError;
 
     /**
      * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBooks and ControllerChangeCookBook.
@@ -61,7 +68,7 @@ public class ControllerManageCookBooks {
         return ControllerManageCookBooks.instance;
     }
 
-    protected String getSelectedItem() {
+    protected Cookbook getSelectedItem() {
         return this.selectedItem;
     }
 
@@ -71,12 +78,11 @@ public class ControllerManageCookBooks {
         initializeListeners();
         loadInfo();
         refreshListViews();
+        setupSearchFilter();
     }
 
     private void manageSaveError(String boldPrint, String littlePrint) {
-        ControllerDefault controllerDefault = new ControllerDefault();
-        controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
-        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+        controllerError.setLabels(boldPrint, littlePrint);
     }
 
     /**
@@ -88,9 +94,19 @@ public class ControllerManageCookBooks {
         buttonActions();
     }
 
+    private void setupSearchFilter() {
+        FilteredList<Cookbook> filteredData = new FilteredList<>(this.listViewCookBooks.getItems(), p -> true);
+        this.searchFieldCookBooks.textProperty()
+                                 .addListener((observable, oldValue, newValue) -> {
+                                     filteredData.setPredicate(newValue.isEmpty() ? s -> true : s -> s.getTitle().toLowerCase()
+                                                                                                      .contains(newValue.toLowerCase()));
+                                 });
+        this.listViewCookBooks.setItems(filteredData);
+    }
+
     private void buttonActions() {
         deleteButton.setOnAction((ActionEvent event) -> {
-            String cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
+            Cookbook cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
             this.selectedItem = cookbook;
             if (cookbook != null) {
                 controllerDefault.newWindowNotResizable(Resources.getDeleteCookBookFXML(), Resources.getDeleteWindowText());
@@ -99,7 +115,7 @@ public class ControllerManageCookBooks {
             }
         });
         changeButton.setOnAction((ActionEvent event) -> {
-            String cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
+            Cookbook cookbook = listViewCookBooks.getSelectionModel().getSelectedItem();
             this.selectedItem = cookbook;
             if (cookbook != null) {
                 controllerDefault.newWindow(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
@@ -110,25 +126,25 @@ public class ControllerManageCookBooks {
     }
 
     /**
-     * The method ''refreshListView(ObservableList<String> cookbooks)'' refreshs the listView.
+     * The method ''refreshListView(ObservableList<Cookbook> cookbooks)'' refreshs the listView.
      */
     protected void refreshListViews() {
         loadInfo();
         if(this.listViewCookBooks != null) {
-            FXCollections.sort(this.cookbooks);
+            FXCollections.sort(this.cookbooks, Comparator.comparing(Cookbook::getTitle));
             this.listViewCookBooks.getItems().clear();
+            this.listViewCookBooks.setCellFactory(new CookbookAdapter());
             this.listViewCookBooks.setItems(this.cookbooks);
             ControllerManageCookBook controllerManageCookBook = new ControllerManageCookBook();
-            controllerManageCookBook.searchInListView(this.cookbooks, searchFieldCookBooks, listViewCookBooks);
+            //TODO: controllerManageCookBook.searchInListView(this.cookbooks, searchFieldCookBooks, listViewCookBooks);
         }
     }
 
     void loadInfo(){
         this.cookbooks = FXCollections.observableArrayList();
         List<Cookbook> cookbooksDB = ui.getAllCookbooksFromDB();
-        for (Cookbook cookbook : cookbooksDB) {
-            this.cookbooks.add(cookbook.getTitle());
-        }
+        ObservableList<Cookbook> cookbooksObservable = FXCollections.observableArrayList( cookbooksDB);
+        EasyBind.listBind(this.cookbooks, cookbooksObservable);
     }
 
 
@@ -151,8 +167,8 @@ public class ControllerManageCookBooks {
                 }
                 if ((!listViewCookBooks.getItems().isEmpty()) && (selectedItem != null)) {
                     if (click.getClickCount() == 2) {
-                    controllerDefault.newWindowNotResizable(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText());
-                }
+                        controllerDefault.newWindowNotResizable(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText());
+                    }
                 }
             }
         });

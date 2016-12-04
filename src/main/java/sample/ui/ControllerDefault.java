@@ -51,7 +51,7 @@ public class ControllerDefault {
     /**
      * These method changes the layout in the main window.
      *
-     * @param fxml defenies the path of the new FXML-Layout-File.
+     * @param fxml defines the path of the new FXML-Layout-File.
      */
     void changeLayout(final String fxml) {
         //Pane (Content) durch anderes Pane in anderer FXML ersetzten
@@ -78,8 +78,8 @@ public class ControllerDefault {
 
     /**
      * The method opens a new not resizable window.
-     * @param fxml defenies the path of the FXML-File.
-     * @param windowTitel defenies the window titel
+     * @param fxml defines the path of the FXML-File.
+     * @param windowTitel defines the window titel
      */
     void newWindowNotResizable(String fxml, String windowTitel) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
@@ -100,16 +100,18 @@ public class ControllerDefault {
 
     /**
      * Opens a new resizable window.
-     * @param fxml defenies the path of the FXML-File.
-     * @param windowTitel defenies the window titel
-     * @param minValueWidth defenies the min value for the window size
-     * @param maxValueHeight defenies the max value for the window size
+     * @param fxml defines the path of the FXML-File.
+     * @param windowTitle defines the window title
+     * @param minValueWidth defines the min value for the window size
+     * @param maxValueHeight defines the max value for the window size
      */
-    void newWindow(String fxml, String windowTitel, double minValueWidth, double maxValueHeight, String pathIcon) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+    void newWindow(String fxml, String windowTitle, double minValueWidth, double maxValueHeight, String pathIcon) {
         Parent root = null;
         try {
-            root = loader.load();
+            fxmlLoader.setRoot(null);
+            fxmlLoader.setController(null);
+            fxmlLoader.setLocation(getClass().getResource(fxml));
+            root = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(wrongPathException);
@@ -117,7 +119,7 @@ public class ControllerDefault {
         Stage stage = new Stage();
         stage.getIcons().add(new Image(this.getClass().getResourceAsStream(pathIcon)));
         stage.setScene(new Scene(root));
-        stage.setTitle(windowTitel);
+        stage.setTitle(windowTitle);
         stage.setMinWidth(minValueWidth);
         stage.setMinHeight(maxValueHeight);
         stage.show();

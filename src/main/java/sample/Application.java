@@ -60,6 +60,7 @@ public class Application {
         }
 
         //new GUI().start(args);
+        new GUI().start(args);
         /*final ICookbookDAO cookbookDAO = injector.getInstance(CookbookDAOImpl.class);
         final IRecipeDAO recipeDAO = injector.getInstance(RecipeDAOImpl.class);
         final ICategoryDAO categoryDAO = injector.getInstance(CategoryDAOImpl.class);*/

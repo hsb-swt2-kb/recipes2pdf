@@ -87,7 +87,7 @@ public class ControllerManageCookBook implements Initializable {
             }
         });
 
-        // Bind to field for convenience
+
         comboBoxCookBooks.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedCookbook = newValue;
             try {
@@ -106,9 +106,15 @@ public class ControllerManageCookBook implements Initializable {
     }
 
     private void populateData() {
-        ui.getAllCookbooksFromDB().forEach( cookbook -> comboBoxCookBooks.getItems().add(cookbook));
+        comboBoxCookBooks.getItems().setAll(  ui.getAllCookbooksFromDB() );
         comboBoxCookBooks.selectionModelProperty().get().selectFirst();
 
+        try {
+            ObservableList<Recipe> recipesOfCookbook = FXCollections.observableArrayList( ui.getRecipesOfCookbook(selectedCookbook) );
+            EasyBind.listBind(listViewCookBook.getItems(), recipesOfCookbook);
+        } catch (CookBookNotFoundException e) {
+            e.printStackTrace();
+        }
         ui.getAllRecipesFromDB().forEach( recipe -> {
             if( !listViewCookBook.getItems().contains(recipe)) {
                 // Only show left if is not already in the cookbook
