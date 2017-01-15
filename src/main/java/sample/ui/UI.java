@@ -236,6 +236,7 @@ public class UI {
      * uses CookBookDAO to delete a Cookbook (only, not the Recipes of it) from the DB
      *
      * @param cookbookName name of the cookbook to delete from DB
+     * @deprecated replaced by object-parameter method
      */
     void delCookBook(String cookbookName) {
         if(this.cookbookDAO.findFirst("name", cookbookName).isPresent())
@@ -257,7 +258,8 @@ public class UI {
      * @param cookbook cookbook to delete from DB
      */
     void delCookBook(Cookbook cookbook) {
-        this.cookbookDAO.remove(cookbook);
+        Cookbook reattached = cookbookDAO.update(cookbook);
+        this.cookbookDAO.remove(reattached);
     }
 
     /**
@@ -268,7 +270,7 @@ public class UI {
      * @param cookbook cookbook which data have to be changed
      */
     void changeCookBook(Cookbook cookbook) {
-        this.cookbookDAO.update(cookbook);
+        cookbookDAO.update(cookbook);
     }
 
     /**

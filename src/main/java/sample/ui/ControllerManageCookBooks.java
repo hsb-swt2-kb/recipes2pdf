@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -24,20 +25,24 @@ import sample.model.Cookbook;
 import sample.ui.adapter.CookbookAdapter;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ControllerManageCookBooks {
+@Singleton
+public class ControllerManageCookBooks implements Initializable {
 
     private static ControllerManageCookBooks instance;
     protected Cookbook selectedItem;
-    ControllerDefault controllerDefault = new ControllerDefault();
     private ObservableList<Cookbook> cookbooks;
 
     @FXML
     private Button closeButton;
     @FXML
     private TextField searchFieldCookBooks;
+
     @FXML
     private ListView<Cookbook> listViewCookBooks;
     @FXML
@@ -50,6 +55,8 @@ public class ControllerManageCookBooks {
     UI ui;
     @Inject
     ControllerError controllerError;
+    @Inject
+    private ControllerDefault controllerDefault;
 
     /**
      * The method ''getInstance'' returns the controllerInstance for passing data beetween the ControllerManageCookBooks and ControllerChangeCookBook.
@@ -68,12 +75,12 @@ public class ControllerManageCookBooks {
         return ControllerManageCookBooks.instance;
     }
 
-    protected Cookbook getSelectedItem() {
-        return this.selectedItem;
+    public ListView<Cookbook> getListViewCookBooks() {
+        return listViewCookBooks;
     }
 
-    @FXML
-    private void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         instance = this;
         initializeListeners();
         loadInfo();
@@ -126,16 +133,14 @@ public class ControllerManageCookBooks {
     }
 
     /**
-     * The method ''refreshListView(ObservableList<Cookbook> cookbooks)'' refreshs the listView.
+     * The method ''refreshListView(ObservableList<Cookbook> cookbooks)'' refreshes the listView.
      */
     protected void refreshListViews() {
         loadInfo();
         if(this.listViewCookBooks != null) {
             FXCollections.sort(this.cookbooks, Comparator.comparing(Cookbook::getTitle));
-            this.listViewCookBooks.getItems().clear();
             this.listViewCookBooks.setCellFactory(new CookbookAdapter());
             this.listViewCookBooks.setItems(this.cookbooks);
-            ControllerManageCookBook controllerManageCookBook = new ControllerManageCookBook();
             //TODO: controllerManageCookBook.searchInListView(this.cookbooks, searchFieldCookBooks, listViewCookBooks);
         }
     }
@@ -143,7 +148,7 @@ public class ControllerManageCookBooks {
     void loadInfo(){
         this.cookbooks = FXCollections.observableArrayList();
         List<Cookbook> cookbooksDB = ui.getAllCookbooksFromDB();
-        ObservableList<Cookbook> cookbooksObservable = FXCollections.observableArrayList( cookbooksDB);
+        ObservableList<Cookbook> cookbooksObservable = FXCollections.observableArrayList(cookbooksDB);
         EasyBind.listBind(this.cookbooks, cookbooksObservable);
     }
 

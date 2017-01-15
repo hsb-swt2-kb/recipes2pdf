@@ -8,20 +8,24 @@ package sample.ui;
  */
 
 
+import com.github.vbauer.herald.annotation.Log;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
 import sample.model.Cookbook;
 
+import javax.inject.Inject;
 import java.io.File;
 
 public class ControllerChangeCookBook {
 
+    @Log
+    private Logger LOG;
     File file;
-    Cookbook cookbook;
 
     @FXML
     private Button fileChooserButton;
@@ -35,8 +39,14 @@ public class ControllerChangeCookBook {
     private TextField textFieldPicture;
     @FXML
     private Button changeButton;
-    UI ui;
-
+    @Inject
+    private ControllerError controllerError;
+    @Inject
+    private UI ui;
+    @Inject
+    private ControllerManageCookBook controllerManageCookBook;
+    @Inject
+    private ControllerManageCookBooks controllerManageCookBooks;
     @FXML
     public void initialize() {
         refreshData();
@@ -50,9 +60,8 @@ public class ControllerChangeCookBook {
      * set loaded text to textfields
      */
     private void fillTextFields() {
-
         //Cookbook selection from the ControllerManageCookBooks
-        textFieldName.setText(ControllerManageCookBooks.getInstance().getSelectedItem());
+        textFieldName.setText(controllerManageCookBooks.getListViewCookBooks().getSelectionModel().getSelectedItem().getTitle());
         textAreaVorwort.setText("");
         textFieldPicture.setText("");
     }
@@ -60,27 +69,27 @@ public class ControllerChangeCookBook {
     private void manageSaveError(String boldPrint, String littlePrint) {
         ControllerDefault controllerDefault = new ControllerDefault();
         controllerDefault.newWindowNotResizable(Resources.getErrorFXML(), Resources.getErrorWindowText());
-        ControllerError.getInstance().setLabels(boldPrint, littlePrint);
+        controllerError.setLabels(boldPrint, littlePrint);
     }
 
     @FXML
     void changeCookBook(ActionEvent event) {
-        if(this.textFieldName.getText().trim().isEmpty() == false) {
-            try {
+        Cookbook cookbook = controllerManageCookBooks.getListViewCookBooks().getSelectionModel().getSelectedItem();
+        if(null != cookbook) {
+            if(!this.textFieldName.getText().trim().isEmpty()) {
                 cookbook.setTitle(textFieldName.getText());
                 ui.changeCookBook(cookbook);
-                ControllerManageCookBooks.getInstance().refreshListViews();
-                ControllerManageCookBook.getInstance().refresh();
-            }catch (Exception e)
-            {
-                System.out.println("Couldn't load cookbook");
+                controllerManageCookBooks.refreshListViews();
+                controllerManageCookBook.refresh();
+            } else {
+                manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
             }
         } else {
-            manageSaveError("Sie haben die Plfichtfelder nicht ausgefüllt.", "Bitte füllen Sie die Pflichtfelder aus.");
+            LOG.error("Failed to apply changes of input mask to given object because it can't retried from the list for modification.");
         }
-            //Close Stage
-            Stage stage = (Stage) changeButton.getScene().getWindow();
-            stage.close();
+        //Close Stage
+        Stage stage = (Stage) changeButton.getScene().getWindow();
+        stage.close();
     }
 
     /**
