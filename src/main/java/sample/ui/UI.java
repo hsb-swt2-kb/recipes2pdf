@@ -290,7 +290,8 @@ public class UI {
      * @param recipe the recipe that have to be deleted
      */
     void delRecipe(Recipe recipe) {
-        this.recipeDAO.remove(recipe);
+        Recipe reattached = recipeDAO.update(recipe);
+        this.recipeDAO.remove(reattached);
     }
 
     /**

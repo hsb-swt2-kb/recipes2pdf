@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,38 +14,37 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.input.KeyCodeCombination?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerManageCookBook">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ui.ControllerManageCookBook">
     <children>
-        <Button fx:id="changeRecipeButton" layoutX="83.0" layoutY="352.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="83.0">
+        <JFXButton fx:id="changeRecipeButton" contentDisplay="GRAPHIC_ONLY" layoutX="83.0" layoutY="352.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="83.0" disable="true">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
          <graphic>
             <FontAwesomeIconView glyphName="COG" size="15" />
          </graphic>
-        </Button>
-        <Button fx:id="delteButtonRecipe" layoutX="45.0" layoutY="353.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="45.0">
+        </JFXButton>
+        <JFXButton fx:id="deleteButtonRecipe" contentDisplay="GRAPHIC_ONLY" layoutX="45.0" layoutY="353.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="45.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
          <graphic>
             <FontAwesomeIconView glyphName="TRASH" size="15" />
          </graphic>
-        </Button>
-        <Button fx:id="plusButton" layoutX="7.0" layoutY="353.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="24.0" prefWidth="34.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="7.0">
+        </JFXButton>
+        <JFXButton fx:id="plusButton" contentDisplay="GRAPHIC_ONLY" layoutX="7.0" layoutY="353.0" mnemonicParsing="false" onAction="#addRecipe" prefHeight="24.0" prefWidth="23.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="7.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
          <graphic>
             <FontAwesomeIconView glyphName="PLUS" size="15" />
          </graphic>
-        </Button>
-        <Button fx:id="export2pdfButton" layoutX="474.0" layoutY="352.0" mnemonicParsing="false" onAction="#export2pdf" text="Erzeugen" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="7.0">
+        </JFXButton>
+        <JFXButton fx:id="export2pdfButton" defaultButton="true" layoutX="474.0" layoutY="352.0" mnemonicParsing="false" onAction="#export2pdf" text="Erzeugen" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="7.0">
             <graphic>
                 <FontAwesomeIconView glyphName="BOOK" size="15" />
             </graphic>
-        </Button>
+        </JFXButton>
         <GridPane fx:id="gridPane" layoutX="7.0" layoutY="6.0" prefHeight="343.0" prefWidth="561.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="6.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="260.0" />
@@ -62,7 +61,7 @@
                 <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="289.0" prefWidth="266.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
                 <TextField fx:id="searchFieldRecipes" prefHeight="25.0" prefWidth="245.0" promptText="Suche*" GridPane.rowIndex="1" />
                 <TextField fx:id="searchFieldCookBooks" prefHeight="19.0" prefWidth="245.0" promptText="Suche*" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Button fx:id="rightArrowButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                <JFXButton fx:id="toRight" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
@@ -75,8 +74,8 @@
                <graphic>
                   <FontAwesomeIconView glyphName="ARROW_RIGHT" size="20" wrappingWidth="16.14285659790039" />
                </graphic>
-                </Button>
-                <Button fx:id="leftArrowButton" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                </JFXButton>
+                <JFXButton fx:id="toLeft" contentDisplay="GRAPHIC_ONLY" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
@@ -86,27 +85,27 @@
                <graphic>
                   <FontAwesomeIconView glyphName="ARROW_LEFT" size="20" />
                </graphic>
-                </Button>
+                </JFXButton>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                <children>
-                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch:" underline="true">
+                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kochbuch:">
                           <font>
-                              <Font name="System Bold" size="21.0" />
+                              <Font size="21.0" />
                           </font>
                       </Text>
-                      <ComboBox fx:id="comboBoxCookBooks" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="150.0" HBox.hgrow="SOMETIMES" />
+                      <JFXComboBox fx:id="comboBoxCookBooks" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="150.0" HBox.hgrow="SOMETIMES" />
                </children>
             </HBox>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte:" underline="true">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rezepte:">
                     <font>
-                        <Font name="System Bold Italic" size="21.0" />
+                        <Font size="21.0" />
                     </font>
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>
                 </Text>
                 <ListView fx:id="listViewRecipes" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
-                <ListView fx:id="listViewCookBook" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                <ListView fx:id="listViewRecipesInCookbook" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             </children>
         </GridPane>
     </children>

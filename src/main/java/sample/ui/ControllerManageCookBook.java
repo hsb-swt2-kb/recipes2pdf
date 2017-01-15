@@ -58,7 +58,7 @@ public class ControllerManageCookBook implements Initializable {
     ListView<Recipe> listViewRecipes;
 
     @FXML
-    ListView<Recipe> listViewCookBook;
+    ListView<Recipe> listViewRecipesInCookbook;
 
     @FXML
     ComboBox<Cookbook> comboBoxCookBooks;
@@ -68,6 +68,9 @@ public class ControllerManageCookBook implements Initializable {
 
     @Inject
     FXMLLoader fxmlLoader;
+
+    @Inject
+    ControllerDefault controllerDefault;
 
     private Cookbook selectedCookbook;
 
@@ -92,17 +95,39 @@ public class ControllerManageCookBook implements Initializable {
             selectedCookbook = newValue;
             try {
                 ObservableList<Recipe> recipesOfCookbook = FXCollections.observableArrayList( ui.getRecipesOfCookbook(selectedCookbook) );
-                EasyBind.listBind(listViewCookBook.getItems(), recipesOfCookbook);
+                EasyBind.listBind(listViewRecipesInCookbook.getItems(), recipesOfCookbook);
             } catch (CookBookNotFoundException e) {
                 e.printStackTrace();
             }
         });
         listViewRecipes.setCellFactory(new RecipeAdapter());
-        listViewCookBook.setCellFactory(new RecipeAdapter());
+        listViewRecipesInCookbook.setCellFactory(new RecipeAdapter());
         toLeft.setOnAction(this::toLeft);
         toRight.setOnAction(this::toRight);
 
+        buttonActions();
         populateData();
+    }
+
+    private void buttonActions() {
+        deleteButtonRecipe.setOnAction((ActionEvent event) -> {
+            Recipe recipe = listViewRecipes.getSelectionModel().getSelectedItem();
+            Recipe recipeInCookBook = listViewRecipesInCookbook.getSelectionModel().getSelectedItem();
+            if (recipe != null || recipeInCookBook != null) {
+                controllerDefault.newWindowNotResizable(Resources.getDeleteRecipeFXML(), Resources.getDeleteWindowText());
+            } else {
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Rezept aus.");
+            }
+        });
+        changeRecipeButton.setOnAction((ActionEvent event) -> {
+            Recipe recipe = listViewRecipes.getSelectionModel().getSelectedItem();
+            Recipe recipeInCookBook = listViewRecipesInCookbook.getSelectionModel().getSelectedItem();
+            if (recipe != null || recipeInCookBook != null) {
+                controllerDefault.newWindow(Resources.getChangeCookBooksFXML(), Resources.getChangeCookBookWindowText(), 370, 245, Resources.getDefaultIcon());
+            } else {
+                manageSaveError("Sie haben kein Element ausgwählt.", "Bitte wählen Sie ein Kochbuch aus.");
+            }
+        });
     }
 
     private void populateData() {
@@ -111,12 +136,12 @@ public class ControllerManageCookBook implements Initializable {
 
         try {
             ObservableList<Recipe> recipesOfCookbook = FXCollections.observableArrayList( ui.getRecipesOfCookbook(selectedCookbook) );
-            EasyBind.listBind(listViewCookBook.getItems(), recipesOfCookbook);
+            EasyBind.listBind(listViewRecipesInCookbook.getItems(), recipesOfCookbook);
         } catch (CookBookNotFoundException e) {
             e.printStackTrace();
         }
         ui.getAllRecipesFromDB().forEach( recipe -> {
-            if( !listViewCookBook.getItems().contains(recipe)) {
+            if( !listViewRecipesInCookbook.getItems().contains(recipe)) {
                 // Only show left if is not already in the cookbook
                 listViewRecipes.getItems().add(recipe);
             }
@@ -126,7 +151,7 @@ public class ControllerManageCookBook implements Initializable {
     private void toRight(ActionEvent actionEvent) {
         if ( null != selectedCookbook ) {
             listViewRecipes.getSelectionModel().getSelectedItems().forEach(recipe -> {
-                listViewCookBook.getItems().add(recipe);
+                listViewRecipesInCookbook.getItems().add(recipe);
                 listViewRecipes.getItems().removeAll(recipe);
                 ui.addRecipeToCookbook(selectedCookbook, recipe);
             });
@@ -138,9 +163,9 @@ public class ControllerManageCookBook implements Initializable {
 
     private void toLeft(ActionEvent event) {
         if ( null != selectedCookbook ) {
-            listViewCookBook.getSelectionModel().getSelectedItems().forEach(recipe -> {
+            listViewRecipesInCookbook.getSelectionModel().getSelectedItems().forEach(recipe -> {
                 listViewRecipes.getItems().add(recipe);
-                listViewCookBook.getItems().removeAll(recipe);
+                listViewRecipesInCookbook.getItems().removeAll(recipe);
                 ui.removeRecipeFromCookbook(selectedCookbook, recipe);
             });
             System.out.println("toLeft");
@@ -194,4 +219,7 @@ public class ControllerManageCookBook implements Initializable {
         popOver.show(this.plusButton);
     }
 
+    public ListView<Recipe> getListViewRecipes() {
+        return listViewRecipes;
+    }
 }

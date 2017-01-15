@@ -82,10 +82,12 @@ public class ControllerDefault {
      * @param windowTitel defines the window titel
      */
     void newWindowNotResizable(String fxml, String windowTitel) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
         try {
-            root = loader.load();
+            fxmlLoader.setRoot(null);
+            fxmlLoader.setController(null);
+            fxmlLoader.setLocation(getClass().getResource(fxml));
+            root = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(wrongPathException);
