@@ -26,7 +26,6 @@ public class ControllerChangeCookBook {
     @Log
     private Logger LOG;
     File file;
-
     @FXML
     private Button fileChooserButton;
     @FXML
@@ -61,7 +60,10 @@ public class ControllerChangeCookBook {
      */
     private void fillTextFields() {
         //Cookbook selection from the ControllerManageCookBooks
-        textFieldName.setText(controllerManageCookBooks.getListViewCookBooks().getSelectionModel().getSelectedItem().getTitle());
+        final Cookbook cookbook = controllerManageCookBooks.getListViewCookBooks()
+                                                               .getSelectionModel()
+                                                               .getSelectedItem();
+        textFieldName.setText(cookbook.getTitle());
         textAreaVorwort.setText("");
         textFieldPicture.setText("");
     }
