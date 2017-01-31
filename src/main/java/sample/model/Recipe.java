@@ -1,6 +1,7 @@
 package sample.model;
 
 import org.apache.commons.lang3.NotImplementedException;
+import sample.ui.adapter.GUIRepresentable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
  * Created by czoeller on 11.07.16.
  */
 @Entity
-public class Recipe {
+public class Recipe implements GUIRepresentable {
     private Integer id;
     private String title;
     private String text;

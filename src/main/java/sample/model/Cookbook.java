@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.ui.adapter.GUIRepresentable;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +12,7 @@ import java.util.stream.Collectors;
  * Created by czoeller on 11.07.16.
  */
 @Entity
-public class Cookbook {
+public class Cookbook implements GUIRepresentable {
     private Integer id;
     private String title;
     private Set<CookbookRecipe> cookbookRecipes = new CopyOnWriteArraySet<>();
