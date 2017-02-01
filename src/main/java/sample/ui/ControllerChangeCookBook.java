@@ -27,15 +27,9 @@ public class ControllerChangeCookBook {
     private Logger LOG;
     File file;
     @FXML
-    private Button fileChooserButton;
-    @FXML
     private Button closeButton;
     @FXML
     private TextField textFieldName;
-    @FXML
-    private TextArea textAreaVorwort;
-    @FXML
-    private TextField textFieldPicture;
     @FXML
     private Button changeButton;
     @Inject
@@ -64,8 +58,6 @@ public class ControllerChangeCookBook {
                                                                .getSelectionModel()
                                                                .getSelectedItem();
         textFieldName.setText(cookbook.getTitle());
-        textAreaVorwort.setText("");
-        textFieldPicture.setText("");
     }
 
     private void manageSaveError(String boldPrint, String littlePrint) {
@@ -102,20 +94,6 @@ public class ControllerChangeCookBook {
     void closeChangeCookBook(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-    }
-
-    /**
-     * The method ''openFileChooser()'' opens the filechooser after a interaction with the browse-Button.
-     * If the user imports a picture, the path will display in the textField-picture.
-     * @param event
-     */
-    @FXML
-    void openFileChooser(ActionEvent event) {
-        FileHandler fileHandler = new FileHandler();
-        this.file = fileHandler.importPicture();
-        if(this.file != null) {
-            textFieldPicture.setText(file.getAbsolutePath());
-        }
     }
 }
 
